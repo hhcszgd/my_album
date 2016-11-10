@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  zjlao
+
+  Created by WY on 16/11/4.
+  Copyright © 2016年 com.16lao.zjlao. All rights reserved.
+*/
+"tabBar_home" = "首页";
+"tabBar_classify" = "分类";
+"tabBar_lao" = "捞";
+"tabBar_shopcar" = "购物车";
+"tabBar_profile" = "我的";
+
+
+"languageID" = "zh-Hans-US";
+"languageDisplayName" = "简体中文";
+//提示语
+"currentLanguageIs" = "当前语言已经是";
+"languageChangeing" = "语言切换中 请稍后...";
+"confirm" = "确定";
+"cancel" = "取消";
+"applyAfterRestart" = "重启以生效";
