@@ -34,6 +34,9 @@ class SkipManager: NSObject {
         case "info"://查看用户信息
             mylog("跳转到个人信息页面")
             break
+        case "QRCodeScannerVC":
+            targetVC = QRCodeScannerVC(vcType: VCType.withBackButton)
+            break
         case "set":
 //            mylog("跳转到设置")
             targetVC = SettingVC(vcType: VCType.withBackButton)

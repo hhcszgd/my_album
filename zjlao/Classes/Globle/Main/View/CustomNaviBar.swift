@@ -15,10 +15,36 @@ import UIKit
 }
 
 
-    enum NaviBarType {
-        case withBackBtn
-        case withoutBackBtn
-    }
+/// 初始化控制器时,导航栏是否带返回按钮
+///
+/// - withBackBtn:    有返回键
+/// - withoutBackBtn: 没有返回键
+enum NaviBarStyle {
+    case withBackBtn
+    case withoutBackBtn
+}
+
+/// 导航栏改变的方式
+///
+/// - offset:   通过改变位置来实现消失/出现
+/// - alpha: 通过改变整体透明度实现消失/出现
+/// - color: 通过改变背景色实现消失/出现(非子控件不变)
+enum NaviBarActionType {
+    case offset
+    case alpha
+    case color
+}
+
+/// 导航栏状态
+///
+/// - normal:   正常出现状态
+/// - changing: 状态改变中
+/// - disapear: 已经消失
+enum NaviBarStatusType {
+    case normal
+    case changing
+    case disapear
+}
 class CustomNaviBar: UIView {
     weak var delegate  :  CustomNaviBarDelegate?
     let backBtn = UIButton(frame: CGRect(x: 0, y: 20, width: 44, height: 44))
@@ -37,7 +63,7 @@ class CustomNaviBar: UIView {
         }
     }
     
-    var  currentType : NaviBarType  = .withBackBtn
+    var  currentType : NaviBarStyle  = .withBackBtn
     
 //    var backBtnHidden : Bool {//计算属性
 //        get {
@@ -164,7 +190,7 @@ class CustomNaviBar: UIView {
             navTitleView.frame = CGRect(x: x, y: y, width: w, height: h);
         }
     }
-    convenience init(type:NaviBarType){
+    convenience init(type:NaviBarStyle){
         self.init(frame: CGRect.zero)
         currentType = type
         switch currentType {

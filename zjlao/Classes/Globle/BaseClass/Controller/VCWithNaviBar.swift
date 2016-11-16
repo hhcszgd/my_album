@@ -34,14 +34,14 @@ enum VCType {
         switch currentType {
         case .withBackButton:
             //
-            naviBar = CustomNaviBar(type: NaviBarType.withBackBtn)
+            naviBar = CustomNaviBar(type: NaviBarStyle.withBackBtn)
             naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64 )
             naviBar.delegate = self
             break
         case .withoutBackButton:
             //
             
-            naviBar = CustomNaviBar(type: NaviBarType.withoutBackBtn)
+            naviBar = CustomNaviBar(type: NaviBarStyle.withoutBackBtn)
             naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64 )
             break
         }
@@ -105,6 +105,15 @@ enum VCType {
     func hiddenErrorView()  {
         self.errorView?.removeFromSuperview()
         self.errorView = nil
+    }
+    
+    
+    //MARK:动态改变导航栏的状态(改变透明度)
+    //MARK:动态改变导航栏的状态(上下移动)
+    
+    func changeNaviBarStatus(contentOffset:CGFloat ) {
+        
+        
     }
 }
 //extension VCWithNaviBar : CustomNaviBarDelegate {

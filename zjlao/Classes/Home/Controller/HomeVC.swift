@@ -59,7 +59,14 @@ class HomeVC: VCWithNaviBar {
         naviBar.navTitleView = navTitleView
         
         self.setupSuvViews()
+        
+        
+        leftBtn1.addTarget(self, action: #selector(qrScanner), for: UIControlEvents.touchUpInside)
         // Do any additional setup after loading the view.
+    }
+    func qrScanner()  {
+        let model = BaseModel.init(dict: ["actionkey" : "QRCodeScannerVC" as AnyObject])
+        SkipManager.skip(viewController: self, model: model)
     }
     func setupSuvViews() -> () {
 //        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
