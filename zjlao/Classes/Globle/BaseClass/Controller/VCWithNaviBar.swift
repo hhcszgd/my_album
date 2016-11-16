@@ -111,7 +111,7 @@ enum VCType {
     //MARK:动态改变导航栏的状态(改变透明度)
     //MARK:动态改变导航栏的状态(上下移动)
     
-    func changeNaviBarStatus(contentOffset:CGFloat ) {
+    func changeNaviBarStatus(contentOffset:CGFloat , naviBarActionType : NaviBarActionType) {
         
         
     }

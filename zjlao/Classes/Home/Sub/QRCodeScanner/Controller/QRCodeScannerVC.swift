@@ -13,6 +13,8 @@ class QRCodeScannerVC: VCWithNaviBar , QRViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
      self.setup()
+        self.view.backgroundColor = UIColor.clear
+        
         // Do any additional setup after loading the view.
     }
     func setup()  {
@@ -25,6 +27,10 @@ class QRCodeScannerVC: VCWithNaviBar , QRViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.qrView.session.startRunning()
     }
 
     /*

@@ -13,7 +13,8 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
     let bgView  = UIImageView()//背景框
     let lineView = UIImageView()//上下扫描的线
     let session = AVCaptureSession()
-    
+    var sublayer    : AVCaptureVideoPreviewLayer!
+
     /**
      *  设置CZQRView的layer是AVCaptureVideoPreviewLayer
      */
@@ -39,10 +40,13 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
         //  默认是后置摄像头
         let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
 //        let error = NSError()
-        var input  = AVCaptureDeviceInput()
+//        let input  = AVCaptureDeviceInput.init(device: device)
         do {
-            let inp = try  AVCaptureDeviceInput.init(device: device)
-            input = inp
+            let input = try  AVCaptureDeviceInput.init(device: device)
+            if self.session.canAddInput(input) {
+                self.session.addInput(input)
+            }
+//            input = inp
         } catch {
             mylog(error)
         }
@@ -54,22 +58,32 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
         let output = AVCaptureMetadataOutput.init()
         
         //链接设备
-        if self.session.canAddInput(input) {
-            self.session.addInput(input)
-        }
+//        if self.session.canAddInput(input) {
+//            self.session.addInput(input)
+//        }
+        
+        //  设置输出对象的元数据类型
+        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
         if self.session.canAddOutput(output) {
             self.session.addOutput(output)
         }
-        
-        //  设置输出对象的元数据类型
         output.metadataObjectTypes = output.availableMetadataObjectTypes;
-        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        let layer : AVCaptureVideoPreviewLayer = self.layer as! AVCaptureVideoPreviewLayer
-        layer.session = session
+        self.sublayer = AVCaptureVideoPreviewLayer(session: session)
+        sublayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        
+        
+        self.layer.addSublayer(sublayer!);
+//        let layer : AVCaptureVideoPreviewLayer = self.layer as! AVCaptureVideoPreviewLayer
+//        
+//        layer.session = session
         //开始运行session
-        self.session.startRunning()
+//        self.session.startRunning()
     }
-    
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        sublayer?.frame = self.layer.bounds
+        
+    }
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         let obj : AVMetadataMachineReadableCodeObject = metadataObjects.first! as! AVMetadataMachineReadableCodeObject
         if obj.stringValue.characters.count > 0 {
@@ -107,6 +121,9 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
         positionAnimation.repeatCount = Float(NSIntegerMax)
         self.lineView.layer.add(positionAnimation, forKey: "positionAnimation")
 //        [self.lineView.layer addAnimation:positionAnimation forKey:@"positionAnimation"];
+    }
+    func startsesstion()  {
+//        self.session.startRunning()
     }
 }
     /**
