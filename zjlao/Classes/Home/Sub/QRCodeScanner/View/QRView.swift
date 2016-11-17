@@ -1,104 +1,128 @@
+
 //
 //  QRView.swift
 //  zjlao
 //
 //  Created by WY on 16/11/9.
 //  Copyright © 2016年 com.16lao.zjlao. All rights reserved.
-//
+//如果想让预览取充满屏幕 , 就把qrview的父控件充满屏幕//
 
 import UIKit
 import AVFoundation
 class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
-    var delegate : QRViewDelegate?
+   weak var delegate : QRViewDelegate?
     let bgView  = UIImageView()//背景框
     let lineView = UIImageView()//上下扫描的线
     let session = AVCaptureSession()
     var sublayer    : AVCaptureVideoPreviewLayer!
-
-    /**
-     *  设置CZQRView的layer是AVCaptureVideoPreviewLayer
-     */
-    
+    let videoCaptureDevice: AVCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+    let flashLightBtn = UIButton(type: UIButtonType.contactAdd)
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setup()
-        self.configQR()
+        self.setupQRScannerCompose()
+        self.setupControlCompose()
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func setup ()  {
+    func setupControlCompose ()  {
         self.addSubview( bgView)
         self.addSubview(lineView)
+        self.addSubview(flashLightBtn)
+        flashLightBtn.setImage(UIImage(named: "bg_icon_wu"), for: UIControlState.normal)
+        flashLightBtn.addTarget(self, action: #selector(flashBtnClick(sender:)), for: UIControlEvents.touchUpInside)
         self.bgView.image = UIImage.init(named: "pick_bg")
         self.lineView.image = UIImage.init(named: "line")
         
     }
-    func configQR()  {
-        //  创建输入对象
-        //  默认是后置摄像头
-        let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-//        let error = NSError()
-//        let input  = AVCaptureDeviceInput.init(device: device)
+    func flashBtnClick(sender:UIButton) {
+        sender.isSelected = !sender.isSelected
+        
+        self.videoCaptureDevice.torchMode = sender.isSelected ? .off : .on
+    }
+    func setupQRScannerCompose()  {
+//        let videoCaptureDevice: AVCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+//        videoCaptureDevice.unlockForConfiguration()
         do {
-            let input = try  AVCaptureDeviceInput.init(device: device)
-            if self.session.canAddInput(input) {
-                self.session.addInput(input)
-            }
-//            input = inp
-        } catch {
-            mylog(error)
-        }
-        
-        
-        
-        //  创建输出设备
-        
-        let output = AVCaptureMetadataOutput.init()
-        
-        //链接设备
-//        if self.session.canAddInput(input) {
-//            self.session.addInput(input)
-//        }
-        
-        //  设置输出对象的元数据类型
-        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        if self.session.canAddOutput(output) {
-            self.session.addOutput(output)
-        }
-        output.metadataObjectTypes = output.availableMetadataObjectTypes;
-        self.sublayer = AVCaptureVideoPreviewLayer(session: session)
-        sublayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        
-        
-        self.layer.addSublayer(sublayer!);
-//        let layer : AVCaptureVideoPreviewLayer = self.layer as! AVCaptureVideoPreviewLayer
-//        
-//        layer.session = session
-        //开始运行session
-//        self.session.startRunning()
-    }
-    override func layoutSublayers(of layer: CALayer) {
-        super.layoutSublayers(of: layer)
-        sublayer?.frame = self.layer.bounds
-        
-    }
-    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
-        let obj : AVMetadataMachineReadableCodeObject = metadataObjects.first! as! AVMetadataMachineReadableCodeObject
-        if obj.stringValue.characters.count > 0 {
-            if (self.delegate?.responds(to: #selector(QRViewDelegate.qrView(view:didCompletedWithQRValue:)) ))!{
-                self.delegate?.qrView(view: self, didCompletedWithQRValue: obj.stringValue)
+            try  videoCaptureDevice.lockForConfiguration()
             
+        }catch{
+            
+        }
+        videoCaptureDevice.torchMode = .off
+        
+        let setting = AVCapturePhotoSettings.init(format: nil).flashMode = AVCaptureFlashMode.on
+        
+//        videoCaptureDevice.torchMode =  AVCaptureTorchMode.on
+//        videoCaptureDevice.flashMode  = AVCaptureFlashMode.on
+        
+        do {
+            
+            let videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+            
+            if self.session.canAddInput(videoInput) {
+                self.session.addInput(videoInput)
+            } else {
+                print("Could not add video input")
+            }
+            
+            let metadataOutput = AVCaptureMetadataOutput()
+            
+            if self.session.canAddOutput(metadataOutput) {
+                self.session.addOutput(metadataOutput)
+                
+                metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+                metadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode,AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypePDF417Code]
+            } else {
+                print("Could not add metadata output")
+            }
+            
+            let previewLayer = AVCaptureVideoPreviewLayer(session: self.session)
+            previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+            self.sublayer = previewLayer
+            self.layer.addSublayer(self.sublayer)
+//            previewLayer?.frame = self.view.layer.bounds
+//            self.view.layer .addSublayer(previewLayer!)
+            self.session.startRunning()
+        } catch let error as NSError {
+            print("Error while creating vide input device: \(error.localizedDescription)")
+        }
+
+    }
+//    override func layoutSublayers(of layer: CALayer) {
+//        super.layoutSublayers(of: layer)
+//        sublayer?.frame = self.layer.bounds
+//        
+//    }
+    //扫描成功的代理
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
+        mylog(metadataObjects)
+        
+        
+        //MARK: 强制解包失败已修复
+        
+        for item in metadataObjects {
+            if let obj  = item as? AVMetadataMachineReadableCodeObject {
+                if obj.stringValue.characters.count > 0 {
+                    let isRespondOption = (self.delegate?.responds(to: #selector(QRViewDelegate.qrView(view:didCompletedWithQRValue:))))
+                    if let isRespond = isRespondOption  {
+                        if isRespond {
+                            self.delegate?.qrView(view: self, didCompletedWithQRValue: obj.stringValue)
+                            self.session.stopRunning();
+                            return
+                        }
+                    }
+                }
+                
             }
         }
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        mylog(self.bounds)
+        sublayer.frame = self.bounds
         let  size = self.bounds.size;
-        
-        let  bgW : CGFloat = 200
+                let  bgW : CGFloat = 200
         let bgH  : CGFloat = 200
         let  bgX  : CGFloat = (size.width - bgW) * 0.5;
         let  bgY  : CGFloat = (size.height - bgH) * 0.5;
@@ -106,24 +130,21 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
         self.bgView.frame = CGRect.init(x: bgX, y: bgY, width: bgW, height: bgH)
         //  线的frame
         self.lineView.frame = CGRect.init(x: bgX, y: bgY, width: bgW, height: 2)
-        
         //  使用核心动画
         self.lineView.layer.removeAnimation(forKey: "positionAnimation")
         let  positionAnimation : CABasicAnimation =  CABasicAnimation.init(keyPath: "position.y")
-//        let  positionAnimation : CABasicAnimation = CABasicAnimation.animationWithKeyPath:"position.y"];
-        
         positionAnimation.fromValue = (bgY);
-        
         positionAnimation.toValue = (self.bgView.frame.maxY)
-        
         positionAnimation.duration = 2
-        
         positionAnimation.repeatCount = Float(NSIntegerMax)
         self.lineView.layer.add(positionAnimation, forKey: "positionAnimation")
-//        [self.lineView.layer addAnimation:positionAnimation forKey:@"positionAnimation"];
+        self.flashLightBtn.frame = CGRect(x: 123, y: screenH - 88, width:44, height:44)
     }
-    func startsesstion()  {
-//        self.session.startRunning()
+    
+    deinit {
+        mylog("二维码视图销毁了")
+//         videoCaptureDevice.torchMode = .off
+        
     }
 }
     /**

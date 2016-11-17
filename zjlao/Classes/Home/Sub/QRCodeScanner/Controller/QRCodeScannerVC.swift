@@ -7,16 +7,112 @@
 //
 
 import UIKit
+import AVFoundation
+protocol BarcodeDelegate {
+    
+    func barcodeReaded(barcode: String)
+}
 
-class QRCodeScannerVC: VCWithNaviBar , QRViewDelegate {
+class QRCodeScannerVC: VCWithNaviBar,AVCaptureMetadataOutputObjectsDelegate , QRViewDelegate {
     let qrView  = QRView()
+    
+    var delegate: BarcodeDelegate?
+    var captureSession: AVCaptureSession!
+    var code: String?
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.newQRCode()
      self.setup()
-        self.view.backgroundColor = UIColor.clear
+        
+//        self.view.backgroundColor = UIColor.clear
         
         // Do any additional setup after loading the view.
     }
+    
+    func newQRCode() {
+        
+        self.captureSession = AVCaptureSession();
+        let videoCaptureDevice: AVCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        
+        do {
+            
+            let videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+            
+            if self.captureSession.canAddInput(videoInput) {
+                self.captureSession.addInput(videoInput)
+            } else {
+                print("Could not add video input")
+            }
+            
+            let metadataOutput = AVCaptureMetadataOutput()
+            if self.captureSession.canAddOutput(metadataOutput) {
+                self.captureSession.addOutput(metadataOutput)
+                
+                metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+                metadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode,AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypePDF417Code]
+            } else {
+                print("Could not add metadata output")
+            }
+            
+            let previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+            previewLayer?.frame = self.view.layer.bounds
+            self.view.layer .addSublayer(previewLayer!)
+            self.captureSession.startRunning()
+        } catch let error as NSError {
+            print("Error while creating vide input device: \(error.localizedDescription)")
+        }
+
+    }
+    
+    
+    //I THINK THIS METHOD NOT CALL !
+    private func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+        
+        // This is the delegate'smethod that is called when a code is readed
+        for metadata in metadataObjects {
+            let readableObject = metadata as! AVMetadataMachineReadableCodeObject
+            let code = readableObject.stringValue
+            
+            // If the code is not empty the code is ready and we call out delegate to pass the code.
+            if  code!.isEmpty {
+                print("is empty")
+                
+            }else {
+                
+                self.captureSession.stopRunning()
+                self.dismiss(animated: true, completion: nil)
+                self.delegate?.barcodeReaded(barcode: code!)
+                
+                
+            }
+        }
+    
+    
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func setup()  {
         let frame = CGRect(x: 0, y: 64, width: screenW, height: screenH - 64)
         self.view.addSubview(self.qrView)
@@ -30,7 +126,6 @@ class QRCodeScannerVC: VCWithNaviBar , QRViewDelegate {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.qrView.session.startRunning()
     }
 
     /*

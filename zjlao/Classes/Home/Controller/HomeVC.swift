@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 import AFNetworking
-class HomeVC: VCWithNaviBar {
+class HomeVC: VCWithNaviBar ,BarcodeDelegate {
 
     func test()  {
         
@@ -33,6 +33,10 @@ class HomeVC: VCWithNaviBar {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         self.viewDidLoad()
+    }
+    func barcodeReaded(barcode: String) {
+        mylog(barcode)
+        print(barcode)
     }
 
     override func viewDidLoad() {
@@ -67,6 +71,10 @@ class HomeVC: VCWithNaviBar {
     func qrScanner()  {
         let model = BaseModel.init(dict: ["actionkey" : "QRCodeScannerVC" as AnyObject])
         SkipManager.skip(viewController: self, model: model)
+        
+//        let qrvc = QRCodeScannerVC(vcType: VCType.withBackButton)
+//        qrvc.delegate = self
+//        self.navigationController?.pushViewController(qrvc, animated: true )
     }
     func setupSuvViews() -> () {
 //        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
