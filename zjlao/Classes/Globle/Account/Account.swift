@@ -123,7 +123,7 @@ class Account: NSObject , NSCoding {
     /** 用户是否登录 */
     var  isLogin : Bool {
         get{
-            guard let token_temp = UserDefaults.standard.value(forKey: "token") as! String?   else{
+            guard let token_temp = GDStorgeManager.standard.value(forKey: "token") as! String?   else{
                 mylog("取登录状态时 , token为空")
                 return false
             }

@@ -9,40 +9,15 @@
 import UIKit
 import MBProgressHUD
 import AFNetworking
-class HomeVC: VCWithNaviBar ,BarcodeDelegate {
+class HomeVC: VCWithNaviBar  {
 
-    func test()  {
-        
-        mylog( UIDevice.current.systemVersion)
-        mylog( Float(UIDevice.current.systemVersion))
-
-        if let  systemVersion = Float(UIDevice.current.systemVersion) {
-            mylog("当前iOS版本为\(systemVersion)")
-            if systemVersion <= 11.0 {
-                mylog("10+")
-            }else if (systemVersion <= 10.0){
-                mylog("9+")
-            }else if (systemVersion <= 9.0){
-                mylog("8+")
-            }else{
-                mylog("8-")
-            }
-
-        }
-    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         self.viewDidLoad()
     }
-    func barcodeReaded(barcode: String) {
-        mylog(barcode)
-        print(barcode)
-    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-         test()
-        mylog(4/3)
         self.naviBar.backgroundColor  = UIColor.orange
         
 //        NSLocalizedString(<#T##key: String##String#>, comment: <#T##String#>)//默认加载Localizable

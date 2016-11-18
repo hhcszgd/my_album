@@ -84,6 +84,9 @@
 		1523AE6B1DCC937300011F9A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE6D1DCC937300011F9A /* InfoPlist.strings */; };
 		1523AE721DCC942500011F9A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE741DCC942500011F9A /* Localizable.strings */; };
 		1523AE781DCC94B300011F9A /* english.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE771DCC94B300011F9A /* english.strings */; };
+		15E250D01DDEA73E004D4509 /* GDStorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */; };
+		15E250D21DDEB05C004D4509 /* GDSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250D11DDEB05C004D4509 /* GDSettingManager.swift */; };
+		15E250D41DDEB123004D4509 /* GDDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250D31DDEB123004D4509 /* GDDevice.swift */; };
 		15EB0BF71DCD9DB00009640A /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 15EB0BF61DCD9DB00009640A /* loading.gif */; };
 		15EB0BF91DCDA02F0009640A /* simplified.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15EB0BF81DCDA02F0009640A /* simplified.strings */; };
 		15EB0BFB1DCDAB5F0009640A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15EB0BFA1DCDAB5F0009640A /* Assets.xcassets */; };
@@ -205,6 +208,9 @@
 		1523AE751DCC942600011F9A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1523AE761DCC942700011F9A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1523AE771DCC94B300011F9A /* english.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = english.strings; sourceTree = "<group>"; };
+		15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDStorgeManager.swift; sourceTree = "<group>"; };
+		15E250D11DDEB05C004D4509 /* GDSettingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSettingManager.swift; sourceTree = "<group>"; };
+		15E250D31DDEB123004D4509 /* GDDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDDevice.swift; sourceTree = "<group>"; };
 		15EB0BF61DCD9DB00009640A /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		15EB0BF81DCDA02F0009640A /* simplified.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = simplified.strings; sourceTree = "<group>"; };
 		15EB0BFA1DCDAB5F0009640A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -578,6 +584,9 @@
 				1523AD521DCC8DDC00011F9A /* GDRefreshHeader.swift */,
 				1523AD531DCC8DDC00011F9A /* SkipManager.swift */,
 				15EB0C011DCDC1610009640A /* GDCalculator.swift */,
+				15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */,
+				15E250D11DDEB05C004D4509 /* GDSettingManager.swift */,
+				15E250D31DDEB123004D4509 /* GDDevice.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -2334,10 +2343,12 @@
 				1523AE2D1DCC8DDC00011F9A /* BaseTableView.swift in Sources */,
 				1523AE5B1DCC8DDC00011F9A /* ShopCarNaviVC.swift in Sources */,
 				1523AE401DCC8DDC00011F9A /* MainTabbar.swift in Sources */,
+				15E250D01DDEA73E004D4509 /* GDStorgeManager.swift in Sources */,
 				1523AE3D1DCC8DDC00011F9A /* LoginVC.swift in Sources */,
 				15EB0C001DCDBE030009640A /* CGFloat_extention.swift in Sources */,
 				1523AE5F1DCC8DDC00011F9A /* FullGoodsView.swift in Sources */,
 				1523AE451DCC8DDC00011F9A /* GDLanguageManager.swift in Sources */,
+				15E250D21DDEB05C004D4509 /* GDSettingManager.swift in Sources */,
 				1523AE251DCC8DDC00011F9A /* BaseWebVC.swift in Sources */,
 				15F5D2DC1DD34BB0003F2A15 /* QRView.swift in Sources */,
 				1523AE591DCC8DDC00011F9A /* PtableViewCell.swift in Sources */,
@@ -2350,6 +2361,7 @@
 				1523AE431DCC8DDC00011F9A /* OriginalNetDataModel.swift in Sources */,
 				1523AE3B1DCC8DDC00011F9A /* KeyVC.swift in Sources */,
 				1523AE2C1DCC8DDC00011F9A /* BaseControl.swift in Sources */,
+				15E250D41DDEB123004D4509 /* GDDevice.swift in Sources */,
 				1523AE361DCC8DDC00011F9A /* UIButton+Extension.swift in Sources */,
 				1523AE511DCC8DDC00011F9A /* ProfileChannelModel.swift in Sources */,
 				1523AE5A1DCC8DDC00011F9A /* PTableViewSub.swift in Sources */,

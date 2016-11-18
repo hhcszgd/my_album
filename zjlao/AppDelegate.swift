@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     //
     //        }else if (targetLanguage == LFollowSystemLanguage){//由自定义语言切换为跟随系统语言
     //            if targetLanguage ==  GDLanguageManager.gotcurrentSystemLanguage() {//当切换前的自定义语言跟当前系统语言一样时 ,只保存 ,不重新切换 (如何获取系统语言??)
-    //                UserDefaults.standard.set(LFollowSystemLanguage, forKey: "LanguageTableName")
+    //                GDStorgeManager.standard.set(LFollowSystemLanguage, forKey: "LanguageTableName")
     //            }else{//否则即保存又重新切换
     //                UserDefaults.standard.set(LFollowSystemLanguage, forKey: "LanguageTableName")
     ////                performChangeTheLanguage(targetLanguageTableName:targetLanguage)

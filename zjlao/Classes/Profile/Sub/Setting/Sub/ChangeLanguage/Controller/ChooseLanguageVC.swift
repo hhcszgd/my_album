@@ -105,7 +105,7 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
     }
     //MARK:customMethod
     func sureClick(sender : UIButton) {
-        mylog(UserDefaults.standard.object(forKey: "AppleLanguages"))
+        mylog(GDStorgeManager.standard.object(forKey: "AppleLanguages"))
         mylog(GDLanguageManager.gotcurrentSystemLanguage())
         if self.selectedLanguage == "" {
             GDAlertView.alert("请选择目标语言", image: nil, time: 2, complateBlock: nil)

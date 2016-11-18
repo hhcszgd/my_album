@@ -32,7 +32,7 @@ class NetworkManager: AFHTTPSessionManager {
             
             
             
-            if let result  = UserDefaults.standard.value(forKey: "token") {
+            if let result  = GDStorgeManager.standard.value(forKey: "token") {
                 if  let token_temp =  result as? String   {
                     if token_temp.characters.count>0  && token_temp != "nil"{
                         return token_temp
@@ -258,7 +258,7 @@ class NetworkManager: AFHTTPSessionManager {
 //            var tempToken = "383B255B-87F7-466C-914A-0B1A35AA5DC3" + (result.data as! String)//先把token写死
             tempToken = tempToken.md5()
             
-            UserDefaults.standard.setValue(tempToken, forKey: "token")
+            GDStorgeManager.standard.setValue(tempToken, forKey: "token")
             success(result)
             }) { (error) in
                 failure(error)
@@ -271,7 +271,7 @@ class NetworkManager: AFHTTPSessionManager {
         let url = "LoginOut"
         let para = [String : AnyObject]()
         Account.shareAccount.deleteAccountFromDisk()//有没有联网都退出
-        UserDefaults.standard.setValue("nil", forKey: "token")//token 赋值为空//不管有没有联网
+        GDStorgeManager.standard.setValue("nil", forKey: "token")//token 赋值为空//不管有没有联网
         self.requestDataFromNewWork(RequestType.POST, urlString: url, parameters: para, success: { (result) in
             if Int (result.status!) > 0 {
 //                Account.shareAccount.deleteAccountFromDisk()

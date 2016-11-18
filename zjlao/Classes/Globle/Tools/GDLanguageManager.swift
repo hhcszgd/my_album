@@ -34,7 +34,7 @@ class GDLanguageManager: NSObject {
 //MARK:获取偏好设置里现存的当前语言包名
    class var LanguageTableName : String?  {//当前语言包名(是LocalizableCH , 还是 LoaclizableEN)
         //    UserDefaults.standard.set("LocalizableEN", forKey: "LanguageTableName")
-        guard let LanguageTableNameAny = UserDefaults.standard.value(forKey: LLanguageTableName) else{return LFollowSystemLanguage}//如果取不到就返回跟随系统的语言table名
+        guard let LanguageTableNameAny = GDStorgeManager.standard.value(forKey: LLanguageTableName) else{return LFollowSystemLanguage}//如果取不到就返回跟随系统的语言table名
         guard let LanguageTableName  = LanguageTableNameAny as? String else {return LFollowSystemLanguage}//如果取不到就返回跟随系统的语言table名
         mylog(LanguageTableName)
         return LanguageTableName//正常返回保存到偏好设置的语言包名
@@ -69,20 +69,20 @@ class GDLanguageManager: NSObject {
         }else if (targetLanguage == LFollowSystemLanguage){//由自定义语言切换为跟随系统语言
             if GDLanguageManager.titleByKey(key: LLanguageID) ==  GDLanguageManager.gotcurrentSystemLanguage() {//当切换前的自定义语言跟当前系统语言一样时 ,只保存 ,不重新切换 (如何获取系统语言??)
                 GDAlertView.alert("当前语言已经是\(targetLanguage)", image: nil, time: 2, complateBlock: nil)
-                UserDefaults.standard.set(LFollowSystemLanguage, forKey: LLanguageTableName)
+                GDStorgeManager.standard.set(LFollowSystemLanguage, forKey: LLanguageTableName)
             }else{//否则即保存又重新切换
                 GDAlertView.alert(self.titleByKey(key: LApplyAfterRestart), image: nil, time: 2, complateBlock: nil)//保存前提示
-                UserDefaults.standard.set(LFollowSystemLanguage, forKey: LLanguageTableName)
+                GDStorgeManager.standard.set(LFollowSystemLanguage, forKey: LLanguageTableName)
             }
         }else{//切换为自定义语言
             let oldLanguageName = LanguageTableName
-            UserDefaults.standard.set(targetLanguage, forKey: LLanguageTableName)
+            GDStorgeManager.standard.set(targetLanguage, forKey: LLanguageTableName)
 //            if  GDLanguageManager.titleByKey(key: LLanguageID)  != nil {
                 if GDLanguageManager.titleByKey(key: LLanguageID) == "languageID"  {//gotTitleStr(key:)这个方法如果找不到键所对应的值 , 就把键返回,同时也说明本地没有相应的语言包
                     GDAlertView.alert("没有相应的语言包", image: nil, time: 2, complateBlock: nil)
-                    UserDefaults.standard.set(oldLanguageName, forKey: LLanguageTableName)//顺便改回原来的语言
+                    GDStorgeManager.standard.set(oldLanguageName, forKey: LLanguageTableName)//顺便改回原来的语言
                 }else{
-                    UserDefaults.standard.set(targetLanguage, forKey: LLanguageTableName)
+                    GDStorgeManager.standard.set(targetLanguage, forKey: LLanguageTableName)
                      (UIApplication.shared.delegate as? AppDelegate)?.resetKeyVC()
                      (UIApplication.shared.delegate as? AppDelegate)?.showNotic(autoHide: false, showStr:"\(noticeStr_changeing)" )
                 }
@@ -133,7 +133,7 @@ class GDLanguageManager: NSObject {
      */
     //MARK:获取手机当前系统语言
     class  func gotcurrentSystemLanguage() -> String{
-        let languages = UserDefaults.standard.object(forKey: "AppleLanguages")
+        let languages = GDStorgeManager.standard.object(forKey: "AppleLanguages")
         guard  let languagesAny = languages else {return   "" }
         guard let languagesArr = languagesAny as? [AnyObject] else { return "" }
         let systemLanguage = languagesArr[0]
