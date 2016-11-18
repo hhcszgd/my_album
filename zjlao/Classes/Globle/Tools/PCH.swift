@@ -25,8 +25,8 @@ let THEMECOLOR = UIColor.init(hexString: "e95513")
 //let screenW = UIScreen.main.bounds.size.width
 //let screenH = UIScreen.main.bounds.size.height
 
-var screenW  :CGFloat{get{return UIScreen.main.bounds.size.width}}
-var screenH  :CGFloat{get{return UIScreen.main.bounds.size.height}}
+//var screenW  :CGFloat{get{return UIScreen.main.bounds.size.width}}
+//var screenH  :CGFloat{get{return UIScreen.main.bounds.size.height}}
 //
 ////MARK:当前语言包名
 //var LanguageTableName : String?  {//当前语言包名(是LocalizableCH , 还是 LoaclizableEN)
@@ -177,9 +177,9 @@ public func mylog <T>(_ message: T, fileName: String = #file, methodName: String
 //MARK:获取宽高比
 var SCALE : CGFloat  {
     get{
-        if (screenW>375.0) {
+        if (GDDevice.width>375.0) {
             return 1.104000;
-        } else if (screenW<321) {
+        } else if (GDDevice.width<321) {
             return 0.853333;
         }else {
             return 1 ;

@@ -9,7 +9,7 @@
 import UIKit
 
 class ProfileVC: UIViewController ,ActionDelegate {
-    let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: screenW, height: screenH), style: UITableViewStyle.plain)
+    let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: GDDevice.width, height: GDDevice.height), style: UITableViewStyle.plain)
     var tableHeaderData : [AnyObject] {
         get{
             var tableHeaderModels = [AnyObject]()
@@ -105,12 +105,12 @@ class ProfileVC: UIViewController ,ActionDelegate {
         
     }
     func setupTableView() -> () {
-        tableView.frame = CGRect(x: 0, y: 0, width: screenW, height: screenH);
+        tableView.frame = CGRect(x: 0, y: 0, width: GDDevice.width, height: GDDevice.height);
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         self.tableView.separatorStyle=UITableViewCellSeparatorStyle.none
-        let tableHeader = PTableHeaderView(frame: CGRect(x: 0, y: 0, width: screenW, height: 200.0 * SCALE))
+        let tableHeader = PTableHeaderView(frame: CGRect(x: 0, y: 0, width: GDDevice.width, height:  GDCalculator.GDAdaptation(200.0)))
         tableHeader.actionDelegate = self
         tableView.tableHeaderView = tableHeader
         

@@ -30,18 +30,19 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
     func setupSubViews()  {
         let margin : CGFloat = 20.0
         
-        let btnW : CGFloat = screenW - margin * 2
+        let btnW : CGFloat = GDDevice.width - margin * 2
         let btnH : CGFloat = 44
         let btnX : CGFloat = margin
-        let btnY : CGFloat = screenH - margin - btnH
+        let btnY : CGFloat = GDDevice.height - margin - btnH
         self.bottomButton.frame = CGRect(x: btnX, y: btnY, width: btnW, height: btnH)
         
         let tableViewX : CGFloat = 0
-        let tableViewY : CGFloat = 64.0
-        let tableViewW : CGFloat = screenW
+//        let tableViewY : CGFloat = 64.0
+        let tableViewY : CGFloat = 0
+        let tableViewW : CGFloat = GDDevice.width
         let tableViewH : CGFloat = btnY - tableViewY - margin
         self.tableView.frame = CGRect(x: tableViewX, y: tableViewY, width: tableViewW, height: tableViewH)
-        
+        self.tableView.contentInset  = UIEdgeInsetsMake(64, 0, 20, 0)
         self.tableView.backgroundColor = UIColor.randomColor()
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -120,6 +121,15 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
         // Dispose of any resources that can be recreated.
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        mylog(scrollView.contentOffset)
+//        mylog(scrollView.contentSize)
+//        mylog(scrollView.bounds.size)
+        self.naviBar.currentBarActionType = .alpha
+        self.naviBar.change(by: scrollView)
+//        self.naviBar.changeWithOffset(offset: (scrollView.contentOffset.y + 64) / scrollView.contentSize.height)
+//        self.naviBar.changeWithOffset(offset: scrollView.contentOffset.y, contentSize: scrollView.contentSize)
 
+    }
 
 }

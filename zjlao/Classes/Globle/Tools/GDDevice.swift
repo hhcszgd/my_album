@@ -11,6 +11,8 @@ import UIKit
 class GDDevice: UIDevice {
 
     
+  class  var width  :CGFloat{get{return UIScreen.main.bounds.size.width}}
+  class  var height  :CGFloat{get{return UIScreen.main.bounds.size.height}}
     /// 获取当前系统版本
     ///
     /// - returns: Float类型的系统版本

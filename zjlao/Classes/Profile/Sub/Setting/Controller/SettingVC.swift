@@ -37,16 +37,16 @@ class SettingVC: VCWithNaviBar {
         let lines : NSInteger = 5
         let lineH : CGFloat  = 44.0
         let margin : CGFloat = 5.0
-        self.topComtaier.frame = CGRect(x: 0, y: 88, width: screenW, height: (lineH+margin) * CGFloat(lines) )
+        self.topComtaier.frame = CGRect(x: 0, y: 88, width: GDDevice.width, height: (lineH+margin) * CGFloat(lines) )
         
         for index in 0 ..< lines {
-            let rowView = RowView.init(frame: CGRect(x: 0, y: (lineH+margin)*CGFloat(index), width: screenW, height: lineH))
+            let rowView = RowView.init(frame: CGRect(x: 0, y: (lineH+margin)*CGFloat(index), width: GDDevice.width, height: lineH))
             rowView.titleLabel.font = UIFont.systemFont(ofSize: 12*SCALE)
             self.topComtaier.addSubview(rowView)
             switch index {
             case 0://消息通知
 //                self.switchButton.center = CGPoint(x: screenW - 10 - self.switchButton.bounds.width, y: (rowView.bounds.size.height - self.switchButton.bounds.size.height ) * 0.5)//自定义控件缺陷,center 无效 , 只能用frame
-                self.switchButton.frame = CGRect(x: screenW - 10 - self.switchButton.bounds.size.width, y: (rowView.bounds.size.height - self.switchButton.bounds.size.height)*0.5, width: self.switchButton.bounds.size.width, height: self.switchButton.bounds.size.height)
+                self.switchButton.frame = CGRect(x: GDDevice.width - 10 - self.switchButton.bounds.size.width, y: (rowView.bounds.size.height - self.switchButton.bounds.size.height)*0.5, width: self.switchButton.bounds.size.width, height: self.switchButton.bounds.size.height)
                 rowView.diyView = self.switchButton
                 self.switchButton.addTarget(self, action: #selector(changeNoticeCustomSound(sender:)), for: UIControlEvents.valueChanged)
                 rowView.titleLabel.text = "消息通知提示"
@@ -101,12 +101,12 @@ class SettingVC: VCWithNaviBar {
             versionCodeLabel.text = "当前版本号为 : \(versionCodeStr)"
         }
         versionCodeLabel.sizeToFit()
-        versionCodeLabel.center = CGPoint(x: screenW/2, y: self.topComtaier.frame.maxY+14)
+        versionCodeLabel.center = CGPoint(x: GDDevice.width/2, y: self.topComtaier.frame.maxY+14)
         
         self.loginOutButton.backgroundColor = UIColor.red
-        let w : CGFloat = screenW - 40
+        let w : CGFloat = GDDevice.width - 40
         let h : CGFloat = 48.0
-        let x : CGFloat = (screenW - w) / 2
+        let x : CGFloat = (GDDevice.width - w) / 2
         let y : CGFloat = self.topComtaier.frame.maxY + 44.0
         self.loginOutButton.frame = CGRect(x: x, y: y, width: w, height: h)
         self.loginOutButton.setTitle("退出登录", for: UIControlState.normal)

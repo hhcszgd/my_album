@@ -73,7 +73,10 @@ enum VCType {
     }
   
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.view.bringSubview(toFront: self.naviBar)
+    }
 
     /*
     // MARK: - Navigation

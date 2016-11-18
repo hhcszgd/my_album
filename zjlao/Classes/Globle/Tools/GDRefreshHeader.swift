@@ -123,7 +123,7 @@ class GDRefreshHeader: MJRefreshHeader {
     override var pullingPercent: CGFloat {//当值在0.0~1.0做数据操作
         set{
             super.pullingPercent = newValue
-            mylog("\n\n\(self.pullingPercent)\n\n")
+//            mylog("\n\n\(self.pullingPercent)\n\n")
         }
         get{
             return super.pullingPercent

@@ -26,35 +26,35 @@ class TabBarVCAnimat: NSObject , UIViewControllerAnimatedTransitioning {
         var fromX : CGFloat = 0.0
         var toX  : CGFloat = 0.0
         if fromViewController.isKind(of: HomeVaviVC.self) {
-            fromX = -screenW
-            toX = screenW
+            fromX = -GDDevice.width
+            toX = GDDevice.width
         }else if (fromViewController.isKind(of: ClassifyNaviVC.self)){
             if toViewController.isKind(of: HomeVaviVC.self) {
-                fromX = screenW
-                toX = -screenW
+                fromX = GDDevice.width
+                toX = -GDDevice.width
             }else{
-                fromX = -screenW
-                toX = screenW
+                fromX = -GDDevice.width
+                toX = GDDevice.width
             }
         }else if (fromViewController.isKind(of: LaoNaviVC.self)){
             if toViewController.isKind(of: HomeVaviVC.self) || toViewController.isKind(of: ClassifyNaviVC.self) {
-                fromX = screenW
-                toX = -screenW
+                fromX = GDDevice.width
+                toX = -GDDevice.width
             }else{
-                fromX = -screenW
-                toX = screenW
+                fromX = -GDDevice.width
+                toX = GDDevice.width
             }
         }else if (fromViewController.isKind(of: ShopCarNaviVC.self)){
             if toViewController.isKind(of: ProfileNaviVC.self) {
-                fromX = -screenW
-                toX = screenW
+                fromX = -GDDevice.width
+                toX = GDDevice.width
             }else{
-                fromX = screenW
-                toX = -screenW
+                fromX = GDDevice.width
+                toX = -GDDevice.width
             }
         }else if (fromViewController.isKind(of: ProfileNaviVC.self)){
-            fromX = screenW
-            toX = -screenW
+            fromX = GDDevice.width
+            toX = -GDDevice.width
         }
         
         

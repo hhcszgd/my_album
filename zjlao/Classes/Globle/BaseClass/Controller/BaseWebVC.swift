@@ -33,7 +33,7 @@ class BaseWebVC: VCWithNaviBar,WKScriptMessageHandler {
         
         
         
-        self.webView.frame = CGRect(x: 0.0, y: 64.0, width: screenW, height: screenH - 64.0)
+        self.webView.frame = CGRect(x: 0.0, y: 64.0, width: GDDevice.width, height: GDDevice.height - 64.0)
         guard let model = self.keyModel else {
             mylog("webViewController的关键模型为nil\(self.keyModel)")
             return

@@ -40,12 +40,41 @@ enum NaviBarActionType {
 /// - normal:   正常出现状态
 /// - changing: 状态改变中
 /// - disapear: 已经消失
-enum NaviBarStatusType {
+enum NaviBarStatus {
     case normal
     case changing
     case disapear
 }
 class CustomNaviBar: UIView {
+    
+    var  currentType : NaviBarStyle  = NaviBarStyle.withBackBtn{
+        willSet{
+        
+        }
+        didSet{
+        
+        }
+    }
+    var currentBarActionType = NaviBarActionType.offset{
+        willSet{
+        
+        }
+        didSet{
+            
+        }
+    }
+    
+    var currentBarStatus = NaviBarStatus.normal{
+        willSet {
+            
+        }
+        didSet{
+
+        }
+    
+    }
+    
+    
     weak var delegate  :  CustomNaviBarDelegate?
     let backBtn = UIButton(frame: CGRect(x: 0, y: 20, width: 44, height: 44))
    fileprivate let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 88.0, height: 44))
@@ -63,7 +92,6 @@ class CustomNaviBar: UIView {
         }
     }
     
-    var  currentType : NaviBarStyle  = .withBackBtn
     
 //    var backBtnHidden : Bool {//计算属性
 //        get {
@@ -237,16 +265,187 @@ class CustomNaviBar: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
+    
+    /**移动位置*/
+  private  func changeOffsetWith(scrollView : UIScrollView)  {
+    let offsetScale :  CGFloat = scrollView.contentOffset.y / scrollView.contentSize.height
+        if currentBarStatus == .normal {
+            if offsetScale > self.previousOffset {
+                self.currentBarStatus = .changing
+                self.gotoTargetStatus()
+            }
+        }else if (currentBarStatus == .disapear){
+            if offsetScale < self.previousOffset   {
+                self.currentBarStatus = .changing
+                self.gobackOriginStatus()
+            }
+        }else if (currentBarStatus == .changing){/*啥也不干*/  }
+         self.previousOffset = offsetScale//记录上次一的偏移量
+    }
     /**更改自身透明度的方法*/
-    func changeAlpha(_ value : CGFloat) -> Void {
-        self.alpha = value
-        
+   private func changeAlpha(scrollView : UIScrollView) -> Void {
+        let offsetScale :  CGFloat = scrollView.contentOffset.y / scrollView.contentSize.height
+        if currentBarStatus == .normal {
+            if offsetScale > self.previousOffset {
+                self.currentBarStatus = .changing
+                self.gotoTargetStatus()
+            }
+        }else if (currentBarStatus == .disapear){
+            if offsetScale < self.previousOffset   {
+                self.currentBarStatus = .changing
+                self.gobackOriginStatus()
+            }
+        }else if (currentBarStatus == .changing){/*啥也不干*/  }
+        self.previousOffset = offsetScale//记录上次一的偏移量
+    
     }
     /**更改背景色透明度*/
-    func changeBackgroundColorAlpha(_ value : CGFloat) -> Void {
-        
-        self.backgroundColor = THEMECOLOR!.withAlphaComponent(value)
+   private func changeBackgroundColorAlpha(scrollView : UIScrollView) -> Void {
+    let offsetScale :  CGFloat = scrollView.contentOffset.y / scrollView.contentSize.height
+    if currentBarStatus == .normal {
+        if offsetScale > self.previousOffset {
+            self.currentBarStatus = .changing
+            self.gotoTargetStatus()
+        }
+    }else if (currentBarStatus == .disapear){
+        if offsetScale < self.previousOffset   {
+            self.currentBarStatus = .changing
+            self.gobackOriginStatus()
+        }
+    }else if (currentBarStatus == .changing){/*啥也不干*/  }
+    self.previousOffset = offsetScale//记录上次一的偏移量
+
     }
+    private func gotoTargetStatus(){
+        if self.currentBarActionType == .offset {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.frame = self.targetFrame
+                }, completion: { (finish) in
+                    self.currentBarStatus = .disapear
+            })
+        }else if (self.currentBarActionType == .color){
+            UIView.animate(withDuration: 0.4, animations: {
+                self.backgroundColor = self.targetColorAlpha
+                }, completion: { (finish) in
+                    self.currentBarStatus = .disapear
+            })
+        }else if (self.currentBarActionType == .alpha){
+            UIView.animate(withDuration: 0.4, animations: {
+                self.alpha = self.targetAlpha
+                }, completion: { (finish) in
+                    self.currentBarStatus = .disapear
+            })
+        }
+    }
+    private func gobackOriginStatus(){
+        if self.currentBarActionType == .offset {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.frame = self.originFrame
+                }, completion: { (finish) in
+                    self.currentBarStatus = .normal
+            })
+        }else if (self.currentBarActionType == .color){
+            UIView.animate(withDuration: 0.4, animations: {
+                self.backgroundColor = self.originColorAlpha
+                }, completion: { (finish) in
+                    self.currentBarStatus = .normal
+            })
+        }else if (self.currentBarActionType == .alpha){
+            UIView.animate(withDuration: 0.4, animations: {
+                self.alpha = self.originAlpha
+                }, completion: { (finish) in
+                    self.currentBarStatus = .normal
+            })
+        }
+    }
+    
+    /// 动态改变导航栏状态
+    ///
+    /// - parameter offset: 0~1的偏移指数
+    var previousOffset : CGFloat = 0
+    var scrollView : UIScrollView = UIScrollView()
+    
+    func change(by scrollView : UIScrollView) {
+        if self.scrollView != scrollView { self.scrollView = scrollView  }
+        mylog(scrollView.contentOffset)
+        if scrollView.contentOffset.y < -scrollView.contentInset.top {//下拉刷新部分
+            //导航栏应处于原始状态
+            self.gobackOriginStatus()
+        }else  if scrollView.contentOffset.y > -scrollView.contentInset.top && scrollView.contentOffset.y <= 0 {//inset.top范围
+            //导航栏应处于原始状态
+            self.gobackOriginStatus()
+        }else if (scrollView.contentOffset.y > 0 && scrollView.contentOffset.y <= scrollView.contentSize.height - scrollView.bounds.size.height){//正常范围
+            if currentBarActionType == .offset {//只有移动是一点驱动
+                self.changeOffsetWith(scrollView: scrollView)
+            }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
+                self.changeAlpha(scrollView: scrollView)
+            }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
+                self.changeBackgroundColorAlpha(scrollView: scrollView)
+            }
+           
+
+        }else if (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height &&  scrollView.contentOffset.y < scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom){//inset.bottom范围
+        }else if (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom){//上拉加载部分
+        }
+        
+    }
+    
+    
+    func changeWithOffset(offset : CGFloat){
+        if offset > 1 || offset < 0 {
+            return
+        }
+        if currentBarActionType == .offset {//只有移动是一点驱动
+            if currentBarStatus == .normal {
+                if offset > self.previousOffset {
+                    self.currentBarStatus = .changing
+                    UIView.animate(withDuration: 0.4, animations: {
+                        self.frame = self.targetFrame
+                        }, completion: { (finish) in
+                            self.currentBarStatus = .disapear
+                    })
+                }
+            }else if (currentBarStatus == .disapear){
+                if offset < self.previousOffset   {
+                    self.currentBarStatus = .changing
+                    UIView.animate(withDuration: 0.4, animations: {
+                        self.frame = self.originFrame
+                        }, completion: { (finish) in
+                            self.currentBarStatus = .normal
+                    })
+                    
+                }
+            }else if (currentBarStatus == .changing){/*啥也不干*/  }
+
+        }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
+            
+            
+            
+            
+            
+        }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
+            
+        }
+        self.previousOffset = offset
+    }
+    let originFrame = CGRect(x: 0, y: 0, width: GDDevice.width, height: 64)
+    let targetFrame = CGRect(x: 0, y: -64, width: GDDevice.width, height: 64)
+    let originAlpha : CGFloat = 1.0
+    let targetAlpha : CGFloat = 0.0
+    let originColorAlpha  = UIColor.white.withAlphaComponent(1.0)
+    let targetColorAlpha = UIColor.white.withAlphaComponent(0)
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @objc fileprivate  func backAction(_ sender : UIButton) -> () {
         
         delegate?.popToPreviousVC()

@@ -114,7 +114,7 @@ class QRCodeScannerVC: VCWithNaviBar,AVCaptureMetadataOutputObjectsDelegate , QR
     
     
     func setup()  {
-        let frame = CGRect(x: 0, y: 64, width: screenW, height: screenH - 64)
+        let frame = CGRect(x: 0, y: 64, width: GDDevice.width, height: GDDevice.height - 64)
         self.view.addSubview(self.qrView)
         self.qrView.delegate = self
         self.qrView.frame  =  frame

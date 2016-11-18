@@ -132,13 +132,13 @@ class PTableHeaderView: BaseView{
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        let backImgViewW : CGFloat = screenW
+        let backImgViewW : CGFloat = GDDevice.width
          var backImgViewH : CGFloat = 0
         if backImg != nil {
             
              backImgViewH = (backImg?.size.height)!/(backImg?.size.width)!*backImgViewW
         }else{
-            backImgViewH = screenW
+            backImgViewH = GDDevice.width
             self.backgroundColor = UIColor.orange
         }
         

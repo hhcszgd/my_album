@@ -25,6 +25,9 @@ class ClassifyVC: VCWithNaviBar {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.showErrorView()
+        self.naviBar.currentBarStatus = .changing
+        mylog(self.naviBar.currentBarStatus)
+        mylog(self.naviBar.alpha)
         /**    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:"]];*/
 //        UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString) ?? URL(string: "http://www.baidu.com")! )
 //        UIApplication.shared.openURL(URL(string: "appsetting") ?? URL(string: "http://www.baidu.com")! )

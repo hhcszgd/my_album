@@ -5,7 +5,6 @@
 //
 //  Created by WY on 16/11/9.
 //  Copyright © 2016年 com.16lao.zjlao. All rights reserved.
-//如果想让预览取充满屏幕 , 就把qrview的父控件充满屏幕//
 
 import UIKit
 import AVFoundation
@@ -138,7 +137,7 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
         positionAnimation.duration = 2
         positionAnimation.repeatCount = Float(NSIntegerMax)
         self.lineView.layer.add(positionAnimation, forKey: "positionAnimation")
-        self.flashLightBtn.frame = CGRect(x: 123, y: screenH - 88, width:44, height:44)
+        self.flashLightBtn.frame = CGRect(x: 123, y: GDDevice.height - 88, width:44, height:44)
     }
     
     deinit {
