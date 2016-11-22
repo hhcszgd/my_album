@@ -83,8 +83,9 @@ class GDLanguageManager: NSObject {
                     GDStorgeManager.standard.set(oldLanguageName, forKey: LLanguageTableName)//顺便改回原来的语言
                 }else{
                     GDStorgeManager.standard.set(targetLanguage, forKey: LLanguageTableName)
-                     (UIApplication.shared.delegate as? AppDelegate)?.resetKeyVC()
-                     (UIApplication.shared.delegate as? AppDelegate)?.showNotic(autoHide: false, showStr:"\(noticeStr_changeing)" )
+                    //                     (UIApplication.shared.delegate as? AppDelegate)?.resetKeyVC()
+//                    (UIApplication.shared.delegate as? AppDelegate)?.showNotic(autoHide: false, showStr:"\(noticeStr_changeing)" )
+                    KeyVC.share.restartAfterChangedLanguage()
                 }
 //            }else{
 //                GDAlertView.alert("没有相应的语言包", image: nil, time: 2, complateBlock: nil)

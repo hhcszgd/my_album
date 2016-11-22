@@ -84,6 +84,7 @@
 		1523AE6B1DCC937300011F9A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE6D1DCC937300011F9A /* InfoPlist.strings */; };
 		1523AE721DCC942500011F9A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE741DCC942500011F9A /* Localizable.strings */; };
 		1523AE781DCC94B300011F9A /* english.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE771DCC94B300011F9A /* english.strings */; };
+		156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156858711DE2A077009DF996 /* GDNormalVC.swift */; };
 		15E250D01DDEA73E004D4509 /* GDStorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */; };
 		15E250D21DDEB05C004D4509 /* GDSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250D11DDEB05C004D4509 /* GDSettingManager.swift */; };
 		15E250D41DDEB123004D4509 /* GDDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250D31DDEB123004D4509 /* GDDevice.swift */; };
@@ -208,6 +209,7 @@
 		1523AE751DCC942600011F9A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1523AE761DCC942700011F9A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1523AE771DCC94B300011F9A /* english.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = english.strings; sourceTree = "<group>"; };
+		156858711DE2A077009DF996 /* GDNormalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNormalVC.swift; sourceTree = "<group>"; };
 		15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDStorgeManager.swift; sourceTree = "<group>"; };
 		15E250D11DDEB05C004D4509 /* GDSettingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSettingManager.swift; sourceTree = "<group>"; };
 		15E250D31DDEB123004D4509 /* GDDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDDevice.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 			isa = PBXGroup;
 			children = (
 				1523AD1C1DCC8DDC00011F9A /* BaseVC.swift */,
+				156858711DE2A077009DF996 /* GDNormalVC.swift */,
 				1523AD1D1DCC8DDC00011F9A /* BaseWebVC.swift */,
 				1523AD1E1DCC8DDC00011F9A /* PanGestureVC.swift */,
 				1523AD1F1DCC8DDC00011F9A /* VCWithNaviBar.swift */,
@@ -2313,6 +2316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */,
 				1523AE421DCC8DDC00011F9A /* NetworkManager.swift in Sources */,
 				1523AE571DCC8DDC00011F9A /* PTableHeaderSub.swift in Sources */,
 				15EB0C021DCDC1610009640A /* GDCalculator.swift in Sources */,
@@ -2570,6 +2574,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = EY693LHB6N;
 				INFOPLIST_FILE = zjlao/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.16lao.zjlao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2588,6 +2593,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = EY693LHB6N;
 				INFOPLIST_FILE = zjlao/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.16lao.zjlao;
 				PRODUCT_NAME = "$(TARGET_NAME)";

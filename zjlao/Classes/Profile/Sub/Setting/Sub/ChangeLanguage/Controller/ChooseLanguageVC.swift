@@ -9,10 +9,10 @@
 import UIKit
 
 import MJRefresh
-class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSource {
+class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewDataSource */{
     let languages : [String] = [LFollowSystemLanguage,LEnglish,LChinese,"Japanese","aa","bb","cc","dd","ee","ff","gg","hh","ii","jj","kk","ll","mm","nn","oo","pp","qq","rr","ss","tt","uu","vv","ww","xx","yy","zz"]
     let bottomButton = UIButton()
-    let tableView = BaseTableView(frame: CGRect.zero, style: UITableViewStyle.plain)
+//    let tableView = BaseTableView(frame: CGRect.zero, style: UITableViewStyle.plain)
     var  currentIndexPath = IndexPath(row: 0, section: 0)
     var choosedIndexPaths = [String : IndexPath]()
     
@@ -20,14 +20,20 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.naviBar.currentBarActionType = .color//.alpha //.offset // 
+        self.naviBar.layoutType = .desc
         self.automaticallyAdjustsScrollViewInsets = false
-        self.view.addSubview(bottomButton)
-        self.view.addSubview(tableView)
         self.setupSubViews()
+        self.view.addSubview(bottomButton)
+//        self.view.addSubview(tableView)
+//        self.naviBar.currentBarStatus = .disapear
         // Do any additional setup after loading the view.
     }
 
     func setupSubViews()  {
+        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
+        self.tableView.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
         let margin : CGFloat = 20.0
         
         let btnW : CGFloat = GDDevice.width - margin * 2
@@ -37,12 +43,12 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
         self.bottomButton.frame = CGRect(x: btnX, y: btnY, width: btnW, height: btnH)
         
         let tableViewX : CGFloat = 0
-//        let tableViewY : CGFloat = 64.0
+//        let tableViewY : CGFloat = NavigationBarHeight
         let tableViewY : CGFloat = 0
         let tableViewW : CGFloat = GDDevice.width
         let tableViewH : CGFloat = btnY - tableViewY - margin
         self.tableView.frame = CGRect(x: tableViewX, y: tableViewY, width: tableViewW, height: tableViewH)
-        self.tableView.contentInset  = UIEdgeInsetsMake(64, 0, 20, 0)
+//        self.tableView.contentInset  = UIEdgeInsetsMake(NavigationBarHeight, 0, 20, 0)
         self.tableView.backgroundColor = UIColor.randomColor()
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -52,19 +58,18 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
         self.bottomButton.backgroundColor = UIColor.red
         self.bottomButton.setTitle(GDLanguageManager.titleByKey(key: "confirm"), for: UIControlState.normal)
         self.bottomButton.addTarget(self, action: #selector(sureClick(sender:)), for: UIControlEvents.touchUpInside)
-        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
-        self.tableView.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
+
         
     }
-    func refresh ()  {
+    override func refresh ()  {
         self.tableView.mj_header.endRefreshing()
         self.tableView.mj_footer.state = MJRefreshState.idle
     }
-    func loadMore ()  {
+    override func loadMore ()  {
         self.tableView.mj_footer.endRefreshingWithNoMoreData()
     }
     //MARK:UITableViewDelegate and UITableViewDataSource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return self.languages.count ;
     }
     
@@ -72,7 +77,7 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
     // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell  = tableView.dequeueReusableCell(withIdentifier: "cell")
         if cell == nil  {
             cell = BaseCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
@@ -80,9 +85,7 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
         cell?.textLabel?.text = self.languages[indexPath.row]
         return cell ?? BaseCell()
     }
-
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currentStr = "\(indexPath.row)"
         if  let _ = self.choosedIndexPaths[currentStr] {//键能找到值
             self.choosedIndexPaths.removeValue(forKey: currentStr)
@@ -97,7 +100,7 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
         self.tableView.endUpdates()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
          let currentStr = "\(indexPath.row)"
         if  let _ = self.choosedIndexPaths[currentStr] {
             return 66
@@ -125,7 +128,8 @@ class ChooseLanguageVC: VCWithNaviBar,UITableViewDelegate , UITableViewDataSourc
 //        mylog(scrollView.contentOffset)
 //        mylog(scrollView.contentSize)
 //        mylog(scrollView.bounds.size)
-        self.naviBar.currentBarActionType = .alpha
+//        self.naviBar.currentBarActionType = .alpha
+//        self.naviBar.layoutType = .desc
         self.naviBar.change(by: scrollView)
 //        self.naviBar.changeWithOffset(offset: (scrollView.contentOffset.y + 64) / scrollView.contentSize.height)
 //        self.naviBar.changeWithOffset(offset: scrollView.contentOffset.y, contentSize: scrollView.contentSize)

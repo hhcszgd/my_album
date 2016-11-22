@@ -55,13 +55,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     
     
     func setupRootVC() -> () {
-        let mainTabbarVC = MainTabbarVC()
-        let keyVC = KeyVC(rootViewController: mainTabbarVC)
-        keyVC.mainTabbarVC = mainTabbarVC
-        mainTabbarVC.delegate = keyVC
+//        let mainTabbarVC = MainTabbarVC()
+//        let keyVC = KeyVC(rootViewController: mainTabbarVC)
+//        
+//        keyVC.mainTabbarVC = mainTabbarVC
+//        mainTabbarVC.delegate = keyVC
+//        self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+//        self.window!.rootViewController = keyVC
+//        self.window!.makeKeyAndVisible()
+        self.window = nil
         self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-        self.window!.rootViewController = keyVC
+        self.window!.rootViewController = KeyVC.share
         self.window!.makeKeyAndVisible()
+
     }
     
     
@@ -116,14 +122,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     //
     //    }
     
-    func resetKeyVC() {
-        let mainTabbarVC = MainTabbarVC()
-        let keyVC = KeyVC(rootViewController: mainTabbarVC)
-        keyVC.keyVCDelegate = self
-        keyVC.mainTabbarVC = mainTabbarVC
-        mainTabbarVC.delegate = keyVC
-        UIApplication.shared.keyWindow!.rootViewController = keyVC
-    }
+//    func resetKeyVC() {
+//        let mainTabbarVC = MainTabbarVC()
+//        let keyVC = KeyVC(rootViewController: mainTabbarVC)
+//        keyVC.keyVCDelegate = self
+//        keyVC.mainTabbarVC = mainTabbarVC
+//        mainTabbarVC.delegate = keyVC
+//        UIApplication.shared.keyWindow!.rootViewController = keyVC
+//    }
     var hub : MBProgressHUD?
     func showNotic(autoHide : Bool , showStr : String) -> () {
         //        changeLanguageLabel.frame = CGRect(x: 0, y: 0, width: 100, height: 40)

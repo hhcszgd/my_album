@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ClassifyVC: VCWithNaviBar {
+class ClassifyVC: GDNormalVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()

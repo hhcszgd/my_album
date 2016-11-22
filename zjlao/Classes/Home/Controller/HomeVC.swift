@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 import AFNetworking
-class HomeVC: VCWithNaviBar  {
+class HomeVC: GDNormalVC  {
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         self.viewDidLoad()
@@ -18,8 +18,10 @@ class HomeVC: VCWithNaviBar  {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         self.naviBar.backgroundColor  = UIColor.orange
-        
+        self.naviBar.currentBarActionType = .color//.alpha //.offset //
+        self.naviBar.layoutType = .desc
 //        NSLocalizedString(<#T##key: String##String#>, comment: <#T##String#>)//默认加载Localizable
 //        NSLocalizedString(<#T##key: String##String#>, tableName: <#T##String?#>, bundle: <#T##Bundle#>, value: <#T##String#>, comment: <#T##String#>)
         
@@ -37,7 +39,7 @@ class HomeVC: VCWithNaviBar  {
         navTitleView.insets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10);
         naviBar.navTitleView = navTitleView
         
-        self.setupSuvViews()
+        self.setupTableView()
         
         
         leftBtn1.addTarget(self, action: #selector(qrScanner), for: UIControlEvents.touchUpInside)
@@ -51,8 +53,25 @@ class HomeVC: VCWithNaviBar  {
 //        qrvc.delegate = self
 //        self.navigationController?.pushViewController(qrvc, animated: true )
     }
-    func setupSuvViews() -> () {
+    func setupTableView() -> () {
+        mylog(tableView)
+
 //        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 40
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.naviBar.change(by: scrollView)
+//        if scrollView.contentOffset.y<0 {
+//            UIView.animate(withDuration: 0.2, animations: { 
+//                self.naviBar.alpha = 0
+//            })
+//        }else{
+//            UIView.animate(withDuration: 0.2, animations: { 
+//                self.naviBar.alpha = 1
+//            })
+//        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -61,7 +80,8 @@ class HomeVC: VCWithNaviBar  {
     
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.navigationController?.pushViewController(VCWithNaviBar.init(vcType: VCType.withBackButton), animated: true)
+//        self.navigationController?.pushViewController(VCWithNaviBar.init(vcType: VCType.withBackButton), animated: true)
+         self.navigationController?.pushViewController(GDNormalVC(), animated: true)
     }
     
     

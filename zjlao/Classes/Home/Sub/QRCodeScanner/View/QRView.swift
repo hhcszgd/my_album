@@ -49,8 +49,8 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
             
         }
         videoCaptureDevice.torchMode = .off
-        
-        let setting = AVCapturePhotoSettings.init(format: nil).flashMode = AVCaptureFlashMode.on
+        //MARK:先注销 , 等会儿再测
+//        let setting = AVCapturePhotoSettings.init(format: nil).flashMode = AVCaptureFlashMode.on
         
 //        videoCaptureDevice.torchMode =  AVCaptureTorchMode.on
 //        videoCaptureDevice.flashMode  = AVCaptureFlashMode.on

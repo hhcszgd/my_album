@@ -13,11 +13,15 @@
 /**规格右方始终有一个下拉按钮 , 以修改规格*/
 /**失效商品以类店铺的形式展示出来*/
 import UIKit
-
-class ShopCarVC: VCWithNaviBar {
-
+import MJRefresh
+class ShopCarVC: GDNormalVC {
+    var  currentIndexPath = IndexPath(row: 0, section: 0)
+    var choosedIndexPaths = [String : IndexPath]()
+    let editBtn = UIButton(imageName: "message", backImage: nil)
+    let messageBtn  = UIButton(imageName: "message", backImage: nil)
     let shopDict = [String :AnyObject]()
     let goodDict = [String :AnyObject]()
+    
     func operatorTheSelectGoodOrShop(model: [String :AnyObject]) -> () {
         
         //优先遍历shopDict
@@ -35,10 +39,63 @@ class ShopCarVC: VCWithNaviBar {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
+        self.setupTableView()
         self.gotShopCarData(type: LoadDataType.initialize, { (model) in }) { (error ) in }
         self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_shopcar));  //gotTitleStr(key: "tabBar_shopcar")!)
         self.view.backgroundColor = UIColor.green
+        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
+        self.tableView.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
+        
     }
+    override func refresh ()  {
+        self.tableView.mj_header.endRefreshing()
+        self.tableView.mj_footer.state = MJRefreshState.idle
+    }
+    override func loadMore ()  {
+        self.tableView.mj_footer.endRefreshingWithNoMoreData()
+    }
+    func setupNavigationBar() {
+        
+      self.naviBar.rightBarButtons = [editBtn , messageBtn]
+        let someview = UIView.init(frame: CGRect(x: ( messageBtn.imageView?.bounds.size.width ?? 38) - 15, y:   0, width: 15, height: 15))
+        someview.backgroundColor = UIColor.randomColor()
+        messageBtn.imageView?.backgroundColor = UIColor.randomColor()
+        messageBtn.imageView?.addSubview(someview)
+    }
+    func setupTableView() {
+        tableView.contentInset = UIEdgeInsets(top: NavigationBarHeight, left: 0, bottom: TabBarHeight, right: 0)
+        
+    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 27
+    }
+    //MARK: tableViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.naviBar.change(by: scrollView)
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentStr = "\(indexPath.row)"
+        if  let _ = self.choosedIndexPaths[currentStr] {//键能找到值
+            self.choosedIndexPaths.removeValue(forKey: currentStr)
+        }else{//找不到就加进去
+            self.choosedIndexPaths[currentStr] = indexPath
+        }
+        
+        
+        self.currentIndexPath = indexPath
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let currentStr = "\(indexPath.row)"
+        if  let _ = self.choosedIndexPaths[currentStr] {
+            return 66
+        }else{return 33}
+        
+    }
+    //MARK:网络请求方法(初始化,刷新,加载更多)
     func gotShopCarData(type : LoadDataType , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) {
         switch type {
         case .initialize , .reload:
@@ -92,5 +149,5 @@ class ShopCarVC: VCWithNaviBar {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
 }

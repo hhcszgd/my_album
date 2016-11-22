@@ -8,7 +8,7 @@
 
 import UIKit
 
- class PanGestureVC: VCWithNaviBar ,UIGestureRecognizerDelegate{
+ class PanGestureVC: GDNormalVC ,UIGestureRecognizerDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()

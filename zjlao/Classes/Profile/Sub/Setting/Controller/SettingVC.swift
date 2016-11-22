@@ -11,7 +11,7 @@ import UIKit
 import SDWebImage
 
 
-class SettingVC: VCWithNaviBar {
+class SettingVC: GDNormalVC {
 
 //    let tableView = BaseTableView.init(frame: <#T##CGRect#>, style: <#T##UITableViewStyle#>)
 

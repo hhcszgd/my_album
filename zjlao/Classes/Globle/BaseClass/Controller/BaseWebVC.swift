@@ -8,7 +8,7 @@
 
 import UIKit
 import WebKit
-class BaseWebVC: VCWithNaviBar,WKScriptMessageHandler {
+class BaseWebVC: GDNormalVC,WKScriptMessageHandler {
 
     let webView : WKWebView = WKWebView(frame: CGRect.zero, configuration: WKWebViewConfiguration.init())
 
@@ -33,7 +33,7 @@ class BaseWebVC: VCWithNaviBar,WKScriptMessageHandler {
         
         
         
-        self.webView.frame = CGRect(x: 0.0, y: 64.0, width: GDDevice.width, height: GDDevice.height - 64.0)
+        self.webView.frame = CGRect(x: 0.0, y: NavigationBarHeight, width: GDDevice.width, height: GDDevice.height - NavigationBarHeight)
         guard let model = self.keyModel else {
             mylog("webViewController的关键模型为nil\(self.keyModel)")
             return

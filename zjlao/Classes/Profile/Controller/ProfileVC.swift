@@ -285,7 +285,7 @@ extension ProfileVC :  UITableViewDelegate , UITableViewDataSource {
         case "order" , "my_capital":
             cacuModel.toHeaderMargin = 1
             cacuModel.itemCount = 1 
-            cacuModel.itemHeight = 64.0
+            cacuModel.itemHeight = NavigationBarHeight
             cacuModel.bottomMargin = 10
             break
 //        case "my_capital":

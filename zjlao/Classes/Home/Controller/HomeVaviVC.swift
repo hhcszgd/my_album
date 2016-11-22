@@ -19,6 +19,7 @@ class HomeVaviVC: UINavigationController {
 //        self.tabBarItem.title = NSLocalizedString("tabBar_home", tableName: "LocalizableEN", bundle: Bundle.main, value:"", comment: "") // 加载指定语言包名(LocalizableEN) 里的键对应的值
 //        self.tabBarItem.title = NSLocalizedString("tabBar_home", tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "") // 加载指定语言包名(LocalizableEN) 里的键对应的值
         self.tabBarItem.title  = GDLanguageManager.titleByKey(key: LTabBar_home) //gotTitleStr(key: "tabBar_home")
+        
         // Do any additional setup after loading the view.
     }
 

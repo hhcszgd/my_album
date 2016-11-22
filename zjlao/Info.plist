@@ -36,5 +36,7 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>accessCamera</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>accessLocation</string>
 </dict>
 </plist>

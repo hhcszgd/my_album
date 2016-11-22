@@ -13,8 +13,30 @@ import UIKit
 }
 
 class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate  {
-    var  mainTabbarVC : MainTabbarVC?
+    
+    var mainTabbarVC : MainTabbarVC? {
+    
+        
+        if self.childViewControllers.count > 0 {
+            if let vc = self.childViewControllers[0] as? MainTabbarVC{
+                return vc
+            }else{
+                return nil
+            }
+        }else{
+            return nil
+        }
+    
+    }
+    
     weak var keyVCDelegate : AfterChangeLanguageKeyVCDidApear?
+    static let share: KeyVC = {
+        let tempMainTabbarVC = MainTabbarVC()
+        let tempKeyVC = KeyVC(rootViewController: tempMainTabbarVC)
+        tempMainTabbarVC.delegate = tempKeyVC
+        
+        return tempKeyVC
+    }()
 //    override init(rootViewController: UIViewController) {
 //        
 //    }
@@ -34,19 +56,47 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 //        super.init(nibName: nil, bundle: nil)
 //    }
+    func restartAfterChangedLanguage()  {
+        for vc in self.childViewControllers {
+            if let targetVC = vc as? MainTabbarVC {
+                targetVC.restartAfterChangeLanguage()
+            }
+        }
+        
+    }
     var currentTabbarIndex : Int {
-        if let tabbarvc  = mainTabbarVC {
-            return tabbarvc.selectedIndex
+        if self.childViewControllers.count > 0 {
+            if let vc = self.childViewControllers[0] as? MainTabbarVC{
+                return vc.selectedIndex
+            }else{
+                return 0
+            }
         }else{
             return 0
         }
+        
+//        if let tabbarvc  = mainTabbarVC {
+//            return tabbarvc.selectedIndex
+//        }else{
+//            return 0
+//        }
     }
     var currentSubVC : UIViewController?{
-        if let tabbarvc  = mainTabbarVC {
-            return tabbarvc.selectedViewController
+        
+        if self.childViewControllers.count > 0 {
+            if let vc = self.childViewControllers[0] as? MainTabbarVC{
+                return vc.selectedViewController
+            }else{
+                return nil
+            }
         }else{
             return nil
         }
+//        if let tabbarvc  = mainTabbarVC {
+//            return tabbarvc.selectedViewController
+//        }else{
+//            return nil
+//        }
     
     }
     
@@ -70,7 +120,7 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         if Account.shareAccount.isLogin {
             return true
         }else{
-            let loginVC = LoginVC(vcType: VCType.withBackButton)
+            let loginVC = LoginVC()
             loginVC.loginDelegate = self
             let loginNaviVC = UINavigationController.init(rootViewController: loginVC)
             loginNaviVC.navigationBar.isHidden = true
@@ -113,7 +163,8 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
             if Account.shareAccount.isLogin {
                 mainTabbarVC?.selectedIndex = selectedIndex
             }else{
-                let loginVC = LoginVC(vcType: VCType.withBackButton)
+//                let loginVC = LoginVC(vcType: VCType.withBackButton)
+                let loginVC = LoginVC()
                 loginVC.loginDelegate = self
                 let loginNaviVC = UINavigationController.init(rootViewController: loginVC)
                 UIApplication.shared.keyWindow!.rootViewController!.present(loginNaviVC, animated: true, completion: nil)

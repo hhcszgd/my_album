@@ -9,7 +9,9 @@
 import UIKit
 
 class BaseVC: UIViewController {
-    
+    var TabBarHeight : CGFloat {
+        return self.tabBarController?.tabBar.bounds.size.height ?? 44.0
+    }
     var parameter : AnyObject? //用来接收关键参数的属性 (字符串 , 自定义模型等等)
     var keyModel : BaseModel? = BaseModel.init(dict: nil){
         didSet{

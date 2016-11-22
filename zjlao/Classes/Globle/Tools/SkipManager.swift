@@ -29,17 +29,22 @@ class SkipManager: NSObject {
         switch realActionKey {
         case "goodscollect" , "shopcollect" , "focusbrand" , "pay", "ship", "receive", "comment", "over", "balance", "coupons", "coins", "help" , "order" , "my_capital" , "member_club" , "" : //webViewVC
 //            targetVC = BaseWebVC(vcType: VCType.withBackButton , model : model )
-            targetVC = BaseWebVC(vcType: VCType.withBackButton)
+//            targetVC = BaseWebVC(vcType: VCType.withBackButton)
+            targetVC = BaseWebVC()
+
             break
         case "info"://查看用户信息
             mylog("跳转到个人信息页面")
             break
         case "QRCodeScannerVC":
-            targetVC = QRCodeScannerVC(vcType: VCType.withBackButton)
+//            targetVC = QRCodeScannerVC(vcType: VCType.withBackButton)
+            targetVC = QRCodeScannerVC()
             break
         case "set":
 //            mylog("跳转到设置")
-            targetVC = SettingVC(vcType: VCType.withBackButton)
+//            targetVC = SettingVC(vcType: VCType.withBackButton)
+            
+            targetVC = SettingVC()
             break
             //        case <#pattern#>:
             //            <#code#>
@@ -55,14 +60,16 @@ class SkipManager: NSObject {
         //            <#code#>
         case "Login"://执行登录操作
             mylog("执行登录操作")
-            let loginVC = LoginVC(vcType: VCType.withBackButton)
+//            let loginVC = LoginVC(vcType: VCType.withBackButton)
+            let loginVC = LoginVC()
             let loginNaviVC = UINavigationController(rootViewController: loginVC)
             loginNaviVC.navigationBar.isHidden = true
              viewController.navigationController?.present(loginNaviVC, animated: true, completion: nil)
             return
 //            break
             case "ChooseLuanguageVC":
-            targetVC = ChooseLanguageVC(vcType: VCType.withBackButton)
+//            targetVC = ChooseLanguageVC(vcType: VCType.withBackButton)
+                targetVC = ChooseLanguageVC()
             break
         default:
             mylog("\(realActionKey)是无效actionKey ,找不到跳转控制器")

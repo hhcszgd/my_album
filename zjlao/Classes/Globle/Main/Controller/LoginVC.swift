@@ -13,7 +13,7 @@ import UIKit
     
 }
 
-class LoginVC: VCWithNaviBar {
+class LoginVC: GDNormalVC {
 
     weak var loginDelegate : LoginDelegate?
     override func viewDidLoad() {
@@ -49,7 +49,7 @@ class LoginVC: VCWithNaviBar {
         //            }) { (error) in
         //                mylog(error)
         //        }
-        NetworkManager.shareManager.login("johnlock", password: "123123", success: { (result) in
+        NetworkManager.shareManager.login("fuckfuck", password: "123123", success: { (result) in
 //            mylog(result.data)
 //            mylog(result.msg)
             mylog("登录成功")

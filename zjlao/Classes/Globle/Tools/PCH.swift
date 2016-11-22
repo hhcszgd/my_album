@@ -17,11 +17,23 @@ enum LoadDataType {
     case reload
     case loadMore
 }
-
+//MARK: notificationName
+let LoginSuccess = "LoginSuccess"
+let LoginOutSuccess = "LoginOutSuccess"
+let ShopcarChanged = "ShopcarChanged"
+let HomeReclick = "HomeReclick"
+let ClassifyReclick = "ClassifyReclick"
+let LaoReclick = "LaoReclick"
+let ShopcarReclick = "ShopcarReclick"
+let ProfileReclick = "ProfileReclick"
+let MessageChanged = "MessageChanged"
+//MARK: normalColor
 let MainTitleColor = UIColor.init(hexString: "333333")
 let SubTitleColor = UIColor.init(hexString: "7f7f7f")
 let BackGrayColor = UIColor.init(colorLiteralRed: 244.0/256.0, green: 244.0/256.0, blue: 244.0/256.0, alpha: 1.0) // UIColor.init(hexString: "f4f4f4")
 let THEMECOLOR = UIColor.init(hexString: "e95513")
+let NavigationBarHeight : CGFloat = 64
+
 //let screenW = UIScreen.main.bounds.size.width
 //let screenH = UIScreen.main.bounds.size.height
 

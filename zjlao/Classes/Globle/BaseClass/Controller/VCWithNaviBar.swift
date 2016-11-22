@@ -7,11 +7,11 @@
 //
 
 import UIKit
-
-enum VCType {
-    case withBackButton
-    case withoutBackButton
-}
+//
+//enum VCType {
+//    case withBackButton
+//    case withoutBackButton
+//}
 
 
  class VCWithNaviBar: BaseVC  , CustomNaviBarDelegate{
@@ -26,28 +26,28 @@ enum VCType {
 
     
      var naviBar : CustomNaviBar!
-    init(vcType : VCType){
-        super.init(nibName: nil, bundle: nil)
+//    init(vcType : VCType){
+//        super.init(nibName: nil, bundle: nil)
 
 //        super.init()
-        currentType = vcType
-        switch currentType {
-        case .withBackButton:
-            //
-            naviBar = CustomNaviBar(type: NaviBarStyle.withBackBtn)
-            naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64 )
-            naviBar.delegate = self
-            break
-        case .withoutBackButton:
-            //
-            
-            naviBar = CustomNaviBar(type: NaviBarStyle.withoutBackBtn)
-            naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64 )
-            break
-        }
-        naviBar.backgroundColor = UIColor.randomColor()
-//        self.view.addSubview(naviBar)//推迟添加 , 否则会提前调用viewdidload()
-    }
+//        currentType = vcType
+//        switch currentType {
+//        case .withBackButton:
+//            //
+//            naviBar = CustomNaviBar(type: NaviBarStyle.withBackBtn)
+//            naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64 )
+//            naviBar.delegate = self
+//            break
+//        case .withoutBackButton:
+//            //
+//            
+//            naviBar = CustomNaviBar(type: NaviBarStyle.withoutBackBtn)
+//            naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64 )
+//            break
+//        }
+//        naviBar.backgroundColor = UIColor.randomColor()
+////        self.view.addSubview(naviBar)//推迟添加 , 否则会提前调用viewdidload()
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -62,8 +62,33 @@ enum VCType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (((self.navigationController?.childViewControllers.count) ?? 1) > 1) {
+            self.currentType=VCType.withBackButton;
+        }else{
+            self.currentType=VCType.withoutBackButton;
+        }
+
+        switch currentType {
+        case .withBackButton:
+            //
+            naviBar = CustomNaviBar(type: NaviBarStyle.withBackBtn)
+            naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: NavigationBarHeight )
+            naviBar.delegate = self
+            break
+        case .withoutBackButton:
+            //
+            
+            naviBar = CustomNaviBar(type: NaviBarStyle.withoutBackBtn)
+            naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: NavigationBarHeight )
+            break
+        }
+        naviBar.backgroundColor = UIColor.randomColor()
+        //        self.view.addSubview(naviBar)//推迟添加 , 否则会提前调用viewdidload()
+        
+        
+        
         self.view.addSubview(naviBar)
-        naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64 )
+        naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: NavigationBarHeight )
         
     }
     

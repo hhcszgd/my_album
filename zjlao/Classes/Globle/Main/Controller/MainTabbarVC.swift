@@ -29,16 +29,23 @@ class MainTabbarVC: UITabBarController {
     }
     func addchileVC() -> () {
 
-        self.addChildViewController(HomeVaviVC(rootViewController: HomeVC(vcType: VCType.withoutBackButton)))
-        self.addChildViewController(ClassifyNaviVC(rootViewController: ClassifyVC(vcType: VCType.withoutBackButton)))
-        self.addChildViewController(LaoNaviVC(rootViewController: LaoVC(vcType: VCType.withoutBackButton)))
-        self.addChildViewController(ShopCarNaviVC(rootViewController: ShopCarVC(vcType: VCType.withoutBackButton)))
+        for subVC in self.childViewControllers {
+            subVC.removeFromParentViewController()
+        }
+        self.addChildViewController(HomeVaviVC(rootViewController: HomeVC()))
+        self.addChildViewController(ClassifyNaviVC(rootViewController: ClassifyVC()))
+        self.addChildViewController(LaoNaviVC(rootViewController: LaoVC()))
+        self.addChildViewController(ShopCarNaviVC(rootViewController: ShopCarVC()))
         self.addChildViewController(ProfileNaviVC(rootViewController: ProfileVC()))
+
         
+        mylog(self.childViewControllers)
         
     }
     
-    
+    func restartAfterChangeLanguage() {
+        self.setViewControllers([HomeVaviVC(rootViewController: HomeVC()),ClassifyNaviVC(rootViewController: ClassifyVC()),LaoNaviVC(rootViewController: LaoVC()),ShopCarNaviVC(rootViewController: ShopCarVC()),ProfileNaviVC(rootViewController: ProfileVC())], animated: true)
+    }
     
 //     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool{
 //        return true

@@ -13,7 +13,7 @@ import AVFoundation
 //    func barcodeReaded(barcode: String)
 //}
 
-class QRCodeScannerVC: VCWithNaviBar,AVCaptureMetadataOutputObjectsDelegate , QRViewDelegate {
+class QRCodeScannerVC: GDNormalVC,AVCaptureMetadataOutputObjectsDelegate , QRViewDelegate {
     let qrView  = QRView()
     
 //    var delegate: BarcodeDelegate?
@@ -114,7 +114,7 @@ class QRCodeScannerVC: VCWithNaviBar,AVCaptureMetadataOutputObjectsDelegate , QR
     
     
     func setup()  {
-        let frame = CGRect(x: 0, y: 64, width: GDDevice.width, height: GDDevice.height - 64)
+        let frame = CGRect(x: 0, y: NavigationBarHeight, width: GDDevice.width, height: GDDevice.height - NavigationBarHeight)
         self.view.addSubview(self.qrView)
         self.qrView.delegate = self
         self.qrView.frame  =  frame

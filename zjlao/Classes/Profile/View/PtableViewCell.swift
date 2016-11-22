@@ -120,7 +120,7 @@ class PtableViewCell: BaseCell  , ActionDelegate{
                 let bodyX : CGFloat = 0
                 let bodyY : CGFloat =   headerH + toHeaderMargin
                 let bodyW : CGFloat = self.bounds.size.width
-                let bodyH : CGFloat = 64.0
+                let bodyH : CGFloat = NavigationBarHeight
                 self.cellBody.frame = CGRect(x: bodyX, y: bodyY, width: bodyW, height: bodyH)
 
             }else{
