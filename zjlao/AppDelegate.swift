@@ -10,10 +10,10 @@ import UIKit
 import CoreData
 
 import MBProgressHUD
-
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVCDidApear{
+class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVCDidApear,UNUserNotificationCenterDelegate{
     
     //MARK:////////////////////////////////////属性相关//////////////////////////////////////////
     
@@ -25,6 +25,79 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     //MARK:////////////////////////////////////XXXXXX相关//////////////////////////////////////////
     
     
+    
+    //MARK:////////////////////////////////////jpush相关//////////////////////////////////////////
+    func setupJpush(launchOptions: [UIApplicationLaunchOptionsKey: Any]?)   {
+        JPUSHService.setup(withOption: launchOptions, appKey: "97771ee938d1dc6354c0451d", channel: "WYAppStore", apsForProduction: true, advertisingIdentifier: nil)
+        //        JPUSHService.setup(withOption: launchOptions, appKey: "97771ee938d1dc6354c0451d", channel: "WYAppStore", apsForProduction: true)
+    }
+    
+    
+    
+    
+    
+    //MARK:////////////////////////////////////原生推送相关//////////////////////////////////////////
+    func setupOriginPushNotification()  {
+        if #available(iOS 10.0, *){
+            let novifiCenter = UNUserNotificationCenter.current()
+            novifiCenter.delegate = self
+            novifiCenter.requestAuthorization(options: [UNAuthorizationOptions.alert , UNAuthorizationOptions.sound , UNAuthorizationOptions.badge], completionHandler: { (resule, error) in
+                if(resule ){
+                    mylog("成功")
+                }else{
+                    mylog("注册失败\(error)")
+                }
+            })
+        }else{
+            
+            let setting = UIUserNotificationSettings(types: [UIUserNotificationType.alert ,UIUserNotificationType.badge , UIUserNotificationType.sound ], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(setting)
+        }
+        UIApplication.shared.registerForRemoteNotifications()
+        
+    }
+    
+    
+    
+    
+    
+    //MARK:////////////////////////////////////iOS10接收远程推送相关//////////////////////////////////////////
+    
+    @available(iOS 10.0, *)//程序在前台的通知
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Swift.Void){
+        let userInfo = notification.request.content.userInfo
+        GDAlertView.alert(userInfo.description, image: nil, time: 4, complateBlock: nil)
+        if notification.request.trigger?.isKind(of: UNPushNotificationTrigger.self) ?? false {
+            JPUSHService.handleRemoteNotification(userInfo)
+        }
+        mylog("程序在前台时 : ios10 接收到的远程推送\(userInfo)")
+        completionHandler(UNNotificationPresentationOptions.sound)
+    }
+    
+    
+    // The method will be called on the delegate when the user responded to the notification by opening the application, dismissing the notification or choosing a UNNotificationAction. The delegate must be set before the application returns from applicationDidFinishLaunching:.
+    @available(iOS 10.0, *)//程序在后台或退出时的通知
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void){
+        let userInfo = response.notification.request.content.userInfo
+        GDAlertView.alert(userInfo.description, image: nil, time: 4, complateBlock: nil)
+        if response.notification.request.trigger?.isKind(of: UNPushNotificationTrigger.self) ?? false {
+            JPUSHService.handleRemoteNotification(userInfo)
+        }
+        mylog("程序在后台时 : ios10 接收到的远程推送\(userInfo)")
+        completionHandler()
+    }
+    
+    
+    
+    
+    //MARK:////////////////////////////////////iOS8,9接收远程推送相关//////////////////////////////////////////
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        JPUSHService.handleRemoteNotification(userInfo)
+        mylog("iOS 8 , 9 接收到的远程推送\(userInfo)")
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+
     
     
     
@@ -158,11 +231,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         mylog(UIScreen.main.bounds)
         //        UserDefaults.standard.set(nil, forKey: "LanguageTableName")
         self.setupRootVC()
+        self.setupOriginPushNotification()
+        self.setupJpush(launchOptions: launchOptions)
         // Override point for customization after application launch.
         return true
     }
     
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let device_ns = NSData.init(data: deviceToken)
+        let token:String = device_ns.description.trimmingCharacters(in: CharacterSet(charactersIn: "<>" ))//需要传给服务器
+        mylog(token)
+        JPUSHService.registerDeviceToken(deviceToken)
+        //        [registrationIDCompletionHandler:]?
+        JPUSHService.registrationIDCompletionHandler { (respondsCode, registrationID) in
+            mylog("极光注册远程通知成功后获取的注册ID\(registrationID)\n\n状态码是\(respondsCode)")//需要传给服务器
+        }
+    }
     
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        mylog("注册远程推送失败\(error)")
+    }
+
     
     
     func applicationWillResignActive(_ application: UIApplication) {

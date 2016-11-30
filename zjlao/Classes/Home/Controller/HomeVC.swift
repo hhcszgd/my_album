@@ -15,10 +15,32 @@ class HomeVC: GDNormalVC  {
         self.viewDidLoad()
     }
 
+    func testxxx() {
+        var count: UInt32 = 0
+        let ivars = class_copyIvarList(BaseModel.self, &count)
+        
+        for i in 0 ..< count {
+            let ivar = ivars![Int(i)]
+            let name = ivar_getName(ivar)
+            mylog(String(cString: name!))
+        }
+        free(ivars)
+    }
+    func testyyy() {
+        var count: UInt32 = 3
 
+        let objc_property_tS = class_copyPropertyList(BaseModel.self, &count)
+        for i in 0 ..< count {
+            let objc_property_tO = objc_property_tS![Int(i)]
+            let name = property_getName(objc_property_tO)
+            mylog(String(cString: name!))
+        }
+        free(objc_property_tS)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+       self.testyyy()
         self.naviBar.backgroundColor  = UIColor.orange
         self.naviBar.currentBarActionType = .color//.alpha //.offset //
         self.naviBar.layoutType = .desc

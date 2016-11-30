@@ -5,3 +5,4 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #import "NSArray+LogMsg.h"
+#import "JPUSHService.h"

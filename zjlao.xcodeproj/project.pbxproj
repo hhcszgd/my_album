@@ -14,6 +14,7 @@
 		150869811DCC74E70001B6EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1508697F1DCC74E70001B6EF /* LaunchScreen.storyboard */; };
 		1508698C1DCC74E80001B6EF /* zjlaoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508698B1DCC74E80001B6EF /* zjlaoTests.swift */; };
 		150869971DCC74E80001B6EF /* zjlaoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150869961DCC74E80001B6EF /* zjlaoUITests.swift */; };
+		151DF54C1DE564400035EF18 /* GDSwitchModelMangager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */; };
 		1523AE201DCC8DDC00011F9A /* ClassifyNaviVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1523AD111DCC8DDC00011F9A /* ClassifyNaviVC.swift */; };
 		1523AE211DCC8DDC00011F9A /* ClassifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1523AD121DCC8DDC00011F9A /* ClassifyVC.swift */; };
 		1523AE221DCC8DDC00011F9A /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1523AD181DCC8DDC00011F9A /* Account.swift */; };
@@ -85,6 +86,13 @@
 		1523AE721DCC942500011F9A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE741DCC942500011F9A /* Localizable.strings */; };
 		1523AE781DCC94B300011F9A /* english.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE771DCC94B300011F9A /* english.strings */; };
 		156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156858711DE2A077009DF996 /* GDNormalVC.swift */; };
+		1589F55B1DE6FE01007CE639 /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5591DE6FE01007CE639 /* jpush-ios-2.2.0.a */; };
+		1589F55D1DE6FEC8007CE639 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F55C1DE6FEC8007CE639 /* libresolv.tbd */; };
+		1589F55F1DE6FED1007CE639 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F55E1DE6FED1007CE639 /* UserNotifications.framework */; };
+		1589F5611DE6FEDA007CE639 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5601DE6FEDA007CE639 /* libz.tbd */; };
+		1589F5631DE6FEE2007CE639 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5621DE6FEE2007CE639 /* Security.framework */; };
+		1589F5651DE6FF06007CE639 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5641DE6FF06007CE639 /* SystemConfiguration.framework */; };
+		1589F5671DE6FF10007CE639 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5661DE6FF10007CE639 /* CoreTelephony.framework */; };
 		15E250D01DDEA73E004D4509 /* GDStorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */; };
 		15E250D21DDEB05C004D4509 /* GDSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250D11DDEB05C004D4509 /* GDSettingManager.swift */; };
 		15E250D41DDEB123004D4509 /* GDDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250D31DDEB123004D4509 /* GDDevice.swift */; };
@@ -131,6 +139,7 @@
 		150869921DCC74E80001B6EF /* zjlaoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zjlaoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		150869961DCC74E80001B6EF /* zjlaoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zjlaoUITests.swift; sourceTree = "<group>"; };
 		150869981DCC74E80001B6EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSwitchModelMangager.swift; sourceTree = "<group>"; };
 		1523ABBA1DCC833B00011F9A /* zjlao-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "zjlao-Bridging-Header.h"; sourceTree = "<group>"; };
 		1523AD111DCC8DDC00011F9A /* ClassifyNaviVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassifyNaviVC.swift; sourceTree = "<group>"; };
 		1523AD121DCC8DDC00011F9A /* ClassifyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassifyVC.swift; sourceTree = "<group>"; };
@@ -210,6 +219,19 @@
 		1523AE761DCC942700011F9A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1523AE771DCC94B300011F9A /* english.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = english.strings; sourceTree = "<group>"; };
 		156858711DE2A077009DF996 /* GDNormalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNormalVC.swift; sourceTree = "<group>"; };
+		1589F5591DE6FE01007CE639 /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
+		1589F55A1DE6FE01007CE639 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		1589F55C1DE6FEC8007CE639 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		1589F55E1DE6FED1007CE639 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		1589F5601DE6FEDA007CE639 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		1589F5621DE6FEE2007CE639 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1589F5641DE6FF06007CE639 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1589F5661DE6FF10007CE639 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		1589F5681DE6FF2C007CE639 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1589F56A1DE6FF33007CE639 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1589F56C1DE6FF41007CE639 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		1589F56E1DE6FF58007CE639 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1589F5701DE6FF5F007CE639 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDStorgeManager.swift; sourceTree = "<group>"; };
 		15E250D11DDEB05C004D4509 /* GDSettingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSettingManager.swift; sourceTree = "<group>"; };
 		15E250D31DDEB123004D4509 /* GDDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDDevice.swift; sourceTree = "<group>"; };
@@ -232,7 +254,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1589F5671DE6FF10007CE639 /* CoreTelephony.framework in Frameworks */,
+				1589F5651DE6FF06007CE639 /* SystemConfiguration.framework in Frameworks */,
+				1589F5631DE6FEE2007CE639 /* Security.framework in Frameworks */,
+				1589F5611DE6FEDA007CE639 /* libz.tbd in Frameworks */,
+				1589F55F1DE6FED1007CE639 /* UserNotifications.framework in Frameworks */,
+				1589F55D1DE6FEC8007CE639 /* libresolv.tbd in Frameworks */,
 				29EB8BDDF902E40694D87D45 /* Pods_zjlao.framework in Frameworks */,
+				1589F55B1DE6FE01007CE639 /* jpush-ios-2.2.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +285,17 @@
 		0AE864C0847A2414E2DBF248 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1589F5701DE6FF5F007CE639 /* UIKit.framework */,
+				1589F56E1DE6FF58007CE639 /* Foundation.framework */,
+				1589F56C1DE6FF41007CE639 /* CoreFoundation.framework */,
+				1589F56A1DE6FF33007CE639 /* CoreGraphics.framework */,
+				1589F5681DE6FF2C007CE639 /* CFNetwork.framework */,
+				1589F5661DE6FF10007CE639 /* CoreTelephony.framework */,
+				1589F5641DE6FF06007CE639 /* SystemConfiguration.framework */,
+				1589F5621DE6FEE2007CE639 /* Security.framework */,
+				1589F5601DE6FEDA007CE639 /* libz.tbd */,
+				1589F55E1DE6FED1007CE639 /* UserNotifications.framework */,
+				1589F55C1DE6FEC8007CE639 /* libresolv.tbd */,
 				39ADA3DD6442FE1337131D68 /* Pods_zjlao.framework */,
 			);
 			name = Frameworks;
@@ -511,6 +551,8 @@
 		1523AD3D1DCC8DDC00011F9A /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1589F5591DE6FE01007CE639 /* jpush-ios-2.2.0.a */,
+				1589F55A1DE6FE01007CE639 /* JPUSHService.h */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -590,6 +632,7 @@
 				15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */,
 				15E250D11DDEB05C004D4509 /* GDSettingManager.swift */,
 				15E250D31DDEB123004D4509 /* GDDevice.swift */,
+				151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -2370,6 +2413,7 @@
 				1523AE511DCC8DDC00011F9A /* ProfileChannelModel.swift in Sources */,
 				1523AE5A1DCC8DDC00011F9A /* PTableViewSub.swift in Sources */,
 				1523AE411DCC8DDC00011F9A /* NavTitleView.swift in Sources */,
+				151DF54C1DE564400035EF18 /* GDSwitchModelMangager.swift in Sources */,
 				1523AE2F1DCC8DDC00011F9A /* GDAlertView.swift in Sources */,
 				1523AE271DCC8DDC00011F9A /* VCWithNaviBar.swift in Sources */,
 				15F5D2DE1DD35BC9003F2A15 /* QRCodeScannerVC.swift in Sources */,
@@ -2576,6 +2620,10 @@
 				INFOPLIST_FILE = zjlao/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/zjlao/Classes/Globle/Library",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.16lao.zjlao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "zjlao/zjlao-Bridging-Header.h";
@@ -2595,6 +2643,10 @@
 				INFOPLIST_FILE = zjlao/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/zjlao/Classes/Globle/Library",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.16lao.zjlao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "zjlao/zjlao-Bridging-Header.h";
