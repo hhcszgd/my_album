@@ -8,9 +8,9 @@
 
 import UIKit
 
-@objc  protocol AfterChangeLanguageKeyVCDidApear {
-    func languageHadChanged() -> ()
-}
+//@objc  protocol AfterChangeLanguageKeyVCDidApear {
+//    func languageHadChanged() -> ()
+//}
 
 class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate  {
     

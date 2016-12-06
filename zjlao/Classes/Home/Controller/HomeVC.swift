@@ -80,20 +80,36 @@ class HomeVC: GDNormalVC  {
 
 //        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    override  func sectionIndexTitles(for tableView: UITableView) -> [String]?{
+        var arr = [String]()
+        for   index in 0..<3  {
+            arr.append(" \(index) ")
+        }
+        return arr
+    }
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool{
+        if indexPath.row == 0  {
+            return true
+        }else{
+            return false 
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.allowsMultipleSelection = true
+//                self.tableView.setEditing(true , animated: true )
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 40
+        return 18
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.naviBar.change(by: scrollView)
-//        if scrollView.contentOffset.y<0 {
-//            UIView.animate(withDuration: 0.2, animations: { 
-//                self.naviBar.alpha = 0
-//            })
-//        }else{
-//            UIView.animate(withDuration: 0.2, animations: { 
-//                self.naviBar.alpha = 1
-//            })
-//        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

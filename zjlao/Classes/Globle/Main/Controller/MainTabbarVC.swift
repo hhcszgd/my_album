@@ -9,8 +9,7 @@
 import UIKit
 
 class MainTabbarVC: UITabBarController {
-    let mainTabbar  =  MainTabbar()
-    
+    let mainTabbar  =  MainTabbar.share
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTabbar.delegate = self

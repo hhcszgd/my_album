@@ -49,6 +49,9 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
     }
 
     //MARK:collectViewDataSource
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return 5
@@ -59,6 +62,10 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
         return item
     }
     //MARK:tabViewDataSource
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
@@ -70,7 +77,9 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
         cell?.textLabel?.text = "\(indexPath.section)组\(indexPath.row)行"
         return cell ?? UITableViewCell()
     }
-
+    func sectionIndexTitles(for tableView: UITableView) -> [String]?{
+        return nil
+    }
     private var errorView : GDErrorView?
     
     var currentType : VCType = VCType.withBackButton

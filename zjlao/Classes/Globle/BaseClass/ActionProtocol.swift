@@ -15,3 +15,7 @@ protocol ActionDelegate : NSObjectProtocol {
 @objc protocol QRViewDelegate : NSObjectProtocol{
    func qrView(view : QRView , didCompletedWithQRValue : String)
 }
+
+@objc  protocol AfterChangeLanguageKeyVCDidApear {
+    func languageHadChanged() -> ()
+}

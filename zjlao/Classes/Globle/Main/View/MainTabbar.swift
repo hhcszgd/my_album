@@ -10,6 +10,13 @@ import UIKit
 
 class MainTabbar: UITabBar {
 
+    
+    static let share: MainTabbar = {
+        let tempTabBar = MainTabbar()
+        return tempTabBar
+    }()
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 //        self.backgroundColor = randomColor
