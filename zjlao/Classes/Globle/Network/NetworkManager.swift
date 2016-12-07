@@ -392,6 +392,64 @@ class NetworkManager: AFHTTPSessionManager {
     }
     
     
+    //MARK: 保存deviceToken和registerID
+    func saveDeviceTokenAndRegisterID(deviceToken : String? , registerID : String? ,  _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) -> () {
+        
+        if deviceToken == nil && registerID == nil  {
+            failure(NSError.init())
+            return
+        }
+        /**POST: http://api.zjlao.com/V2/Push/rest*/
+        let url = "Push"
+        //        let para = ["username" : name ,  "password" : password ]
+        var para = [String : AnyObject]()
+        if let deviceTokenStr = deviceToken  {
+            para["devicetoken"] = deviceTokenStr as AnyObject
+        }
+        if let registerIDStr  = registerID {
+            para["registrationID"] = registerIDStr as AnyObject
+        }
+        requestDataFromNewWork(RequestType.POST, urlString: url, parameters: para, success: { (result) in
+            success(result)
+        }) { (error) in
+            failure(error)
+        }
+    }
+    
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    //MARK:
+    
+    
+    
     
     
     

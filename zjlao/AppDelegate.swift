@@ -240,11 +240,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let device_ns = NSData.init(data: deviceToken)
         let token:String = device_ns.description.trimmingCharacters(in: CharacterSet(charactersIn: "<>" ))//需要传给服务器
+        NetworkManager.shareManager.saveDeviceTokenAndRegisterID(deviceToken: token , registerID: nil , { (respodsData) in
+            mylog("deviceToken\(respodsData.msg)")
+        }, failure: { (error ) in
+            mylog("deviceToken保存失败\(error)")
+        })
+        
         mylog(token)
         JPUSHService.registerDeviceToken(deviceToken)
         //        [registrationIDCompletionHandler:]?
         JPUSHService.registrationIDCompletionHandler { (respondsCode, registrationID) in
             mylog("极光注册远程通知成功后获取的注册ID\(registrationID)\n\n状态码是\(respondsCode)")//需要传给服务器
+            NetworkManager.shareManager.saveDeviceTokenAndRegisterID(deviceToken: nil , registerID: registrationID, { (respondsData) in
+                mylog("registrationID\(respondsData.msg)")
+            }, failure: { (error ) in
+                mylog("registrationID保存失败\(error)")
+            })
         }
     }
     
