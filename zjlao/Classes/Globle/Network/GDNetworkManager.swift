@@ -54,7 +54,8 @@ class GDNetworkManager: AFHTTPSessionManager {
     static let shareManager : GDNetworkManager = {
         let url = URL(string: hostName)!
         let mgr = GDNetworkManager(baseURL: url)
-        
+//        mgr.session.configuration.timeoutIntervalForRequest = 6 //timeoutIntervalForRequest时间内, 如果没有请求数据发送,则请求超时
+        mgr.session.configuration.timeoutIntervalForResource = 6//timeoutIntervalForResource时间内,如果没有返回响应,则响应超时
         //添加支持的反序列化格式
         mgr.responseSerializer.acceptableContentTypes?.insert("text/plain")
         mgr.requestSerializer.setValue("2", forHTTPHeaderField: "APPID")

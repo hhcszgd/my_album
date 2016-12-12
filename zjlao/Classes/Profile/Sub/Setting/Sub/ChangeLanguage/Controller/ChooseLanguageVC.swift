@@ -116,6 +116,7 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
             return
         }
         GDLanguageManager.performChangeLanguage(targetLanguage: self.selectedLanguage)
+        NotificationCenter.default.post(name: GDLanguageChanged, object: nil, userInfo: nil)
 //        (UIApplication.shared.delegate as? AppDelegate)?.performChangeLanguage(targetLanguage: self.selectedLanguage)//更改语言
 
     }

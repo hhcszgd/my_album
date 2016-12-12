@@ -12,6 +12,8 @@ class HomeVaviVC: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(LaoNaviVC.languageChanged), name: GDLanguageChanged, object: nil)
+
         self.tabBarItem.image = UIImage(named: "tab_home_normal")
         self.tabBarItem.selectedImage = UIImage(named: "tab_home_click")
         self.navigationBar.isHidden = true;
@@ -22,7 +24,9 @@ class HomeVaviVC: UINavigationController {
         
         // Do any additional setup after loading the view.
     }
-
+    func languageChanged() {
+        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_classify)  // gotTitleStr(key: "tabBar_lao")
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -34,12 +38,6 @@ class HomeVaviVC: UINavigationController {
         super.pushViewController(viewController, animated: animated)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarItem.title  = GDLanguageManager.titleByKey(key: LTabBar_home) //gotTitleStr(key: "tabBar_home")
-
-    }
-    
     /*
     // MARK: - Navigation
 

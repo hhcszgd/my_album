@@ -17,6 +17,8 @@ enum LoadDataType {
     case reload
     case loadMore
 }
+//MARK: swift3.0.1通知名字
+let GDLanguageChanged = NSNotification.Name(rawValue:"languageChanged")
 //MARK: notificationName
 let LoginSuccess = "LoginSuccess"
 let LoginOutSuccess = "LoginOutSuccess"

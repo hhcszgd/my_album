@@ -12,6 +12,8 @@ class ClassifyNaviVC: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(LaoNaviVC.languageChanged), name: GDLanguageChanged, object: nil)
+
         self.tabBarItem.image = UIImage(named: "tab_classify_normal")
         self.tabBarItem.selectedImage = UIImage(named: "tab_classify_click")
 //        self.tabBarItem.title = "classify"
@@ -26,18 +28,16 @@ class ClassifyNaviVC: UINavigationController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func languageChanged() {
+        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_classify)  // gotTitleStr(key: "tabBar_lao")
+    }
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         if self.childViewControllers.count != 0 {
             viewController.hidesBottomBarWhenPushed = true
         }
         super.pushViewController(viewController, animated: animated)
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarItem.title =  GDLanguageManager.titleByKey(key: LTabBar_classify) // gotTitleStr(key: "tabBar_classify")
-        
-    }
+
     /*
     // MARK: - Navigation
 

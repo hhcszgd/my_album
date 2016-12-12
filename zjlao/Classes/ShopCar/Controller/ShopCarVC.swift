@@ -42,11 +42,14 @@ class ShopCarVC: GDNormalVC {
         self.setupNavigationBar()
         self.setupTableView()
         self.gotShopCarData(type: LoadDataType.initialize, { (model) in }) { (error ) in }
-        self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_shopcar));  //gotTitleStr(key: "tabBar_shopcar")!)
+
         self.view.backgroundColor = UIColor.green
         self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
         self.tableView.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
         
+    }
+    override func setupContentAndFrame() {
+        self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_shopcar));  
     }
     override func refresh ()  {
         self.tableView.mj_header.endRefreshing()

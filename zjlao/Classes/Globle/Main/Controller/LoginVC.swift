@@ -49,7 +49,7 @@ class LoginVC: GDNormalVC {
         //            }) { (error) in
         //                mylog(error)
         //        }
-        GDNetworkManager.shareManager.login("fuckfuck", password: "123123", success: { (result) in
+        GDNetworkManager.shareManager.login("wangyuanfei", password: "123456", success: { (result) in
 //            mylog(result.data)
 //            mylog(result.msg)
             mylog("登录成功")

@@ -12,6 +12,8 @@ class ProfileNaviVC: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(LaoNaviVC.languageChanged), name: GDLanguageChanged, object: nil)
+
         self.navigationBar.isHidden = true
         self.tabBarItem.image = UIImage(named: "tab_me_normal")
         self.tabBarItem.selectedImage = UIImage(named: "tab_me_click")
@@ -32,12 +34,10 @@ class ProfileNaviVC: UINavigationController {
         }
         super.pushViewController(viewController, animated: animated)
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_profile)//gotTitleStr(key: "tabBar_shopcar")
-        
+    func languageChanged() {
+        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_profile)  // gotTitleStr(key: "tabBar_lao")
     }
+
     /*
     // MARK: - Navigation
 
