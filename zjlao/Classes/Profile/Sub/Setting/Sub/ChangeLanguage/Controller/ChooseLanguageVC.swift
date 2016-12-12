@@ -10,19 +10,20 @@ import UIKit
 
 import MJRefresh
 class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewDataSource */{
-    let languages : [String] = [LFollowSystemLanguage,LEnglish,LChinese,"Japanese","aa","bb","cc","dd","ee","ff","gg","hh","ii","jj","kk","ll","mm","nn","oo","pp","qq","rr","ss","tt","uu","vv","ww","xx","yy","zz"]
+    let languages : [String] = [/*LFollowSystemLanguage,*/LEnglish,LChinese]
     let bottomButton = UIButton()
 //    let tableView = BaseTableView(frame: CGRect.zero, style: UITableViewStyle.plain)
-    var  currentIndexPath = IndexPath(row: 0, section: 0)
+    var  currentLanguageIndexPath = IndexPath(row: 111, section: 0)
+    var  selectedLanguageIndexPath = IndexPath(row: 1111, section: 0)
+    
     var choosedIndexPaths = [String : IndexPath]()
     
     var selectedLanguage : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.naviBar.currentBarActionType = .color//.alpha //.offset // 
-        self.naviBar.layoutType = .desc
+        self.naviBar.currentBarActionType = .offset // .color//.alpha //
+        self.naviBar.layoutType = .asc
         self.automaticallyAdjustsScrollViewInsets = false
         self.setupSubViews()
         self.view.addSubview(bottomButton)
@@ -32,6 +33,7 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
     }
 
     func setupSubViews()  {
+        self.tableView.contentInset = UIEdgeInsetsMake(NavigationBarHeight, 0, 0, 0)
         self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
         self.tableView.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
         let margin : CGFloat = 20.0
@@ -58,10 +60,13 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
         self.bottomButton.backgroundColor = UIColor.red
         self.bottomButton.setTitle(GDLanguageManager.titleByKey(key: "confirm"), for: UIControlState.normal)
         self.bottomButton.addTarget(self, action: #selector(sureClick(sender:)), for: UIControlEvents.touchUpInside)
-
+        self.bottomButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        self.bottomButton.setTitleColor(UIColor.gray, for: UIControlState.disabled)
+        self.bottomButton.isEnabled = false
         
     }
     override func refresh ()  {
+        self.tableView.reloadData()
         self.tableView.mj_header.endRefreshing()
         self.tableView.mj_footer.state = MJRefreshState.idle
     }
@@ -80,31 +85,63 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell  = tableView.dequeueReusableCell(withIdentifier: "cell")
         if cell == nil  {
-            cell = BaseCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+            cell = BaseCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "cell")
         }
         cell?.textLabel?.text = self.languages[indexPath.row]
+        cell?.selectionStyle = UITableViewCellSelectionStyle.blue
+        if let  currentLanguage = GDLanguageManager.LanguageTableName   {
+            
+            if self.selectedLanguageIndexPath.row == 1111 {//第一次
+                if currentLanguage == languages[indexPath.row] {
+                    cell?.isSelected = true
+                    cell?.detailTextLabel?.text = "选中"
+                    self.currentLanguageIndexPath = indexPath
+                }else{
+                    cell?.detailTextLabel?.text = "未选中"
+                }
+                
+                
+            }else{//点击了任何行以后
+                if indexPath == self.selectedLanguageIndexPath {
+                    cell?.detailTextLabel?.text = "选中"
+                }else{
+                    cell?.detailTextLabel?.text = "未选中"
+                }
+                if self.currentLanguageIndexPath == self.selectedLanguageIndexPath {
+                    self.bottomButton.isEnabled = false
+                    
+                }else{
+                    self.bottomButton.isEnabled = true
+                }
+            }
+
+        }
         return cell ?? BaseCell()
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //无关紧要
         let currentStr = "\(indexPath.row)"
         if  let _ = self.choosedIndexPaths[currentStr] {//键能找到值
             self.choosedIndexPaths.removeValue(forKey: currentStr)
         }else{//找不到就加进去
             self.choosedIndexPaths[currentStr] = indexPath
         }
+        //        self.tableView.beginUpdates()
+        //        self.tableView.endUpdates()
+
         
         
-        self.currentIndexPath = indexPath
+        //重要
+        self.selectedLanguageIndexPath = indexPath
         self.selectedLanguage = self.languages[indexPath.row]
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
+        self.tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
          let currentStr = "\(indexPath.row)"
         if  let _ = self.choosedIndexPaths[currentStr] {
             return 66
-        }else{return 33}
+        }else{return 44}
         
     }
     //MARK:customMethod
@@ -117,6 +154,9 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
         }
         GDLanguageManager.performChangeLanguage(targetLanguage: self.selectedLanguage)
         NotificationCenter.default.post(name: GDLanguageChanged, object: nil, userInfo: nil)
+        GDAlertView.alert("保存成功", image: nil , time: 2) {
+            self.navigationController?.popViewController(animated: true)
+        }
 //        (UIApplication.shared.delegate as? AppDelegate)?.performChangeLanguage(targetLanguage: self.selectedLanguage)//更改语言
 
     }
