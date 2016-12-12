@@ -11,7 +11,7 @@ import CoreData
 
 import MBProgressHUD
 import UserNotifications
-
+import AFNetworking
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVCDidApear,UNUserNotificationCenterDelegate{
     
@@ -116,15 +116,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     
     
     
-    //MARK:////////////////////////////////////XXXXXX相关//////////////////////////////////////////
+    //MARK:////////////////////////////////////通用链接相关//////////////////////////////////////////
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool{
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            let webPageUrl = userActivity.webpageURL
+            let host = webPageUrl?.host
+            if let hostStr = host  {
+                if hostStr == "zjlao.com" || hostStr == "www.zjlao.com" || hostStr == "m.zjlao.com" || hostStr == "items.zjlao.com" {
+                    
+                    /*
+                     //进行我们需要的处理
+                     NSLog(@"_%d_%@",__LINE__,@"通用链接测试成功");
+                     NSLog(@"_%d_%@",__LINE__,webpageURL.absoluteString);
+                     NSURLComponents * components = [NSURLComponents componentsWithString:webpageURL.absoluteString];
+                     NSArray * queryItems =  components.queryItems;
+                     NSString * actionkey =  nil ;
+                     NSString * ID = nil ;
+                     for (NSURLQueryItem * item  in queryItems) {
+                     if ([item.name isEqualToString:@"actionkey"]) {
+                     if ([item.value isEqualToString:@"shop"]) {
+                     actionkey = @"HShopVC";
+                     }else if ([item.value isEqualToString:@"goods"]){
+                     actionkey = @"HGoodsVC";
+                     }else{
+                     actionkey = item.value;
+                     }
+                     NSLog(@"_%d_%@",__LINE__,item.value);
+                     }else if ([item.name isEqualToString:@"ID"]){
+                     ID = item.value;
+                     NSLog(@"_%d_%@",__LINE__,item.value);
+                     }
+                     
+                     NSLog(@"_%d_%@",__LINE__,item.name);
+                     NSLog(@"_%d_%@",__LINE__,item.value);
+                     }
+                     if (actionkey && ID ) {
+                     BaseModel * model = [[[BaseModel alloc] init]initWithDict:@{@"actionkey":actionkey,@"paramete":ID}];
+                     model.actionKey = actionkey;
+                     model.keyParamete = @{@"paramete":ID};
+                     [[SkipManager shareSkipManager] skipByVC:[KeyVC shareKeyVC] withActionModel:model];
+                     }
+                     
+                     */
+                    
+                }else{
+                    if UIApplication.shared.canOpenURL(webPageUrl!) {
+                        UIApplication.shared.openURL(webPageUrl!)
+                    }
+                
+                }
+            }
+        }
+        
+        return true
+    }
     
     
     
     
-    
-    
-    //MARK:////////////////////////////////////根控制器相关//////////////////////////////////////////
-    
+    //MARK:////////////////////////////////////网络监测相关//////////////////////////////////////////
+    func initnetWorkManager() {
+                    NotificationCenter.default.addObserver(GDNetworkManager.self, selector: #selector(GDNetworkManager.noticeNetworkChanged(_:)), name: NSNotification.Name.AFNetworkingReachabilityDidChange, object: nil)
+               AFNetworkReachabilityManager.shared().startMonitoring()
+    }
     
     
     func setupRootVC() -> () {
@@ -231,6 +286,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         mylog(UIScreen.main.bounds)
         //        UserDefaults.standard.set(nil, forKey: "LanguageTableName")
         self.setupRootVC()
+        self.initnetWorkManager()
         self.setupOriginPushNotification()
         self.setupJpush(launchOptions: launchOptions)
         // Override point for customization after application launch.
@@ -240,7 +296,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let device_ns = NSData.init(data: deviceToken)
         let token:String = device_ns.description.trimmingCharacters(in: CharacterSet(charactersIn: "<>" ))//需要传给服务器
-        NetworkManager.shareManager.saveDeviceTokenAndRegisterID(deviceToken: token , registerID: nil , { (respodsData) in
+        GDNetworkManager.shareManager.saveDeviceTokenAndRegisterID(deviceToken: token , registerID: nil , { (respodsData) in
             mylog("deviceToken\(respodsData.msg)")
         }, failure: { (error ) in
             mylog("deviceToken保存失败\(error)")
@@ -251,7 +307,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         //        [registrationIDCompletionHandler:]?
         JPUSHService.registrationIDCompletionHandler { (respondsCode, registrationID) in
             mylog("极光注册远程通知成功后获取的注册ID\(registrationID)\n\n状态码是\(respondsCode)")//需要传给服务器
-            NetworkManager.shareManager.saveDeviceTokenAndRegisterID(deviceToken: nil , registerID: registrationID, { (respondsData) in
+            GDNetworkManager.shareManager.saveDeviceTokenAndRegisterID(deviceToken: nil , registerID: registrationID, { (respondsData) in
                 mylog("registrationID\(respondsData.msg)")
             }, failure: { (error ) in
                 mylog("registrationID保存失败\(error)")

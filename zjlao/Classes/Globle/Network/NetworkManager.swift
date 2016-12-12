@@ -1,3 +1,4 @@
+/*
 //
 //  NetworkManager.swift
 //  mh824appWithSwift
@@ -12,7 +13,14 @@
 //    }
 //  Created by wangyuanfei on 16/8/30.
 //  Copyright © 2016年 www.16lao.com. All rights reserved.
-//
+
+
+
+
+
+
+
+//:在失败回调里 ,如果错误码是-11111  , 代表网络错误  , 测试在自定义控制器里就可以执行showErrorView
 
 import UIKit
 import AFNetworking
@@ -26,6 +34,11 @@ private let hostName = "https://api.zjlao.com/"
 private let dataErrorDomain = "com.zjlao.b2c"
 //"http://api.zjlao.com/"
 class NetworkManager: AFHTTPSessionManager {
+    //MARK:当前网络状态
+    var gdNetWorkStatus : AFNetworkReachabilityStatus  {
+        return AFNetworkReachabilityManager.shared().networkReachabilityStatus
+        
+    }
     var alert : GDAlertView = GDAlertView.networkLoading()
     var token : String? {
         get{
@@ -52,7 +65,6 @@ class NetworkManager: AFHTTPSessionManager {
     override class func initialize(){
         
             NotificationCenter.default.addObserver(self, selector: #selector(noticeNetworkChanged(_:)), name: NSNotification.Name.AFNetworkingReachabilityDidChange, object: nil)
-        AFNetworkReachabilityManager.shared().startMonitoring()
     
     }
     
@@ -142,10 +154,14 @@ class NetworkManager: AFHTTPSessionManager {
                 
                 }else{
                     GDAlertView.alert("初始化失败 , 请重试", image: nil, time: 2, complateBlock: nil)
+                    let gdError = NSError(domain: "wrongDomain.com", code: -10001, userInfo: ["reason" : "netWorkError"])
+                    failure(gdError)
                 }
 
                 }, failure: { (error) in
-                    //初始化失败,不做处理
+                    //初始化失败,
+                    let gdError = NSError(domain: "wrongDomain.com", code: -10001, userInfo: ["reason" : "netWorkError"])
+                    failure(gdError)
             })
         
         }
@@ -155,7 +171,16 @@ class NetworkManager: AFHTTPSessionManager {
     
     //(终极自定义)基于核心网络框架的核心方法 进行封装  以后所有的网络请求 都走这个方法(初始化方法除外)
   private  func requestJSONDict(_ method: RequestType, urlString: String,parameters:[String : AnyObject],success: @escaping (_ result:OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) ->()) {
-        self.alert.gdShow()
+//MARK:在失败回调里 ,如果错误码是-11111  , 代表网络错误  , 测试在自定义控制器里就可以执行showErrorView
+
+    if gdNetWorkStatus == AFNetworkReachabilityStatus.notReachable || gdNetWorkStatus == AFNetworkReachabilityStatus.unknown {
+        GDAlertView.alert("请求失败 , 请检查网络", image: nil, time: 2, complateBlock: nil)
+        let gdError = NSError(domain: "wrongDomain.com", code: -11111, userInfo: ["reason" : "netWorkError"])
+        failure(gdError)
+        
+        return
+    }
+    if urlString != "LoginOut" { self.alert.gdShow()}//退出是立即生效的, 不转圈
     mylog( UIDevice.current.identifierForVendor?.uuidString)
         mylog("\(urlString)\(parameters)")
             var  para : [String : AnyObject] = [String : AnyObject]()
@@ -826,3 +851,6 @@ class NetworkManager: AFHTTPSessionManager {
 
 }
 
+
+ 
+ */

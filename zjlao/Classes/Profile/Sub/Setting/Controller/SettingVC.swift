@@ -117,7 +117,7 @@ class SettingVC: GDNormalVC {
     func performLoginOut() {
         mylog("退出登录")
         if Account.shareAccount.isLogin {
-            NetworkManager.shareManager.loginOut({ (result) in
+            GDNetworkManager.shareManager.loginOut({ (result) in
                 mylog(result.description)
 
                 GDAlertView.alert("退出成功", image: nil, time: 2, complateBlock: {

@@ -15,7 +15,7 @@ import UIKit
 
 
  class VCWithNaviBar: BaseVC  , CustomNaviBarDelegate{
-    private var errorView : GDErrorView?
+//    private var errorView : GDErrorView?
     
     var currentType : VCType = VCType.withBackButton
 
@@ -118,7 +118,7 @@ import UIKit
     }
     
     //MARK:页面加载错误是调这个方法
-    func showErrorView ()  {
+  override  func showErrorView ()  {
         self.errorView = GDErrorView()
         self.errorView?.addTarget(self, action: #selector(errorViewClick), for: UIControlEvents.touchUpInside)
         self.view.insertSubview(errorView!, belowSubview: self.naviBar)
@@ -127,13 +127,13 @@ import UIKit
         
     }
     //MARK://子类重写它 , 在方法中调hiddenErrorView()
-    func errorViewClick ()  {
-        
-    }
-    func hiddenErrorView()  {
-        self.errorView?.removeFromSuperview()
-        self.errorView = nil
-    }
+//    func errorViewClick ()  {
+//        
+//    }
+//    func hiddenErrorView()  {
+//        self.errorView?.removeFromSuperview()
+//        self.errorView = nil
+//    }
     
     
     //MARK:动态改变导航栏的状态(改变透明度)

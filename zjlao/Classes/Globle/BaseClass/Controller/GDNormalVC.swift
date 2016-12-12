@@ -80,7 +80,6 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
     func sectionIndexTitles(for tableView: UITableView) -> [String]?{
         return nil
     }
-    private var errorView : GDErrorView?
     
     var currentType : VCType = VCType.withBackButton
     
@@ -145,8 +144,17 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.bringSubview(toFront: self.naviBar)
+
+        
     }
-    
+    override  func showErrorView ()  {//因为有导航栏 , 所以得重写次方法把错误页面插到导航栏下面
+        self.errorView = GDErrorView()
+        self.errorView?.addTarget(self, action: #selector(errorViewClick), for: UIControlEvents.touchUpInside)
+        self.view.insertSubview(errorView!, belowSubview: self.naviBar)
+        self.errorView?.frame = self.view.bounds
+        
+        
+    }
     /*
      // MARK: - Navigation
      
@@ -159,24 +167,7 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
     func popToPreviousVC() {
         _ = self.navigationController?.popViewController(animated: true)
     }
-    
-    //MARK:页面加载错误是调这个方法
-    func showErrorView ()  {
-        self.errorView = GDErrorView()
-        self.errorView?.addTarget(self, action: #selector(errorViewClick), for: UIControlEvents.touchUpInside)
-        self.view.insertSubview(errorView!, belowSubview: self.naviBar)
-        self.errorView?.frame = self.view.bounds
-        
-        
-    }
-    //MARK://子类重写它 , 在方法中调hiddenErrorView()
-    func errorViewClick ()  {
-        
-    }
-    func hiddenErrorView()  {
-        self.errorView?.removeFromSuperview()
-        self.errorView = nil
-    }
+
     /*
     // MARK: - Navigation
 
@@ -193,4 +184,6 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
         return 44.0
     }
 
+
+    
 }

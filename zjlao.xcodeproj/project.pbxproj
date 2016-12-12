@@ -85,6 +85,7 @@
 		1523AE6B1DCC937300011F9A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE6D1DCC937300011F9A /* InfoPlist.strings */; };
 		1523AE721DCC942500011F9A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE741DCC942500011F9A /* Localizable.strings */; };
 		1523AE781DCC94B300011F9A /* english.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE771DCC94B300011F9A /* english.strings */; };
+		155191B81DFE49D50031FFD4 /* GDNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155191B71DFE49D50031FFD4 /* GDNetworkManager.swift */; };
 		156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156858711DE2A077009DF996 /* GDNormalVC.swift */; };
 		1589F55B1DE6FE01007CE639 /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5591DE6FE01007CE639 /* jpush-ios-2.2.0.a */; };
 		1589F55D1DE6FEC8007CE639 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F55C1DE6FEC8007CE639 /* libresolv.tbd */; };
@@ -218,6 +219,7 @@
 		1523AE751DCC942600011F9A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1523AE761DCC942700011F9A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1523AE771DCC94B300011F9A /* english.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = english.strings; sourceTree = "<group>"; };
+		155191B71DFE49D50031FFD4 /* GDNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNetworkManager.swift; sourceTree = "<group>"; };
 		156858711DE2A077009DF996 /* GDNormalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNormalVC.swift; sourceTree = "<group>"; };
 		1589F5591DE6FE01007CE639 /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
 		1589F55A1DE6FE01007CE639 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
@@ -600,6 +602,7 @@
 			isa = PBXGroup;
 			children = (
 				1523AD4A1DCC8DDC00011F9A /* NetworkManager.swift */,
+				155191B71DFE49D50031FFD4 /* GDNetworkManager.swift */,
 				1523AD4B1DCC8DDC00011F9A /* OriginalNetDataModel.swift */,
 			);
 			path = Network;
@@ -2414,6 +2417,7 @@
 				1523AE5A1DCC8DDC00011F9A /* PTableViewSub.swift in Sources */,
 				1523AE411DCC8DDC00011F9A /* NavTitleView.swift in Sources */,
 				151DF54C1DE564400035EF18 /* GDSwitchModelMangager.swift in Sources */,
+				155191B81DFE49D50031FFD4 /* GDNetworkManager.swift in Sources */,
 				1523AE2F1DCC8DDC00011F9A /* GDAlertView.swift in Sources */,
 				1523AE271DCC8DDC00011F9A /* VCWithNaviBar.swift in Sources */,
 				15F5D2DE1DD35BC9003F2A15 /* QRCodeScannerVC.swift in Sources */,

@@ -77,7 +77,11 @@ class SkipManager: NSObject {
         
         if let vc = targetVC {
             vc.keyModel = model
-            viewController.navigationController?.pushViewController(vc, animated: true )
+            if let naviVC  = viewController as? UINavigationController {
+                naviVC.pushViewController(vc, animated: true )
+            }else{
+                viewController.navigationController?.pushViewController(vc, animated: true )
+            }
         }
         
     }

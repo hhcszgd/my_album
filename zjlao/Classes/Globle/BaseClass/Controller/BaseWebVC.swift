@@ -46,7 +46,7 @@ class BaseWebVC: GDNormalVC,WKScriptMessageHandler {
             mylog("webViewController对应的url字符串不存在\(self.keyModel)")
             return
         }
-        if let token = NetworkManager.shareManager.token {
+        if let token = GDNetworkManager.shareManager.token {
             
             let urlStrAppendToken  = urlStr.appending("?token=\(token)")
             mylog(urlStrAppendToken)

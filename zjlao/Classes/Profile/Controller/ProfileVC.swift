@@ -140,7 +140,7 @@ class ProfileVC: UIViewController ,ActionDelegate {
         switch type {
         case .initialize:
             if Account.shareAccount.isLogin {
-                NetworkManager.shareManager.gotProfilePageData({ (result) in//网络获取数据成功
+                GDNetworkManager.shareManager.gotProfilePageData({ (result) in//网络获取数据成功
                     guard let tempTotalData = result.data as? [AnyObject] else {return}
                     self.totalData = tempTotalData
                     mylog(self.totalData)

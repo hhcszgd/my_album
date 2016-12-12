@@ -20,6 +20,12 @@ class GDAlertView: MBProgressHUD {
 
     class func networkLoading() -> GDAlertView  {
 //        let pro  = GDAlertView.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        
+//        if let window  = UIApplication.shared.keyWindow {
+//            
+//        }else{
+//        
+//        }
        let pro  =   GDAlertView.init(view: UIApplication.shared.keyWindow!)
         UIApplication.shared.keyWindow!.addSubview(pro)
         pro.graceTime = 2.0
@@ -44,21 +50,24 @@ class GDAlertView: MBProgressHUD {
     
    class func alert(_ message : String? ,image : UIImage? , time : Int , complateBlock : MBProgressHUDCompletionBlock? ) -> () {
         if message == nil && image == nil  { return }
-        let pro  = GDAlertView.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
-        pro.bezelView.backgroundColor = UIColor.white//弹框部分的底色
-        pro.mode = MBProgressHUDMode.customView
-        pro.hide(animated: true, afterDelay: TimeInterval(time))
-        if message != nil {
-            pro.detailsLabel.text = message
-        }
-        if image != nil  {
-            pro.customView = UIImageView(image:image )
-        }
-        pro.completionBlock = {
-            if complateBlock != nil {
-                complateBlock!()
-            }
-        }
+    
+        DispatchQueue.main.async {
+                    let pro  = GDAlertView.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                    pro.bezelView.backgroundColor = UIColor.white//弹框部分的底色
+                    pro.mode = MBProgressHUDMode.customView
+                    pro.hide(animated: true, afterDelay: TimeInterval(time))
+                    if message != nil {
+                        pro.detailsLabel.text = message
+                    }
+                    if image != nil  {
+                        pro.customView = UIImageView(image:image )
+                    }
+                    pro.completionBlock = {
+                        if complateBlock != nil {
+                            complateBlock!()
+                        }
+                    }
+          };
     //            pro.backgroundView.backgroundColor = UIColor.white//全屏白
     //            pro.backgroundColor = UIColor.white//全屏白
     }
@@ -66,10 +75,15 @@ class GDAlertView: MBProgressHUD {
     
     
     func gdShow() {
+        DispatchQueue.main.async {
             self.show(animated: true)
+          };
     }
     func gdHide() {
+        DispatchQueue.main.async {
             self.hide(animated: true)
+            
+          };
     }
     
     

@@ -99,7 +99,7 @@ class ShopCarVC: GDNormalVC {
     func gotShopCarData(type : LoadDataType , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) {
         switch type {
         case .initialize , .reload:
-            NetworkManager.shareManager.gotShopCarData({ (originalNetDataModel) in
+            GDNetworkManager.shareManager.gotShopCarData({ (originalNetDataModel) in
                 
                 if (true){/**选项卡栏显示,布局*/
                     guard let dataAnyObj = originalNetDataModel.data else{
