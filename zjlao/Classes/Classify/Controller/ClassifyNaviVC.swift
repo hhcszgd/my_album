@@ -16,7 +16,7 @@ class ClassifyNaviVC: UINavigationController {
         self.tabBarItem.selectedImage = UIImage(named: "tab_classify_click")
 //        self.tabBarItem.title = "classify"
 //        self.tabBarItem.title = NSLocalizedString("tabBar_classify", tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "")
-        self.tabBarItem.title =  GDLanguageManager.titleByKey(key: "tabBar_classify") // gotTitleStr(key: "tabBar_classify")
+        self.tabBarItem.title =  GDLanguageManager.titleByKey(key: LTabBar_classify) // gotTitleStr(key: "tabBar_classify")
         self.navigationBar.isHidden = true;
 
         // Do any additional setup after loading the view.
@@ -33,7 +33,11 @@ class ClassifyNaviVC: UINavigationController {
         }
         super.pushViewController(viewController, animated: animated)
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarItem.title =  GDLanguageManager.titleByKey(key: LTabBar_classify) // gotTitleStr(key: "tabBar_classify")
+        
+    }
     /*
     // MARK: - Navigation
 

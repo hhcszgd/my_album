@@ -34,6 +34,12 @@ class HomeVaviVC: UINavigationController {
         super.pushViewController(viewController, animated: animated)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarItem.title  = GDLanguageManager.titleByKey(key: LTabBar_home) //gotTitleStr(key: "tabBar_home")
+
+    }
+    
     /*
     // MARK: - Navigation
 

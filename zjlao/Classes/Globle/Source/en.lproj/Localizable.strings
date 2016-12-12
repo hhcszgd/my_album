@@ -25,3 +25,24 @@
 "confirm" = "confirm";
 "cancel" = "cancel";
 "applyAfterRestart" = "applyAfterRestart" ;
+//下拉刷新
+"pullDownRefresh"  = "pullDownRefresh";
+"unloosenRefresh"  = "unloosenRefresh";
+"refreshing"  = "refreshing";
+
+
+"pullUpLoad" = "pullUpLoad";
+"unloosenLoad"  = "unloosenLoad";
+"loading"  = "loading";
+"noMoreData"  = "noMoreData";
+
+//设置页面
+"SSetting" = "setting" ;
+"SSoundNotice" = "sound" ;
+"SImageQuarlity" = "imageQuarlity" ;
+"SSmartMode" = "smartMode" ;
+"SClearCache" = "clearCache" ;
+"SGrade" = "grade" ;
+"SChangeLanguage" = "changeLanguage" ;
+"SCurrentVersion" = "currentVersion" ;
+"SLoginout" = "loginout" ;

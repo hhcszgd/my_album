@@ -34,7 +34,11 @@ class ShopCarNaviVC: UINavigationController {
         }
         super.pushViewController(viewController, animated: animated)
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_shopcar)//gotTitleStr(key: "tabBar_shopcar")
+        
+    }
     /*
     // MARK: - Navigation
 

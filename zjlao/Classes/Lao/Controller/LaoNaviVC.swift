@@ -19,7 +19,7 @@ class LaoNaviVC: UINavigationController {
 //        self.tabBarItem.title = "lao"
 //        self.tabBarItem.title = NSLocalizedString("tabBar_lao", tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "")
 
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: "tabBar_lao")  // gotTitleStr(key: "tabBar_lao")
+        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_lao)  // gotTitleStr(key: "tabBar_lao")
         // Do any additional setup after loading the view.
     }
 
@@ -34,7 +34,11 @@ class LaoNaviVC: UINavigationController {
         }
         super.pushViewController(viewController, animated: animated)
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_lao)  // gotTitleStr(key: "tabBar_lao")
+        
+    }
     /*
     // MARK: - Navigation
 

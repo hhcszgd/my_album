@@ -16,7 +16,7 @@ class LaoVC: GDNormalVC {
     let clMar = GDLocationManager.init()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: "tabBar_lao") /*gotTitleStr(key: "tabBar_shopcar")!*/)
+        self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_lao) /*gotTitleStr(key: "tabBar_shopcar")!*/)
         self.view.backgroundColor = UIColor.blue
         self.setupCollectionView()
     }
@@ -56,6 +56,9 @@ class LaoVC: GDNormalVC {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
     }
+    override func setupContentAndFrame() {
+        self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_lao) /*gotTitleStr(key: "tabBar_shopcar")!*/)
 
+    }
 
 }

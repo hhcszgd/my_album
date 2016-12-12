@@ -67,25 +67,29 @@ class GDRefreshHeader: MJRefreshHeader {
             switch (state) {
                 
             case MJRefreshState.idle:
-                self.label.text = "上拉加载更多";
+//                self.label.text = "下拉加载更多";
+                self.label.text = GDLanguageManager.titleByKey(key: "pullDownRefresh");
                 self.setupFrame()//貌似有必要了, 不然当状态为没有更多数据时 , 再手动设置状态为闲置状态时 , 没有加载图片
 
                 self.logo.isHidden =  true
                 break;
             case MJRefreshState.pulling:
-                self.label.text = "松开立即加载";
+//                self.label.text = "松开立即刷新";
+                self.label.text = GDLanguageManager.titleByKey(key: "unloosenRefresh");
                 self.setupFrame()
                 self.logo.isHidden = true
                 break;
 
             case MJRefreshState.refreshing:
-                self.label.text = "正在加载...";
+//                self.label.text = "刷新中...";
+                self.label.text = GDLanguageManager.titleByKey(key: "refreshing");
                 self.setupFrame()
                 self.logo.isHidden  = false
                 break;
                 
             case MJRefreshState.noMoreData:
-                self.label.text = "-- 亲,你看完了 --";
+                self.label.text = "";
+                
                 self.logo.isHidden = true
                 self.label.frame = self.bounds;
                 break;

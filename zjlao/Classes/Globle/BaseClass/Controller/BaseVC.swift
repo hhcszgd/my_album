@@ -43,17 +43,15 @@ class BaseVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.addSubViews()
-        self.setupFrame()
-        self.setupContent()
+        self.setupContentAndFrame()
     }
-    func setupFrame()  {
-        
-    }
-    func setupContent () {
-        
-    }
+
     func addSubViews () {
+        
+    }
+    func setupContentAndFrame () {
         
     }
     

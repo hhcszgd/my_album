@@ -4,7 +4,7 @@
 //
 //  Created by WY on 16/10/19.
 //  Copyright © 2016年 WY. All rights reserved.
-//
+/*进来时  确定按钮不可用 , 只有选择非当前语言后 确定按钮才可用**/
 
 import UIKit
 

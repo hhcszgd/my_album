@@ -33,7 +33,11 @@ class ProfileNaviVC: UINavigationController {
         super.pushViewController(viewController, animated: animated)
     }
 
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_profile)//gotTitleStr(key: "tabBar_shopcar")
+        
+    }
     /*
     // MARK: - Navigation
 
