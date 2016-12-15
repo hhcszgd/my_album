@@ -1,41 +1,39 @@
 //
-//  GDRefreshBackFooter.swift
+//  GDRefreshGifFooter.swift
 //  zjlao
 //
-//  Created by WY on 16/10/24.
-//  Copyright © 2016年 WY. All rights reserved.
-//
+//  Created by WY on 16/12/15.
+//  Copyright © 2016年 com.16lao.zjlao. All rights reserved.
+/**       
+ let images = [UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
+ let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
+ header?.lastUpdatedTimeLabel.isHidden = true
+ header?.setImages(images , for: MJRefreshState.idle)
+ header?.setImages(images , for: MJRefreshState.refreshing)
+ self.tableView.mj_header = header
+ 
+ let footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+ footer?.setImages(images , for: MJRefreshState.idle)
+ footer?.setImages(images , for: MJRefreshState.refreshing)
+ self.tableView.mj_footer = footer
+ */
 
 import UIKit
 import MJRefresh
-class GDRefreshBackFooter: MJRefreshBackFooter {
-    
-    let label  = UILabel(frame: CGRect.zero)
-    let logo = UIImageView(frame: CGRect.zero)
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+class GDRefreshGifFooter: MJRefreshBackGifFooter {
+
     override func prepare() {//1
         super.prepare()
         self.backgroundColor = UIColor.randomColor()
-        self.label.backgroundColor = UIColor.randomColor()
-        self.logo.backgroundColor = UIColor.randomColor()
+        self.stateLabel.backgroundColor = UIColor.randomColor()
+        self.gifView.backgroundColor = UIColor.randomColor()
         //设置控件的高度
         self.mj_h = 66.0
         //提示
-        label.textColor = MainTitleColor
-        label.font = UIFont.boldSystemFont(ofSize: 10)
-        label.textAlignment = NSTextAlignment.center
-        self.addSubview(label)
+        stateLabel.textColor = MainTitleColor
+        stateLabel.font = UIFont.boldSystemFont(ofSize: 10)
+        stateLabel.textAlignment = NSTextAlignment.center
         //图片
-        self.addSubview(logo)
-        logo.image = UIImage.sd_animatedGIFNamed("loading")
-        logo.contentMode = UIViewContentMode.scaleAspectFit
         
     }
     //设置子控件的位置和尺寸
@@ -54,21 +52,23 @@ class GDRefreshBackFooter: MJRefreshBackFooter {
          
          */
         let margin : CGFloat = 5.0
-        self.label.sizeToFit()
+        self.stateLabel.sizeToFit()
         let logoW : CGFloat = 40.0
         let logoH : CGFloat = 40.0
         let logoX : CGFloat = (self.bounds.size.width-logoW)/2
         let logoY : CGFloat = margin
-        let labelW : CGFloat = self.label.bounds.size.width
-        let labelH : CGFloat = self.label.bounds.size.height
-        let labelX : CGFloat = (self.bounds.size.width - self.label.bounds.size.width)/2
-        let labelY : CGFloat = self.logo.frame.maxY+margin
-        self.label.frame =  self.state == MJRefreshState.noMoreData ? self.bounds :  CGRect(x: labelX, y: labelY, width: labelW, height: labelH)
-        self.logo.frame = CGRect(x: logoX, y: logoY, width: logoW, height: logoH)
+        let labelW : CGFloat = self.stateLabel.bounds.size.width
+        let labelH : CGFloat = self.stateLabel.bounds.size.height
+        let labelX : CGFloat = (self.bounds.size.width - self.stateLabel.bounds.size.width)/2
+        let labelY : CGFloat = logoY + logoH+margin
+        self.stateLabel.frame =  self.state == MJRefreshState.noMoreData ? self.bounds :  CGRect(x: labelX, y: labelY, width: labelW, height: labelH)
+        self.gifView.frame = CGRect(x: logoX, y: logoY, width: logoW, height: logoH)
+        gifView.contentMode = UIViewContentMode.scaleAspectFit
+
     }
     
     override func scrollViewPanStateDidChange(_ change: [AnyHashable : Any]!) {
-
+        
         
     }
     
@@ -80,19 +80,15 @@ class GDRefreshBackFooter: MJRefreshBackFooter {
             switch (state) {
                 
             case MJRefreshState.idle:
-//                self.label.text = "上拉加载更多";
-                self.label.text = GDLanguageManager.titleByKey(key: "pullUpLoad")
+                //                self.label.text = "上拉加载更多";
+                self.stateLabel.text = GDLanguageManager.titleByKey(key: "pullUpLoad")
                 //            [self setupFrame];//不必
                 self.setupFrame()//貌似有必要了, 不然当状态为没有更多数据时 , 再手动设置状态为闲置状态时 , 没有加载图片
-//                [self.loading stopAnimating];
-//                [self.s setOn:NO animated:YES];
-                self.logo.isHidden =  true
                 break;
             case MJRefreshState.pulling:
-//                self.label.text = "松开立即加载";
-                self.label.text = GDLanguageManager.titleByKey(key: "unloosenLoad");
+                //                self.label.text = "松开立即加载";
+                self.stateLabel.text = GDLanguageManager.titleByKey(key: "unloosenLoad");
                 self.setupFrame()
-                self.logo.isHidden = true
                 break;
                 
                 //        case MJRefreshStateWillRefresh:
@@ -105,36 +101,34 @@ class GDRefreshBackFooter: MJRefreshBackFooter {
                 
                 
             case MJRefreshState.refreshing:
-//                self.label.text = "正在加载...";
-
-                self.label.text = GDLanguageManager.titleByKey(key: "loading");
+                //                self.label.text = "正在加载...";
+                
+                self.stateLabel.text = GDLanguageManager.titleByKey(key: "loading");
                 self.setupFrame()
-                self.logo.isHidden  = false
                 break;
                 
                 
                 
             case MJRefreshState.noMoreData:
-//                self.label.text = "-- 亲,你看完了 --";
-
-                self.label.text = GDLanguageManager.titleByKey(key: "noMoreData");
-                self.logo.isHidden = true
-                self.label.frame = self.bounds;
+                //                self.label.text = "-- 亲,你看完了 --";
+                
+                self.stateLabel.text = GDLanguageManager.titleByKey(key: "noMoreData");
+                self.stateLabel.frame = self.bounds;
                 break;
             default:
                 break;
             }
-
+            
             
         }
         get{
             return super.state
         }
-    
+        
     }
     
     //MARK: 监听scrollView的contentOffset改变
-
+    
     override func scrollViewContentOffsetDidChange(_ change: [AnyHashable : Any]!) {
         super.scrollViewContentOffsetDidChange(change)
         mylog("footer拖拽比例\(self.pullingPercent)")
@@ -147,14 +141,14 @@ class GDRefreshBackFooter: MJRefreshBackFooter {
     
     //MARK: 监听scrollView的拖拽状态改变
     
-//    override func scrollViewPanStateDidChange(_ change: [AnyHashable : Any]!) {
-//        super.scrollViewPanStateDidChange(change)
-//    }
+    //    override func scrollViewPanStateDidChange(_ change: [AnyHashable : Any]!) {
+    //        super.scrollViewPanStateDidChange(change)
+    //    }
     //MARK: 监听拖拽比例（控件被拖部分占footer的比例）
-   override var pullingPercent: CGFloat {//当值在0.0~1.0做数据操作
+    override var pullingPercent: CGFloat {//当值在0.0~1.0做数据操作
         set{
             super.pullingPercent = newValue
-//            mylog("\n\n\(self.pullingPercent)\n\n")
+            //            mylog("\n\n\(self.pullingPercent)\n\n")
         }
         get{
             return super.pullingPercent
@@ -164,5 +158,12 @@ class GDRefreshBackFooter: MJRefreshBackFooter {
     
     
     
-    
+    /*
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func draw(_ rect: CGRect) {
+        // Drawing code
+    }
+    */
+
 }

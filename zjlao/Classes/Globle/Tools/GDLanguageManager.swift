@@ -36,7 +36,7 @@ class GDLanguageManager: NSObject {
         //    UserDefaults.standard.set("LocalizableEN", forKey: "LanguageTableName")
         guard let LanguageTableNameAny = GDStorgeManager.standard.value(forKey: LLanguageTableName) else{return LFollowSystemLanguage}//如果取不到就返回跟随系统的语言table名
         guard let LanguageTableName  = LanguageTableNameAny as? String else {return LFollowSystemLanguage}//如果取不到就返回跟随系统的语言table名
-        mylog(LanguageTableName)
+//        mylog("当前语言为\(LanguageTableName)")
         return LanguageTableName//正常返回保存到偏好设置的语言包名
     }
 

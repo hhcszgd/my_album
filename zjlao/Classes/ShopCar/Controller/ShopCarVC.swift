@@ -44,9 +44,18 @@ class ShopCarVC: GDNormalVC {
         self.gotShopCarData(type: LoadDataType.initialize, { (model) in }) { (error ) in }
 
         self.view.backgroundColor = UIColor.green
-        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
-        self.tableView.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
-        
+//        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
+//        self.tableView.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
+        let images = [UIImage(named: "bg_collocation")!,UIImage(named: "bg_coupon")!,UIImage(named: "bg_Direct selling")!,UIImage(named: "bg_electric")!,UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
+         let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
+        header?.lastUpdatedTimeLabel.isHidden = true
+        header?.setImages(images , for: MJRefreshState.idle)
+        header?.setImages(images , for: MJRefreshState.refreshing)
+        self.tableView.mj_header = header
+        let footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+        footer?.setImages(images , for: MJRefreshState.idle)
+        footer?.setImages(images , for: MJRefreshState.refreshing)
+        self.tableView.mj_footer = footer
     }
     override func setupContentAndFrame() {
         self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_shopcar));  

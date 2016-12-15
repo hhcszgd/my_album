@@ -443,7 +443,7 @@ class CustomNaviBar: UIView {
             self.scrollView = scrollView
             self.originContentInset = scrollView.contentInset//有必要记录 , 刷新是会改变的
         }
-        mylog(scrollView.contentOffset)
+//        mylog(scrollView.contentOffset)
         if scrollView.contentOffset.y < -originContentInset.top {//下拉刷新部分
             //导航栏应处于原始状态
             self.gobackOriginStatus()

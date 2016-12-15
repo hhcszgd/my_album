@@ -111,6 +111,12 @@ class GDRefreshHeader: MJRefreshHeader {
     
     override func scrollViewContentOffsetDidChange(_ change: [AnyHashable : Any]!) {
         super.scrollViewContentOffsetDidChange(change)
+        mylog("header拖拽比例\(self.pullingPercent)")
+        if self.pullingPercent>0.5 {
+            logo.image = UIImage(named: "bg_electric")
+        }else if self.pullingPercent>1.0{
+            logo.image = UIImage(named: "bg_Direct selling")
+        }
     }
     
     //MARK: 监听scrollView的contentSize改变

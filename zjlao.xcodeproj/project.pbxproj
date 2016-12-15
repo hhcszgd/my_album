@@ -14,6 +14,8 @@
 		150869811DCC74E70001B6EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1508697F1DCC74E70001B6EF /* LaunchScreen.storyboard */; };
 		1508698C1DCC74E80001B6EF /* zjlaoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508698B1DCC74E80001B6EF /* zjlaoTests.swift */; };
 		150869971DCC74E80001B6EF /* zjlaoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150869961DCC74E80001B6EF /* zjlaoUITests.swift */; };
+		150890071E022CB600F4F763 /* GDRefreshGifHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150890061E022CB600F4F763 /* GDRefreshGifHeader.swift */; };
+		150890091E02425900F4F763 /* GDRefreshGifFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150890081E02425900F4F763 /* GDRefreshGifFooter.swift */; };
 		151DF54C1DE564400035EF18 /* GDSwitchModelMangager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */; };
 		1523AE201DCC8DDC00011F9A /* ClassifyNaviVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1523AD111DCC8DDC00011F9A /* ClassifyNaviVC.swift */; };
 		1523AE211DCC8DDC00011F9A /* ClassifyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1523AD121DCC8DDC00011F9A /* ClassifyVC.swift */; };
@@ -140,6 +142,8 @@
 		150869921DCC74E80001B6EF /* zjlaoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zjlaoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		150869961DCC74E80001B6EF /* zjlaoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zjlaoUITests.swift; sourceTree = "<group>"; };
 		150869981DCC74E80001B6EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		150890061E022CB600F4F763 /* GDRefreshGifHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDRefreshGifHeader.swift; sourceTree = "<group>"; };
+		150890081E02425900F4F763 /* GDRefreshGifFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDRefreshGifFooter.swift; sourceTree = "<group>"; };
 		151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSwitchModelMangager.swift; sourceTree = "<group>"; };
 		1523ABBA1DCC833B00011F9A /* zjlao-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "zjlao-Bridging-Header.h"; sourceTree = "<group>"; };
 		1523AD111DCC8DDC00011F9A /* ClassifyNaviVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassifyNaviVC.swift; sourceTree = "<group>"; };
@@ -630,6 +634,8 @@
 				1523AD501DCC8DDC00011F9A /* GDLocationManager.swift */,
 				1523AD511DCC8DDC00011F9A /* GDRefreshBackFooter.swift */,
 				1523AD521DCC8DDC00011F9A /* GDRefreshHeader.swift */,
+				150890061E022CB600F4F763 /* GDRefreshGifHeader.swift */,
+				150890081E02425900F4F763 /* GDRefreshGifFooter.swift */,
 				1523AD531DCC8DDC00011F9A /* SkipManager.swift */,
 				15EB0C011DCDC1610009640A /* GDCalculator.swift */,
 				15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */,
@@ -2368,8 +2374,10 @@
 				15EB0C021DCDC1610009640A /* GDCalculator.swift in Sources */,
 				1523AE341DCC8DDC00011F9A /* NSDate+Extension.swift in Sources */,
 				1523AE491DCC8DDC00011F9A /* SkipManager.swift in Sources */,
+				150890071E022CB600F4F763 /* GDRefreshGifHeader.swift in Sources */,
 				1523AE311DCC8DDC00011F9A /* ImgTxtView.swift in Sources */,
 				1523AE201DCC8DDC00011F9A /* ClassifyNaviVC.swift in Sources */,
+				150890091E02425900F4F763 /* GDRefreshGifFooter.swift in Sources */,
 				1523AE371DCC8DDC00011F9A /* UIColor+Extension.swift in Sources */,
 				1523AE461DCC8DDC00011F9A /* GDLocationManager.swift in Sources */,
 				1523AE531DCC8DDC00011F9A /* SettingVC.swift in Sources */,
