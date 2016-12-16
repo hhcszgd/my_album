@@ -37,13 +37,17 @@ class HomeVC: GDNormalVC  {
         }
         free(objc_property_tS)
     }
-    
+    func setupTableView() {
+        tableView.contentInset = UIEdgeInsets(top: NavigationBarHeight, left: 0, bottom: TabBarHeight, right: 0)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupTableView()
        self.testyyy()
         self.naviBar.backgroundColor  = UIColor.orange
         self.naviBar.currentBarActionType = .color//.alpha //.offset //
-        self.naviBar.layoutType = .desc
+        self.naviBar.layoutType = .asc
 //        NSLocalizedString(<#T##key: String##String#>, comment: <#T##String#>)//默认加载Localizable
 //        NSLocalizedString(<#T##key: String##String#>, tableName: <#T##String?#>, bundle: <#T##Bundle#>, value: <#T##String#>, comment: <#T##String#>)
         
@@ -75,11 +79,7 @@ class HomeVC: GDNormalVC  {
 //        qrvc.delegate = self
 //        self.navigationController?.pushViewController(qrvc, animated: true )
     }
-    func setupTableView() -> () {
-        mylog(tableView)
 
-//        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-    }
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -102,6 +102,8 @@ class HomeVC: GDNormalVC  {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tableView.allowsMultipleSelection = true
+        mylog(self.naviBar.isHidden)
+
 //                self.tableView.setEditing(true , animated: true )
     }
     
@@ -150,6 +152,5 @@ class HomeVC: GDNormalVC  {
         // Pass the selected object to the new view controller.
     }
     */
-
 
 }

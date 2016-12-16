@@ -22,8 +22,8 @@ class LaoVC: GDNormalVC {
     }
     func setupCollectionView() {
 //        collectoinView.collectionViewLayout
-        collectoinView.contentInset  = UIEdgeInsetsMake(NavigationBarHeight, 0, self.TabBarHeight, 0)
-        mylog(collectoinView)
+        collectionView.contentInset  = UIEdgeInsetsMake(NavigationBarHeight, 0, self.TabBarHeight, 0)
+        mylog(collectionView)
     }
     func jianbian()  {
         layer.startPoint = CGPoint(x: 0, y: 0.5)

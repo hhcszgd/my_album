@@ -9,26 +9,29 @@
 import UIKit
 import MJRefresh
 class GDRefreshGifHeader: MJRefreshGifHeader {
-    
+    //MARK:refresh  这个控件的高度是根据图片的像素数类定的 , 像素限制在40个点(注意2X和3X)
     override func prepare() {
+        mylog(self )
         super.prepare()
+        mylog(self )
         //设置控件的高度
+        self.mj_h = 70.0
         self.backgroundColor = UIColor.randomColor()
         self.stateLabel.backgroundColor = UIColor.randomColor()
         self.gifView.backgroundColor = UIColor.randomColor()
-        self.mj_h = 70.0
         //提示
         self.stateLabel.textColor = MainTitleColor
         self.stateLabel.font = UIFont.boldSystemFont(ofSize: 10)
         self.stateLabel.textAlignment = NSTextAlignment.center
         //图片
-//        gifView.contentMode = UIViewContentMode.scaleAspectFit//在这设置没用
+       gifView.contentMode = UIViewContentMode.scaleAspectFit//在这设置没用
 
 
         
     }
     //设置子控件的位置和尺寸
     override func placeSubviews() {
+        mylog(self )
         super.placeSubviews()
         self.setupFrame()
     }

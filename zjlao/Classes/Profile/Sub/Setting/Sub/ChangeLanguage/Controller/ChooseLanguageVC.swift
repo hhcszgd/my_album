@@ -34,8 +34,6 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
 
     func setupSubViews()  {
         self.tableView.contentInset = UIEdgeInsetsMake(NavigationBarHeight, 0, 0, 0)
-        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
-        self.tableView.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
         let margin : CGFloat = 20.0
         
         let btnW : CGFloat = GDDevice.width - margin * 2

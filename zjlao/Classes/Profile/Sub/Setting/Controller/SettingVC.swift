@@ -150,6 +150,10 @@ class SettingVC: GDNormalVC {
             UIApplication.shared.openURL(realUrl)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+            self.loginOutButton.isHidden = !Account.shareAccount.isLogin
+    }
     func clearCache(sender : RowView){
         mylog("清除缓存")
         SDImageCache.shared().clearMemory()
@@ -172,6 +176,10 @@ class SettingVC: GDNormalVC {
         let chooseLanguageVCModel = BaseModel(dict: nil)
         chooseLanguageVCModel.actionkey = "ChooseLuanguageVC"
         SkipManager.skip(viewController: self, model: chooseLanguageVCModel)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mylog(self.naviBar.isHidden)
     }
 
 }

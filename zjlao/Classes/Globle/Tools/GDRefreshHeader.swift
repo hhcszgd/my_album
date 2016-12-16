@@ -71,20 +71,20 @@ class GDRefreshHeader: MJRefreshHeader {
                 self.label.text = GDLanguageManager.titleByKey(key: "pullDownRefresh");
                 self.setupFrame()//貌似有必要了, 不然当状态为没有更多数据时 , 再手动设置状态为闲置状态时 , 没有加载图片
 
-                self.logo.isHidden =  true
+//                self.logo.isHidden =  true
                 break;
             case MJRefreshState.pulling:
 //                self.label.text = "松开立即刷新";
                 self.label.text = GDLanguageManager.titleByKey(key: "unloosenRefresh");
                 self.setupFrame()
-                self.logo.isHidden = true
+//                self.logo.isHidden = true
                 break;
 
             case MJRefreshState.refreshing:
 //                self.label.text = "刷新中...";
                 self.label.text = GDLanguageManager.titleByKey(key: "refreshing");
                 self.setupFrame()
-                self.logo.isHidden  = false
+//                self.logo.isHidden  = false
                 break;
                 
             case MJRefreshState.noMoreData:
@@ -112,11 +112,19 @@ class GDRefreshHeader: MJRefreshHeader {
     override func scrollViewContentOffsetDidChange(_ change: [AnyHashable : Any]!) {
         super.scrollViewContentOffsetDidChange(change)
         mylog("header拖拽比例\(self.pullingPercent)")
-        if self.pullingPercent>0.5 {
-            logo.image = UIImage(named: "bg_electric")
-        }else if self.pullingPercent>1.0{
-            logo.image = UIImage(named: "bg_Direct selling")
-        }
+//        if self.pullingPercent>0.5 {
+//            logo.image = UIImage(named: "bg_electric")
+//        }else if self.pullingPercent>0.6{
+//            logo.image = UIImage(named: "bg_female baby")
+//        }else if self.pullingPercent>0.7{
+//            logo.image = UIImage(named: "bg_coupon")
+//        }else if self.pullingPercent>0.8{
+//            logo.image = UIImage(named: "bg_franchise")
+//        }else if self.pullingPercent>0.9{
+//            logo.image = UIImage(named: "bg_collocation")
+//        }else if self.pullingPercent>1.0{
+//            logo.image = UIImage(named: "bg_Direct selling")
+//        }
     }
     
     //MARK: 监听scrollView的contentSize改变

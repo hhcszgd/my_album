@@ -14,38 +14,90 @@ enum VCType {
 }
 
 class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableViewDataSource ,UICollectionViewDelegate , UICollectionViewDataSource{
-    lazy var collectoinView: UICollectionView = {
+    private var  scrollViewType = ""
+    lazy var collectionView: UICollectionView = {
+        self.scrollViewType = "collect"
         let collect = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: UICollectionViewFlowLayout.init())
         self.view.addSubview(collect)
         collect.dataSource = self
         collect.delegate = self
         collect.register(UICollectionViewCell.self , forCellWithReuseIdentifier: "item")
         collect.frame = self.view.bounds
-        collect.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
-        collect.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
+//        collect.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
+//        collect.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
+        let images = [UIImage(named: "bg_collocation")!,UIImage(named: "bg_coupon")!,UIImage(named: "bg_Direct selling")!,UIImage(named: "bg_electric")!,UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
+        let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
+        header?.lastUpdatedTimeLabel.isHidden = true
+        header?.setImages(self.refreshImages , for: MJRefreshState.idle)
+        header?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
+        collect.mj_header = header
+        let footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+        footer?.setImages(self.refreshImages , for: MJRefreshState.idle)
+        footer?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
+        collect.mj_footer = footer
         return collect
     }()
     lazy var tableView : UITableView = {
+        self.scrollViewType = "table"
         let temp = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)//
+        self.view.addSubview(temp)
         temp.dataSource = self
         temp.delegate = self
         temp.frame = self.view.bounds
-        temp.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
-        temp.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
-        self.view.addSubview(temp)
+        
+//        temp.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction:  #selector(refresh))
+//        temp.mj_footer = GDRefreshBackFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
+        let images = [UIImage(named: "bg_collocation")!,UIImage(named: "bg_coupon")!,UIImage(named: "bg_Direct selling")!,UIImage(named: "bg_electric")!,UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
+        
+        
+        let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
+        header?.lastUpdatedTimeLabel.isHidden = true
+        header?.setImages(self.refreshImages , for: MJRefreshState.idle)
+        header?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
+        temp.mj_header = header
+        let footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+        footer?.setImages(self.refreshImages , for: MJRefreshState.idle)
+        footer?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
+        temp.mj_footer = footer
         return temp
     
     }()
-    //MARK:refresh
+    //MARK:refresh  这个控件的高度是根据图片的像素数类定的 , 像素限制在40个点(注意2X和3X)
 
-    
+    var   refreshImages:  [UIImage] = {
+        var images = [UIImage]()
+        for i in 1...34 {
+            let formateStr = NSString(format: "%02d", i)
+            let img = UIImage(named: "loading100\(formateStr)");
+            
+            if img != nil  {
+                images.append(img!)
+            }
+        }
+
+        mylog(images.count)
+        return images
+    }()
 
     func refresh ()  {
-//        self.tableView.mj_header.endRefreshing()
-//        self.tableView.mj_footer.state = MJRefreshState.idle
+        if self.scrollViewType == "collect" {
+            self.collectionView.mj_header.endRefreshing()
+            self.collectionView.mj_header.state = MJRefreshState.idle
+            self.collectionView.mj_footer.state = MJRefreshState.idle
+        }else if self.scrollViewType == "table"{
+            self.tableView.mj_header.endRefreshing()
+            self.tableView.mj_header.state = MJRefreshState.idle
+            self.tableView.mj_footer.state = MJRefreshState.idle
+        }
+
     }
     func loadMore ()  {
-//        self.tableView.mj_footer.endRefreshingWithNoMoreData()
+        if self.scrollViewType == "collect" {
+            self.collectionView.mj_footer.endRefreshingWithNoMoreData()
+        }else if self.scrollViewType == "table"{
+            self.tableView.mj_footer.endRefreshingWithNoMoreData()
+        }
+        
     }
 
     //MARK:collectViewDataSource
