@@ -62,6 +62,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         mgr.requestSerializer.setValue("1", forHTTPHeaderField: "VERSIONID")
         mgr.requestSerializer.setValue("20160501", forHTTPHeaderField: "VERSIONMINI")
         mgr.requestSerializer.setValue((UIDevice.current.identifierForVendor?.uuidString)!, forHTTPHeaderField: "DID")
+        mgr.responseSerializer.acceptableContentTypes = Set<String>(arrayLiteral: "application/json", "text/json", "text/javascript","text/html")
         //        mgr.requestSerializer.setValue("383B255B-87F7-466C-914A-0B1A35AA5DC3", forHTTPHeaderField: "DID")//先把UID写死
         
         

@@ -88,6 +88,8 @@
 		1523AE721DCC942500011F9A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE741DCC942500011F9A /* Localizable.strings */; };
 		1523AE781DCC94B300011F9A /* english.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1523AE771DCC94B300011F9A /* english.strings */; };
 		155191B81DFE49D50031FFD4 /* GDNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155191B71DFE49D50031FFD4 /* GDNetworkManager.swift */; };
+		156571491E08FA8E00383408 /* GDScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156571481E08FA8E00383408 /* GDScene.swift */; };
+		1565714B1E09062800383408 /* GDSKSceneA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1565714A1E09062800383408 /* GDSKSceneA.swift */; };
 		156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156858711DE2A077009DF996 /* GDNormalVC.swift */; };
 		1589F55B1DE6FE01007CE639 /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5591DE6FE01007CE639 /* jpush-ios-2.2.0.a */; };
 		1589F55D1DE6FEC8007CE639 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F55C1DE6FEC8007CE639 /* libresolv.tbd */; };
@@ -224,6 +226,8 @@
 		1523AE761DCC942700011F9A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1523AE771DCC94B300011F9A /* english.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = english.strings; sourceTree = "<group>"; };
 		155191B71DFE49D50031FFD4 /* GDNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNetworkManager.swift; sourceTree = "<group>"; };
+		156571481E08FA8E00383408 /* GDScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDScene.swift; sourceTree = "<group>"; };
+		1565714A1E09062800383408 /* GDSKSceneA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSKSceneA.swift; sourceTree = "<group>"; };
 		156858711DE2A077009DF996 /* GDNormalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNormalVC.swift; sourceTree = "<group>"; };
 		1589F5591DE6FE01007CE639 /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
 		1589F55A1DE6FE01007CE639 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
@@ -413,6 +417,8 @@
 		1523AD151DCC8DDC00011F9A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				156571481E08FA8E00383408 /* GDScene.swift */,
+				1565714A1E09062800383408 /* GDSKSceneA.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2400,6 +2406,7 @@
 				1523AE621DCC8E8900011F9A /* PCH.swift in Sources */,
 				1523AE2D1DCC8DDC00011F9A /* BaseTableView.swift in Sources */,
 				1523AE5B1DCC8DDC00011F9A /* ShopCarNaviVC.swift in Sources */,
+				1565714B1E09062800383408 /* GDSKSceneA.swift in Sources */,
 				1523AE401DCC8DDC00011F9A /* MainTabbar.swift in Sources */,
 				15E250D01DDEA73E004D4509 /* GDStorgeManager.swift in Sources */,
 				1523AE3D1DCC8DDC00011F9A /* LoginVC.swift in Sources */,
@@ -2449,6 +2456,7 @@
 				1523AE321DCC8DDC00011F9A /* RowView.swift in Sources */,
 				1523AE3F1DCC8DDC00011F9A /* CustomNaviBar.swift in Sources */,
 				1523AE4C1DCC8DDC00011F9A /* LaoNaviVC.swift in Sources */,
+				156571491E08FA8E00383408 /* GDScene.swift in Sources */,
 				1523AE2B1DCC8DDC00011F9A /* BaseCell.swift in Sources */,
 				1523AE221DCC8DDC00011F9A /* Account.swift in Sources */,
 			);

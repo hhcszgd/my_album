@@ -103,7 +103,8 @@ class HomeVC: GDNormalVC  {
         super.viewDidAppear(animated)
         self.tableView.allowsMultipleSelection = true
         mylog(self.naviBar.isHidden)
-
+//        KeyVC.share.mainTabbarVC?.selectedIndex = 2
+//        KeyVC.share.selectChildViewControllerIndex(index: 2)
 //                self.tableView.setEditing(true , animated: true )
     }
     

@@ -21,8 +21,15 @@ class LoginVC: GDNormalVC {
         self.attritNavTitle = NSAttributedString(string: "登录")
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.randomColor()
+        let btn  = UIButton(type: UIButtonType.contactAdd)
+        self.naviBar.leftBarButtons = [btn]
+        btn.addTarget(self , action: #selector(click), for: UIControlEvents.touchUpInside)
+        
     }
-
+    func click () {
+        mylog("sadfasd")
+        self.navigationController?.dismiss(animated: true , completion: nil )
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -37,7 +37,7 @@ class SettingVC: GDNormalVC {
             let rowView = RowView.init(frame: CGRect.zero)
             self.topComtaier.addSubview(rowView)
         }
-        self.versionLabel.font = UIFont.systemFont(ofSize: 12*SCALE)
+        self.versionLabel.font = GDFont.systemFont(ofSize: 12)//UIFont.systemFont(ofSize: 12*SCALE)
         self.versionLabel.textColor = SubTitleColor
         self.view.addSubview(self.versionLabel)
 
@@ -62,7 +62,7 @@ class SettingVC: GDNormalVC {
         for (index , rowView) in self.topComtaier.subviews.enumerated() {
             if let rowView  = rowView as? RowView {
                 rowView.frame  =  CGRect(x: 0, y: (lineH+margin)*CGFloat(index), width: GDDevice.width, height: lineH)
-                rowView.titleLabel.font = UIFont.systemFont(ofSize: 12*SCALE)
+                rowView.titleLabel.font = GDFont.systemFont(ofSize: 12)//UIFont.systemFont(ofSize: 12*SCALE)
                 if index == 0{//消息通知
                     //                self.switchButton.center = CGPoint(x: screenW - 10 - self.switchButton.bounds.width, y: (rowView.bounds.size.height - self.switchButton.bounds.size.height ) * 0.5)//自定义控件缺陷,center 无效 , 只能用frame
                     self.switchButton.frame = CGRect(x: GDDevice.width - 10 - self.switchButton.bounds.size.width, y: (rowView.bounds.size.height - self.switchButton.bounds.size.height)*0.5, width: self.switchButton.bounds.size.width, height: self.switchButton.bounds.size.height)

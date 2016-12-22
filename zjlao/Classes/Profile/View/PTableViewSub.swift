@@ -45,7 +45,7 @@ class PTableViewSub: BaseControl {
         self.container.addSubview(self.imageView)
         self.imageView.contentMode = UIViewContentMode.scaleAspectFit
         
-        self.subTitleLabel.font = UIFont.systemFont(ofSize: 14*SCALE)
+        self.subTitleLabel.font = GDFont.systemFont(ofSize: 14) //UIFont.systemFont(ofSize: 14*SCALE)
         self.subTitleLabel.textColor = MainTitleColor
         self.subTitleLabel.textAlignment = NSTextAlignment.center
         

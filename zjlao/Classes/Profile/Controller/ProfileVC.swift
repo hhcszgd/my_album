@@ -8,7 +8,7 @@
 //TODO: 消息按钮 固定不随tableView滚动
 import UIKit
 
-class ProfileVC: UIViewController ,ActionDelegate {
+class ProfileVC: BaseVC ,ActionDelegate {
     let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: GDDevice.width, height: GDDevice.height), style: UITableViewStyle.plain)
     var tableHeaderData : [AnyObject] {
         get{

@@ -46,7 +46,7 @@ class ImgTxtView: BaseControl {
         self.container.addSubview(self.imageView)
         self.imageView.contentMode = UIViewContentMode.scaleAspectFit
        
-        self.subTitleLabel.font = UIFont.systemFont(ofSize: 14*SCALE)
+        self.subTitleLabel.font = GDFont.systemFont(ofSize: 14)//UIFont.systemFont(ofSize: 14*SCALE)
         self.subTitleLabel.textColor = UIColor.white
         self.subTitleLabel.textAlignment = NSTextAlignment.center
         self.container.addSubview(self.subTitleLabel)

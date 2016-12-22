@@ -74,7 +74,7 @@ class RowView: BaseControl {
         
         self.titleLabel.textColor = UIColor.darkGray
         self.subTitleLabel.textColor = UIColor.lightGray
-        self.subTitleLabel.font = UIFont.systemFont(ofSize: 13*SCALE)
+        self.subTitleLabel.font = GDFont.systemFont(ofSize: 13)//UIFont.systemFont(ofSize: 13*SCALE)
         //        self.addSubview(<#T##view: UIView##UIView#>)
     }
     

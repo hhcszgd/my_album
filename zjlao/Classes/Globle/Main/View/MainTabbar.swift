@@ -28,6 +28,17 @@ class MainTabbar: UITabBar {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        for (index ,item)  in self.items!.enumerated() {
+            mylog(item)
+            if index == 2  {
+                item.imageInsets = UIEdgeInsetsMake(-14, 0, 14, 0)
+                item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -26)
+            }
+            
+        }
+    }
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

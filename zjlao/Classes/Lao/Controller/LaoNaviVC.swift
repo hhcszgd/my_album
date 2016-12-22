@@ -13,18 +13,23 @@ class LaoNaviVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(LaoNaviVC.languageChanged), name: GDLanguageChanged, object: nil)
-        self.tabBarItem.image = UIImage(named: "tab_lao_normal")
-        self.tabBarItem.selectedImage = UIImage(named: "tab_lao_click")
-        self.navigationBar.isHidden = true;
+       // self.tabBarItem.image = UIImage(named: "tab_lao_normal")
+//        self.tabBarItem.selectedImage = UIImage(named: "tab_lao_click")
+
+       self.tabBarItem.selectedImage  =  UIImage(named: gotResourceInSubBundle("mg", type: "gif", directory: "face_img")!)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBarItem.image = UIImage(named: gotResourceInSubBundle("dx", type: "gif", directory: "face_img")!)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+            self.navigationBar.isHidden = true;
 
 //        self.tabBarItem.title = "lao"
 //        self.tabBarItem.title = NSLocalizedString("tabBar_lao", tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "")
 
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_lao)  // gotTitleStr(key: "tabBar_lao")
+//        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_lao)  // gotTitleStr(key: "tabBar_lao")
+        self.tabBarItem.title = "🌱🌱🌱"
         // Do any additional setup after loading the view.
     }
     func languageChanged() {
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_lao)  // gotTitleStr(key: "tabBar_lao")
+//        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_lao)  // gotTitleStr(key: "tabBar_lao")
+        self.tabBarItem.title = "🌱🌱🌱"
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

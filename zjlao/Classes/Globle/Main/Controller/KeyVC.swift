@@ -14,9 +14,9 @@ import UIKit
 
 class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate  {
     
+    var priviousVC = UINavigationController() //记录上一次控制器
     var mainTabbarVC : MainTabbarVC? {
     
-        
         if self.childViewControllers.count > 0 {
             if let vc = self.childViewControllers[0] as? MainTabbarVC{
                 return vc
@@ -28,7 +28,6 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         }
     
     }
-    
     weak var keyVCDelegate : AfterChangeLanguageKeyVCDidApear?
     static let share: KeyVC = {
         let tempMainTabbarVC = MainTabbarVC()
@@ -113,7 +112,11 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
     }
     
     //MARK: tabbarViewControllerDelegate
+
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool{
+         self.priviousVC = self.mainTabbarVC?.selectedViewController as! UINavigationController //记录上一次控制器
+
+        mylog(viewController)
         
         guard  let _ =  viewController as? ShopCarNaviVC else {  return true}
         
@@ -122,17 +125,55 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         }else{
             let loginVC = LoginVC()
             loginVC.loginDelegate = self
-            let loginNaviVC = UINavigationController.init(rootViewController: loginVC)
+            let loginNaviVC = LoginNaviVC.init(rootViewController: loginVC)
             loginNaviVC.navigationBar.isHidden = true
             UIApplication.shared.keyWindow!.rootViewController!.present(loginNaviVC, animated: true, completion: nil)
             return false
         }
+        
+        
        
     }
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController){
+        if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: HomeVaviVC.self) {
+            if bool && self.priviousVC == viewController{
+                
+                mylog("发送首页重复点击通知")
+            }
+        }
+        if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: ClassifyNaviVC.self) {
+            if bool && self.priviousVC == viewController {
+                
+                mylog("发送分类重复点击通知")
+            }
+        }
+        if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: LaoNaviVC.self) {
+            if bool && self.priviousVC == viewController {
+                
+                mylog("发送lao重复点击通知")
+            }
+        }
+        if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: ShopCarNaviVC.self) {
+            if bool && self.priviousVC == viewController {
+                
+                mylog("发送购物车重复点击通知")
+            }
+        }
+        if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: ProfileNaviVC.self) {
+            if bool && self.priviousVC == viewController {
+                
+                mylog("发送我的重复点击通知")
+            }
+        }
+        
+        mylog(self.mainTabbarVC?.selectedViewController)
+    }
+    
      public func tabBarController(_ tabBarController: UITabBarController, animationControllerForTransitionFrom fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?{
         let ani : TabBarVCAnimat = TabBarVCAnimat()
-        mylog(fromVC)
-        mylog(toVC)
+        //mylog(fromVC)
+        //mylog(toVC)
+        //mylog(self.mainTabbarVC?.selectedViewController)
         return ani
     }
     
@@ -163,10 +204,9 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
             if Account.shareAccount.isLogin {
                 mainTabbarVC?.selectedIndex = selectedIndex
             }else{
-//                let loginVC = LoginVC(vcType: VCType.withBackButton)
                 let loginVC = LoginVC()
                 loginVC.loginDelegate = self
-                let loginNaviVC = UINavigationController.init(rootViewController: loginVC)
+                let loginNaviVC = LoginNaviVC.init(rootViewController: loginVC)
                 UIApplication.shared.keyWindow!.rootViewController!.present(loginNaviVC, animated: true, completion: nil)
                 
             }

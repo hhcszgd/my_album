@@ -62,7 +62,7 @@ class SkipManager: NSObject {
             mylog("执行登录操作")
 //            let loginVC = LoginVC(vcType: VCType.withBackButton)
             let loginVC = LoginVC()
-            let loginNaviVC = UINavigationController(rootViewController: loginVC)
+            let loginNaviVC = LoginNaviVC(rootViewController: loginVC)
             loginNaviVC.navigationBar.isHidden = true
              viewController.navigationController?.present(loginNaviVC, animated: true, completion: nil)
             return
@@ -87,3 +87,5 @@ class SkipManager: NSObject {
     }
     
 }
+
+

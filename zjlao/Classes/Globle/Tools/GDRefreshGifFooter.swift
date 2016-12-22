@@ -131,7 +131,7 @@ class GDRefreshGifFooter: MJRefreshBackGifFooter {
     
     override func scrollViewContentOffsetDidChange(_ change: [AnyHashable : Any]!) {
         super.scrollViewContentOffsetDidChange(change)
-        mylog("footer拖拽比例\(self.pullingPercent)")
+        //mylog("footer拖拽比例\(self.pullingPercent)")
     }
     
     //MARK: 监听scrollView的contentSize改变

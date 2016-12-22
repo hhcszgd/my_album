@@ -127,7 +127,7 @@ class PTableHeaderView: BaseView{
         iconContainer.addSubview(levelImg)
 //        levelImg.backgroundColor = UIColor.randomColor()
 //        name.backgroundColor = UIColor.randomColor()
-        name.font = UIFont.systemFont(ofSize: 14*SCALE)
+        name.font = GDFont.systemFont(ofSize: 14)//UIFont.systemFont(ofSize: 14*SCALE)
         name.textColor = UIColor.white
     }
     override func layoutSubviews() {
@@ -148,21 +148,32 @@ class PTableHeaderView: BaseView{
         let backImgViewY : CGFloat = -(backImgViewH - self.bounds.size.height)
         self.backImageView.frame = CGRect(x: backImgViewX, y: backImgViewY, width: backImgViewW, height: backImgViewH)
         
-        iconContainer.bounds = CGRect(x: 0, y: 0, width: 66 * SCALE, height: 66 * SCALE)
+//        iconContainer.bounds = CGRect(x: 0, y: 0, width: 66 * SCALE, height: 66 * SCALE)
+//        iconContainer.center = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2)
+//        icon.frame = iconContainer.bounds
+//        levelImg.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+//        levelImg.center = self.test(66*SCALE)
+//        
+//        icon.layer.cornerRadius = 66.0 * SCALE / 2
+//        icon.layer.masksToBounds = true
+//        
+//        levelImg.layer.cornerRadius = 20.0 * SCALE / 2
+        iconContainer.bounds = CGRect(x: 0, y: 0, width: GDCalculator.GDAdaptation(66), height: GDCalculator.GDAdaptation(66))
         iconContainer.center = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2)
         icon.frame = iconContainer.bounds
         levelImg.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-        levelImg.center = self.test(66*SCALE)
+        levelImg.center = self.test(GDCalculator.GDAdaptation(66))
         
-        icon.layer.cornerRadius = 66.0 * SCALE / 2
+        icon.layer.cornerRadius = GDCalculator.GDAdaptation(66) / 2
         icon.layer.masksToBounds = true
         
-        levelImg.layer.cornerRadius = 20.0 * SCALE / 2
+        levelImg.layer.cornerRadius = GDCalculator.GDAdaptation(22) / 2
+        
         levelImg.layer.masksToBounds = true
         name.sizeToFit()
         name.center = CGPoint(x: self.bounds.size.width/2, y: iconContainer.frame.maxY + name.bounds.size.height/2)
         let menuW = self.bounds.size.width
-        let menuH = 44 * SCALE
+        let menuH = GDCalculator.GDAdaptation(44)//44 * SCALE
         let menuX : CGFloat = 0.0
         let menuY = self.bounds.size.height - menuH
         

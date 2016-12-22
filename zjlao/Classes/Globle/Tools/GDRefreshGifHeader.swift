@@ -107,7 +107,7 @@ class GDRefreshGifHeader: MJRefreshGifHeader {
     override func scrollViewContentOffsetDidChange(_ change: [AnyHashable : Any]!) {
         super.scrollViewContentOffsetDidChange(change)
 //        mylog("header拖拽比例\(self.pullingPercent)")
-        mylog("header拖拽比例\(self.gifView.frame)")
+        //mylog("header拖拽比例\(self.gifView.frame)")
 //        if self.pullingPercent>0.5 {
 //            gifView.image = UIImage(named: "bg_electric")
 //        }else if self.pullingPercent>1.0{

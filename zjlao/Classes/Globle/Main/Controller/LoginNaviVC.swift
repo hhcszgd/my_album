@@ -12,8 +12,17 @@ class LoginNaviVC: UINavigationController {
 
 
     
-    convenience init(rootVC: UIViewController) {
-        self.init(rootViewController: rootVC)
+    /// 自定义便利构造方法
+    ///
+    /// - Parameter rootVC: 跟控制器 , 可为空
+    convenience init(rootVC: UIViewController?) {
+        if rootVC == nil   {
+            
+            let loginvc = LoginVC.init()
+            self.init(rootViewController: loginvc)
+        }else {
+            self.init(rootViewController: rootVC!)
+        }
     }
     
     override func viewDidLoad() {
@@ -26,7 +35,9 @@ class LoginNaviVC: UINavigationController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    deinit {
+        mylog("登录页面销毁")
+    }
 
     /*
     // MARK: - Navigation

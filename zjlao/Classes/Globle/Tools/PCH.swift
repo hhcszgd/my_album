@@ -188,20 +188,6 @@ public func mylog <T>(_ message: T, fileName: String = #file, methodName: String
     #endif
 }
 
-//MARK:获取宽高比
-var SCALE : CGFloat  {
-    get{
-        if (GDDevice.width>375.0) {
-            return 1.104000;
-        } else if (GDDevice.width<321) {
-            return 0.853333;
-        }else {
-            return 1 ;
-        }
-
-    }
-
-}
 
 //MARK: 直接从Resource中获取文件
 

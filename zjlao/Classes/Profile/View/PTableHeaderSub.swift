@@ -47,8 +47,8 @@ class PTableHeaderSub: BaseControl {
         self.addSubview(self.imageView)
         self.imageView.contentMode = UIViewContentMode.scaleAspectFit
         self.titleLabel.textAlignment = NSTextAlignment.center
-        self.titleLabel.font = UIFont.systemFont(ofSize: 14*SCALE)
-        self.subTitleLabel.font = UIFont.systemFont(ofSize: 14*SCALE)
+        self.titleLabel.font = GDFont.systemFont(ofSize: 14) // UIFont.systemFont(ofSize: 14*SCALE)
+        self.subTitleLabel.font =  GDFont.systemFont(ofSize: 14)//UIFont.systemFont(ofSize: 14*SCALE)
         self.titleLabel.textColor = UIColor.white
         self.subTitleLabel.textColor = UIColor.white
         self.subTitleLabel.textAlignment = NSTextAlignment.center

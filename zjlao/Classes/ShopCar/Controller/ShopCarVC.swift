@@ -21,6 +21,7 @@ class ShopCarVC: GDNormalVC {
     let messageBtn  = UIButton(imageName: "message", backImage: nil)
     let shopDict = [String :AnyObject]()
     let goodDict = [String :AnyObject]()
+    var datas = [0]
     
     func operatorTheSelectGoodOrShop(model: [String :AnyObject]) -> () {
         
@@ -64,7 +65,13 @@ class ShopCarVC: GDNormalVC {
         self.tableView.mj_footer.state = MJRefreshState.idle
     }
     override func loadMore ()  {
-        self.tableView.mj_footer.endRefreshingWithNoMoreData()
+        //self.tableView.mj_footer.endRefreshingWithNoMoreData()
+        self.tableView.mj_footer.state = MJRefreshState.idle
+        for _  in 0...4 {
+            
+            self.datas.append( self.datas.last ?? 0 + 1   )
+        }
+        self.tableView.insertRows(at: [IndexPath(row: self.datas.count-5, section: 0),IndexPath(row: self.datas.count-4, section: 0),IndexPath(row: self.datas.count-3, section: 0),IndexPath(row: self.datas.count-2, section: 0),IndexPath(row: self.datas.count-1, section: 0)], with: UITableViewRowAnimation.fade)
     }
     func setupNavigationBar() {
         
@@ -79,7 +86,7 @@ class ShopCarVC: GDNormalVC {
         
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 27
+        return self.datas.count
     }
     //MARK: tableViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -102,8 +109,8 @@ class ShopCarVC: GDNormalVC {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let currentStr = "\(indexPath.row)"
         if  let _ = self.choosedIndexPaths[currentStr] {
-            return 66
-        }else{return 33}
+            return 88
+        }else{return 66}
         
     }
     //MARK:网络请求方法(初始化,刷新,加载更多)
@@ -151,6 +158,8 @@ class ShopCarVC: GDNormalVC {
         
         
     }
+    
+
     /*
     // MARK: - Navigation
 

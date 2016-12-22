@@ -13,14 +13,20 @@
  }
  */
 
-
+/*0
+ 
+ 添加隐藏后或者显示后的代理
+ 添加根据contentOffset的驱使渐变
+ */
 
 import UIKit
 
 @objc protocol CustomNaviBarDelegate {
     func popToPreviousVC() -> Void
 }
-
+protocol CustomnaviBarStatusDelegate {
+    func navigationBarHasChanged(status :  NaviBarStatus) -> Void
+}
 enum LayoutType {
     case desc/*下降的*/ // 监听属性 , 当这个被赋值时 , navibarstatus初始状态必须是消失状态
     case asc /*ascending上升的*/ // 监听属性 , 当这个被赋值时 , navibarstatus初始状态必须是正常状态状态
@@ -57,6 +63,16 @@ enum NaviBarStatus {
     case changing
     case disapear
 }
+
+/// 导航栏过渡的类型
+///
+/// - immediately: 导航栏的状态 在contentOffset达到某个值时立刻改变 , 默认
+/// - gradually: 导航栏的状态根据contentOffset的改变而渐渐的改变
+enum TransitionType  {
+    case immediately
+    case gradually
+}
+
 class CustomNaviBar: UIView {
     
     var  currentType : NaviBarStyle  = NaviBarStyle.withBackBtn{
@@ -67,31 +83,41 @@ class CustomNaviBar: UIView {
         willSet{}
         didSet{}
     }
+    var transitionType = TransitionType.immediately{
+        didSet{ }
+    
+    }
     
     var layoutType = LayoutType.asc{
         willSet {}
         didSet{
-            if layoutType == .asc {
-                self.currentBarStatus = .normal
-                if currentBarActionType == .offset {//只有移动是一点驱动
-                    self.frame = self.originFrame
-                }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
-                    self.alpha = self.originAlpha
-                    
-                }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
-                    self.backgroundColor = self.originColorAlpha
+            if self.transitionType == TransitionType.immediately {
+                if layoutType == .asc {
+                    self.currentBarStatus = .normal
+                    if currentBarActionType == .offset {//只有移动是一点驱动
+                        self.frame = self.originFrame
+                    }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
+                        self.alpha = self.originAlpha
+                        
+                    }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
+                        self.backgroundColor = self.originColorAlpha
+                    }
+                }else if (layoutType == .desc){
+                    self.currentBarStatus = .disapear
+                    if currentBarActionType == .offset {//只有移动是一点驱动
+                        self.frame = self.targetFrame
+                    }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
+                        self.alpha = self.targetAlpha
+                        
+                    }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
+                        self.backgroundColor = self.targetColorAlpha
+                    }
                 }
-            }else if (layoutType == .desc){
-                self.currentBarStatus = .disapear
-                if currentBarActionType == .offset {//只有移动是一点驱动
-                    self.frame = self.targetFrame
-                }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
-                    self.alpha = self.targetAlpha
-                    
-                }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
-                    self.backgroundColor = self.targetColorAlpha
-                }
+            } else if self.transitionType == TransitionType.gradually{
+//MARK:             todo something
             }
+            
+            
         }
     }
     
@@ -434,61 +460,99 @@ class CustomNaviBar: UIView {
     
     /// 动态改变导航栏状态
     ///
-    /// - parameter offset: 0~1的偏移指数
+    /// - parameter scrollView: 滚动视图
+    
     var previousOffset : CGFloat = 0
     var scrollView : UIScrollView = UIScrollView()
     var originContentInset = UIEdgeInsets.zero
     func change(by scrollView : UIScrollView) {
-        if self.scrollView != scrollView {
-            self.scrollView = scrollView
-            self.originContentInset = scrollView.contentInset//有必要记录 , 刷新是会改变的
-        }
 //        mylog(scrollView.contentOffset)
-        if scrollView.contentOffset.y < -originContentInset.top {//下拉刷新部分
-            //导航栏应处于原始状态
-            self.gobackOriginStatus()
-            if (self.layoutType == .desc ){
-                if self.currentBarActionType == .color  {
-                    self.alpha = 0
-                }else if (self.currentBarActionType == .offset ){ /*暂时没用,目前需求不可能刷新时让navibar移除,留出大片空间*/
-                }else if (self.currentBarActionType == .alpha){/*暂时没用,目前需求不可能一开始就透明*/}
+        if self.transitionType == TransitionType.immediately{
+            if self.scrollView != scrollView {
+                self.scrollView = scrollView
+                self.originContentInset = scrollView.contentInset//有必要记录 , 刷新是会改变的
             }
-        }else  if scrollView.contentOffset.y >= -originContentInset.top && scrollView.contentOffset.y <= 0 {//inset.top范围
-            mylog(scrollView.contentOffset.y)
-            mylog(scrollView.contentInset.top)
-            //导航栏应处于原始状态
-            self.gobackOriginStatus()
-            if self.layoutType == .desc  && self.alpha <= 0.0{
-                if self.currentBarActionType == .color {
-                    self.alpha = 1
-                    self.backgroundColor = targetColorAlpha
+    //        mylog(scrollView.contentOffset)
+            if scrollView.contentOffset.y < -originContentInset.top {//下拉刷新部分
+                mylog("下拉刷新部分")
+                //导航栏应处于原始状态
+                self.gobackOriginStatus()
+                if (self.layoutType == .desc ){
+                    if self.currentBarActionType == .color  {
+                        self.alpha = 0
+                    }else if (self.currentBarActionType == .offset ){ /*暂时没用,目前需求不可能刷新时让navibar移除,留出大片空间*/
+                    }else if (self.currentBarActionType == .alpha){/*暂时没用,目前需求不可能一开始就透明*/}
                 }
-            }
-        }else if (scrollView.contentOffset.y > 0 && scrollView.contentOffset.y <= scrollView.contentSize.height - scrollView.bounds.size.height){//正常范围
-            let temp = self.currentBarActionType
-            if self.layoutType == .desc  && self.alpha <= 0.0{
-                if self.currentBarActionType == .color {
-                    self.currentBarActionType = .other
-                }
-            }
-            if currentBarActionType == .offset {//只有移动是一点驱动
-                self.changeOffsetWith(scrollView: scrollView)
-            }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
-                self.changeAlpha(scrollView: scrollView)
-            }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
-                self.changeBackgroundColorAlpha(scrollView: scrollView)
-            }else if (self.currentBarActionType == .other){
-                if self.layoutType == .desc && self.alpha <= 0.0{
-                    if temp == .color {
+            }else  if scrollView.contentOffset.y >= -originContentInset.top && scrollView.contentOffset.y <= 0 {//inset.top范围
+                mylog("inset.top范围")
+//                mylog(scrollView.contentOffset.y)
+//                mylog(scrollView.contentInset.top)
+                //导航栏应处于原始状态
+                self.gobackOriginStatus()
+                if self.layoutType == .desc  && self.alpha <= 0.0{
+                    if self.currentBarActionType == .color {
                         self.alpha = 1
                         self.backgroundColor = targetColorAlpha
                     }
                 }
+            }else if (scrollView.contentOffset.y > 0 && scrollView.contentOffset.y <= scrollView.contentSize.height - scrollView.bounds.size.height){//正常范围
+                mylog("正常范围")
+                let temp = self.currentBarActionType
+                if self.layoutType == .desc  && self.alpha <= 0.0{
+                    if self.currentBarActionType == .color {
+                        self.currentBarActionType = .other
+                    }
+                }
+                if currentBarActionType == .offset {//只有移动是一点驱动
+                    self.changeOffsetWith(scrollView: scrollView)
+                }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
+                    self.changeAlpha(scrollView: scrollView)
+                }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
+                    self.changeBackgroundColorAlpha(scrollView: scrollView)
+                }else if (self.currentBarActionType == .other){
+                    if self.layoutType == .desc && self.alpha <= 0.0{
+                        if temp == .color {
+                            self.alpha = 1
+                            self.backgroundColor = targetColorAlpha
+                        }
+                    }
+                }
+                self.currentBarActionType  = temp
+                
+            }else if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height &&  scrollView.contentOffset.y <= scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom){//inset.bottom范围
+                mylog("inset.bottom范围")
+                
+                let temp = self.currentBarActionType
+                if self.layoutType == .desc  && self.alpha <= 0.0{
+                    if self.currentBarActionType == .color {
+                        self.currentBarActionType = .other
+                    }
+                }
+                if currentBarActionType == .offset {//只有移动是一点驱动
+                    self.changeOffsetWith(scrollView: scrollView)
+                }else if(currentBarActionType == .alpha){//这个是根据fload来实现渐变
+                    self.changeAlpha(scrollView: scrollView)
+                }else if(currentBarActionType == .color){//这个是根据fload来实现渐变
+                    self.changeBackgroundColorAlpha(scrollView: scrollView)
+                }else if (self.currentBarActionType == .other){
+                    if self.layoutType == .desc && self.alpha <= 0.0{
+                        if temp == .color {
+                            self.alpha = 1
+                            self.backgroundColor = targetColorAlpha
+                        }
+                    }
+                }
+                self.currentBarActionType  = temp
+                
+                
+                
+            }else if (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom){//上拉加载部分
+                mylog("上拉加载部分")
             }
-            self.currentBarActionType  = temp
-            
-        }else if (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height &&  scrollView.contentOffset.y < scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom){//inset.bottom范围
-        }else if (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom){//上拉加载部分
+        }else if self.transitionType == TransitionType.gradually {
+        
+        
+        
         }
         
     }
