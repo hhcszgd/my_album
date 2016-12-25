@@ -19,6 +19,11 @@ enum LoadDataType {
 }
 //MARK: swift3.0.1通知名字
 let GDLanguageChanged = NSNotification.Name(rawValue:"languageChanged")
+let GDHomeTabBarReclick = NSNotification.Name("GDHomeTabBarReclick")
+let GDClassifyTabBarReclick = NSNotification.Name("GDClassifyTabBarReclick")
+let GDLaoTabBarReclick = NSNotification.Name("GDLaoTabBarReclick")
+let GDShopcarTabBarReclick = NSNotification.Name("GDShopcarTabBarReclick")
+let GDProfileTabBarReclick = NSNotification.Name("GDProfileTabBarReclick")
 //MARK: notificationName
 let LoginSuccess = "LoginSuccess"
 let LoginOutSuccess = "LoginOutSuccess"

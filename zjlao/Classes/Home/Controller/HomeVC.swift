@@ -9,11 +9,12 @@
 import UIKit
 import MBProgressHUD
 import AFNetworking
+import MJRefresh
 class HomeVC: GDNormalVC  {
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        self.viewDidLoad()
-    }
+    //override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    //    self.viewDidLoad()
+    //}
 
     func testxxx() {
         var count: UInt32 = 0
@@ -43,17 +44,27 @@ class HomeVC: GDNormalVC  {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupTableView()
+        self.tabBarItem.badgeValue = "345"
+        mylog(self.tabBarItem.badgeValue)
        self.testyyy()
+        self.setupNaviBar()
+        self.setupTableView()
+        self.setupNotification()
+        // Do any additional setup after loading the view.
+    }
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self , selector: #selector(homeTabBarReclick), name: GDHomeTabBarReclick, object: nil)
+    }
+    func setupNaviBar (){
         self.naviBar.backgroundColor  = UIColor.orange
         self.naviBar.currentBarActionType = .color//.alpha //.offset //
         self.naviBar.layoutType = .asc
-//        NSLocalizedString(<#T##key: String##String#>, comment: <#T##String#>)//默认加载Localizable
-//        NSLocalizedString(<#T##key: String##String#>, tableName: <#T##String?#>, bundle: <#T##Bundle#>, value: <#T##String#>, comment: <#T##String#>)
+        //        NSLocalizedString(<#T##key: String##String#>, comment: <#T##String#>)//默认加载Localizable
+        //        NSLocalizedString(<#T##key: String##String#>, tableName: <#T##String?#>, bundle: <#T##Bundle#>, value: <#T##String#>, comment: <#T##String#>)
         
-//        self.title = NSLocalizedString("tabBar_home", tableName: nil, bundle: Bundle.main, value:"", comment: "")
+        //        self.title = NSLocalizedString("tabBar_home", tableName: nil, bundle: Bundle.main, value:"", comment: "")
         self.view.backgroundColor = UIColor.randomColor()
-
+        
         
         
         let leftBtn1 = UIButton(type: UIButtonType.contactAdd)
@@ -64,12 +75,14 @@ class HomeVC: GDNormalVC  {
         navTitleView.backgroundColor = UIColor.randomColor()
         navTitleView.insets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10);
         naviBar.navTitleView = navTitleView
-        
-        self.setupTableView()
-        
-        
         leftBtn1.addTarget(self, action: #selector(qrScanner), for: UIControlEvents.touchUpInside)
-        // Do any additional setup after loading the view.
+
+        
+    }
+    func homeTabBarReclick()  {
+        //self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+        self.tableView.mj_header.state = MJRefreshState.refreshing
+
     }
     func qrScanner()  {
         let model = BaseModel.init(dict: ["actionkey" : "QRCodeScannerVC" as AnyObject])
@@ -101,11 +114,21 @@ class HomeVC: GDNormalVC  {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.tableView.allowsMultipleSelection = true
-        mylog(self.naviBar.isHidden)
+//        self.tableView.allowsMultipleSelection = true
+//mylog(self.naviBar.isHidden)
+        //self.tabBarItem.badgeValue = "432"
+//mylog("首页的tabBarItem\(self.tabBarItem!)")
+      //  self.tabBarController?.tabBarItem.badgeValue = "444"
+//        self.tabBarController?.tabBar.selectedItem?.badgeValue = "ddd"
+        //self.tabBarController?.tabBar.items?.last?.badgeValue = "ff"
 //        KeyVC.share.mainTabbarVC?.selectedIndex = 2
 //        KeyVC.share.selectChildViewControllerIndex(index: 2)
 //                self.tableView.setEditing(true , animated: true )
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.scrollToNearestSelectedRow(at: UITableViewScrollPosition.middle, animated: true)
+
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -153,5 +176,7 @@ class HomeVC: GDNormalVC  {
         // Pass the selected object to the new view controller.
     }
     */
-
+     deinit  {
+        NotificationCenter.default.removeObserver(self)
+    }
 }

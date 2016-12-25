@@ -24,6 +24,7 @@ class ClassifyVC: GDNormalVC {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.yellow
         self.setupSence()
+        self.setupNotification()
 //        self.title = NSLocalizedString("tabBar_classify", tableName: nil, bundle: Bundle.main, value:"", comment: "")
 //        UIColor(hexString: "#ffe700ff")
         // Do any additional setup after loading the view.
@@ -71,5 +72,14 @@ class ClassifyVC: GDNormalVC {
         //        sence.position = self.view.center // Setting the position of a SKScene has no effect.
         spriteView.presentScene(sence)
         self.view.addSubview(spriteView)
+    }
+    func classifyReclick()  {
+        mylog("分类重复点击")
+    }
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self , selector: #selector(classifyReclick), name: GDClassifyTabBarReclick, object: nil)
+    }
+    deinit  {
+        NotificationCenter.default.removeObserver(self)
     }
 }

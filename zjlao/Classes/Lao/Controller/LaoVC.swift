@@ -20,6 +20,7 @@ class LaoVC: GDNormalVC {
         self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_lao) /*gotTitleStr(key: "tabBar_shopcar")!*/)
         self.view.backgroundColor = UIColor.blue
         self.setupCollectionView()
+        self.setupNotification()
     }
     func setupCollectionView() {
 //        collectoinView.collectionViewLayout
@@ -71,5 +72,15 @@ class LaoVC: GDNormalVC {
         }
         self.collectionView.insertItems(at:[IndexPath(item: self.datas.count-5, section: 0),IndexPath(item: self.datas.count-4, section: 0),IndexPath(item: self.datas.count-3, section: 0),IndexPath(item: self.datas.count-2, section: 0),IndexPath(item: self.datas.count-1, section: 0)] )
     
+    }
+    func setupNotification()  {
+        NotificationCenter.default.addObserver(self , selector: #selector(laotabBarReclick), name: GDLaoTabBarReclick, object: nil )
+    }
+    func laotabBarReclick()  {
+        
+        mylog("lao重复点击")
+    }
+    deinit  {
+        NotificationCenter.default.removeObserver(self)
     }
 }

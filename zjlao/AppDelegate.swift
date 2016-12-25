@@ -12,6 +12,7 @@ import CoreData
 import MBProgressHUD
 import UserNotifications
 import AFNetworking
+import XMPPFramework
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVCDidApear,UNUserNotificationCenterDelegate{
     
@@ -102,9 +103,75 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     
     
     
-    //MARK:////////////////////////////////////XXXXXX相关//////////////////////////////////////////
-    
-    
+    //MARK:////////////////////////////////////处理远程推送相关//////////////////////////////////////////
+    func dealWithRemoteNotification(userInfo : [AnyHashable : Any]) {
+        if !Account.shareAccount.isLogin {
+            GDAlertView.alert("请登录", image: nil, time: 2, complateBlock: nil)
+        }
+        if let aps  = userInfo["aps"] {
+            if let apsDict  = aps as? [String : Any] {
+                if let actionkey = apsDict["actionkey"] {
+                    
+                    if let actionkeyStr = actionkey as? String {
+                        if  actionkeyStr == "orderlist" {
+                            if let value  = apsDict["value"] {
+                                mylog("good成功\(value)")
+//                                let subWebVC = SubOrderListVC(vcType : VCType.withBackButton)
+                                if let url  = value as? String {
+                                    mylog("链接解析成功\(url)")
+//                                    subWebVC.originUrl = url
+//                                    KeyVC.share.pushViewController(subWebVC, animated: true )
+                                    
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                }else {
+                    mylog("解析actinkey失败")
+                }
+                
+                
+                
+                if let actionkey = apsDict["actionkey"] {
+                    
+                    if let actionkeyStr = actionkey as? String {
+                        if  actionkeyStr == "im" {
+                            if let value  = apsDict["value"] {
+                                mylog("good成功\(value)")
+//                                let chatVC  = ChatVC()
+                                if let user  = value as? String {
+                                    let jid : XMPPJID = XMPPJID.init(user: user , domain: "jabber.zjlao.com", resource: "ios")
+//                                    chatVC.userJid = jid
+//                                    KeyVC.share.pushViewController(chatVC, animated: true )
+                                    mylog("聊天昵称解析成功\(user)")
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                }else {
+                    mylog("解析actinkey失败")
+                }
+                
+                
+                
+                
+                
+                
+            }
+            
+        }
+        
+    }
+
+   // func analysisData (aps ) -> <#return type#> {
+   //     <#function body#>
+//////}
     
     
     

@@ -43,8 +43,10 @@ class ShopCarVC: GDNormalVC {
         self.setupNavigationBar()
         self.setupTableView()
         self.gotShopCarData(type: LoadDataType.initialize, { (model) in }) { (error ) in }
-
+        self.setupNotification()
         self.view.backgroundColor = UIColor.green
+        KeyVC.share.settabBarItem(number: "6" , index: 3)
+        KeyVC.share.settabBarItem(number: "", index: 4)
 
 //        let images = [UIImage(named: "bg_collocation")!,UIImage(named: "bg_coupon")!,UIImage(named: "bg_Direct selling")!,UIImage(named: "bg_electric")!,UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
 //         let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
@@ -57,6 +59,7 @@ class ShopCarVC: GDNormalVC {
 //        footer?.setImages(images , for: MJRefreshState.refreshing)
 //        self.tableView.mj_footer = footer
     }
+
     override func setupContentAndFrame() {
         self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_shopcar));  
     }
@@ -169,5 +172,15 @@ class ShopCarVC: GDNormalVC {
         // Pass the selected object to the new view controller.
     }
     */
-    
+    func shopcarReclick() {
+        self.tableView.mj_header.state = MJRefreshState.refreshing
+
+        //self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+    }
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self , selector: #selector(shopcarReclick), name: GDShopcarTabBarReclick, object: nil)
+    }
+    deinit  {
+        NotificationCenter.default.removeObserver(self)
+    }
 }

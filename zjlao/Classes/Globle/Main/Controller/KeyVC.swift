@@ -139,29 +139,30 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
             if bool && self.priviousVC == viewController{
                 
                 mylog("发送首页重复点击通知")
+                NotificationCenter.default.post(name: GDHomeTabBarReclick, object: nil, userInfo: nil)
             }
         }
         if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: ClassifyNaviVC.self) {
             if bool && self.priviousVC == viewController {
-                
+                NotificationCenter.default.post(name: GDClassifyTabBarReclick, object: nil, userInfo: nil)
                 mylog("发送分类重复点击通知")
             }
         }
         if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: LaoNaviVC.self) {
             if bool && self.priviousVC == viewController {
-                
+                NotificationCenter.default.post(name: GDLaoTabBarReclick, object: nil, userInfo: nil)
                 mylog("发送lao重复点击通知")
             }
         }
         if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: ShopCarNaviVC.self) {
             if bool && self.priviousVC == viewController {
-                
+                NotificationCenter.default.post(name: GDShopcarTabBarReclick, object: nil, userInfo: nil)
                 mylog("发送购物车重复点击通知")
             }
         }
         if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: ProfileNaviVC.self) {
             if bool && self.priviousVC == viewController {
-                
+                NotificationCenter.default.post(name: GDProfileTabBarReclick, object: nil, userInfo: nil)
                 mylog("发送我的重复点击通知")
             }
         }
@@ -218,6 +219,21 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
     func loginResult(result: Bool) {
         if result {
             mainTabbarVC?.selectedIndex = 3
+        }
+    }
+    
+    func  settabBarItem(number : String? , index : Int ){
+        if index < 0 || index > 4 {return}
+        if let numStr  = number {
+            self.setnum(num: numStr, index: index)
+        }else{
+            self.setnum(num: nil , index: index)
+        }
+    }
+  private  func setnum (num : String? , index : Int )  {
+        if let items = mainTabbarVC?.tabBar.items {
+             let tabBarItem : UITabBarItem = items[index]
+                tabBarItem.badgeValue = num
         }
     }
     

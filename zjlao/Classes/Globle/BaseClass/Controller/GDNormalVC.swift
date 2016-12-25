@@ -52,7 +52,7 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
         
         let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
         header?.lastUpdatedTimeLabel.isHidden = true
-        header?.setImages(self.refreshImages , for: MJRefreshState.idle)
+        header?.setImages(self.pullingImages , for: MJRefreshState.idle)
         header?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
         temp.mj_header = header
         let footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
@@ -64,18 +64,24 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
     }()
     //MARK:refresh  这个控件的高度是根据图片的像素数类定的 , 像素限制在40个点(注意2X和3X)
 
+    var pullingImages : [UIImage] = {
+        var images = [UIImage(named: "pulling1")! , UIImage(named: "pulling2")! ,UIImage(named: "pulling3")! ,UIImage(named: "pulling4")! ,UIImage(named: "pulling5")! ,UIImage(named: "pulling6")! ,UIImage(named: "pulling7")! ]
+        return images
+    
+    }()
     var   refreshImages:  [UIImage] = {
-        var images = [UIImage]()
-        for i in 1...34 {
-            let formateStr = NSString(format: "%02d", i)
-            let img = UIImage(named: "loading100\(formateStr)");
-            
-            if img != nil  {
-                images.append(img!)
-            }
-        }
+//        var images = [UIImage]()
+//        for i in 1...34 {
+//            let formateStr = NSString(format: "%02d", i)
+//            let img = UIImage(named: "loading100\(formateStr)");
+//            
+//            if img != nil  {
+//                images.append(img!)
+//            }
+//        }
 
-        mylog(images.count)
+//        mylog(images.count)
+        let images = [UIImage(named: "gdloading1")! , UIImage(named: "gdloading2")! ]
         return images
     }()
 
@@ -85,9 +91,9 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
             self.collectionView.mj_header.state = MJRefreshState.idle
             self.collectionView.mj_footer.state = MJRefreshState.idle
         }else if self.scrollViewType == "table"{
-            self.tableView.mj_header.endRefreshing()
-            self.tableView.mj_header.state = MJRefreshState.idle
-            self.tableView.mj_footer.state = MJRefreshState.idle
+            //self.tableView.mj_header.endRefreshing()
+           // self.tableView.mj_header.state = MJRefreshState.idle
+            //self.tableView.mj_footer.state = MJRefreshState.idle
         }
 
     }

@@ -225,6 +225,7 @@
 		1523AE751DCC942600011F9A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1523AE761DCC942700011F9A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1523AE771DCC94B300011F9A /* english.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = english.strings; sourceTree = "<group>"; };
+		1536B9F61E0BEA38008CCB31 /* zjlao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = zjlao.entitlements; sourceTree = "<group>"; };
 		155191B71DFE49D50031FFD4 /* GDNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNetworkManager.swift; sourceTree = "<group>"; };
 		156571481E08FA8E00383408 /* GDScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDScene.swift; sourceTree = "<group>"; };
 		1565714A1E09062800383408 /* GDSKSceneA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSKSceneA.swift; sourceTree = "<group>"; };
@@ -336,6 +337,7 @@
 		150869721DCC74E70001B6EF /* zjlao */ = {
 			isa = PBXGroup;
 			children = (
+				1536B9F61E0BEA38008CCB31 /* zjlao.entitlements */,
 				1523AD0E1DCC8DDC00011F9A /* Classes */,
 				150869731DCC74E70001B6EF /* AppDelegate.swift */,
 				150869751DCC74E70001B6EF /* ViewController.swift */,
@@ -2252,6 +2254,17 @@
 						DevelopmentTeam = EY693LHB6N;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					150869861DCC74E80001B6EF = {
 						CreatedOnToolsVersion = 8.0;
@@ -2636,6 +2649,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = zjlao/zjlao.entitlements;
 				DEVELOPMENT_TEAM = EY693LHB6N;
 				INFOPLIST_FILE = zjlao/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -2659,6 +2673,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = zjlao/zjlao.entitlements;
 				DEVELOPMENT_TEAM = EY693LHB6N;
 				INFOPLIST_FILE = zjlao/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;

@@ -12,8 +12,8 @@ class MainTabbarVC: UITabBarController {
     let mainTabbar  =  MainTabbar.share
     override func viewDidLoad() {
         super.viewDidLoad()
-        mainTabbar.delegate = self
-        setValue(mainTabbar, forKey: "tabBar")
+        //mainTabbar.delegate = self
+        self.setValue(mainTabbar, forKey: "tabBar")
         self.addchileVC()
     }
     

@@ -102,6 +102,7 @@ class ProfileVC: BaseVC ,ActionDelegate {
         self.view.backgroundColor = UIColor.orange
                // Do any additional setup after loading the view.
         self.setupTableView()
+        self.setupNotification()
         
     }
     func setupTableView() -> () {
@@ -202,9 +203,23 @@ class ProfileVC: BaseVC ,ActionDelegate {
 //        default: break
         }
     }
-
+    func setupNotification()  {
+        NotificationCenter.default.addObserver(self , selector: #selector(profileTabbarBarReclick), name: GDProfileTabBarReclick, object: nil )
+    }
+    func profileTabbarBarReclick()  {
+        
+        mylog("个人中心重复点击")
+    }
+    deinit  {
+        NotificationCenter.default.removeObserver(self)
+    }
 
 }
+
+
+
+
+
 
 extension ProfileVC :  UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
