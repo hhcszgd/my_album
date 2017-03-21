@@ -197,7 +197,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>accessCamera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>accessLocation</string>
+	<string>accessLocationWhenInUse</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>accessLOcationAlways</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShopModel: BaseModel {
+class ShopModel: GDBaseModel {
 //    var <#name#> = <#value#>
     
     override func setValue(_ value: Any?, forKey key: String) {

@@ -1,25 +1,26 @@
 //
-//  BaseVC.swift
-//  mh824appWithSwift
+//  GDBaseVC.swift
+//  zjlao
 //
-//  Created by wangyuanfei on 16/8/24.
-//  Copyright © 2016年 www.16lao.com. All rights reserved.
+//  Created by WY on 17/1/15.
+//  Copyright © 2017年 com.16lao.zjlao. All rights reserved.
 //
 
 import UIKit
 
-class BaseVC: UIViewController {
-   /* private*/ var errorView : GDErrorView?
+class GDBaseVC: UIViewController {
 
+    /* private*/ var errorView : GDErrorView?
+    
     var TabBarHeight : CGFloat {
         return self.tabBarController?.tabBar.bounds.size.height ?? 44.0
     }
     var parameter : AnyObject? //用来接收关键参数的属性 (字符串 , 自定义模型等等)
-    var keyModel : BaseModel? = BaseModel.init(dict: nil){
+    var keyModel : GDBaseModel? = GDBaseModel.init(dict: nil){
         didSet{
             mylog(keyModel)
         }
-    
+        
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -29,15 +30,15 @@ class BaseVC: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
-  
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.randomColor()
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -47,7 +48,7 @@ class BaseVC: UIViewController {
         self.addSubViews()
         self.setupContentAndFrame()
     }
-
+    
     func addSubViews () {
         
     }
@@ -74,7 +75,7 @@ class BaseVC: UIViewController {
         self.errorView = GDErrorView()
         self.errorView?.addTarget(self, action: #selector(errorViewClick), for: UIControlEvents.touchUpInside)
         self.view.addSubview(errorView!)
-//        self.view.insertSubview(errorView!, belowSubview: self.naviBar)
+        //        self.view.insertSubview(errorView!, belowSubview: self.naviBar)
         self.errorView?.frame = self.view.bounds
         
         
@@ -88,13 +89,12 @@ class BaseVC: UIViewController {
         self.errorView = nil
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 }

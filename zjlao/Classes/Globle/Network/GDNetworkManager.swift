@@ -181,6 +181,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         if method == RequestType.GET {
             //实现GET请求
+                        
             get(url, parameters: para, progress: nil , success: { (_, result) in
                 //                mylog(result)
                 self.alert.gdHide()///////////////////////////
@@ -189,6 +190,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                     //执行成功回调
                     let model = OriginalNetDataModel.init(dict: dict)
                     success(model)
+                    
                     return
                 }
                 //如果程序走到这里  成功回调的结果 无法转换为字典形式的数据
@@ -250,7 +252,16 @@ class GDNetworkManager: AFHTTPSessionManager {
             })
         }
     }
-    
+
+    func testtesttest ()  {
+        post("URLString", parameters: "parameters", progress: { (progress) in
+            
+        }, success: { (tase , resultData) in
+            
+        }) { (task , error ) in
+            
+        }
+    }
     
     //MARK: 初始化token
     func initToken(_ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) -> () {
@@ -283,7 +294,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         Account.shareAccount.deleteAccountFromDisk()//有没有联网都退出
         GDStorgeManager.standard.setValue("nil", forKey: "token")//token 赋值为空//不管有没有联网
         self.requestDataFromNewWork(RequestType.POST, urlString: url, parameters: para, success: { (result) in
-            if Int (result.status!) > 0 {
+            if result.status > 0 {
                 //                Account.shareAccount.deleteAccountFromDisk()
                 //                UserDefaults.standard.setValue("nil", forKey: "token")//token 赋值为空
             }
@@ -298,8 +309,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         let url = "Login"
         let para = ["username" : name ,  "password" : password ]
         requestDataFromNewWork(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
-            if  let status =  result.status as? Int {
-                if status > 0 {
+                if result.status > 0 {
                     if let data = result.data {//登录成功 , 先把memberID放到内存中 , 方便其他类取用(此处是用来判断登录状态)
                         if let memberid = data as? String {
                             Account.shareAccount.member_id = memberid
@@ -311,7 +321,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                     })
                 }
                 
-            }
+            
             
             success(result)
         }) { (error) in

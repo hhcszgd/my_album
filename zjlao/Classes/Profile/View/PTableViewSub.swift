@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PTableViewSub: BaseControl {
+class PTableViewSub: GDBaseControl {
     /*
      lazy var titleLabel = UILabel()//底部标题
      lazy var subTitleLabel = UILabel()//头部数量标题

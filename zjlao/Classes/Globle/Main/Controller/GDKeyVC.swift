@@ -1,24 +1,20 @@
 //
-//  KeyVC.swift
-//  mh824appWithSwift
+//  GDKeyVC.swift
+//  zjlao
 //
-//  Created by wangyuanfei on 16/8/24.
-//  Copyright © 2016年 www.16lao.com. All rights reserved.
+//  Created by WY on 17/1/15.
+//  Copyright © 2017年 com.16lao.zjlao. All rights reserved.
 //
 
 import UIKit
 
-//@objc  protocol AfterChangeLanguageKeyVCDidApear {
-//    func languageHadChanged() -> ()
-//}
+class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelegate  {
 
-class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate  {
-    
     var priviousVC = UINavigationController() //记录上一次控制器
-    var mainTabbarVC : MainTabbarVC? {
-    
+    var mainTabbarVC : GDMainTabbarVC? {
+        
         if self.childViewControllers.count > 0 {
-            if let vc = self.childViewControllers[0] as? MainTabbarVC{
+            if let vc = self.childViewControllers[0] as? GDMainTabbarVC{
                 return vc
             }else{
                 return nil
@@ -26,38 +22,38 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         }else{
             return nil
         }
-    
+        
     }
     weak var keyVCDelegate : AfterChangeLanguageKeyVCDidApear?
-    static let share: KeyVC = {
-        let tempMainTabbarVC = MainTabbarVC()
-        let tempKeyVC = KeyVC(rootViewController: tempMainTabbarVC)
+    static let share: GDKeyVC = {
+        let tempMainTabbarVC = GDMainTabbarVC()
+        let tempKeyVC = GDKeyVC(rootViewController: tempMainTabbarVC)
         tempMainTabbarVC.delegate = tempKeyVC
         
         return tempKeyVC
     }()
-//    override init(rootViewController: UIViewController) {
-//        
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    //    override init(rootViewController: UIViewController) {
+    //
+    //    }
+    //
+    //    required init?(coder aDecoder: NSCoder) {
+    //        fatalError("init(coder:) has not been implemented")
+    //    }
     
-//    init(rootVC: UIViewController?) {
-//        super.init(rootViewController: mainTabbarVC)
-//        mainTabbarVC.delegate = self
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-//        super.init(nibName: nil, bundle: nil)
-//    }
+    //    init(rootVC: UIViewController?) {
+    //        super.init(rootViewController: mainTabbarVC)
+    //        mainTabbarVC.delegate = self
+    //    }
+    //
+    //    required init?(coder aDecoder: NSCoder) {
+    //        fatalError("init(coder:) has not been implemented")
+    //    }
+    //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    //        super.init(nibName: nil, bundle: nil)
+    //    }
     func restartAfterChangedLanguage()  {
         for vc in self.childViewControllers {
-            if let targetVC = vc as? MainTabbarVC {
+            if let targetVC = vc as? GDMainTabbarVC {
                 targetVC.restartAfterChangeLanguage()
             }
         }
@@ -65,7 +61,7 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
     }
     var currentTabbarIndex : Int {
         if self.childViewControllers.count > 0 {
-            if let vc = self.childViewControllers[0] as? MainTabbarVC{
+            if let vc = self.childViewControllers[0] as? GDMainTabbarVC{
                 return vc.selectedIndex
             }else{
                 return 0
@@ -74,16 +70,16 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
             return 0
         }
         
-//        if let tabbarvc  = mainTabbarVC {
-//            return tabbarvc.selectedIndex
-//        }else{
-//            return 0
-//        }
+        //        if let tabbarvc  = mainTabbarVC {
+        //            return tabbarvc.selectedIndex
+        //        }else{
+        //            return 0
+        //        }
     }
     var currentSubVC : UIViewController?{
         
         if self.childViewControllers.count > 0 {
-            if let vc = self.childViewControllers[0] as? MainTabbarVC{
+            if let vc = self.childViewControllers[0] as? GDMainTabbarVC{
                 return vc.selectedViewController
             }else{
                 return nil
@@ -91,12 +87,12 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         }else{
             return nil
         }
-//        if let tabbarvc  = mainTabbarVC {
-//            return tabbarvc.selectedViewController
-//        }else{
-//            return nil
-//        }
-    
+        //        if let tabbarvc  = mainTabbarVC {
+        //            return tabbarvc.selectedViewController
+        //        }else{
+        //            return nil
+        //        }
+        
     }
     
     
@@ -105,17 +101,17 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         self.navigationBar.isHidden = true;
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     //MARK: tabbarViewControllerDelegate
-
+    
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool{
-         self.priviousVC = self.mainTabbarVC?.selectedViewController as! UINavigationController //记录上一次控制器
-
+        self.priviousVC = self.mainTabbarVC?.selectedViewController as! UINavigationController //记录上一次控制器
+        
         mylog(viewController)
         
         guard  let _ =  viewController as? ShopCarNaviVC else {  return true}
@@ -132,7 +128,7 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         }
         
         
-       
+        
     }
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController){
         if let bool = self.mainTabbarVC?.selectedViewController?.isKind(of: HomeVaviVC.self) {
@@ -170,7 +166,7 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         mylog(self.mainTabbarVC?.selectedViewController)
     }
     
-     public func tabBarController(_ tabBarController: UITabBarController, animationControllerForTransitionFrom fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?{
+    public func tabBarController(_ tabBarController: UITabBarController, animationControllerForTransitionFrom fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?{
         let ani : TabBarVCAnimat = TabBarVCAnimat()
         //mylog(fromVC)
         //mylog(toVC)
@@ -185,14 +181,14 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
         self.keyVCDelegate?.languageHadChanged()
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     func selectChildViewControllerIndex(index : Int) -> () {
         
         var selectedIndex = index
@@ -230,10 +226,10 @@ class KeyVC: UINavigationController ,UITabBarControllerDelegate , LoginDelegate 
             self.setnum(num: nil , index: index)
         }
     }
-  private  func setnum (num : String? , index : Int )  {
+    private  func setnum (num : String? , index : Int )  {
         if let items = mainTabbarVC?.tabBar.items {
-             let tabBarItem : UITabBarItem = items[index]
-                tabBarItem.badgeValue = num
+            let tabBarItem : UITabBarItem = items[index]
+            tabBarItem.badgeValue = num
         }
     }
     

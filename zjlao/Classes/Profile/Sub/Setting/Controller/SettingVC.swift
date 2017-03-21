@@ -34,7 +34,7 @@ class SettingVC: GDNormalVC {
         }
         let lines : NSInteger = 5
         for _ in 0 ..< lines {
-            let rowView = RowView.init(frame: CGRect.zero)
+            let rowView = GDRowView.init(frame: CGRect.zero)
             self.topComtaier.addSubview(rowView)
         }
         self.versionLabel.font = GDFont.systemFont(ofSize: 12)//UIFont.systemFont(ofSize: 12*SCALE)
@@ -60,7 +60,7 @@ class SettingVC: GDNormalVC {
         let lines : NSInteger = 5
         self.topComtaier.frame = CGRect(x: 0, y: 88, width: GDDevice.width, height: (lineH+margin) * CGFloat(lines) )
         for (index , rowView) in self.topComtaier.subviews.enumerated() {
-            if let rowView  = rowView as? RowView {
+            if let rowView  = rowView as? GDRowView {
                 rowView.frame  =  CGRect(x: 0, y: (lineH+margin)*CGFloat(index), width: GDDevice.width, height: lineH)
                 rowView.titleLabel.font = GDFont.systemFont(ofSize: 12)//UIFont.systemFont(ofSize: 12*SCALE)
                 if index == 0{//消息通知
@@ -139,7 +139,7 @@ class SettingVC: GDNormalVC {
         }
         
     }
-    func valuation(sender : RowView){
+    func valuation(sender : GDRowView){
         mylog("评分")
         let urlStr = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1133780608"
         let url = URL(string: urlStr)
@@ -154,14 +154,14 @@ class SettingVC: GDNormalVC {
         super.viewWillAppear(animated)
             self.loginOutButton.isHidden = !Account.shareAccount.isLogin
     }
-    func clearCache(sender : RowView){
+    func clearCache(sender : GDRowView){
         mylog("清除缓存")
         SDImageCache.shared().clearMemory()
         SDImageCache.shared().cleanDisk()
         GDAlertView.alert("清除成功", image: nil, time: 2, complateBlock: nil)
         sender.subTitleLabel.text = "0 MB"
     }
-    func changeImageQuality(sender : RowView){
+    func changeImageQuality(sender : GDRowView){
         mylog("改变图片质量")
     }
     func changeNoticeCustomSound(sender : UISwitch){
@@ -171,11 +171,11 @@ class SettingVC: GDNormalVC {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func performChangeLanguage(sender : RowView){
+    func performChangeLanguage(sender : GDRowView){
         mylog("更改语言")
-        let chooseLanguageVCModel = BaseModel(dict: nil)
+        let chooseLanguageVCModel = GDBaseModel(dict: nil)
         chooseLanguageVCModel.actionkey = "ChooseLuanguageVC"
-        SkipManager.skip(viewController: self, model: chooseLanguageVCModel)
+        GDSkipManager.skip(viewController: self, model: chooseLanguageVCModel)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

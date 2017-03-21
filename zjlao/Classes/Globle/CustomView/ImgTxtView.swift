@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImgTxtView: BaseControl {
+class ImgTxtView: GDBaseControl {
 
     /*
      lazy var titleLabel = UILabel()//底部标题

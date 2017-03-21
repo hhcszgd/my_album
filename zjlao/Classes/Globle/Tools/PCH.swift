@@ -17,6 +17,8 @@ enum LoadDataType {
     case reload
     case loadMore
 }
+//MARK:常量字符串
+let GDMessageCount = "GDMessageCount"
 //MARK: swift3.0.1通知名字
 let GDLanguageChanged = NSNotification.Name(rawValue:"languageChanged")
 let GDHomeTabBarReclick = NSNotification.Name("GDHomeTabBarReclick")
@@ -24,6 +26,8 @@ let GDClassifyTabBarReclick = NSNotification.Name("GDClassifyTabBarReclick")
 let GDLaoTabBarReclick = NSNotification.Name("GDLaoTabBarReclick")
 let GDShopcarTabBarReclick = NSNotification.Name("GDShopcarTabBarReclick")
 let GDProfileTabBarReclick = NSNotification.Name("GDProfileTabBarReclick")
+let GDMessageCountChanged = NSNotification.Name("GDMessageCountChanged")
+
 //MARK: notificationName
 let LoginSuccess = "LoginSuccess"
 let LoginOutSuccess = "LoginOutSuccess"
@@ -187,8 +191,27 @@ func RGBA (_ r:CGFloat, g:CGFloat, b:CGFloat, a:CGFloat) -> UIColor { return UIC
 //MARK:自定义打印方法
 public func mylog <T>(_ message: T, fileName: String = #file, methodName: String = #function, lineNumber: Int = #line){
     #if DEBUG
-            print("👉[\(lineNumber)]\((fileName as NSString).pathComponents.last!) <--> \(methodName)  \n\(message)")
-
+        let url = URL.init(fileURLWithPath: fileName)
+        /*
+        //let a = (fileName as NSString).pathComponents.last
+        let arr : NSArray = NSArray.init()
+        URL.init(fileURLWithPath: "///").pathComponents
+        
+        let a = fileName.path
+        fileName.compare(<#T##aString: String##String#>)
+        let components = (fileName as NSString).pathComponents
+        //arr.isKind(of: <#T##AnyClass#>)
+        if components.isKind(of : NSArray.self ) {
+            
+        }
+        if fileName {
+            <#code#>
+        }*/
+            //print("👉[\(lineNumber)]\((fileName as NSString).pathComponents.last!) <--> \(methodName)  \n\(message)")
+        print(url.pathComponents.last!)
+        print(message)
+        print(lineNumber)
+        print("👉[\(lineNumber)]\(url.pathComponents.last!) <--> \(methodName)  \n\(message)")
 //        print("\(methodName)[\(lineNumber)]:\(message)")
     #endif
 }

@@ -1,28 +1,28 @@
 //
-//  MainTabbar.swift
-//  mh824appWithSwift
+//  GDTabBar.swift
+//  zjlao
 //
-//  Created by wangyuanfei on 16/8/24.
-//  Copyright © 2016年 www.16lao.com. All rights reserved.
+//  Created by WY on 17/1/15.
+//  Copyright © 2017年 com.16lao.zjlao. All rights reserved.
 //
 
 import UIKit
 
-class MainTabbar: UITabBar {
+class GDTabBar: UITabBar {
 
     
-    static let share: MainTabbar = {
-        let tempTabBar = MainTabbar()
+    static let share: GDTabBar = {
+        let tempTabBar = GDTabBar()
         return tempTabBar
     }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.backgroundColor = randomColor
+        //        self.backgroundColor = randomColor
         self.tintColor = UIColor.orange
         self.barTintColor = UIColor.white
-//        self.backgroundImage = UIImage(named: "tab_me_click")
+        //        self.backgroundImage = UIImage(named: "tab_me_click")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,11 +41,13 @@ class MainTabbar: UITabBar {
         }
     }
     /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
+     // Only override drawRect: if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func drawRect(rect: CGRect) {
+     // Drawing code
+     }
+     */
+    
+
 
 }

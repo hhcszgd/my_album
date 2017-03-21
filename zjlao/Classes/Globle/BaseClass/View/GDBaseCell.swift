@@ -1,24 +1,24 @@
 //
-//  BaseCell.swift
-//  mh824appWithSwift
+//  GDBaseCell.swift
+//  zjlao
 //
-//  Created by wangyuanfei on 16/9/20.
-//  Copyright © 2016年 www.16lao.com. All rights reserved.
+//  Created by WY on 17/1/15.
+//  Copyright © 2017年 com.16lao.zjlao. All rights reserved.
 //
 
 import UIKit
 
-class BaseCell: UITableViewCell {
-    
+class GDBaseCell: UITableViewCell {
+
     weak var subViewDelegate : ActionDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PTableCellHeader: BaseControl {
+class PTableCellHeader: GDBaseControl {
     /*
      lazy var titleLabel = UILabel()//主标题
      lazy var subTitleLabel = UILabel()//副标题

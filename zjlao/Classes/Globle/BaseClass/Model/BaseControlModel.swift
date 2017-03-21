@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseControlModel: BaseModel {
+class BaseControlModel: GDBaseModel {
 
     var title : String?
      var subTitle : String?

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PTableCellBody: BaseView {
+class PTableCellBody: GDView {
 
     var arr : [ProfileSubModel] = [ProfileSubModel](){
         didSet{

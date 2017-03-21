@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FullGoodsView: BaseView {
+class FullGoodsView: GDView {
 
     /*
     // Only override draw() if you perform custom drawing.

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileSubModel: BaseModel {
+class ProfileSubModel: GDBaseModel {
     
     var img : String?//头像链接,只有一个模型有
     var name : String?//标题

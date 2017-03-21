@@ -10,15 +10,17 @@ import UIKit
 import MBProgressHUD
 import AFNetworking
 import MJRefresh
-class HomeVC: GDNormalVC  {
+class HomeVC: GDNormalVC   {
 
+    var mapView : GDMapInView? = GDMapInView()
     //override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     //    self.viewDidLoad()
     //}
+    let testLabel = UILabel.init()
 
     func testxxx() {
         var count: UInt32 = 0
-        let ivars = class_copyIvarList(BaseModel.self, &count)
+        let ivars = class_copyIvarList(GDBaseModel.self, &count)
         
         for i in 0 ..< count {
             let ivar = ivars![Int(i)]
@@ -30,7 +32,7 @@ class HomeVC: GDNormalVC  {
     func testyyy() {
         var count: UInt32 = 3
 
-        let objc_property_tS = class_copyPropertyList(BaseModel.self, &count)
+        let objc_property_tS = class_copyPropertyList(GDBaseModel.self, &count)
         for i in 0 ..< count {
             let objc_property_tO = objc_property_tS![Int(i)]
             let name = property_getName(objc_property_tO)
@@ -42,15 +44,42 @@ class HomeVC: GDNormalVC  {
         tableView.contentInset = UIEdgeInsets(top: NavigationBarHeight, left: 0, bottom: TabBarHeight, right: 0)
         
     }
+    func testArchivSave()  {
+        let dict = ["msg" : "从首页进行数据归档" , "status" : "200" , "data" : "success" , "additional" : "noneNULL" ]
+        let a : OriginalNetDataModel = OriginalNetDataModel.init(dict: dict as [String : AnyObject])
+        mylog(a.msg)
+        a.save()
+    }
+    func testArchivRead()  {
+        let a : OriginalNetDataModel = OriginalNetDataModel.read()
+        mylog(a.msg)
+         mylog(a.status)
+    }
+    func testLoginXMPP() {
+        GDXmppManager.share.login(jidName: "wangyuanfei", password: "123456")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarItem.badgeValue = "345"
         mylog(self.tabBarItem.badgeValue)
        self.testyyy()
+        self.testArchivSave()
+        self.testLoginXMPP()
         self.setupNaviBar()
         self.setupTableView()
         self.setupNotification()
+        
+        self.testMapView()
         // Do any additional setup after loading the view.
+    }
+
+    
+   
+    func testMapView()  {
+        
+        let  map = GDMapInView(frame: CGRect(x: 0, y: 64, width: self.view.bounds.size.width, height: self.view.bounds.size.height - 49 - 64))
+        self.mapView = map
+        self.view.addSubview(self.mapView!)
     }
     func setupNotification() {
         NotificationCenter.default.addObserver(self , selector: #selector(homeTabBarReclick), name: GDHomeTabBarReclick, object: nil)
@@ -76,8 +105,13 @@ class HomeVC: GDNormalVC  {
         navTitleView.insets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10);
         naviBar.navTitleView = navTitleView
         leftBtn1.addTarget(self, action: #selector(qrScanner), for: UIControlEvents.touchUpInside)
-
+        rightBtn1.addTarget(self , action: #selector(rightBtnClick(sender:)), for: UIControlEvents.touchUpInside)
         
+    }
+    func rightBtnClick(sender : UIButton)  {
+        //GDXmppManager.share.login(jidName: "wangyuanfei", password: "123456")
+        self.navigationController?.pushViewController(GDRosterVC(), animated: true)
+//        self.navigationController?.pushViewController(GDRecentRosterVC(), animated: true)
     }
     func homeTabBarReclick()  {
         //self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
@@ -85,8 +119,8 @@ class HomeVC: GDNormalVC  {
 
     }
     func qrScanner()  {
-        let model = BaseModel.init(dict: ["actionkey" : "QRCodeScannerVC" as AnyObject])
-        SkipManager.skip(viewController: self, model: model)
+        let model = GDBaseModel.init(dict: ["actionkey" : "QRCodeScannerVC" as AnyObject])
+        GDSkipManager.skip(viewController: self, model: model)
         
 //        let qrvc = QRCodeScannerVC(vcType: VCType.withBackButton)
 //        qrvc.delegate = self
@@ -112,8 +146,13 @@ class HomeVC: GDNormalVC  {
         }
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        self.mapView?.removeFromSuperview()
+        self.mapView = nil
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+                self.testArchivRead()
 //        self.tableView.allowsMultipleSelection = true
 //mylog(self.naviBar.isHidden)
         //self.tabBarItem.badgeValue = "432"
@@ -145,7 +184,7 @@ class HomeVC: GDNormalVC  {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        self.navigationController?.pushViewController(VCWithNaviBar.init(vcType: VCType.withBackButton), animated: true)
-         self.navigationController?.pushViewController(GDNormalVC(), animated: true)
+//         self.navigationController?.pushViewController(GDNormalVC(), animated: true)//测试控制器跳转,
     }
     
     

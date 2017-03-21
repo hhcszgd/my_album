@@ -8,6 +8,6 @@
 
 import UIKit
 
-class GoodsModel: BaseModel {
+class GoodsModel: GDBaseModel {
 
 }

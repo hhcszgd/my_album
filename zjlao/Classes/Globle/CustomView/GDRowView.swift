@@ -1,22 +1,22 @@
 //
-//  RowView.swift
-//  mh824appWithSwift
+//  GDRowView.swift
+//  zjlao
 //
-//  Created by wangyuanfei on 16/9/20.
-//  Copyright © 2016年 www.16lao.com. All rights reserved.
+//  Created by WY on 17/1/15.
+//  Copyright © 2017年 com.16lao.zjlao. All rights reserved.
 //
 
 import UIKit
 
-class RowView: BaseControl {
+class GDRowView: GDBaseControl {
 
     /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
     /*
      lazy var titleLabel = UILabel()//主标题
      lazy var subTitleLabel = UILabel()//副标题
@@ -179,6 +179,6 @@ class RowView: BaseControl {
         }
         
     }
-
+    
 
 }

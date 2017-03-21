@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileChannelModel: BaseModel {
+class ProfileChannelModel: GDBaseModel {
 
     var channel : String?
     var url : String?

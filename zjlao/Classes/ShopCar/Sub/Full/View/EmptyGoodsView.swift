@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmptyGoodsView: BaseView {
+class EmptyGoodsView: GDView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

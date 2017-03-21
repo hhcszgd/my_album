@@ -13,7 +13,7 @@ enum VCType {
     case withoutBackButton
 }
 
-class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableViewDataSource ,UICollectionViewDelegate , UICollectionViewDataSource{
+class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableViewDataSource ,UICollectionViewDelegate , UICollectionViewDataSource{
     private var  scrollViewType = ""
     lazy var collectionView: UICollectionView = {
         self.scrollViewType = "collect"
@@ -125,7 +125,7 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 10
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
@@ -147,7 +147,7 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
     }
     
     
-    var naviBar : CustomNaviBar!
+    var naviBar : GDNavigatBar!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -172,14 +172,14 @@ class GDNormalVC: BaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableVi
         switch currentType {
         case .withBackButton:
             //
-            naviBar = CustomNaviBar(type: NaviBarStyle.withBackBtn)
+            naviBar = GDNavigatBar(type: NaviBarStyle.withBackBtn)
             naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: NavigationBarHeight )
             naviBar.delegate = self
             break
         case .withoutBackButton:
             //
             
-            naviBar = CustomNaviBar(type: NaviBarStyle.withoutBackBtn)
+            naviBar = GDNavigatBar(type: NaviBarStyle.withoutBackBtn)
             naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: NavigationBarHeight )
             break
         }

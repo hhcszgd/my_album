@@ -17,8 +17,21 @@ typealias closureType = (String , NSError) -> ()
 
 class GDLocationManager: NSObject ,CLLocationManagerDelegate {
     
-    let localtionManager  =  CLLocationManager.init()
-    
+    static let share : GDLocationManager = {
+        let temp = GDLocationManager.init()
+        
+        return temp
+    }()
+    lazy var localtionManager: CLLocationManager = {
+        let localtionManagerTemp  =  CLLocationManager.init()
+        //        self.localtionManager.requestWhenInUseAuthorization()//请求用户允许前台定位,如果此种授权下想要后台定位 , ios9 以后需要调用一个方法self.localtionManager.allowsBackgroundLocationUpdates = true
+        //        NSFoundationVersionNumber
+        //        if #available(iOS 9.0, *) {//记得在设置里勾选locationUpDates
+        //            self.localtionManager.allowsBackgroundLocationUpdates = true
+        //        }
+        localtionManagerTemp.requestAlwaysAuthorization ()//请求用户允许前后台 , info.plist指定NSLocationAlwaysUsageDescription
+        return localtionManagerTemp
+    }()
     var callback : ( (String? , NSError?) -> ())?//  = {  String , NSError in
     // mylog("")
     //}
@@ -29,27 +42,125 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
         
     }
     
-    func start ( call : @escaping  (String? , NSError?) -> () ) -> () {
-        self.callback = call
-        self.localtionManager.requestWhenInUseAuthorization()
-        self.localtionManager.startUpdatingLocation()
+    
+    
+    
+    func isInSomeRegion( call : @escaping  (String? , NSError?) -> () ) -> () {//是否在某个区域
+        //CLCircularRegion 是 CLRegion的子类
+        let center : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 33, longitude: 111);
+        let  region : CLCircularRegion = CLCircularRegion(center: center, radius: 1000, identifier: "firstRegion")
+        self.localtionManager.requestState(for: region)
+        
+    }
+    //是否在某个区域的代理方法
+    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion){
+    
     }
     
     
+    
+    func motitorCurrentRegion( call : @escaping  (String? , NSError?) -> () ) -> () {//监听当前区域
+        //CLCircularRegion 是 CLRegion的子类
+        let center : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 33, longitude: 111);
+        let  region : CLCircularRegion = CLCircularRegion(center: center, radius: 1000, identifier: "firstRegion")
+        self.localtionManager.startMonitoring(for: region)
+        
+    }
+    
+    //监听区域代理方法
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion)
+    {//进入区域
+        mylog("进入了这区域:\(region.identifier)")
+    
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion){//离开区域
+        mylog("离开了这个区域:\(region.identifier)")
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func gotCurrentCouse( call : @escaping  (String? , NSError?) -> () ) -> () {//获取当前朝向
+        self.localtionManager.startUpdatingHeading()
+        
+    }
+    //当前朝向的代理方法
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading)
+    {
+        /**
+         magneticHeading:磁北 方向
+         trueHeading:现实 方向
+         */
+    }
+
+    func gotCurrentLocation( call : @escaping  (String? , NSError?) -> () ) -> () {//获取当前位置
+        self.callback = call
+
+        self.localtionManager.startUpdatingLocation()//开始定位,
+        self.localtionManager.distanceFilter = 100 //每隔100米定位一次
+    }
+    
+    //定位失败
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
+    
+    }
+    //不断被调用的定位结果方法
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.gotCity(location: locations.first!) { (error, CLPlacemarkArrM) in
+        self.gotCity(location: locations.last!) { (error, CLPlacemarkArrM) in
             
         }
     }
-    
+    //授权状态改变时调用
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus){
+        
+        if CLLocationManager.locationServicesEnabled() {
+            switch status {
+            case CLAuthorizationStatus.authorizedAlways:
+                mylog("现在是前后台定位服务")
+            case CLAuthorizationStatus.authorizedWhenInUse:
+                mylog("现在是前台定位服务")
+            case CLAuthorizationStatus.denied:
+                mylog("现在是用户拒绝使用定位服务")
+            case CLAuthorizationStatus.notDetermined:
+                mylog("用户暂未选择定位服务选项")
+            case CLAuthorizationStatus.restricted:
+                mylog("现在是用户可能拒绝使用定位服务")
+            }
+        }else{
+            mylog("请开启手机的定位服务")
+        }
+        mylog("授权状态改变了\(status)")
+    }
     
     
     
     
     func gotCity(location : CLLocation , result : @escaping ( Error? , [CLPlacemark]?) -> ()) -> Void {
+        /**
+         coordinate:经纬度
+         altitude:海拔
+         course:航向
+         speed:速度
+         timestamp:定位时间
+         
+         
+         */
         let geoCoder = CLGeocoder.init()
         geoCoder.reverseGeocodeLocation(location) { (CLPlacemarkArr, error) in
-            
+            mylog("全部位置信息\(location)")
             let placemark = CLPlacemarkArr?.first
             
             mylog("name : \(placemark?.name)")
@@ -68,7 +179,7 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
             if let formatterStr  = resultArrM?.first {
                 if let Str = formatterStr as? String {
                     mylog(Str)
-                    self.localtionManager.stopUpdatingLocation()
+//                    self.localtionManager.stopUpdatingLocation()
                     self.callback?(Str,error as? NSError)
                 }
             }
@@ -78,7 +189,41 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
         
         
     }
+    //地理编码
+    func gotLocationName(location: CLLocation)  {
+        let geoCoder = CLGeocoder.init()
+        geoCoder.reverseGeocodeLocation(location) { (placeMarks, error ) in
+            //placeMarks只有一个元素
+            if(error == nil ){
+                for item in placeMarks!{
+                    let locationName =  item.name
+                    let clLocation = item.location!
+                    mylog("位置名称:\(locationName) , 坐标是:\(clLocation.description)")
+                }
+            
+            }
+        }
+    }
     
+    func gotCoodinate(addressString: String, region : CLRegion?)  {
+        let geoCoder = CLGeocoder.init()
+        geoCoder.geocodeAddressString(addressString, in: region) { (placeMarks, error ) in
+            //placeMarks只有一个元素
+            if(error == nil ){
+                for item in placeMarks!{
+                    let locationName =  item.name
+                    let clLocation = item.location!
+                    mylog("位置名称:\(locationName) , 坐标是:\(clLocation.description)")
+
+                }
+                
+            }
+        }
+    }
+    //CLGeocoder
+    //reverseGeocodeLocation(_ location: CLLocation, completionHandler: @escaping CoreLocation.CLGeocodeCompletionHandler)地理编码
+    //反地理编码    open func geocodeAddressString(_ addressString: String, in region: CLRegion?, completionHandler: @escaping CoreLocation.CLGeocodeCompletionHandler)
+
 }
 
 

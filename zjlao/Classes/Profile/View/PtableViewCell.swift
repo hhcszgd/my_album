@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PtableViewCell: BaseCell  , ActionDelegate{
+class PtableViewCell: GDBaseCell  , ActionDelegate{
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -87,7 +87,7 @@ class PtableViewCell: BaseCell  , ActionDelegate{
         cellBody.actionDelegate = self
     }
     //MARK: customDelegate
-    func performAction(model: BaseModel) {
+    func performAction(model: GDBaseModel) {
         self.subViewDelegate?.performAction(model: model)
     }
 //   @objc  func mmclick (sender : BaseControl) -> () {

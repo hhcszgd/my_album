@@ -83,7 +83,7 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell  = tableView.dequeueReusableCell(withIdentifier: "cell")
         if cell == nil  {
-            cell = BaseCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "cell")
+            cell = GDBaseCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "cell")
         }
         cell?.textLabel?.text = self.languages[indexPath.row]
         cell?.selectionStyle = UITableViewCellSelectionStyle.blue
@@ -114,7 +114,7 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
             }
 
         }
-        return cell ?? BaseCell()
+        return cell ?? GDBaseCell()
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //无关紧要

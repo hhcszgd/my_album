@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ActionDelegate : NSObjectProtocol {
-    func performAction( model : BaseModel)
+    func performAction( model : GDBaseModel)
 
 }
 @objc protocol QRViewDelegate : NSObjectProtocol{

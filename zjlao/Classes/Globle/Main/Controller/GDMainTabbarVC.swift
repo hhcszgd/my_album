@@ -1,15 +1,16 @@
 //
-//  MainTabbarVC.swift
-//  mh824appWithSwift
+//  GDMainTabbarVC.swift
+//  zjlao
 //
-//  Created by wangyuanfei on 16/8/24.
-//  Copyright © 2016年 www.16lao.com. All rights reserved.
+//  Created by WY on 17/1/15.
+//  Copyright © 2017年 com.16lao.zjlao. All rights reserved.
 //
 
 import UIKit
 
-class MainTabbarVC: UITabBarController {
-    let mainTabbar  =  MainTabbar.share
+class GDMainTabbarVC: UITabBarController {
+
+    let mainTabbar  =  GDTabBar.share
     override func viewDidLoad() {
         super.viewDidLoad()
         //mainTabbar.delegate = self
@@ -24,10 +25,10 @@ class MainTabbarVC: UITabBarController {
         get{
             return super.selectedIndex
         }
-    
+        
     }
     func addchileVC() -> () {
-
+        
         for subVC in self.childViewControllers {
             subVC.removeFromParentViewController()
         }
@@ -36,7 +37,7 @@ class MainTabbarVC: UITabBarController {
         self.addChildViewController(LaoNaviVC(rootViewController: LaoVC()))
         self.addChildViewController(ShopCarNaviVC(rootViewController: ShopCarVC()))
         self.addChildViewController(ProfileNaviVC(rootViewController: ProfileVC()))
-
+        
         
         mylog(self.childViewControllers)
         
@@ -46,9 +47,9 @@ class MainTabbarVC: UITabBarController {
         self.setViewControllers([HomeVaviVC(rootViewController: HomeVC()),ClassifyNaviVC(rootViewController: ClassifyVC()),LaoNaviVC(rootViewController: LaoVC()),ShopCarNaviVC(rootViewController: ShopCarVC()),ProfileNaviVC(rootViewController: ProfileVC())], animated: true)
     }
     
-//     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool{
-//        return true
-//    }
+    //     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool{
+    //        return true
+    //    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -60,14 +61,4 @@ class MainTabbarVC: UITabBarController {
         
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

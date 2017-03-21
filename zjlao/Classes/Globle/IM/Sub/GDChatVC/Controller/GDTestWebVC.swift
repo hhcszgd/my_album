@@ -1,23 +1,47 @@
 //
-//  BaseWebVC.swift
-//  mh824appWithSwift
+//  GDTestWebVC.swift
+//  zjlao
 //
-//  Created by wangyuanfei on 2016/9/28.
-//  Copyright © 2016年 www.16lao.com. All rights reserved.
+//  Created by WY on 17/1/13.
+//  Copyright © 2017年 com.16lao.zjlao. All rights reserved.
 //
+
+
 
 import UIKit
 import WebKit
-class BaseWebVC: GDNormalVC,WKScriptMessageHandler {
+class GDTestWebVC: GDNormalVC ,  WKNavigationDelegate,WKUIDelegate {
 
     let webView : WKWebView = WKWebView(frame: CGRect.zero, configuration: WKWebViewConfiguration.init())
+   // let html = "<html><head></head><body><p style=\"text-align:center ; font-size:44px ; font-family:'arial'\">萨沙讲史堂第一百五十四期（军事系列第81讲）</p>   <img style=\"center\" , src=\"http://d.ifengimg.com/mw640_q75/p0.ifengimg.com/pmop/2016/1226/F19FC9FA3A476FA3FDEF86D6A4EC301E7BE1B258_size12_w640_h355.jpeg\" />  </body></html>"
+    
+        let html = "<html><head></head><body><p style=\"text-align:center ; font-size:44px ; font-family:'arial'\">萨沙讲史堂第一百五十四期（军事系列第81讲）</p>   <img style=\"center\" , src=\"http://d.ifengimg.com/mw640_q75/p0.ifengimg.com/pmop/2016/1226/F19FC9FA3A476FA3FDEF86D6A4EC301E7BE1B258_size12_w640_h355.jpeg\" />  </body></html>"
+    func test() -> String {
+        
+        gotResourceInSubBundle("mg", type: "gif", directory: "face_img")
+        //let path =  gotResourceInSubBundle("icon_payfail@3x", type: "png", directory: "Image")
+        
+        let path =  Bundle.main.path(forResource: "loading", ofType: "gif")
+         let subBundlePath = Bundle.main.path(forResource: "Resource", ofType: "bundle")
+         let subBundle = Bundle(path: subBundlePath!)!
+         subBundle.bundlePath
 
+        
+        mylog(path)
+        //let ss  = String.init(format: "<html><head></head><body><p style=\"text-align:center ; font-size:44px ; font-family:'arial'\">萨沙讲史堂第一百五十四期（军事系列第81讲）</p>   <img href=\"center\" , src=\"file://%@\" />  </body></html>", path!)
+             //   let ss  = String.init(format: "<html><head></head><body><p style=\"text-align:center ; font-size:44px ; font-family:'arial'\">萨沙讲史堂第一百五十四期（军事系列第81讲）</p>   <img src=\"file://%@\" />  </body></html>", path!)
+        let ss = "<html><body style=\"margin: 0px\"> <p style=\"text-align:center ; font-size:44px ; font-family:'arial'\">萨沙讲史堂第一百五十四期（军事系列第81讲）</p>  <img style=\"-webkit-user-select:none; display:block; margin:auto;\" src=\"loading.gif  \"   width=\"111\" height=\"111\"></body></html>"
+        mylog(ss)
+        return ss
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.white
         mylog("\(self.keyModel)")
         self.view.addSubview(self.webView)
         self.layoutsubviews()
+        test()
         // Do any additional setup after loading the view.
     }
     
@@ -26,293 +50,67 @@ class BaseWebVC: GDNormalVC,WKScriptMessageHandler {
         self.webView.navigationDelegate = self
         self.webView.uiDelegate = self
         self.webView.configuration.preferences.javaScriptEnabled = true
-        self.webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
-//        self.webView.allowsBackForwardNavigationGestures = true //会出现不愿看到的返回列表
-        //- (void)addScriptMessageHandler:(id <WKScriptMessageHandler>)scriptMessageHandler name:(NSString *)name;
-        self.webView.configuration.userContentController.add(self , name : "zjlao")//传值的关键 , 释放的时候记得移除
+//        self.webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+       /* //        self.webView.allowsBackForwardNavigationGestures = true //会出现不愿看到的返回列表
+        //- (void)addScriptMessageHandler:(id <WKScriptMessageHandler>)scriptMessageHandler name:(NSString *)name;*/
+//        self.webView.configuration.userContentController.add(self , name : "zjlao")//传值的关键 , 释放的时候记得移除
         
         
         
         self.webView.frame = CGRect(x: 0.0, y: NavigationBarHeight, width: GDDevice.width, height: GDDevice.height - NavigationBarHeight)
-        guard let model = self.keyModel else {
-            mylog("webViewController的关键模型为nil\(self.keyModel)")
-            return
-        }
-        guard let keyParamete = model.keyparamete else {
-            mylog("webViewController的模型关键参数为空\(self.keyModel)")
-            return
-        }
-        guard let urlStr = keyParamete as? String else {
-            mylog("webViewController对应的url字符串不存在\(self.keyModel)")
-            return
-        }
-        if let token = GDNetworkManager.shareManager.token {
-            
-            let urlStrAppendToken  = urlStr.appending("?token=\(token)")
-            mylog(urlStrAppendToken)
-            if  urlStrAppendToken.hasPrefix("https://") {
-                guard let url  = URL.init(string: urlStrAppendToken ) else {
-                    mylog("webViewController的urlStr字符串转换成URL失败")
-                    return
-                }
-                
-                let urlRequest = URLRequest.init(url: url)
-                self.webView.load(urlRequest)
-                
-            }
-        }else{//拼接http://
-            
-        }
-        
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-
-    
-    //MARK:接受js传过来的参数
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        mylog(message.body)
-        mylog(message.name)
-        self.analysisTheDateFromJS(message:message)
-    }
-    //MARK:解析js传过来的数据 , 并执行相应的操作
-    func analysisTheDateFromJS(message : WKScriptMessage)  {
-        if (message.name == "zjlao") {
-            if let dict = message.body as? [String:AnyObject] {//字典的值都为字符串
-                if let actionOption  = dict["action"] {
-                    if let action  = actionOption as? String  {
-                        
-                        switch action  {
-                        case "alert"://弹框操作
-                            self.performAlertWith(dictParamete: dict)
-                            break
-                        case "confirm"://确认操作
-                            self.performConfirmWith(dictParamete: dict)
-                            break
-                        case "jump"://跳转操作
-                            self.performJumpWith(dictParamete: dict)
-                            break
-                        case "pay"://支付操作
-                            self.performPayWith(dictParamete: dict)
-                            break
-                        case "share"://分享操作
-                            self.performShareWith(dictParamete: dict)
-                            break
-                        case "closewebview"://关闭webView
-                            
-                            _ = self.navigationController?.popViewController(animated: true)
-                            break
-                        default:
-                            break
-                        }
-                    }
-                    
-                }
-            }
-        }else{
-            mylog("js的方法名未在本地注册")
-        }
-    }
-    //MARK:弹框
-    func performAlertWith(dictParamete : [String:AnyObject]) {
-        mylog("执行弹框操作")
-    }
-    //MARK:确认收货
-    func performConfirmWith(dictParamete : [String:AnyObject]) {
-        mylog("执行确认收货操作")
-    }
-    //MARK:跳转
-    func performJumpWith(dictParamete : [String:AnyObject]) {
-        guard   let typeOption = dictParamete["type"] else {
-            mylog("跳转类型为空")
-            return
-        }
-        guard let type = typeOption as? String else {
-            return
-        }
-        let model = BaseModel.init(dict: nil)
-        model.judge = true
-            mylog("执行跳转 到 商品详情页")
-            if (type == "goods") {//商品详情页
-                if let goodsID = dictParamete["id"] {
-                    model.keyparamete = goodsID as AnyObject
-                    model.actionkey = "HGoodsVC"
-                    SkipManager.skip(viewController: self, model: model)
-                }
-               
-            }else if(type == "coupon"){//优惠券详情页
-                mylog("执行跳转 到 优惠券详情页")
-                if let couponID = dictParamete["id"] {
-                    model.keyparamete = couponID as AnyObject
-                    model.actionkey = "CouponsDetailVC"
-                    SkipManager.skip(viewController: self, model: model)
-                }
-
-            }else if(type == "couponList"){//优惠券列表页
-                mylog("执行跳转 到 优惠券列表页")
-                //直接跳转到优惠券列表页面
-//                if let couponID = dictParamete["id"] {
-//                    model.keyparamete = couponID as AnyObject
-                    model.actionkey = "HCouponsVC"
-                    SkipManager.skip(viewController: self, model: model)
+        //MARK:loadhtmlString 时 baseurl 写成图片所在的路径文件夹。img标签里写图片名字就可以了
+        self.webView.loadHTMLString(test(), baseURL: URL.init(fileURLWithPath: Bundle.main.bundlePath) )
+//        guard let model = self.keyModel else {
+//            mylog("webViewController的关键模型为nil\(self.keyModel)")
+//            return
+//        }
+//        guard let keyParamete = model.keyparamete else {
+//            mylog("webViewController的模型关键参数为空\(self.keyModel)")
+//            return
+//        }
+//        guard let urlStr = keyParamete as? String else {
+//            mylog("webViewController对应的url字符串不存在\(self.keyModel)")
+//            return
+//        }
+//        if let token = GDNetworkManager.shareManager.token {
+//            
+//            let urlStrAppendToken  = urlStr.appending("?token=\(token)")
+//            mylog(urlStrAppendToken)
+//            if  urlStrAppendToken.hasPrefix("https://") || urlStrAppendToken.hasPrefix("http://") {
+//                guard let url  = URL.init(string: urlStrAppendToken ) else {
+//                    mylog("webViewController的urlStr字符串转换成URL失败")
+//                    return
 //                }
-            }else if(type == "shop"){//店铺页
-                mylog("执行跳转 到 店铺页")
-                if let shopID = dictParamete["id"] {
-                    model.keyparamete = shopID as AnyObject
-                    model.actionkey = "HShopVC"
-                    SkipManager.skip(viewController: self, model: model)
-                }
-                
-            }else if(type == "similarityGoods"){//相似商品列表也  , 记得取出id
-                mylog("执行跳转 到 相似商品列表页")
-                if let goodsID = dictParamete["id"] {
-                    model.keyparamete = goodsID as AnyObject
-                    model.actionkey = "xiangSiShangPinVC"//暂未实现
-                    SkipManager.skip(viewController: self, model: model)
-                }
-
-            }else if ( type == "url"){//web页面
-                mylog("执行跳转 到 web页")
-                if let url = dictParamete["url"] {
-                    model.keyparamete = url as AnyObject
-                    model.actionkey = "BaseWebVC"
-                    SkipManager.skip(viewController: self, model: model)
-                }
-            }else if ( type == "chat"){//聊天页面
-                mylog("执行跳转 到 聊天页")
-                if let userName = dictParamete["name"] {
-                    model.keyparamete = userName as AnyObject
-                    model.actionkey = "ChatVC"
-                    SkipManager.skip(viewController: self, model: model)
-                }
-                
-            }
-
-    }
-    //MARK:支付
-    func performPayWith(dictParamete : [String:AnyObject]) {
-        mylog("执行支付操作")
-        if let typeOption = dictParamete["type"] {
-            if let type  = typeOption as? String {
-                
-                if type  == "order" {
-                    if let orderID  = dictParamete["id"] {
-                        let model  = BaseModel.init(dict: nil)
-                        model.actionkey = "支付控制器"
-                        model.keyparamete = orderID as AnyObject
-                        model.judge = true
-                        SkipManager.skip(viewController: self, model: model)
-                        
-                    }
-                }else if (type == "check"){//wap页确认收货时验证支付密码,直接弹出输入框
-                    
-                }
-            }
-        }
-    }
-    //MARK:分享
-    func performShareWith(dictParamete : [String:AnyObject]) {
-        mylog("执行分享操作")
-    }
-    //MARK:返回上一页
-     func popToPreviousVCXX (){
-        if self.webView.canGoBack  {
-                self.webView.goBack()
-        }else{
-            self.webView.configuration.userContentController.removeScriptMessageHandler(forName: "zjlao")
-            super.popToPreviousVC()
-        }
-    }
-    //MARK:返回上一页
-    override func popToPreviousVC (){
+//                
+//                let urlRequest = URLRequest.init(url: url)
+//                self.webView.load(urlRequest)
+//                
+//            }
+//        }else{//拼接http://
+//            
+//        }
         
-        self.webView.stopLoading()
-        if (self.webView.canGoBack) {
-            let count : Int = self.webView.backForwardList.backList.count
-            for i in 0  ..< count {
-                let   item :  WKBackForwardListItem = self.webView.backForwardList.backList[count - 1 - i]
-                
-                if (item.url.absoluteString.contains("nottaken")) {
-                    if (i==count-1) {//如果栈底的还不需要在返回的时候显示,就直接pop到上一个控制器
-                        self.webView.configuration.userContentController.removeScriptMessageHandler(forName: "zjlao")
-                      _ =  self.navigationController?.popViewController(animated: true)
-                    }
-                }else{
-                    self.webView.go(to: item)
-                    if (item.url.absoluteString.contains("orderlist")) {//待评价页面返回时需要重新加载
-                        self.webView.reload()
-                    }
-                    break
-                }
-            }
-        }else{
-            self.webView.configuration.userContentController.removeScriptMessageHandler(forName: "zjlao")
-            _ =  self.navigationController?.popViewController(animated: true)
-            
-        }
     }
 
     
+
     /*
-    -(void)navigationBack
-    {
-    
-    NSLog(@"_%d_%@",__LINE__,self.webview.backForwardList.currentItem.URL.absoluteString );
-    [self.webview stopLoading];
-    if (self.webview.canGoBack) {
-    NSUInteger count = self.webview.backForwardList.backList.count ;
-    NSLog(@"_%d_%@,%lu",__LINE__,@"总个数",count);
-    for (int i = 0 ; i < count; i++) {
-    WKBackForwardListItem * item = self.webview.backForwardList.backList[count - 1 - i];
-    NSLog(@"_%d_下标%d_%@",__LINE__,i,item.URL.absoluteString);
-    if ([item.URL.absoluteString containsString:@"nottaken"]) {
-    if (i==count-1) {//如果栈底的还不需要在返回的时候显示,就直接pop到上一个控制器
-    
-    [self.webview.configuration.userContentController removeScriptMessageHandlerForName:@"zjlao"];
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
-    
-    }else{
-    [self.webview goToBackForwardListItem:item];
-    if ([item.URL.absoluteString containsString:@"orderlist"]) {//待评价页面返回时需要重新加载
-    [self.webview reload];
-    }
-    break ;
-    }
-    }
-    
-    }else{
-    
-    [self.webview.configuration.userContentController removeScriptMessageHandlerForName:@"zjlao"];
-    [self.navigationController popViewControllerAnimated:YES];
-    
-    }
-    }
-    
     */
 
     
     
     
-
-}
-
-extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
+    
+    
+    
+    
     
     //MARK:WKNavigationDelegate
     
@@ -323,7 +121,7 @@ extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
      @param decisionHandler The decision handler to call to allow or cancel the
      navigation. The argument is one of the constants of the enumerated type WKNavigationActionPolicy.
      @discussion If you do not implement this method, the web view will load the request or, if appropriate, forward it to another application.
-    @available(iOS 8.0, *)
+     @available(iOS 8.0, *)
      */
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Swift.Void){
         decisionHandler(WKNavigationActionPolicy.allow)
@@ -360,7 +158,7 @@ extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
      @available(iOS 8.0, *)
      */
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!){
-
+        
     }
     
     
@@ -393,6 +191,10 @@ extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
      */
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!){
         self.attritNavTitle = NSAttributedString.init(string: webView.title ?? "")
+        webView.alpha = 0
+        UIView.animate(withDuration: 0.2) { 
+            webView.alpha = 1
+        }
         mylog(webView.title)
     }
     
@@ -435,8 +237,8 @@ extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
     }
     
     //MARK: WKUIDelegate
-
-
+    
+    
     /*! @abstract Creates a new web view.
      @param webView The web view invoking the delegate method.
      @param configuration The configuration to use when creating the new web
@@ -450,9 +252,9 @@ extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
      If you do not implement this method, the web view will cancel the navigation.
      @available(iOS 8.0, *)
      */
-//     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView?{
-//        return nil
-//    }
+    //     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView?{
+    //        return nil
+    //    }
     
     
     /*! @abstract Notifies your app that the DOM window object's close() method completed successfully.
@@ -539,10 +341,10 @@ extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
      limited to links. In the future, it could be invoked for additional elements.
      @available(iOS 10.0, *)
      */
-//    @available(iOS 10.0, *)
-//    func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool{
-//        return true
-//    }
+    //    @available(iOS 10.0, *)
+    //    func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool{
+    //        return true
+    //    }
     
     
     /*! @abstract Allows your app to provide a custom view controller to show when the given element is peeked.
@@ -559,10 +361,10 @@ extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
      if a non-nil view controller was returned.
      @available(iOS 10.0, *)
      */
-//    @available(iOS 10.0, *)
-//    func webView(_ webView: WKWebView, previewingViewControllerForElement elementInfo: WKPreviewElementInfo, defaultActions previewActions: [WKPreviewActionItem]) -> UIViewController?{
-//        return nil
-//    }
+    //    @available(iOS 10.0, *)
+    //    func webView(_ webView: WKWebView, previewingViewControllerForElement elementInfo: WKPreviewElementInfo, defaultActions previewActions: [WKPreviewActionItem]) -> UIViewController?{
+    //        return nil
+    //    }
     
     
     /*! @abstract Allows your app to pop to the view controller it created.
@@ -574,4 +376,15 @@ extension BaseWebVC : WKNavigationDelegate,WKUIDelegate{
         
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
+
+

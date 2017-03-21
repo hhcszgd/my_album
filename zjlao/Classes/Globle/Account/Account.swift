@@ -13,7 +13,7 @@ class Account: NSObject , NSCoding {
     static let shareAccount : Account = {
         let acc = Account.loadAccount()
         if acc == nil {
-            return Account.init(dict: [String : AnyObject]())
+          return Account.init(dict: [String : AnyObject]())
         }
         return acc!
     }()
@@ -29,9 +29,7 @@ class Account: NSObject , NSCoding {
     }
     //保存自定义对象
     func saveAccount() {
-        //保存到沙盒路径   stringbyappendingpathcomment  很遗憾 在Swift中被搞丢了
-        //在Xcode 7.0  消失了
-        
+        //保存到沙盒路径        
         let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as NSString).appendingPathComponent("account.plist")
         NSKeyedArchiver.archiveRootObject(self, toFile: path)
         
@@ -149,9 +147,36 @@ class Account: NSObject , NSCoding {
     
     
     func save() -> () {
-        
+        let docuPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last
+        if let realDocuPath : NSString = docuPath as NSString? {
+            let filePath = realDocuPath.appendingPathComponent("Account.data")
+            let isSuccess =  NSKeyedArchiver.archiveRootObject(self , toFile: filePath)
+            
+            if isSuccess {
+                mylog("数据归档成功")
+            }else{
+                mylog("数据归档失败")
+            }
+        }else{
+            mylog("路径不存在")
+        }
+
     }
-    func read() -> () {
+  class  func read() -> Account {
+        //let dict = ["msg" : "解归档失败,重新创建对象" , "status" : "-200" , "data" : "error" , "additional" : "NULL" ]
+        let docuPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last
+        if let realDocuPath : NSString = docuPath as NSString? {
+            let filePath = realDocuPath.appendingPathComponent("Account.data")
+            let object =  NSKeyedUnarchiver.unarchiveObject(withFile:  filePath)
+            if let realObjc = object as? Account {
+                return realObjc
+            }else{
+                return  Account.init(dict: [String : AnyObject]())
+            }
+        }else{
+            mylog("路径不存在")
+            return  Account.init(dict: [String : AnyObject]())
+        }
         
     }
     

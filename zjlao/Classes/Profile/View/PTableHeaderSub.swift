@@ -4,11 +4,11 @@
 //
 //  Created by wangyuanfei on 16/9/12.
 //  Copyright © 2016年 www.16lao.com. All rights reserved.
-/*tableView的header里面的子控件**/
+/*tableView的header里面的子控件 , 如商品收藏按钮**/
 
 import UIKit
 
-class PTableHeaderSub: BaseControl {
+class PTableHeaderSub: GDBaseControl {
 
     /*
     // Only override draw() if you perform custom drawing.

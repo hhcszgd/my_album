@@ -73,6 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         }
         mylog("程序在前台时 : ios10 接收到的远程推送\(userInfo)")
         completionHandler(UNNotificationPresentationOptions.sound)
+        //MARK:设置红点
+        GDKeyVC.share.mainTabbarVC?.tabBar.items?.first?.badgeValue = ""
+
     }
     
     
@@ -86,6 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         }
         mylog("程序在后台时 : ios10 接收到的远程推送\(userInfo)")
         completionHandler()
+        self.dealWithRemoteNotification(userInfo: userInfo)
     }
     
     
@@ -96,6 +100,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         JPUSHService.handleRemoteNotification(userInfo)
         mylog("iOS 8 , 9 接收到的远程推送\(userInfo)")
         completionHandler(UIBackgroundFetchResult.newData)
+        if application.applicationState != UIApplicationState.active {//后台
+            self.dealWithRemoteNotification(userInfo: userInfo)
+        }else{//前台
+            //MARK:设置红点
+            GDKeyVC.share.mainTabbarVC?.tabBar.items?.first?.badgeValue = ""
+            
+        }
     }
     
 
@@ -108,6 +119,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         if !Account.shareAccount.isLogin {
             GDAlertView.alert("请登录", image: nil, time: 2, complateBlock: nil)
         }
+        self.analysisData(userinfo: userInfo)
+        /*
         if let aps  = userInfo["aps"] {
             if let apsDict  = aps as? [String : Any] {
                 if let actionkey = apsDict["actionkey"] {
@@ -166,7 +179,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
             }
             
         }
-        
+        */
     }
 
    // func analysisData (aps ) -> <#return type#> {
@@ -175,6 +188,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     
     
     
+    func analysisData (userinfo : [AnyHashable : Any] ) {
+        if let actionkey = userinfo["actionkey"] {
+            
+            if let actionkeyStr = actionkey as? String {
+                if  actionkeyStr == "orderlist" {
+                    if let value  = userinfo["value"] {
+                        mylog("good成功\(value)")
+//                        let subWebVC = SubOrderListVC(vcType : VCType.withBackButton)
+//                        if let url  = value as? String {
+//                            subWebVC.originUrl = url
+//                            KeyVC.share.pushViewController(subWebVC, animated: true )
+//                            
+//                        }else{mylog("\(actionkeyStr)对应的value转字符串失败")}
+                    }else{mylog("\(actionkeyStr)对应的value为空")}
+                }else if (actionkeyStr == "im"){
+                    
+                    if let value  = userinfo["value"] {
+                        mylog("good成功\(value)")
+//                        let chatVC  = ChatVC()
+                        if let user  = value as? String {
+//                            let jid : XMPPJID = XMPPJID.init(user: user , domain: "jabber.zjlao.com", resource: "ios")
+//                            chatVC.userJid = jid
+//                            KeyVC.share.pushViewController(chatVC, animated: true )
+                        
+                        }else{mylog("\(actionkeyStr)对应的value转字符串失败")}
+                    }else{mylog("\(actionkeyStr)对应的value为空")}
+                    
+                }
+            }else{mylog("actionkey  any类型转string类型失败")}
+            
+            
+            
+        }else {
+            mylog("解析actinkey失败")
+        }
+    }
+
     
     //MARK:////////////////////////////////////XXXXXX相关//////////////////////////////////////////
     
@@ -260,7 +310,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
 //        self.window!.makeKeyAndVisible()
         self.window = nil
         self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-        self.window!.rootViewController = KeyVC.share
+        self.window!.rootViewController = GDKeyVC.share
         self.window!.makeKeyAndVisible()
 
     }

@@ -4,11 +4,11 @@
 //
 //  Created by wangyuanfei on 16/9/8.
 //  Copyright © 2016年 www.16lao.com. All rights reserved.
-/*tableView的头视图**/
+/*tableView的头视图 , 包含头像视图**/
 
 import UIKit
 import SDWebImage
-class PTableHeaderView: BaseView{
+class PTableHeaderView: GDView{
 //    weak var actionDelegate : ActionDelegate?
     var headerChannelModel : ProfileChannelModel =  ProfileChannelModel(dict : nil) {
         didSet {
@@ -192,7 +192,7 @@ class PTableHeaderView: BaseView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func click(sender : BaseControl ) -> () {
+    func click(sender : GDBaseControl ) -> () {
         if let transSender = sender as? PTableHeaderSub {
             self.actionDelegate?.performAction(model: transSender.model)
         }else{

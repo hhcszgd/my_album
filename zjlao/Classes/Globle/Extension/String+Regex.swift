@@ -6,8 +6,8 @@
 //  Copyright © 2015年 mac. All rights reserved.
 //
 
-import Foundation
-
+//import Foundation
+import UIKit
 extension String {
     
     //元祖类型
@@ -66,4 +66,32 @@ extension String {
             return returnStr.replacingOccurrences(of: "\\r\\n", with: "\n")
         }
     
+    //MARK:计算多行字符串的size
+    func sizeWith(font : UIFont , maxSize : CGSize) -> CGSize {
+        var tempMaxSize = CGSize.zero
+        if maxSize == CGSize.zero {
+            tempMaxSize = CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT))
+        }else{
+            tempMaxSize = maxSize
+        }
+        let attribute = Dictionary(dictionaryLiteral: (NSFontAttributeName,font) )
+       let size = self.boundingRect(with: tempMaxSize, options: [NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading], attributes: attribute, context: nil).size
+        return  size
+    }
+    //MARK:计算多行字符串的size
+    func sizeWith(font : UIFont , maxWidth : CGFloat) -> CGSize {
+        var tempMaxSize = CGSize.zero
+        if maxWidth == 0 {
+            tempMaxSize = CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT))
+        }else{
+            tempMaxSize = CGSize(width: maxWidth, height: CGFloat(MAXFLOAT))
+        }
+        let attribute = Dictionary(dictionaryLiteral: (NSFontAttributeName,font) )
+        let size = self.boundingRect(with: tempMaxSize, options: [NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading], attributes: attribute, context: nil).size
+        return  size
+    }
+    //MARK:计算单行字符串的size
+    func sizeSingleLine(font : UIFont ) -> CGSize  {
+        return self.size(attributes: Dictionary(dictionaryLiteral: (NSFontAttributeName,font) ))
+    }
 }

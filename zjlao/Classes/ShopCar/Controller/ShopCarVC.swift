@@ -45,8 +45,8 @@ class ShopCarVC: GDNormalVC {
         self.gotShopCarData(type: LoadDataType.initialize, { (model) in }) { (error ) in }
         self.setupNotification()
         self.view.backgroundColor = UIColor.green
-        KeyVC.share.settabBarItem(number: "6" , index: 3)
-        KeyVC.share.settabBarItem(number: "", index: 4)
+        GDKeyVC.share.settabBarItem(number: "6" , index: 3)
+        GDKeyVC.share.settabBarItem(number: "", index: 4)
 
 //        let images = [UIImage(named: "bg_collocation")!,UIImage(named: "bg_coupon")!,UIImage(named: "bg_Direct selling")!,UIImage(named: "bg_electric")!,UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
 //         let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))

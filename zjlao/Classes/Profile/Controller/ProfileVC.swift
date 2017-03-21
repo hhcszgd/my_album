@@ -8,7 +8,7 @@
 //TODO: 消息按钮 固定不随tableView滚动
 import UIKit
 
-class ProfileVC: BaseVC ,ActionDelegate {
+class ProfileVC: GDBaseVC ,ActionDelegate {
     let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: GDDevice.width, height: GDDevice.height), style: UITableViewStyle.plain)
     var tableHeaderData : [AnyObject] {
         get{
@@ -118,8 +118,8 @@ class ProfileVC: BaseVC ,ActionDelegate {
     }
     
 
-    func performAction( model: BaseModel) {
-         SkipManager.skip(viewController: self, model: model)
+    func performAction( model: GDBaseModel) {
+         GDSkipManager.skip(viewController: self, model: model)
     }
 
     override func didReceiveMemoryWarning() {
