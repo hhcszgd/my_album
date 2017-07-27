@@ -6,3 +6,8 @@
 
 #import "NSArray+LogMsg.h"
 #import "JPUSHService.h"
+#import "GPUImageBeautifyFilter.h"
+#import "NSString+Hash.h"
+
+
+

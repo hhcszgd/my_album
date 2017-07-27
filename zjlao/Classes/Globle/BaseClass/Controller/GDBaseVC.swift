@@ -11,31 +11,41 @@ import UIKit
 class GDBaseVC: UIViewController {
 
     /* private*/ var errorView : GDErrorView?
-    
+
+//    override var childViewControllerForStatusBarStyle: UIViewController? { return self }
+//    override var preferredStatusBarStyle: UIStatusBarStyle { return UIStatusBarStyle.lightContent }
     var TabBarHeight : CGFloat {
-        return self.tabBarController?.tabBar.bounds.size.height ?? 44.0
+        return self.tabBarController?.tabBar.bounds.size.height ?? 64.0
     }
     var parameter : AnyObject? //用来接收关键参数的属性 (字符串 , 自定义模型等等)
     var keyModel : GDBaseModel? = GDBaseModel.init(dict: nil){
         didSet{
-            mylog(keyModel)
+
         }
         
     }
+
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.randomColor()
+//        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+//        self.setNeedsStatusBarAppearanceUpdate()
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        self.view.backgroundColor = UIColor.black
+//        self.navigationController?.navigationBar.barStyle = UIBarStyle.default
+//        self.view.backgroundColor = UIColor.randomColor()
         // Do any additional setup after loading the view.
     }
     

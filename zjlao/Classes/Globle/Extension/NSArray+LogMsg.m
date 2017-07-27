@@ -7,7 +7,6 @@
 //
 
 #import "NSArray+LogMsg.h"
-#import "zjlao-Swift.h"
 @implementation NSArray (LogMsg)
 
 - (NSString *)descriptionWithLocale:(id)locale
@@ -29,7 +28,7 @@
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [strM appendFormat:@"\t%@,\n", obj];
     }];
-    [HomeVC new];
+//    [HomeVC new];
     [strM appendString:@")"];
     return strM;
 }

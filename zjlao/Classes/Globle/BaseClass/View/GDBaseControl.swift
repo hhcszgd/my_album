@@ -18,7 +18,7 @@ class GDBaseControl: UIControl {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    //    var myModel : BaseControlModel?
+    var controlModel : BaseControlModel?
     /*
      // Only override draw() if you perform custom drawing.
      // An empty implementation adversely affects performance during animation.
@@ -34,11 +34,11 @@ class GDBaseControl: UIControl {
     lazy var subTitleLabel = UILabel()
     lazy var additionalLabel = UILabel()
     
-    
-    lazy var imageView = UIImageView()
-    lazy var subImageView = UIImageView()
-    lazy var additionalImageView = UIImageView()
-    lazy var backImageView = UIImageView()
+
+    lazy var imageView = GDImageView(frame: CGRect.zero)
+    lazy var subImageView = GDImageView(frame: CGRect.zero)
+    lazy var additionalImageView = GDImageView(frame: CGRect.zero)
+    lazy var backImageView = GDImageView(frame: CGRect.zero)
     
     lazy var customView = UIView()
     
@@ -47,6 +47,8 @@ class GDBaseControl: UIControl {
     
     lazy var button = UIButton()
     lazy var subButton = UIButton()
+    
+    
 
 
 }

@@ -26,16 +26,21 @@ class GDAlertView: MBProgressHUD {
 //        }else{
 //        
 //        }
-       let pro  =   GDAlertView.init(view: UIApplication.shared.keyWindow!)
-        UIApplication.shared.keyWindow!.addSubview(pro)
-        pro.graceTime = 2.0
-//        pro.taskInProgress = true
-//        pro.isHidden = true
-//        pro.bezelView.backgroundColor = UIColor.clear//弹框部分的底色
-        pro.mode = MBProgressHUDMode.indeterminate
-//        pro.isSquare = false
-//        pro.backgroundColor = UIColor.white//全屏白
-        return pro
+        if UIApplication.shared.keyWindow != nil  {
+            
+            let pro  =   GDAlertView.init(view: UIApplication.shared.keyWindow!)
+            UIApplication.shared.keyWindow!.addSubview(pro)
+            pro.graceTime = 2.0
+            //        pro.taskInProgress = true
+            //        pro.isHidden = true
+            //        pro.bezelView.backgroundColor = UIColor.clear//弹框部分的底色
+            pro.mode = MBProgressHUDMode.indeterminate
+            //        pro.isSquare = false
+            //        pro.backgroundColor = UIColor.white//全屏白
+            return pro
+        }else{
+            return GDAlertView.init(frame: CGRect.zero)
+        }
     }
     
 //    func networkLoading()  {
@@ -49,6 +54,7 @@ class GDAlertView: MBProgressHUD {
     
     
    class func alert(_ message : String? ,image : UIImage? , time : Int , complateBlock : MBProgressHUDCompletionBlock? ) -> () {
+    if UIApplication.shared.keyWindow == nil  {return}
         if message == nil && image == nil  { return }
     
         DispatchQueue.main.async {
@@ -75,11 +81,13 @@ class GDAlertView: MBProgressHUD {
     
     
     func gdShow() {
+        if UIApplication.shared.keyWindow == nil  {return}
         DispatchQueue.main.async {
             self.show(animated: true)
           };
     }
     func gdHide() {
+        if UIApplication.shared.keyWindow == nil  {return}
         DispatchQueue.main.async {
             self.hide(animated: true)
             

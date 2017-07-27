@@ -10,7 +10,7 @@ import UIKit
 
 class OriginalNetDataModel: NSObject , NSCoding /*, NSCopying*/{
     var data  : AnyObject? // 返回的数据
-    var msg : String?//状态信息
+    var message : String?//状态信息
     var status : Int  = 0 //状态码
     var additional : AnyObject? // 额外的信息 (备用)
     init(dict : [String : AnyObject]) {
@@ -19,9 +19,9 @@ class OriginalNetDataModel: NSObject , NSCoding /*, NSCopying*/{
     }
 
     override func setValue(_ value: Any?, forKey key: String) {
-        if key == "msg" {
-            self.msg  = (value as! String).unicodeStr
-            mylog((value as! String).unicodeStr)
+        if key == "message" {
+            self.message  = (value as! String).unicodeStr
+//            mylog((value as! String).unicodeStr)
             return
         }
         super.setValue(value, forKey: key)
@@ -32,7 +32,7 @@ class OriginalNetDataModel: NSObject , NSCoding /*, NSCopying*/{
     }
     //MARK: fileManage
     func save ()  {
-        mylog(self.msg)
+        mylog(self.message)
         let docuPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last
         if let realDocuPath : NSString = docuPath as NSString? {
             let filePath = realDocuPath.appendingPathComponent("homeData.data")
@@ -74,7 +74,7 @@ class OriginalNetDataModel: NSObject , NSCoding /*, NSCopying*/{
 //MARK:    NSCoding
     func encode(with aCoder: NSCoder){
 
-        aCoder.encode(self.msg, forKey: "msg")
+        aCoder.encode(self.message, forKey: "msg")
         aCoder.encode(self.data, forKey: "data")
         aCoder.encode(self.status, forKey: "status")
         aCoder.encode(self.additional, forKey: "additional")
@@ -82,7 +82,7 @@ class OriginalNetDataModel: NSObject , NSCoding /*, NSCopying*/{
     
     required init?(coder aDecoder: NSCoder){
         super.init()
-       self.msg =  aDecoder.decodeObject(forKey: "msg") as? String
+       self.message =  aDecoder.decodeObject(forKey: "message") as? String
        self.data = aDecoder.decodeObject(forKey: "data") as AnyObject?
         self.status = aDecoder.decodeInteger(forKey: "status")
         self.additional = aDecoder.decodeObject(forKey: "additional") as AnyObject?

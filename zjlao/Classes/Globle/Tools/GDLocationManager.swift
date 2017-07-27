@@ -8,7 +8,7 @@
 
 
 import UIKit
-
+import MapKit
 import CoreLocation
 
 
@@ -17,28 +17,58 @@ typealias closureType = (String , NSError) -> ()
 
 class GDLocationManager: NSObject ,CLLocationManagerDelegate {
     
+    static let GDLocationChanged = NSNotification.Name.init("LocationChanged")
+    static let GDAuthorizationStatusChanged =  NSNotification.Name.init("AuthorizationStatusChanged")
     static let share : GDLocationManager = {
         let temp = GDLocationManager.init()
         
         return temp
     }()
-    lazy var localtionManager: CLLocationManager = {
+    
+    var locationServicesEnabled : Bool = {
+        return  CLLocationManager.locationServicesEnabled() 
+        }()
+    func authorizationStatus() -> CLAuthorizationStatus {
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case CLAuthorizationStatus.authorizedAlways:
+                mylog("现在是前后台定位服务")
+            case CLAuthorizationStatus.authorizedWhenInUse:
+                mylog("现在是前台定位服务")
+            case CLAuthorizationStatus.denied:
+                mylog("现在是用户拒绝使用定位服务")
+            case CLAuthorizationStatus.notDetermined:
+                mylog("用户暂未选择定位服务选项")
+            case CLAuthorizationStatus.restricted:
+                mylog("现在是用户可能拒绝使用定位服务")
+            }
+        }else{
+            mylog("请开启手机的定位服务")
+        }
+
+        return CLLocationManager.authorizationStatus()
+    }
+    
+    lazy var geoCoder  = CLGeocoder.init()
+    lazy var locationManager: CLLocationManager = {
         let localtionManagerTemp  =  CLLocationManager.init()
         //        self.localtionManager.requestWhenInUseAuthorization()//请求用户允许前台定位,如果此种授权下想要后台定位 , ios9 以后需要调用一个方法self.localtionManager.allowsBackgroundLocationUpdates = true
         //        NSFoundationVersionNumber
         //        if #available(iOS 9.0, *) {//记得在设置里勾选locationUpDates
         //            self.localtionManager.allowsBackgroundLocationUpdates = true
         //        }
-        localtionManagerTemp.requestAlwaysAuthorization ()//请求用户允许前后台 , info.plist指定NSLocationAlwaysUsageDescription
+//        localtionManagerTemp.requestAlwaysAuthorization ()//请求用户允许前后台 , info.plist指定NSLocationAlwaysUsageDescription
+        
+        localtionManagerTemp.requestWhenInUseAuthorization()//请求用户允许前后台 , info.plist指定NSLocationAlwaysUsageDescription
         return localtionManagerTemp
     }()
-    var callback : ( (String? , NSError?) -> ())?//  = {  String , NSError in
+//    var getLocationCallback : ( (CLLocation? , NSError?) -> ())?//  = {  String , NSError in
     // mylog("")
     //}
     
     override init() {
         super.init()
-        localtionManager.delegate = self
+        locationManager.delegate = self
         
     }
     
@@ -49,7 +79,7 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
         //CLCircularRegion 是 CLRegion的子类
         let center : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 33, longitude: 111);
         let  region : CLCircularRegion = CLCircularRegion(center: center, radius: 1000, identifier: "firstRegion")
-        self.localtionManager.requestState(for: region)
+        self.locationManager.requestState(for: region)
         
     }
     //是否在某个区域的代理方法
@@ -63,7 +93,7 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
         //CLCircularRegion 是 CLRegion的子类
         let center : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 33, longitude: 111);
         let  region : CLCircularRegion = CLCircularRegion(center: center, radius: 1000, identifier: "firstRegion")
-        self.localtionManager.startMonitoring(for: region)
+        self.locationManager.startMonitoring(for: region)
         
     }
     
@@ -85,16 +115,8 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     func gotCurrentCouse( call : @escaping  (String? , NSError?) -> () ) -> () {//获取当前朝向
-        self.localtionManager.startUpdatingHeading()
+        self.locationManager.startUpdatingHeading()
         
     }
     //当前朝向的代理方法
@@ -106,11 +128,15 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
          */
     }
 
-    func gotCurrentLocation( call : @escaping  (String? , NSError?) -> () ) -> () {//获取当前位置
-        self.callback = call
-
-        self.localtionManager.startUpdatingLocation()//开始定位,
-        self.localtionManager.distanceFilter = 100 //每隔100米定位一次
+//    func gotCurrentLocation( call : @escaping  (CLLocation? , NSError?) -> () ) -> () {//获取当前位置
+////        self.getLocationCallback = call
+//        self.locationManager.startUpdatingLocation()//开始定位,
+//        self.locationManager.distanceFilter = 100 //每隔100米定位一次
+//    }
+    func startUpdatingLocation()  {
+        self.locationManager.startUpdatingLocation()//开始定位,
+        self.locationManager.distanceFilter = 100 //每隔30米定位一次 , 默认
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation// kCLLocationAccuracyBest
     }
     
     //定位失败
@@ -119,13 +145,23 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
     }
     //不断被调用的定位结果方法
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.gotCity(location: locations.last!) { (error, CLPlacemarkArrM) in
-            
-        }
+        mylog("距离超过临界值,更新位置(包括app重启或重新进入前台)")
+//        if self.getLocationCallback != nil {
+            if let  location = locations.last {//获取到位置时发送通知
+//                self.getLocationCallback!(location,nil)
+                NotificationCenter.default.post(name: GDLocationManager.GDLocationChanged, object: nil, userInfo: ["userInfo" : location])
+            }else{//获取不到时继续更新位置
+                self.locationManager.startUpdatingLocation()
+//                let error = NSError(domain: "GDLocationManager.com", code: -10001, userInfo: ["reason" : "locationError"])
+//                 NotificationCenter.default.post(name: GDLocationManager.GDLocationChanged, object: nil, userInfo: ["userInfo" : error])
+//                self.getLocationCallback!(nil,error)
+            }
+//            self.localtionManager.stopUpdatingLocation()
+//        }
     }
     //授权状态改变时调用
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus){
-        
+        NotificationCenter.default.post(name: GDLocationManager.GDAuthorizationStatusChanged, object: nil, userInfo:  ["userInfo":status])
         if CLLocationManager.locationServicesEnabled() {
             switch status {
             case CLAuthorizationStatus.authorizedAlways:
@@ -180,7 +216,6 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
                 if let Str = formatterStr as? String {
                     mylog(Str)
 //                    self.localtionManager.stopUpdatingLocation()
-                    self.callback?(Str,error as? NSError)
                 }
             }
             result(error ,  CLPlacemarkArr)
@@ -218,6 +253,44 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
                 }
                 
             }
+        }
+    }
+    
+    func startNaviBySystemMap() {
+        /**
+         let MKLaunchOptionsDirectionsModeKey: String
+         let MKLaunchOptionsMapTypeKey: String
+         let MKLaunchOptionsMapCenterKey: String
+         let MKLaunchOptionsMapSpanKey: String
+         let MKLaunchOptionsShowsTrafficKey: String
+         let MKLaunchOptionsCameraKey: String
+         */
+        var mapItems = [MKMapItem]()
+        self.geoCoder.geocodeAddressString("北京") { (placeMarkArr, error ) in
+            
+            
+            
+            let placemark = MKPlacemark.init(placemark: (placeMarkArr?.first )!)
+            let start = MKMapItem.init(placemark: placemark)
+            mapItems.append(start)
+            let launchOptions = [
+                MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving ,
+                                 //MKLaunchOptionsMapTypeKey: "\(MKMapType.hybrid)" ,
+                                 //MKLaunchOptionsMapCenterKey:"",
+                                 //MKLaunchOptionsMapSpanKey:"",
+                                 //MKLaunchOptionsShowsTrafficKey:"\(true)",
+                                // MKLaunchOptionsCameraKey:""
+                ] as [String : Any]
+            
+            
+            self.geoCoder.geocodeAddressString("上海") { (placeMarkArr, error ) in
+                let endplacemark = MKPlacemark.init(placemark: (placeMarkArr?.first)!)
+                let end = MKMapItem.init(placemark: endplacemark)
+                mapItems.append(end)
+                
+              let result =  MKMapItem.openMaps(with: mapItems, launchOptions: launchOptions )
+                mylog(result)
+                }
         }
     }
     //CLGeocoder

@@ -163,16 +163,8 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        mylog(scrollView.contentOffset)
-//        mylog(scrollView.contentSize)
-//        mylog(scrollView.bounds.size)
-//        self.naviBar.currentBarActionType = .alpha
-//        self.naviBar.layoutType = .desc
-        self.naviBar.change(by: scrollView)
-//        self.naviBar.changeWithOffset(offset: (scrollView.contentOffset.y + 64) / scrollView.contentSize.height)
-//        self.naviBar.changeWithOffset(offset: scrollView.contentOffset.y, contentSize: scrollView.contentSize)
-
-    }
+    //func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    //    self.naviBar.change(by: scrollView)
+    //}
 
 }

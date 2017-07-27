@@ -13,6 +13,8 @@ class GDBaseModel: NSObject {
     var actionkey : String?
     var keyparamete : AnyObject?
     var items : [AnyObject]?
+    var navTitle : String?//控制器标题
+    var attributeTitle : NSAttributedString?//控制器标题
     init(dict : [String : AnyObject]?) {
         super.init()
         if let dic = dict {
@@ -20,7 +22,7 @@ class GDBaseModel: NSObject {
         }
     }
     override func setValue(_ value: Any?, forKey key: String) {
-        //        mylog("\(value)/\(key)")
+//                mylog("\(value)/\(key)")
         
         super.setValue(value, forKey: key)
     }

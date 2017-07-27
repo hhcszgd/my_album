@@ -14,18 +14,21 @@ class ShopCarNaviVC: UINavigationController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(LaoNaviVC.languageChanged), name: GDLanguageChanged, object: nil)
 
-        self.tabBarItem.image = UIImage(named: "tab_Shopping Cart_normal")
-        self.tabBarItem.selectedImage = UIImage(named: "tab_Shopping Cart_click")
-//        self.tabBarItem.title = NSLocalizedString("tabBar_shopcar", tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "")
+//        self.tabBarItem.image = UIImage(named: "tab_Shopping Cart_normal")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+//        self.tabBarItem.selectedImage = UIImage(named: "tab_Shopping Cart_click")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+
+        self.tabBarItem.image = UIImage(named: "diaryIcon")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBarItem.selectedImage = UIImage(named: "diaryIconSelected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        //        self.tabBarItem.title = NSLocalizedString("tabBar_shopcar", tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "")
         self.navigationBar.isHidden = true;
 
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_shopcar)//gotTitleStr(key: "tabBar_shopcar")
+//        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_shopcar)//gotTitleStr(key: "tabBar_shopcar")
 //        self.tabBarItem.title = "shopcar"
 //        self.tabBarItem.selectedImage?.renderingMode = UIImageRenderingMode.UIImageRenderingModeAlwaysOriginal
         // Do any additional setup after loading the view.
     }
     func languageChanged() {
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_shopcar)  // gotTitleStr(key: "tabBar_lao")
+//        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_shopcar)  // gotTitleStr(key: "tabBar_lao")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

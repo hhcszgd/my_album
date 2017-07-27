@@ -7,11 +7,9 @@
 //
 
 import UIKit
-
 import CoreLocation
 import MJRefresh
 class LaoVC: GDNormalVC {
-    
     let layer = CAGradientLayer();
     let clMar = GDLocationManager.init()
     var datas = [0]
@@ -22,7 +20,7 @@ class LaoVC: GDNormalVC {
         self.setupCollectionView()
         self.setupNotification()
     }
-    func setupCollectionView() {
+      func setupCollectionView() {
 //        collectoinView.collectionViewLayout
         collectionView.contentInset  = UIEdgeInsetsMake(NavigationBarHeight, 0, self.TabBarHeight, 0)
         mylog(collectionView)
@@ -38,18 +36,16 @@ class LaoVC: GDNormalVC {
         self.view.layer.addSublayer(layer)
     }
     func gotLocation() {
-        self.clMar.start(call: {str , err in
-            mylog(str)
-        })
+        
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return self.datas.count
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.naviBar.change(by: scrollView)
-    }
+    //func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    //    self.naviBar.change(by: scrollView)
+    //}
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -77,7 +73,12 @@ class LaoVC: GDNormalVC {
         NotificationCenter.default.addObserver(self , selector: #selector(laotabBarReclick), name: GDLaoTabBarReclick, object: nil )
     }
     func laotabBarReclick()  {
-        
+//        let cameraVC = FilterDisplayViewController()
+//        let filterInList = filterOperations[19]
+//        cameraVC.filterOperation = filterInList
+////        self.navigationController?.present(GDImageCaptureVC(), animated: true, completion: { })
+
+//        self.navigationController?.present(cameraVC, animated: true, completion: { })
         mylog("lao重复点击")
     }
     deinit  {

@@ -31,13 +31,13 @@ class GDTabBar: UITabBar {
     override func layoutSubviews() {
         super.layoutSubviews()
         for (index ,item)  in self.items!.enumerated() {
-            if index == 0  {
-                
-            }
-            if index == 2  {
-                item.imageInsets = UIEdgeInsetsMake(-14, 0, 14, 0)
-                item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -26)
-            }
+//            if index == 0  {
+//                
+//            }
+//            if index == 2  {
+                item.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
+//                item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -26)
+//            }
         }
     }
     /*

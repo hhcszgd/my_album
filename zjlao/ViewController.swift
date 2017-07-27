@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+
 
 class ViewController: UIViewController {
 
@@ -20,6 +22,9 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    func test() {
+        let animat = CABasicAnimation.init()
+        animat.keyPath = "aaa"
+    }
 }
 

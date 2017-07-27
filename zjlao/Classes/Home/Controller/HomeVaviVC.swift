@@ -14,18 +14,20 @@ class HomeVaviVC: UINavigationController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(LaoNaviVC.languageChanged), name: GDLanguageChanged, object: nil)
 
-        self.tabBarItem.image = UIImage(named: "tab_home_normal")
-        self.tabBarItem.selectedImage = UIImage(named: "tab_home_click")
+//        self.tabBarItem.image = UIImage(named: "tab_home_normal")
+//        self.tabBarItem.selectedImage = UIImage(named: "tab_home_click")
+        self.tabBarItem.image = UIImage(named: "multiLensIcon")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBarItem.selectedImage = UIImage(named: "multiLensIconSelected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         self.navigationBar.isHidden = true;
 //        NSLocalizedString()
 //        self.tabBarItem.title = NSLocalizedString("tabBar_home", tableName: "LocalizableEN", bundle: Bundle.main, value:"", comment: "") // 加载指定语言包名(LocalizableEN) 里的键对应的值
 //        self.tabBarItem.title = NSLocalizedString("tabBar_home", tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "") // 加载指定语言包名(LocalizableEN) 里的键对应的值
-        self.tabBarItem.title  = GDLanguageManager.titleByKey(key: LTabBar_home) //gotTitleStr(key: "tabBar_home")
+//        self.tabBarItem.title  = GDLanguageManager.titleByKey(key: LTabBar_home) //gotTitleStr(key: "tabBar_home")
         
         // Do any additional setup after loading the view.
     }
     func languageChanged() {
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_classify)  // gotTitleStr(key: "tabBar_lao")
+//        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_classify)  // gotTitleStr(key: "tabBar_lao")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

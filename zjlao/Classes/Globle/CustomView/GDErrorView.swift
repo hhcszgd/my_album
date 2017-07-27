@@ -11,7 +11,8 @@ import UIKit
 class GDErrorView: GDBaseControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.imageView = UIImageView(image: UIImage(named: "bg_icon_ff"))
+//        self.imageView = UIImageView(image: UIImage(named: "bg_icon_ff"))
+        self.imageView.image =  UIImage(named: "bg_icon_ff")
         self.addSubview(self.imageView)
     }
     

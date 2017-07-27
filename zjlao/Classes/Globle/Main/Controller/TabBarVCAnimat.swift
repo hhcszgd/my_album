@@ -58,8 +58,8 @@ class TabBarVCAnimat: NSObject , UIViewControllerAnimatedTransitioning {
         }
         
         
-        mylog(fromViewController)
-        mylog(toViewController)
+//        mylog(fromViewController)
+//        mylog(toViewController)
         //添加toView到上下文
         transitionContext.containerView.insertSubview(toViewController.view, belowSubview: fromViewController.view)
         //自定义动画

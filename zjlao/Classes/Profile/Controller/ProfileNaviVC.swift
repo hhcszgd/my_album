@@ -15,11 +15,14 @@ class ProfileNaviVC: UINavigationController {
         NotificationCenter.default.addObserver(self, selector: #selector(LaoNaviVC.languageChanged), name: GDLanguageChanged, object: nil)
 
         self.navigationBar.isHidden = true
-        self.tabBarItem.image = UIImage(named: "tab_me_normal")
-        self.tabBarItem.selectedImage = UIImage(named: "tab_me_click")
+//        self.tabBarItem.image = UIImage(named: "tab_me_normal")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+//        self.tabBarItem.selectedImage = UIImage(named: "tab_me_click")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBarItem.image = UIImage(named: "notificationsIcon")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBarItem.selectedImage = UIImage(named: "notificationsIconSelected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        
 //        self.tabBarItem.title = "profile"
 //         self.tabBarItem.title = NSLocalizedString("tabBar_profile", tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "") //当找不到相应的语言包时  , 默认显示上一次设置的语言
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_profile) //gotTitleStr(key: "tabBar_profile")
+//        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_profile) //gotTitleStr(key: "tabBar_profile")
         
         // Do any additional setup after loading the vie\w.
     }
@@ -35,7 +38,7 @@ class ProfileNaviVC: UINavigationController {
         super.pushViewController(viewController, animated: animated)
     }
     func languageChanged() {
-        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_profile)  // gotTitleStr(key: "tabBar_lao")
+//        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_profile)  // gotTitleStr(key: "tabBar_lao")
     }
 
     /*

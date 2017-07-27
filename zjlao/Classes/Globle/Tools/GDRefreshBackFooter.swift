@@ -22,9 +22,9 @@ class GDRefreshBackFooter: MJRefreshBackFooter {
     */
     override func prepare() {//1
         super.prepare()
-        self.backgroundColor = UIColor.randomColor()
-        self.label.backgroundColor = UIColor.randomColor()
-        self.logo.backgroundColor = UIColor.randomColor()
+//        self.backgroundColor = UIColor.randomColor()
+//        self.label.backgroundColor = UIColor.randomColor()
+//        self.logo.backgroundColor = UIColor.randomColor()
         //设置控件的高度
         self.mj_h = 66.0
         //提示

@@ -62,7 +62,31 @@ enum TransitionType  {
 
 class GDNavigatBar: GDView {
     var  currentType : NaviBarStyle  = NaviBarStyle.withBackBtn{
-        willSet{}
+        willSet{
+            switch newValue {
+
+            case .withBackBtn:
+
+                leftSubViewsContainer.backgroundColor = UIColor.randomColor()
+                rightSubViewsContainer.backgroundColor = UIColor.randomColor()
+                
+                self.addSubview(backBtn)
+                self.addSubview(leftSubViewsContainer)
+                self.addSubview(rightSubViewsContainer)
+//                backBtn.backgroundColor = UIColor.randomColor()
+                backBtn.addTarget(self, action:#selector(backAction(_:)) , for:UIControlEvents.touchUpInside)
+                break
+            case .withoutBackBtn:
+                for item in self.subviews {
+                    item.removeFromSuperview()
+                }
+                leftSubViewsContainer.backgroundColor = UIColor.randomColor()
+                rightSubViewsContainer.backgroundColor = UIColor.randomColor()
+                self.addSubview(leftSubViewsContainer)
+                self.addSubview(rightSubViewsContainer)
+                break
+            }
+        }
         didSet{}
     }
     var currentBarActionType = NaviBarActionType.offset{
@@ -108,7 +132,7 @@ class GDNavigatBar: GDView {
     }
     
     var currentBarStatus = NaviBarStatus.normal{
-        willSet { }
+        willSet {}
         didSet{   }
     }
     
@@ -116,9 +140,13 @@ class GDNavigatBar: GDView {
     weak var delegate  :  CustomNaviBarDelegate?
     let backBtn = UIButton(frame: CGRect(x: 0, y: 20, width: 44, height: 44))
     fileprivate let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 88.0, height: 44))
-    var title : NSAttributedString {
+    var attributeTitle : NSAttributedString {
         set{
+            mylog(newValue)
             titleLabel.isHidden = false
+            if titleLabel.superview == nil  {
+                self.addSubview(titleLabel)
+            }
             titleLabel.attributedText =  newValue
         }
         get{
@@ -130,6 +158,27 @@ class GDNavigatBar: GDView {
         }
     }
     
+    
+    var title : String {
+        set{
+            mylog(self)
+            mylog(titleLabel)
+            mylog(titleLabel.superview)
+            mylog(newValue)
+            if titleLabel.superview == nil  {
+                self.addSubview(titleLabel)
+            }
+            titleLabel.isHidden = false
+            titleLabel.text =  newValue
+        }
+        get{
+            if let a = titleLabel.text {
+                return a
+            }else{
+                return ""
+            }
+        }
+    }
     
     
     let leftSubViewsContainer : UIView = UIView()
@@ -238,6 +287,7 @@ class GDNavigatBar: GDView {
             navTitleView.frame = CGRect(x: x, y: y, width: w, height: h);
         }
     }
+    /*
     convenience init(type:NaviBarStyle){
         self.init(frame: CGRect.zero)
         currentType = type
@@ -260,6 +310,7 @@ class GDNavigatBar: GDView {
             break
         }
     }
+    */
     override init(frame: CGRect) {
         super.init(frame: frame)
         titleLabel.isHidden = true;
@@ -272,7 +323,10 @@ class GDNavigatBar: GDView {
         //        self.addSubview(backBtn)
         self.addSubview(leftSubViewsContainer)
         self.addSubview(rightSubViewsContainer)
-        backBtn.backgroundColor = UIColor.randomColor()
+//        backBtn.backgroundColor = UIColor.randomColor()
+        backBtn.setImage(UIImage(named: "backArrow1"), for: UIControlState.normal)
+        backBtn.adjustsImageWhenHighlighted = false
+        backBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         backBtn.addTarget(self, action:#selector(backAction(_:)) , for:UIControlEvents.touchUpInside)
     }
     
@@ -460,7 +514,7 @@ class GDNavigatBar: GDView {
             }
             //        mylog(scrollView.contentOffset)
             if scrollView.contentOffset.y < -originContentInset.top {//下拉刷新部分
-                mylog("下拉刷新部分")
+//                mylog("下拉刷新部分")
                 //导航栏应处于原始状态
                 self.gobackOriginStatus()
                 if (self.layoutType == .desc ){

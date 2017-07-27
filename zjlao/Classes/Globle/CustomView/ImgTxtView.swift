@@ -37,6 +37,22 @@ class ImgTxtView: GDBaseControl {
         }
         
     }
+    var bottomTitle : String?{
+        didSet{
+            self.titleLabel.text = bottomTitle ?? ""
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
+        }
+    }
+    var image : UIImage?{
+        didSet{
+            self.imageView.image = image ?? UIImage()
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
+        }
+    }
+    
+    
     
     
     override init(frame: CGRect) {

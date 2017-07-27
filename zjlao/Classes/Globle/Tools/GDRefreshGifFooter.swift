@@ -24,14 +24,14 @@ class GDRefreshGifFooter: MJRefreshBackGifFooter {
 
     override func prepare() {//1
         super.prepare()
-        self.backgroundColor = UIColor.randomColor()
-        self.stateLabel.backgroundColor = UIColor.randomColor()
-        self.gifView.backgroundColor = UIColor.randomColor()
+//        self.backgroundColor = UIColor.randomColor()
+//        self.stateLabel.backgroundColor = UIColor.randomColor()
+//        self.gifView.backgroundColor = UIColor.randomColor()
         //设置控件的高度
         self.mj_h = 66.0
         //提示
         stateLabel.textColor = MainTitleColor
-        stateLabel.font = UIFont.boldSystemFont(ofSize: 10)
+        stateLabel.font = UIFont.boldSystemFont(ofSize: 13)
         stateLabel.textAlignment = NSTextAlignment.center
         //图片
         

@@ -17,6 +17,12 @@ enum LoadDataType {
     case reload
     case loadMore
 }
+
+
+//从后台进入前台 会更新地址 , 但不要刷新首页
+var isNeedReloadData = true
+//占位图
+let placePolderImage = UIImage(named: "qieziImgPlaceholder")!
 //MARK:常量字符串
 let GDMessageCount = "GDMessageCount"
 //MARK: swift3.0.1通知名字
@@ -39,11 +45,14 @@ let ShopcarReclick = "ShopcarReclick"
 let ProfileReclick = "ProfileReclick"
 let MessageChanged = "MessageChanged"
 //MARK: normalColor
-let MainTitleColor = UIColor.init(hexString: "333333")
-let SubTitleColor = UIColor.init(hexString: "7f7f7f")
+let MainTitleColor = UIColor.init(hexString: "#333333")
+let SubTitleColor = UIColor.init(hexString: "#7f7f7f")
 let BackGrayColor = UIColor.init(colorLiteralRed: 244.0/256.0, green: 244.0/256.0, blue: 244.0/256.0, alpha: 1.0) // UIColor.init(hexString: "f4f4f4")
-let THEMECOLOR = UIColor.init(hexString: "e95513")
+let THEMECOLOR = UIColor.init(hexString: "#e95513")
 let NavigationBarHeight : CGFloat = 64
+let SCREENWIDTH = UIScreen.main.bounds.size.width
+let SCREENHEIGHT = UIScreen.main.bounds.size.height
+
 
 //let screenW = UIScreen.main.bounds.size.width
 //let screenH = UIScreen.main.bounds.size.height
@@ -208,10 +217,10 @@ public func mylog <T>(_ message: T, fileName: String = #file, methodName: String
             <#code#>
         }*/
             //print("👉[\(lineNumber)]\((fileName as NSString).pathComponents.last!) <--> \(methodName)  \n\(message)")
-        print(url.pathComponents.last!)
-        print(message)
-        print(lineNumber)
-        print("👉[\(lineNumber)]\(url.pathComponents.last!) <--> \(methodName)  \n\(message)")
+//        print(url.pathComponents.last!)
+//        print(message)
+//        print(lineNumber)
+        print("👉\(url.pathComponents.last!) [\(lineNumber)] 🛑\(message)👈")
 //        print("\(methodName)[\(lineNumber)]:\(message)")
     #endif
 }

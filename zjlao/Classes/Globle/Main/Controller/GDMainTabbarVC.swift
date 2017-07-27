@@ -38,9 +38,6 @@ class GDMainTabbarVC: UITabBarController {
         self.addChildViewController(ShopCarNaviVC(rootViewController: ShopCarVC()))
         self.addChildViewController(ProfileNaviVC(rootViewController: ProfileVC()))
         
-        
-        mylog(self.childViewControllers)
-        
     }
     
     func restartAfterChangeLanguage() {

@@ -23,15 +23,16 @@ class GDRefreshHeader: MJRefreshHeader {
     override func prepare() {
         super.prepare()
         //设置控件的高度
-        self.backgroundColor = UIColor.randomColor()
-        self.label.backgroundColor = UIColor.randomColor()
-        self.logo.backgroundColor = UIColor.randomColor()
-        self.mj_h = 70.0
-        //提示
-        label.textColor = MainTitleColor
-        label.font = UIFont.boldSystemFont(ofSize: 10)
-        label.textAlignment = NSTextAlignment.center
-        self.addSubview(label)
+//        self.backgroundColor = UIColor.randomColor()
+//        self.label.backgroundColor = UIColor.randomColor()
+//        self.logo.backgroundColor = UIColor.randomColor()
+        self.mj_h = 50.0 //70.0
+        //提示 (需求不要显示文字了)
+        
+//        label.textColor = MainTitleColor
+//        label.font = UIFont.boldSystemFont(ofSize: 10)
+//        label.textAlignment = NSTextAlignment.center
+//        self.addSubview(label)
         //图片
         self.addSubview(logo)
         logo.image = UIImage.sd_animatedGIFNamed("loading")
@@ -111,7 +112,7 @@ class GDRefreshHeader: MJRefreshHeader {
     
     override func scrollViewContentOffsetDidChange(_ change: [AnyHashable : Any]!) {
         super.scrollViewContentOffsetDidChange(change)
-        mylog("header拖拽比例\(self.pullingPercent)")
+//        mylog("header拖拽比例\(self.pullingPercent)")
 //        if self.pullingPercent>0.5 {
 //            logo.image = UIImage(named: "bg_electric")
 //        }else if self.pullingPercent>0.6{

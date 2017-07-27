@@ -14,7 +14,392 @@
 /**失效商品以类店铺的形式展示出来*/
 import UIKit
 import MJRefresh
-class ShopCarVC: GDNormalVC {
+import SDWebImage
+class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTrendsCellDelegate ,  UICollectionViewDelegate , UICollectionViewDataSource {
+    
+    var iconView = UIImageView()
+    var  editProfileIcon = UIImageView(image: UIImage(named: "camera_icon_white"))
+    var nameLbl = UILabel.init()
+    
+    
+    
+    
+    let headerViewH : CGFloat = 88
+    var currentPage : Int = 1//媒体内容分页
+    var friendPage : Int = 1
+    var datas  : [GDTrendsCellModel] = {
+        var tempDatas = [GDTrendsCellModel]()
+        return tempDatas
+    }()
+    var friends = [BaseControlModel]()
+    
+    lazy var userCollection : UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout.init()
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.itemSize = CGSize(width: 44, height: 44)
+        let temp = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        //        temp.isPagingEnabled = true
+        temp.register(GDHomeUserCell.self , forCellWithReuseIdentifier: "GDHomeUserCell")
+        return temp
+    }()
+    
+    let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: GDDevice.width, height: 0), style: UITableViewStyle.plain)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.addSubview(self.headerView())
+        self.setupTableView()
+        self.requestData(loadDataType: LoadDataType.initialize)
+        self.getFriends(loadDataType:LoadDataType.initialize)
+        
+    }
+    
+    
+    func getFriends(loadDataType:LoadDataType)  {
+        if loadDataType == LoadDataType.initialize || loadDataType == LoadDataType.reload{
+            self.friendPage = 1
+        }else{
+            self.friendPage += 1
+        }
+        GDNetworkManager.shareManager.getFriends(page: friendPage, { (result) in
+            mylog("获取好友\(result.status)")
+            if let dictArr = result.data as? [[String : AnyObject]]{
+                var tempFriendsArr = [BaseControlModel]()
+                for dict in dictArr {
+                    let userModel = BaseControlModel.init(dict: nil)
+                    if let avatar = dict["avatar"] as? String{
+                        userModel.imageUrl = avatar
+                    }
+                    if let id = dict["id"] as? String{
+                        userModel.subTitle = id
+                    }
+                    tempFriendsArr.append(userModel)
+                }
+                if loadDataType == LoadDataType.initialize || loadDataType == LoadDataType.reload{
+                    self.friends = tempFriendsArr
+                }else{
+                    self.friends.append(contentsOf: tempFriendsArr)
+                }
+                self.userCollection.reloadData()
+            }
+        }) { (error ) in
+            
+        }
+        
+        
+        
+    }
+        func requestData(loadDataType:LoadDataType)  {
+        
+        switch loadDataType {
+        case LoadDataType.initialize , LoadDataType.reload:
+            self.currentPage = 1
+            break
+        case LoadDataType.loadMore:
+            self.currentPage = self.currentPage + 1
+            break
+        }
+        
+        
+        GDNetworkManager.shareManager.getPersonalHistory(page: "\(self.currentPage)" , createAt : nil , { (result ) in
+            mylog("请求历史消息的状态码\(result.status)")
+            mylog("请求历史消息的数据\(result.data)")
+            
+            var tempDatas  : [GDTrendsCellModel] = [GDTrendsCellModel] ()
+            if let infoDict = result.data as? [String : AnyObject]{
+                
+                if let mediasArr = infoDict["medias"] as? [[String : AnyObject]]{
+                    for mediaDict in mediasArr{
+                        let cellModel = GDTrendsCellModel.init(dict: nil)
+                        if let week = mediaDict["week"] as? String{
+                            cellModel.w = week
+                        }
+                        if let create_at = mediaDict["create_at"] as? String{
+                            cellModel.my = "\(create_at)"
+                        }
+                        if let month = mediaDict["month"] as? String{
+                            cellModel.m = month
+                        }
+                        
+                        if let year = mediaDict["year"] as? String{
+                            cellModel.y = year
+                        }
+                        
+                        if let day = mediaDict["day"] as? String{
+                            cellModel.d = day
+                        }
+
+                        if let subMediasArr = mediaDict["media"] as? [[String : AnyObject]]{
+                            var subDatas  : [BaseControlModel] = [BaseControlModel] ()
+                            for subMediaDict in subMediasArr{
+                                let picModel : BaseControlModel = BaseControlModel.init(dict: nil)
+                                if let subthumbnail = subMediaDict["thumbnail"] as? String {
+                                    picModel.imageUrl = subthumbnail
+                                }
+                                if let format = subMediaDict["format"] as? String{
+                                    picModel.extensionTitle2 = format
+                                }
+                                if let circle_id = subMediaDict["circle_id"] as? String{
+                                    picModel.title = circle_id
+                                }else{
+                                    picModel.title = Account.shareAccount.member_id
+                                }
+                                if let id = subMediaDict["id"] as? String{
+                                    picModel.subTitle = id
+                                }
+                             
+                                
+                                subDatas.append(picModel)
+                                
+                            }
+                            
+                            cellModel.items = subDatas
+                            
+                        }
+                        tempDatas.append(cellModel)
+                        
+                    }
+                }
+            }
+            
+            
+            
+            
+            /////
+            
+            if(tempDatas.count == 0 ){
+                self.tableView.mj_header.endRefreshing()
+                self.tableView.mj_footer.state = MJRefreshState.noMoreData
+                return
+            }
+            switch loadDataType {
+            case LoadDataType.initialize , LoadDataType.reload:
+                self.datas = tempDatas
+                break
+            case LoadDataType.loadMore:
+                self.datas.append(contentsOf: tempDatas)
+                break
+            }
+            
+            self.tableView.reloadData()
+            self.tableView.mj_header.endRefreshing()
+            self.tableView.mj_footer.state = MJRefreshState.idle
+            
+            
+            /////
+//            self.datas = tempDatas
+//            self.tableView.reloadData()
+            
+            
+            
+        }) { (error ) in
+            mylog(error)
+        }
+        
+    }
+    func setupTableView()  {
+        self.view.addSubview(self.tableView)
+        self.tableView.frame =  CGRect.init(x: 0, y: self.headerViewH, width: GDDevice.width, height: GDDevice.height - 49.0 - self.headerViewH)
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.tableView.delegate  = self
+        self.tableView.dataSource = self
+        self.tableView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refreshOrInit))
+        
+//        self.tableView.tableHeaderView = self.headerView()
+    }
+    func loadMore () {
+        self.requestData(loadDataType: LoadDataType.loadMore)
+    }
+    func refreshOrInit()  {
+        self.requestData(loadDataType: LoadDataType.initialize)
+    }
+
+    
+    func headerView() -> GDBaseControl {
+        let headerView = GDBaseControl(frame: CGRect(x: 0, y: 0, width: SCREENWIDTH, height: self.headerViewH))
+            let iconView = UIImageView.init(frame: CGRect(x: 0, y: headerView.bounds.size.height - 64, width: 64, height: 64))
+//        iconView.image = UIImage.init(named: "bg_nohead")
+        self.iconView = iconView
+        iconView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
+        headerView.addSubview(iconView)
+        
+        
+        let  editProfileIcon = UIImageView(image: UIImage(named: "camera_icon_white"))
+        editProfileIcon.contentMode = UIViewContentMode.scaleAspectFit
+        editProfileIcon.frame = CGRect(x: 44, y: 70, width: 16, height: 16)
+        self.editProfileIcon = editProfileIcon
+        
+        headerView.addSubview(editProfileIcon)
+        
+        
+        
+        
+        let nameLbl = UILabel.init()
+        nameLbl.textColor = UIColor.white
+        self.nameLbl = nameLbl
+        nameLbl.text = Account.shareAccount.name
+        nameLbl.frame =  CGRect(x: iconView.bounds.size.width + 8, y: iconView.frame.minY, width: SCREENWIDTH - iconView.bounds.size.width - 8 , height: nameLbl.font.lineHeight)
+        headerView.addSubview(nameLbl)
+        headerView.backgroundColor = UIColor.black
+        headerView.addTarget(self , action: #selector(headerViewClick(sender:)), for: UIControlEvents.touchUpInside)
+        
+        
+        let margin : CGFloat = 10
+        userCollection.delegate = self
+        userCollection.dataSource = self
+        userCollection.alwaysBounceVertical = false
+        userCollection.showsHorizontalScrollIndicator = false
+        userCollection.showsVerticalScrollIndicator = false
+        userCollection.backgroundColor = UIColor.clear
+        userCollection.frame = CGRect(x:  iconView.frame.maxX , y:  iconView.frame.maxY - 40 , width: SCREENWIDTH -  iconView.frame.maxX, height: 40)
+
+        
+        headerView.addSubview(userCollection)
+        
+        
+        
+        
+        
+        
+        
+        return headerView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.getFriends(loadDataType:LoadDataType.initialize)
+        
+        
+        iconView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
+        nameLbl.text = Account.shareAccount.name
+    }
+    
+    func headerViewClick(sender:GDBaseControl)  {
+        mylog("头视图点击")
+        let model = GDBaseModel.init(dict: nil )
+        model.actionkey = "GDSetUserinfoVC"
+        GDSkipManager.skip(viewController: self , model: model)
+        
+    }
+    // MARK: 注释 : 代理
+    func trendsCellItemClick(model : BaseControlModel ,  imageControl : GDPicView){
+        mylog(model.title)
+        if let circleID = model.title {
+            let model = GDBaseModel.init(dict: nil)
+            model.actionkey = "GDCircleDetailVC"
+            model.keyparamete = circleID as AnyObject?
+            GDSkipManager.skip(viewController: self , model: model)
+            
+        }
+    }
+    func trendsCellMoreClick(model : GDTrendsCellModel){
+        mylog("点击更多")
+        model.actionkey = "DayMediaDetailVC"
+        GDSkipManager.skip(viewController: self , model: model)
+        
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return self.datas.count
+    }
+    
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        var cell = tableView.dequeueReusableCell(withIdentifier: "GDTrendsCell")
+        if cell == nil  {
+            cell = GDTrendsCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "GDTrendsCell")
+        }
+        if let cellReal  = cell as? GDTrendsCell {
+            cellReal.model = self.datas[indexPath.row]
+            cellReal.delegate = self 
+            return cellReal
+        }
+        return cell!
+    }
+    
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        let model = self.datas[indexPath.row]
+
+        if model.items?.count == 0 || model.items == nil  {
+            return 1
+        }
+        let margin : CGFloat = 1.0
+        let topH : CGFloat = 44.0
+        let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
+        let picH : CGFloat = picW
+//        var rows = ((model.items?.count)! + 1 ) /  4
+//        let left = ((model.items?.count)! + 1 ) % 4
+        var rows = (model.items?.count)!  /  4
+        let left = (model.items?.count)! % 4
+        var bottomH : CGFloat = 0
+        if rows >= 3 {
+            rows = 3
+        }else{
+            if  (left > 0 )  {
+                rows = rows + 1
+            }
+        }
+        bottomH = CGFloat(rows) * picW + CGFloat(rows + 1) * margin
+        return topH + bottomH
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+        mylog(friends)
+        return friends.count
+    }
+    
+    
+    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+
+        
+            let item  = collectionView.dequeueReusableCell(withReuseIdentifier: "GDHomeUserCell", for: indexPath)
+            if let cell  = item as? GDHomeUserCell {
+                //set model
+                cell.model = friends[indexPath.item]
+                return cell
+            }
+        mylog(friends)
+
+            return item
+    }
+    
+    // MARK: 注释 : didSelect
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self.userCollection {
+            mylog("点击附近的人头像")
+            let model = self.friends[indexPath.item]
+            //            mylog("\(model.title)  \(model.subTitle)  \(model.imageUrl)")
+            let skipModel = GDBaseModel.init(dict: nil )
+            skipModel.actionkey = "GDUserHistoryVC"
+            skipModel.keyparamete = model.subTitle as AnyObject//用户id
+            GDSkipManager.skip(viewController: self , model: skipModel)
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    /*
+    
     var  currentIndexPath = IndexPath(row: 0, section: 0)
     var choosedIndexPaths = [String : IndexPath]()
     let editBtn = UIButton(imageName: "message", backImage: nil)
@@ -44,6 +429,9 @@ class ShopCarVC: GDNormalVC {
         self.setupTableView()
         self.gotShopCarData(type: LoadDataType.initialize, { (model) in }) { (error ) in }
         self.setupNotification()
+        let tempView =  UIView.init(frame: CGRect(x: 0, y: 64, width: SCREENWIDTH, height: 44))
+            tempView.backgroundColor = UIColor.purple
+            self.naviBar.addSubview(tempView);
         self.view.backgroundColor = UIColor.green
         GDKeyVC.share.settabBarItem(number: "6" , index: 3)
         GDKeyVC.share.settabBarItem(number: "", index: 4)
@@ -92,9 +480,9 @@ class ShopCarVC: GDNormalVC {
         return self.datas.count
     }
     //MARK: tableViewDelegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.naviBar.change(by: scrollView)
-    }
+    //func scrollViewDidScroll(_ scrollView: UIScrollView) {
+     //   self.naviBar.change(by: scrollView)
+    //}
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currentStr = "\(indexPath.row)"
         if  let _ = self.choosedIndexPaths[currentStr] {//键能找到值
@@ -183,4 +571,5 @@ class ShopCarVC: GDNormalVC {
     deinit  {
         NotificationCenter.default.removeObserver(self)
     }
+ */
 }

@@ -29,8 +29,8 @@
 "pullUpLoad" = "上拉加载更多";
 "unloosenLoad"  = "松开立即加载";
 "loading"  = "正在加载...";
-"noMoreData"  = "-- 亲,你看完了 --";
-
+//"noMoreData"  = "-- 亲,你看完了 --";
+"noMoreData"  = "";
 //设置页面
 "SSetting" = "设置" ;
 "SSoundNotice" = "消息通知提示" ;

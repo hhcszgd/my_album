@@ -11,6 +11,8 @@ import UIKit
 class GDBaseCell: UITableViewCell {
 
     weak var subViewDelegate : ActionDelegate?
+    var model  : GDBaseModel?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

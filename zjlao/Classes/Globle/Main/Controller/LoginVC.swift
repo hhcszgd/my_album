@@ -18,7 +18,8 @@ class LoginVC: GDNormalVC {
     weak var loginDelegate : LoginDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.attritNavTitle = NSAttributedString(string: "登录")
+        //self.attritNavTitle = NSAttributedString(string: "登录那你")
+        self.textNavTitle = "登录"
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.randomColor()
         let btn  = UIButton(type: UIButtonType.contactAdd)

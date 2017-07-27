@@ -14,6 +14,22 @@ enum VCType {
 }
 
 class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITableViewDataSource ,UICollectionViewDelegate , UICollectionViewDataSource{
+    
+    
+    override var keyModel: GDBaseModel?{
+        set{
+            super.keyModel = newValue
+            if newValue != nil && newValue!.navTitle != nil  {
+                self.textNavTitle = newValue!.navTitle!
+            }
+            if newValue != nil && newValue!.attributeTitle != nil  {
+                self.attritNavTitle = newValue!.attributeTitle!
+            }
+        }
+        get{
+            return  super.keyModel
+        }
+    }
     private var  scrollViewType = ""
     lazy var collectionView: UICollectionView = {
         self.scrollViewType = "collect"
@@ -142,53 +158,75 @@ class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITable
     var currentType : VCType = VCType.withBackButton
     
     var attritNavTitle : NSAttributedString  {
+        set{
+            mylog(newValue)
+            naviBar.attributeTitle = newValue  }
+        get{ return naviBar.attributeTitle }
+    }
+    
+    var textNavTitle : String  {
         set{   naviBar.title = newValue  }
         get{ return naviBar.title }
     }
     
-    
-    var naviBar : GDNavigatBar!
+   // var naviBar : GDNavigatBar = GDNavigatBar()
+    var naviBar : GDNavigatBar = GDNavigatBar()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+        mylog(self.navigationController)
         //        fatalError("init(coder:) has not been implemented")
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {//代码或xib创建控制器
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//        mylog(self.navigationController)
     }
     
+   convenience init(type : VCType) {
+        self.init()
+        mylog(self.view)
+        if naviBar.superview == nil  {
+            self.view.addSubview(naviBar)
+        }
+    }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        if naviBar.superview == nil  {
+            self.view.addSubview(naviBar)
+        }
         self.automaticallyAdjustsScrollViewInsets = false
         if (((self.navigationController?.childViewControllers.count) ?? 1) > 1) {
             self.currentType=VCType.withBackButton;
+            naviBar.currentType = NaviBarStyle.withBackBtn
         }else{
             self.currentType=VCType.withoutBackButton;
+            naviBar.currentType = NaviBarStyle.withoutBackBtn
         }
         
         switch currentType {
         case .withBackButton:
             //
-            naviBar = GDNavigatBar(type: NaviBarStyle.withBackBtn)
+           // naviBar = GDNavigatBar(type: NaviBarStyle.withBackBtn)
             naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: NavigationBarHeight )
             naviBar.delegate = self
             break
         case .withoutBackButton:
             //
             
-            naviBar = GDNavigatBar(type: NaviBarStyle.withoutBackBtn)
+            //naviBar = GDNavigatBar(type: NaviBarStyle.withoutBackBtn)
             naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: NavigationBarHeight )
             break
         }
-        naviBar.backgroundColor = UIColor.randomColor()
+//        naviBar.backgroundColor = UIColor.randomColor()
+        
         //        self.view.addSubview(naviBar)//推迟添加 , 否则会提前调用viewdidload()
         
         
         
-        self.view.addSubview(naviBar)
+        
         naviBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: NavigationBarHeight )
         
     }
@@ -241,7 +279,9 @@ class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITable
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44.0
     }
-
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.naviBar.change(by: scrollView)
+    }
 
     
 }

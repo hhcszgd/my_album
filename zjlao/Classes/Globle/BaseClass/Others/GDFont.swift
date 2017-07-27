@@ -14,11 +14,11 @@ class GDFont: UIFont {
         var size = ofSize
         let screenWidth =  UIScreen.main.bounds.size.width
         if screenWidth >= 1024 { //ipadPro(12.9)
-            size += 6
+            size += 5
         }else if(screenWidth >= 768.0){//2X的ipadPro2X(7.9) ipadAir系列 , 1X的7.9寸ipad和mini
-            size += 4
+            size += 3
         }else if(screenWidth >= 414){//6plus , 7plus
-            size += 2
+            size += 1
         }else if(screenWidth >= 375){//6 , 7不变
             
         }else if(screenWidth >= 320){//5,5s,5c不变

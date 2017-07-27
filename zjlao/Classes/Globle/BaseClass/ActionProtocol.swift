@@ -12,10 +12,16 @@ protocol ActionDelegate : NSObjectProtocol {
     func performAction( model : GDBaseModel)
 
 }
+
 @objc protocol QRViewDelegate : NSObjectProtocol{
    func qrView(view : QRView , didCompletedWithQRValue : String)
 }
 
 @objc  protocol AfterChangeLanguageKeyVCDidApear {
     func languageHadChanged() -> ()
+}
+
+@objc protocol UICollectionViewCellClick : NSObjectProtocol {
+   @objc optional  func collectionViewCellClick(item : UICollectionViewCell) -> ()
+   @objc optional  func circleMediaLoadmore(item : GDHomeCircleCell) -> ()
 }

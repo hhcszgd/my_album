@@ -7,7 +7,11 @@
 //
 
 import UIKit
-
+enum AccountStatus : Int {
+    case unAuthenticated  = 0 //未认证 用户已存在
+    case halfAuthenticated = 1//半认证 用户已存在但姓名或头像为空
+    case authenticated = 2 //已认证 用户已存在
+}
 class Account: NSObject , NSCoding {
     
     static let shareAccount : Account = {
@@ -22,7 +26,6 @@ class Account: NSObject , NSCoding {
         let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as NSString).appendingPathComponent("account.plist")
         //解归档
         if let account = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? Account {
-            
            return account
         }
         return nil
@@ -82,8 +85,19 @@ class Account: NSObject , NSCoding {
         aCoder.encode(member_id, forKey: "member_id")
         aCoder.encode(head_images, forKey: "head_images")
     }
-
-    
+    var accountStatus  : AccountStatus  {
+        get {
+            let tempAccountStatusRawvalue = GDStorgeManager.standard.integer(forKey: "AccountStatus")
+            let tempAccountStatus =  AccountStatus.init(rawValue: tempAccountStatusRawvalue)
+            if let accountstatus = tempAccountStatus {
+                return accountstatus
+            }
+            return AccountStatus.unAuthenticated
+        }
+    }
+    func resetAccountStatus(status : AccountStatus)  {
+        GDStorgeManager.standard.set(status.rawValue, forKey: "AccountStatus")
+    }
     /** token */
 //    var token : String?
     var name : String?
@@ -119,7 +133,7 @@ class Account: NSObject , NSCoding {
     /** newpassword(修改密码时用)*/
     var  newpassword : String?
     /** 用户是否登录 */
-    var  isLogin : Bool {
+    var  isLogin : Bool {//是否已经认证
         get{
             guard let token_temp = GDStorgeManager.standard.value(forKey: "token") as! String?   else{
                 mylog("取登录状态时 , token为空")
