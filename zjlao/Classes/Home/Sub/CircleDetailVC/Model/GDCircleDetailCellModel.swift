@@ -11,6 +11,8 @@ import UIKit
 class GDCircleDetailCellModel: GDBaseModel {
     var thumbnail  : String?
     var create_at  : String?
+    var create_date : String?
+    
     var avatar  : String?
     var comment_count  : NSNumber?//评论总数
     var original  : String?

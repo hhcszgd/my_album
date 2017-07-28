@@ -657,14 +657,14 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     }
     
     func deleteClick(mediaID:String){
-        self.testShare()
+        self.testShare(shareUrlStr : mediaID)
     }
-    func testShare() {
+    func testShare(shareUrlStr : String) {
         // 要分享的图片
         let image = UIImage.init(named: "logoPressed")!
         // 要分享的文字
         let str = "茄子媒体分享"
-        let url : URL = URL(string : "https://123qz.cn/share.html")!
+        let url : URL =  URL(string : shareUrlStr) ?? URL(string : "https://123qz.cn/share.html")!
         // 将要分享的元素放到一个数组中
         let postItems = [ image, str , url] as [Any]
         let activityVC = UIActivityViewController.init(activityItems: postItems, applicationActivities: nil)

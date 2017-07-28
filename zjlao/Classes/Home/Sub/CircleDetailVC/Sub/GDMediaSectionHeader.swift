@@ -355,7 +355,18 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
         self.cellDelegate?.commentClick(mediaID: self.model?.id ?? "0")
     }
     func deleteClick(sender:UIButton)  {
-        self.cellDelegate?.deleteClick(mediaID: self.model?.id ?? "0")
+//        self.cellDelegate?.deleteClick(mediaID: self.model?.id ?? "0")
+         self.cellDelegate?.deleteClick(mediaID: self.createTheUrlstrWillBeShare())
+    }
+    func createTheUrlstrWillBeShare() -> String {
+        //      http://www.123qz.cn/share.php?media_id=123i38434&token=md5(媒体ID+用户ID+创建时间+token)
+        let paramete = (self.model?.id ?? ""  ) + (self.model?.user_id  ?? "") + (self.model?.create_date ?? "")  + (GDNetworkManager.shareManager.token ?? "")
+        mylog(paramete)
+        let md5Str = paramete.md5() ?? ""
+        let mediaID = self.model?.id ?? "0"
+        let shareString = "http://www.123qz.cn/share?" + "media_id=" + mediaID + "&token=" + md5Str
+//        self.cellDelegate?.shareClick(mediaID: shareString)
+        return shareString
     }
     func commentUserClick(sender : UIButton)  {
         mylog("点击点赞的人")
