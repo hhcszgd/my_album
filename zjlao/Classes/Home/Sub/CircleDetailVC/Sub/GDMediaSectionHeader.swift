@@ -146,9 +146,9 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
         commentBtn.setTitle(" 评论", for: UIControlState.normal)
         commentBtn.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
         self.contentView.addSubview(deleteBtn)
-        deleteBtn.setImage(UIImage(named : "trash"), for: UIControlState.normal)
+        deleteBtn.setImage(UIImage(named : "shareButton"), for: UIControlState.normal)
         self.contentView.addSubview(ownerIcon)
-        deleteBtn.setTitle(" 分享", for: UIControlState.normal)
+        deleteBtn.setTitle("分享", for: UIControlState.normal)
         // MARK: 注释 : 暂时隐藏分享
         //deleteBtn.isHidden = true
         deleteBtn.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
