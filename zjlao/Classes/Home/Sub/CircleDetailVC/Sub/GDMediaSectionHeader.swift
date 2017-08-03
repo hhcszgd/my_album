@@ -360,7 +360,7 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
     }
     func createTheUrlstrWillBeShare() -> String {
         //      http://www.123qz.cn/share.php?media_id=123i38434&token=md5(媒体ID+用户ID+创建时间+token)
-        let paramete = (self.model?.id ?? ""  ) + (self.model?.user_id  ?? "") + (self.model?.create_date ?? "")  + (GDNetworkManager.shareManager.token ?? "")
+        let paramete = (self.model?.id ?? ""  ) + (self.model?.user_id  ?? "") + (self.model?.create_date ?? "") // + (GDNetworkManager.shareManager.token ?? "")
         mylog(paramete)
         let md5Str = paramete.md5() ?? ""
         let mediaID = self.model?.id ?? "0"
