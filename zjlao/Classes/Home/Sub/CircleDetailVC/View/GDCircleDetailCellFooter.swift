@@ -38,6 +38,10 @@ class GDCircleDetailCellFooter: UITableViewHeaderFooterView {
         self.seeMoreBtn.titleLabel?.font = GDFont.systemFont(ofSize: 14)
         self.seeMoreBtn.addTarget(self, action: #selector(seeMoreCmmments(sender:)), for: UIControlEvents.touchUpInside)
         self.contentView.addSubview(line)
+        if(UIScreen.main.bounds.size.height == 480){//5,5s,5c不变
+//            self.seeMoreBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+            self.seeMoreBtn.titleLabel?.font = GDFont.systemFont(ofSize: 12)
+        }
         line.backgroundColor = UIColor(red: 230 / 256, green:  230 / 256, blue:  230 / 256, alpha: 1)
     }
     override func layoutSubviews() {

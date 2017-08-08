@@ -93,10 +93,16 @@ class GDSetUserinfoVC: GDUnNormalVC {
         bigTipsLabel.textColor = MainTitleColor
         smallTipsLabel.textColor = SubTitleColor
         
+        let screenWidth =  UIScreen.main.bounds.size.height
+        mylog(UIScreen.main.bounds)
+        if(screenWidth == 480){//5,5s,5c不变
+            save.frame = CGRect(x: SCREENWIDTH - 88, y: 20, width: 88, height: 44)
+            save.backgroundColor = UIColor.clear
+        }else{//
+           save.frame = CGRect(x: (SCREENWIDTH - 200) * 0.5, y: smallTipsLabel.frame.maxY + margin * 3, width: 200, height: 44)
+        }
         
         
-        save.frame = CGRect(x: (SCREENWIDTH - 200) * 0.5, y: smallTipsLabel.frame.maxY + margin * 3, width: 200, height: 44)
-
         
     }
     override func didReceiveMemoryWarning() {

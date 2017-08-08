@@ -72,7 +72,10 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
             
             
 //            self.creatTime.text = (model?.city ?? "" ) + " " + (model?.create_at ?? "") + "\t "
-            
+            if(UIScreen.main.bounds.size.height == 480){//5,5s,5c不变
+                //            self.seeMoreBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+                self.creatTime.font = UIFont.systemFont(ofSize: 10)
+            }
             
             var attriStr = NSMutableAttributedString.init(string: "")
             let attachCity = NSTextAttachment()
@@ -94,7 +97,7 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
             attriStr.append(time )
             self.creatTime.attributedText = attriStr
             
-            
+
             
             
             

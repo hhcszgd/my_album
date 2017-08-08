@@ -203,6 +203,8 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         
     }
     func prepareTitlesView()  {
+        self.nearbyUserTitle.titleLabel?.font = GDFont.systemFont(ofSize: 17)
+        self.nearbyCircleTitle.titleLabel?.font = GDFont.systemFont(ofSize: 17)
         self.view.addSubview(nearbyUserTitle)
         nearbyUserTitle.setTitleColor(homeTextColor, for: UIControlState.normal)
         self.view.addSubview(nearbyCircleTitle)
@@ -226,7 +228,11 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         nearbyCircleTitle.adjustsImageWhenHighlighted = false
         nearbyUserTitle.adjustsImageWhenHighlighted = false
         let margin : CGFloat = 10
+        if UIScreen.main.bounds.size.width == 320 && UIScreen.main.bounds.size.height == 480 {
+            self.nearbyUserTitle.frame = CGRect(x: margin, y: 30, width: SCREENWIDTH - margin, height: 20)
+        }else{
         self.nearbyUserTitle.frame = CGRect(x: margin, y: 30, width: SCREENWIDTH - margin, height: 30)
+        }
         self.noBodyTitle.frame = self.nearbyCircleTitle.frame
         self.noBodyTitle.isHidden = true
         
@@ -250,6 +256,7 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         self.requestDataAfterUploadMediaSuccess()
     }
     
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 //        if let path = Bundle.main.path(forResource: "Movie", ofType: "m4v") {
@@ -410,8 +417,9 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         self.view.addSubview(nameScrollView)
         self.nameScrollView.showsHorizontalScrollIndicator = false
         
-        
+        newcircleLbl.font = GDFont.systemFont(ofSize: 17)
         self.nameScrollView.addSubview(newcircleLbl)
+        
         newcircleLbl.textColor = homeTextColor
 
 
@@ -443,7 +451,14 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         userCollection.showsVerticalScrollIndicator = false
         userCollection.backgroundColor = UIColor.clear
         let leftMargin : CGFloat = 13.0
-        userCollection.frame = CGRect(x: leftMargin, y: self.nearbyUserTitle.frame.maxY + margin / 2 , width: SCREENWIDTH - leftMargin , height: 44)
+        if UIScreen.main.bounds.size.width == 320 && UIScreen.main.bounds.size.height == 480 {
+            userCollection.frame = CGRect(x: leftMargin, y: self.nearbyUserTitle.frame.maxY + margin / 5 , width: SCREENWIDTH - leftMargin , height: 30)
+            if let flowLayout  = userCollection.collectionViewLayout as? UICollectionViewFlowLayout {
+                flowLayout.itemSize = CGSize(width: 30, height: 30)
+            }
+        }else{
+            userCollection.frame = CGRect(x: leftMargin, y: self.nearbyUserTitle.frame.maxY + margin / 2 , width: SCREENWIDTH - leftMargin , height: 44)
+        }
         self.noBodyTitle.frame = self.userCollection.frame
         //        if let flowLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout  {
         //            flowLayout.itemSize = CGSize(width: SCREENWIDTH, height: SCREENWIDTH)
@@ -451,9 +466,11 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         //        }
         self.view.addSubview(userCollection)
         
-        
+        if UIScreen.main.bounds.size.width == 320 && UIScreen.main.bounds.size.height == 480 {
+            self.nearbyCircleTitle.frame = CGRect(x: margin, y: self.userCollection.frame.maxY + margin / 5, width: SCREENHEIGHT - margin , height: 20)
+        }else{
         self.nearbyCircleTitle.frame = CGRect(x: margin, y: self.userCollection.frame.maxY + margin, width: SCREENHEIGHT - margin , height: 30)
-        
+        }
         
         
         circleCollection.delegate = self
@@ -462,8 +479,17 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         circleCollection.showsHorizontalScrollIndicator = false
         circleCollection.showsVerticalScrollIndicator = false
         circleCollection.backgroundColor = UIColor.clear
-        circleCollection.frame = CGRect(x: 0, y: self.nearbyCircleTitle.frame.maxY + margin
-            , width: SCREENWIDTH, height: SCREENWIDTH * 0.96)
+        
+        if UIScreen.main.bounds.size.width == 320 && UIScreen.main.bounds.size.height == 480 {
+            circleCollection.frame = CGRect(x: 0, y: self.nearbyCircleTitle.frame.maxY + margin / 5
+                , width: SCREENWIDTH, height: SCREENWIDTH * 0.90)
+        
+        }else{
+            circleCollection.frame = CGRect(x: 0, y: self.nearbyCircleTitle.frame.maxY + margin
+                , width: SCREENWIDTH, height: SCREENWIDTH * 0.96)
+        }
+        
+ 
         circleCollection.alwaysBounceHorizontal = true
 
 //        if let flowLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout  {

@@ -61,9 +61,8 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="gfJ-aI-TSe" secondAttribute="trailing" id="6CW-U1-aTV"/>
                             <constraint firstItem="naj-tj-EVs" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" constant="-44" id="9eW-qy-ISI"/>
-                            <constraint firstItem="lGx-us-ePW" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="Cau-VS-207"/>
                             <constraint firstItem="gfJ-aI-TSe" firstAttribute="leading" secondItem="naj-tj-EVs" secondAttribute="trailing" id="IXw-Wd-XHM"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="lGx-us-ePW" secondAttribute="bottom" id="R4I-V3-4wD"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="lGx-us-ePW" secondAttribute="bottom" id="Q9i-i4-ag4"/>
                             <constraint firstItem="lGx-us-ePW" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="SUo-Tr-psd"/>
                             <constraint firstItem="gfJ-aI-TSe" firstAttribute="top" secondItem="bXj-KS-9hh" secondAttribute="bottom" id="VjW-OZ-2su"/>
                             <constraint firstItem="naj-tj-EVs" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="aLm-v1-q98"/>
@@ -71,6 +70,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="lGx-us-ePW" secondAttribute="trailing" id="leb-wk-cYT"/>
                             <constraint firstAttribute="trailing" secondItem="bXj-KS-9hh" secondAttribute="trailing" id="oAL-36-Hnn"/>
                             <constraint firstItem="gfJ-aI-TSe" firstAttribute="bottom" secondItem="naj-tj-EVs" secondAttribute="bottom" id="qf1-VH-75N"/>
+                            <constraint firstItem="lGx-us-ePW" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="vHV-BC-16T"/>
                         </constraints>
                     </view>
                 </viewController>

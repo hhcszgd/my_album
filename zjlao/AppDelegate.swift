@@ -684,15 +684,33 @@ class GDSetupGPSVC: UIViewController{
 }
 class GDSetupLocationEnableVC: UIViewController{
     
-    let tipLbl  = UILabel()
+    let tipLbl  = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(tipLbl)
         self.view.backgroundColor = UIColor.white
-        self.tipLbl.textAlignment = NSTextAlignment.center
-        self.tipLbl.text = "请前往设置中心打开定位权限"
+        //        self.tipLbl.textAlignment = NSTextAlignment.center
+        //        self.tipLbl.text = "gps功能不可用"
+        self.tipLbl.setTitle("未开启定位功能,点击屏幕以开启定位功能", for: UIControlState.normal )
+        self.tipLbl.titleLabel?.font = GDFont.systemFont(ofSize: 13)
+        self.tipLbl.titleLabel?.numberOfLines = 10
+        self.tipLbl.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
+        self.tipLbl.addTarget(self , action: #selector(gotoSetting), for: UIControlEvents.touchUpInside)
         self.tipLbl.frame = self.view.bounds
+    }
+    
+    func gotoSetting(){
+        //        UIApplicationOpenSettingsURLString
+        //        NSURL *url= [NSURL URLWithString:@"prefs:root=LOCATION_SERVICES"];
+        //        if( [[UIApplicationsharedApplication]canOpenURL:url] ) {
+        //
+        //            [[UIApplicationsharedApplication]openURL:url];
+        //        }
+        let url : URL = URL(string: UIApplicationOpenSettingsURLString)!
+        if UIApplication.shared.canOpenURL(url ) {
+            UIApplication.shared.openURL(url)
+        }
     }
     
 }
@@ -1188,7 +1206,7 @@ enum ShowTimeType {
 class GDLaunchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.red
+        self.view.backgroundColor = UIColor.black
         let imageView = UIImageView()
         imageView.image = UIImage(named: "launchImage")
         self.view.addSubview(imageView)

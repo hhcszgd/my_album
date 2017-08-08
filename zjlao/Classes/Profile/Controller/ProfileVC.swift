@@ -70,29 +70,29 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         
         self.view.backgroundColor = UIColor.black
                // Do any additional setup after loading the view.
-        self.setupAboutQieziView()
+        
         self.requestData(loadDataType: LoadDataType.initialize)
         
     }
-    func setupAboutQieziView()  {
-        let hasNewMessage = false
-        if   !hasNewMessage{
+    func setupAboutQieziView(hasMessage : Bool)  {
+        if   hasMessage{
             self.setupTable()
-            
         }else{
-            self.tipLbl1.text = "没有消息"
-            self.tipLbl2.text = "你在茄子认识的人寄给你的消息"
-            self.tipLbl1.font = GDFont.systemFont(ofSize: 17)
-            self.tipLbl2.font = GDFont.systemFont(ofSize: 14)
-            self.tipLbl1.textColor = UIColor.lightGray
-            self.tipLbl2.textColor = UIColor.lightGray
-            self.tipLbl1.sizeToFit()
-            self.tipLbl2.sizeToFit()
-            self.tipLbl1.frame = CGRect(x: (SCREENWIDTH - self.tipLbl1.bounds.size.width ) / 2, y: (SCREENHEIGHT - self.tipLbl1.bounds.size.height ) / 2, width: self.tipLbl1.bounds.size.width, height: self.tipLbl1.bounds.size.height)
-            self.tipLbl2.frame = CGRect(x: (SCREENWIDTH - self.tipLbl2.bounds.size.width ) / 2, y:  self.tipLbl1.frame.origin.y + 28 , width: self.tipLbl2.bounds.size.width, height: self.tipLbl2.bounds.size.height)
-            
-            self.view.addSubview(self.tipLbl1)
-            self.view.addSubview(self.tipLbl2)
+            if tipLbl1.superview == nil && tipLbl2.superview == nil  {
+                self.tipLbl1.text = "没有消息"
+                self.tipLbl2.text = "你在茄子认识的人寄给你的消息"
+                self.tipLbl1.font = GDFont.systemFont(ofSize: 17)
+                self.tipLbl2.font = GDFont.systemFont(ofSize: 14)
+                self.tipLbl1.textColor = UIColor.lightGray
+                self.tipLbl2.textColor = UIColor.lightGray
+                self.tipLbl1.sizeToFit()
+                self.tipLbl2.sizeToFit()
+                self.tipLbl1.frame = CGRect(x: (SCREENWIDTH - self.tipLbl1.bounds.size.width ) / 2, y: (SCREENHEIGHT - self.tipLbl1.bounds.size.height ) / 2, width: self.tipLbl1.bounds.size.width, height: self.tipLbl1.bounds.size.height)
+                self.tipLbl2.frame = CGRect(x: (SCREENWIDTH - self.tipLbl2.bounds.size.width ) / 2, y:  self.tipLbl1.frame.origin.y + 28 , width: self.tipLbl2.bounds.size.width, height: self.tipLbl2.bounds.size.height)
+                
+                self.view.addSubview(self.tipLbl1)
+                self.view.addSubview(self.tipLbl2)
+            }
         }
     }
     
@@ -113,9 +113,11 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
 //        footer?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
 //        self.tableView.mj_footer = footer
 //        
-        
-        self.tableView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
-        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
+        if self.tableView.mj_header == nil  {
+            
+            self.tableView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+            self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
+        }
         
         
         
@@ -196,13 +198,27 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
                     tempDatas.append(model)
                 }
             }
+            if tempDatas.count == 0 {
+                self.setupAboutQieziView(hasMessage:false)
+                self.tableView.isHidden = true
+                self.tipLbl2.isHidden = false
+                self.tipLbl1.isHidden = false
+            }else{
+                self.setupAboutQieziView(hasMessage:true)
+                self.tableView.isHidden = false
+                self.tipLbl2.isHidden = true
+                self.tipLbl1.isHidden = true
+            }
             self.datas.append(contentsOf: tempDatas)
             
             switch loadDataType {
             case LoadDataType.initialize :
                 break
             case  LoadDataType.reload:
-                self.tableView.mj_header.endRefreshing()
+                if self.tableView.mj_header != nil {
+                
+                    self.tableView.mj_header.endRefreshing()
+                }
                 break
             case LoadDataType.loadMore :
                 if tempDatas.count > 0 {

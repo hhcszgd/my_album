@@ -621,7 +621,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         self.customViewContainer.addSubview(self.filtersView)
         
         let margin : CGFloat = 20
-        self.filtersView.frame  = CGRect(x: margin, y: self.textFieldContainer.frame.maxY + margin , width: SCREENWIDTH - margin * 2 , height: 100)
+        self.filtersView.frame  = CGRect(x: margin, y: self.textFieldContainer.frame.maxY + margin / 5 , width: SCREENWIDTH - margin * 2 , height: 100)
         self.filtersView.delegate = self
         self.filtersView.dataSource = self
         
@@ -662,6 +662,8 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
     }
     func prepareForSetupDescripViews(image:UIImage)  {
         let margin : CGFloat = 20
+
+
         if self.customViewContainer.superview == nil  {
             
             if let window = UIApplication.shared.keyWindow {
@@ -685,7 +687,14 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                 
                 self.customViewContainer.frame = window.bounds
                 self.imageView.frame = CGRect(x: margin, y: margin, width: SCREENWIDTH - margin * 2, height: SCREENWIDTH - margin * 2)
-                self.textFieldContainer.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin , width: SCREENWIDTH - margin  * 2, height: margin * 3)
+                if(UIScreen.main.bounds.size.height == 480){//5,5s,5c不变
+                    self.textFieldContainer.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin / 5 , width: SCREENWIDTH - margin  * 2, height: margin * 1.3)
+                    
+                }else{//
+                    self.textFieldContainer.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin , width: SCREENWIDTH - margin  * 2, height: margin * 3)
+                }
+                
+                
                 self.configCollectionView()
                 self.textFieldContainer.backgroundColor = UIColor.white
                 self.cancleButton.frame = CGRect(x: 10, y: SCREENHEIGHT - margin * 1.5, width: margin * 2, height:  margin * 1.5)
@@ -774,7 +783,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         }
         let margin :CGFloat = 20
         UIView.animate(withDuration: realTime) {
-           self.textFieldContainer.frame =  CGRect(x: margin, y: self.imageView.frame.maxY + margin , width: SCREENWIDTH - margin  * 2, height: margin * 3)
+           self.textFieldContainer.frame =  CGRect(x: margin, y: self.imageView.frame.maxY + margin / 10 , width: SCREENWIDTH - margin  * 2, height: margin * 3)
         }
         
     }

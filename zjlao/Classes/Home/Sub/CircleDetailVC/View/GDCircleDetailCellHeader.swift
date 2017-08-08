@@ -126,6 +126,12 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         self.contentView.addSubview(creatTime)
         self.creatTime.backgroundColor =  self.backColor
         creatTime.font = self.ownerName.font
+        if(UIScreen.main.bounds.size.height == 480){//5,5s,5c不变
+            self.ownerName.adjustsFontSizeToFitWidth = true
+            self.creatTime.adjustsFontSizeToFitWidth = true 
+        }else{//
+            
+        }
         self.creatTime.textAlignment = NSTextAlignment.right
 
         self.zanBtn.addTarget(self , action: #selector(zanClick(sender:)), for: UIControlEvents.touchUpInside)

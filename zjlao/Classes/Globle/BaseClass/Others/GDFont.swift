@@ -21,8 +21,10 @@ class GDFont: UIFont {
             size += 1
         }else if(screenWidth >= 375){//6 , 7不变
             
-        }else if(screenWidth >= 320){//5,5s,5c不变
+        }else if(screenWidth >= 320 && UIScreen.main.bounds.size.height == 568){//5,5s,5c不变
             
+        }else if(screenWidth >= 320 && UIScreen.main.bounds.size.height == 480){//5,5s,5c不变
+            size -= 2
         }else{//
             
         }

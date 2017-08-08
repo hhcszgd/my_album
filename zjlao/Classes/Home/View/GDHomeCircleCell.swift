@@ -118,6 +118,9 @@ class GDHomeCircleCell: UICollectionViewCell , UICollectionViewDelegate , UIColl
         self.bigImgView.setImage(UIImage(named: "qieziImgPlaceholder"), for: UIControlState.normal)
 //        self.iconImageView.image = UIImage(named: "qieziImgPlaceholder")
         self.nameLbl.text = "andlu"
+        self.nameLbl.font = GDFont.systemFont(ofSize: 17)
+        self.timeLbl.font = GDFont.systemFont(ofSize: 17)
+        self.descripLbl.font = GDFont.systemFont(ofSize: 17)
         self.nameLbl.textColor = homeTextColor
         self.timeLbl.text = "1sectionAgo"
         self.timeLbl.textColor = homeTextColor
@@ -180,9 +183,11 @@ class GDHomeCircleCell: UICollectionViewCell , UICollectionViewDelegate , UIColl
         let txtMargin : CGFloat = 10
         self.nameLbl.frame = CGRect(x: self.iconImageView.frame.maxX + txtMargin * 4, y: self.iconImageView.frame.minY, width: (bottomW - bottomH - txtMargin * 2) / 2  , height: self.nameLbl.font.lineHeight)
         self.timeLbl.frame = CGRect(x: self.nameLbl.frame.maxX, y: self.iconImageView.frame.minY, width: bottomW - self.nameLbl.frame.maxX - txtMargin * 2 , height: self.timeLbl.font.lineHeight)
-        
+        if UIScreen.main.bounds.size.height == 480 {
+            self.descripLbl.frame = CGRect(x: self.iconImageView.frame.maxX + txtMargin, y: self.bounds.size.height - self.descripLbl.font.lineHeight * 1.8 , width: bottomW - bottomH - txtMargin, height: self.descripLbl.font.lineHeight)
+        }else{
         self.descripLbl.frame = CGRect(x: self.iconImageView.frame.maxX + txtMargin, y: self.bounds.size.height - self.descripLbl.font.lineHeight, width: bottomW - bottomH - txtMargin, height: self.descripLbl.font.lineHeight)
-        
+        }
         
     }
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
