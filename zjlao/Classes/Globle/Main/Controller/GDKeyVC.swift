@@ -9,6 +9,7 @@
 import UIKit
 import CoreGraphics
 //import GPUImage
+import CoreLocation
 class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelegate  {
 
     var avPlayerVC : AVPlayerViewController?
@@ -212,6 +213,7 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
             if Account.shareAccount.accountStatus == AccountStatus.authenticated {
                 return true
             }else{
+                
                 self.initializationAccountInfo()
                 return false
             }
@@ -284,8 +286,9 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
     func initializationAccountInfo() -> Bool {
         if Account.shareAccount.accountStatus != AccountStatus.authenticated {
             DispatchQueue.main.async {
-                let vc  = GDSetupUserInfoVC()
-                GDKeyVC.share.pushViewController(vc , animated: true)
+//                let vc  = GDSetupUserInfoVC()
+//                GDKeyVC.share.pushViewController(vc , animated: true)
+                self.dealwithLocation()
             }
             return true
         }
@@ -294,6 +297,50 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
 
     
     
+    func dealwithLocation()  {
+        if !CLLocationManager.locationServicesEnabled() {//GPS不可用 ,设备不支持
+            mylog("gps定位功能不可用")
+        }else{//GPS可用
+            if GDLocationManager.share.authorizationStatus() == CLAuthorizationStatus.authorizedAlways || GDLocationManager.share.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse{//app定位功能可用
+                let vc  = GDSetupUserInfoVC()
+                //                let vc = GDSetupLocationEnableVC()
+                GDKeyVC.share.pushViewController(vc , animated: true)
+                mylog("app定位功能可用")
+                
+            }else{//app定位功能不可用 ,请前往设置中心打开app使用位置权限
+                self.alertmessage(message: "开启定位权限")
+//                NotificationCenter.default.addObserver(self , selector: #selector(authorizationStatusChanged(status:)), name: GDLocationManager.GDAuthorizationStatusChanged, object: nil)
+//                GDLocationManager.share.startUpdatingLocation()
+//                
+//                self.window = nil
+//                self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+//                self.window!.rootViewController = GDSetupLocationEnableVC()
+//                //请打开gps定位功能
+//                self.window!.makeKeyAndVisible()
+                mylog("app没有定位权限")
+            }
+        }
+        
+        
+    }
+
+    func alertmessage(message : String )  {
+        let alertvc = UIAlertController.init(title: message, message: nil , preferredStyle: UIAlertControllerStyle.alert)
+        let action1 = UIAlertAction.init(title: "取消", style: UIAlertActionStyle.default) { (action ) in
+            alertvc.dismiss(animated: true , completion: nil )
+//            self.dealwithLocation()
+        }
+        let action2 = UIAlertAction.init(title: "确定", style: UIAlertActionStyle.default) { (action ) in
+            let url : URL = URL(string: UIApplicationOpenSettingsURLString)!
+            if UIApplication.shared.canOpenURL(url ) {
+                UIApplication.shared.openURL(url)
+            }
+        }
+        alertvc.addAction(action1)
+        alertvc.addAction(action2)
+
+        self.present(alertvc, animated: true , completion: nil )
+    }
     
     
     

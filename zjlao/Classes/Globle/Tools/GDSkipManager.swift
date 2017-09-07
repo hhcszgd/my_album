@@ -30,6 +30,10 @@ class GDSkipManager: NSObject {
             targetVC = GDBaseWebVC()
             
             break
+        case "ProvisionVC"://
+            targetVC = ProvisionVC()
+            break
+            
         case "info"://查看用户信息
             mylog("跳转到个人信息页面")
             break
@@ -81,7 +85,13 @@ class GDSkipManager: NSObject {
             if let naviVC  = viewController as? UINavigationController {
                 naviVC.pushViewController(vc, animated: true )
             }else{
-                viewController.navigationController?.pushViewController(vc, animated: true )
+                if let naviVC  = viewController.navigationController {
+                    viewController.navigationController?.pushViewController(vc, animated: true )
+                }else{
+                    viewController.present(vc, animated: true , completion: { 
+                        
+                    })
+                }
             }
         }
         

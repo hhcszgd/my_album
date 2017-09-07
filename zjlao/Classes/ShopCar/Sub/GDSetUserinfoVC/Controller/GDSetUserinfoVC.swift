@@ -24,6 +24,7 @@ class GDSetUserinfoVC: GDUnNormalVC {
     let bigTipsLabel = UILabel()
     let smallTipsLabel = UILabel()
     
+    let provisionButton = UIButton()
     var  editProfileIcon = UIImageView(image: UIImage(named: "camera_icon_white"))
 
     override func viewDidLoad() {
@@ -46,7 +47,7 @@ class GDSetUserinfoVC: GDUnNormalVC {
         self.view.addSubview(bigTipsLabel)
         self.view.addSubview(smallTipsLabel)
         self.view.addSubview(save)
-        
+        self.setupProvisionButton()
         avatarImageView.addTarget(self , action: #selector(iconClick), for: UIControlEvents.touchUpInside)
         
         save.setTitle("保存", for: UIControlState.normal)
@@ -104,6 +105,24 @@ class GDSetUserinfoVC: GDUnNormalVC {
         
         
         
+    }
+    func setupProvisionButton()  {
+        self.view.addSubview(provisionButton)
+        provisionButton.setTitle("用户使用协议", for: UIControlState.normal)
+        provisionButton.setTitleColor(UIColor.blue, for: UIControlState.normal)
+        //        provisionButton.backgroundColor = UIColor.green
+//        provisionButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+        provisionButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        provisionButton.addTarget(self , action: #selector(provisionDetail), for: UIControlEvents.touchUpInside)
+        self.provisionButton.bounds = CGRect(x: 0, y: 0, width: 100, height: 40)
+        self.provisionButton.center = CGPoint(x: self.view.bounds.size.width / 2 , y: self.view.bounds.size.height - 80 )
+        
+    }
+    func provisionDetail(){
+        let model = GDBaseModel.init(dict: nil )
+        model.actionkey = "webpage"
+        model.keyparamete = "http://www.123qz.cn/yinsi.html" as AnyObject//
+        GDSkipManager.skip(viewController: self , model: model)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

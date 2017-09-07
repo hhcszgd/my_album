@@ -48,23 +48,39 @@ class GDBaseWebVC: GDNormalVC , WKScriptMessageHandler ,  WKNavigationDelegate,W
             mylog("webViewController对应的url字符串不存在\(self.keyModel)")
             return
         }
-        if let token = GDNetworkManager.shareManager.token {
-            
-            let urlStrAppendToken  = urlStr.appending("?token=\(token)")
-            mylog(urlStrAppendToken)
-            if  urlStrAppendToken.hasPrefix("https://") || urlStrAppendToken.hasPrefix("http://") {
-                guard let url  = URL.init(string: urlStrAppendToken ) else {
+        print(GDNetworkManager.shareManager.token)
+        if  urlStr == "http://www.123qz.cn/yinsi.html" {
+//            let urlStrAppendToken  = urlStr
+            if  urlStr.hasPrefix("https://") || urlStr.hasPrefix("http://") {
+                guard let url  = URL.init(string: urlStr ) else {
                     mylog("webViewController的urlStr字符串转换成URL失败")
                     return
                 }
-                
                 let urlRequest = URLRequest.init(url: url)
                 self.webView.load(urlRequest)
+            }else{//拼接http://
                 
             }
-        }else{//拼接http://
-            
+        }else{
+            if let token = GDNetworkManager.shareManager.token {
+                
+                let urlStrAppendToken  = urlStr.appending("?token=\(token)")
+                mylog(urlStrAppendToken)
+                if  urlStrAppendToken.hasPrefix("https://") || urlStrAppendToken.hasPrefix("http://") {
+                    guard let url  = URL.init(string: urlStrAppendToken ) else {
+                        mylog("webViewController的urlStr字符串转换成URL失败")
+                        return
+                    }
+                    
+                    let urlRequest = URLRequest.init(url: url)
+                    self.webView.load(urlRequest)
+                    
+                }
+            }else{//拼接http://
+                
+            }
         }
+
         
     }
     override func didReceiveMemoryWarning() {

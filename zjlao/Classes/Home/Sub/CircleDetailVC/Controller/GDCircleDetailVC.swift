@@ -43,7 +43,12 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         // Do any additional setup after loading the view.
         self.setupTextView()
     }
-    
+    func postRefreshNotification(invc: String = "ClassifyVC")  {
+        if invc == "ClassifyVC" {
+            NotificationCenter.default.post(Notification.init(name: Notification.Name.init("RefreshAfterBlockSomeoneInClassifyVC")))
+        }
+        self.popToPreviousVC()
+    }
     func setupTextView()  {
         self.inputContainer.addSubview(self.textView)
         
@@ -420,6 +425,10 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
     }
     
     // MARK: 注释 : customDelegate
+    
+    func blockSomeoneSuccess() {
+        self.postRefreshNotification()
+    }
     func zanClick(mediaID:String){
         GDNetworkManager.shareManager.commentAndLike(mediaID: mediaID, isLike: "1", content: nil, { (result ) in
             mylog("点赞结果\(result.status)")
@@ -541,7 +550,49 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         mylog("删")
     }
     
-
+    /**举报*/
+    
+    func perforReport(mediaID : String , reporterID : String){
+        
+        GDNetworkManager.shareManager.report(mediaID: mediaID, { (model ) in
+            var tips = ""
+            switch model.status {
+            case 200 :
+                tips = "举报成功,等待审核"
+            case 350 :
+                tips = "请勿重复举报"
+            default :
+                tips = "未知错误"
+            }
+            self.alertmessage(message: tips)
+//            print(model.status)
+//            print(model.data)
+        }) { (error ) in
+            self.alertmessage(message: "未知错误")
+            print (error.localizedDescription)
+        }
+//        let alertvc = UIAlertController.init(title: "举报成功", message: "我们将对您的举报的信息进行审核", preferredStyle: UIAlertControllerStyle.alert)
+//        let action = UIAlertAction.init(title: "确定", style: UIAlertActionStyle.default) { (action ) in
+//            alertvc.dismiss(animated: true , completion: nil )
+//        }
+//        alertvc.addAction(action)
+//        self.present(alertvc, animated: true , completion: nil )
+        
+        
+        
+        
+        
+    }
+    
+    func alertmessage(message : String )  {
+        let alertvc = UIAlertController.init(title: message, message: nil , preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction.init(title: "确定", style: UIAlertActionStyle.default) { (action ) in
+            alertvc.dismiss(animated: true , completion: nil )
+        }
+        alertvc.addAction(action)
+        self.present(alertvc, animated: true , completion: nil )
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.textView.resignFirstResponder()
     }

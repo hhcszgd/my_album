@@ -200,8 +200,13 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         self.getNearbyCircles()
         self.blackStatusBar.backgroundColor = UIColor.black
         self.view.addSubview(self.blackStatusBar)
-        
+        self.setupNotification()
     }
+    func setupNotification()  {
+        NotificationCenter.default.addObserver(self , selector: #selector(getNearbyCircles), name: NSNotification.Name.init("RefreshAfterBlockSomeoneInClassifyVC"), object: nil)
+       NotificationCenter.default.addObserver(self , selector: #selector(getNearbyCircles), name: GDHomeTabBarReclick, object: nil)
+    }
+//
     func prepareTitlesView()  {
         self.nearbyUserTitle.titleLabel?.font = GDFont.systemFont(ofSize: 17)
         self.nearbyCircleTitle.titleLabel?.font = GDFont.systemFont(ofSize: 17)

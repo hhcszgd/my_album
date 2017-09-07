@@ -70,7 +70,12 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
         super.viewDidLoad()
         self.setupTableView()
         self.requestData(loadDataType: LoadDataType.initialize)
+        self.setupNotification()
     }
+    func setupNotification()  {
+        NotificationCenter.default.addObserver(self , selector: #selector(refreshOrInit), name: NSNotification.Name.init("RefreshAfterBlockSomeoneInClassifyVC"), object: nil)
+    }
+    
     func setupTableView()  {
         self.view.addSubview(self.tableView)
         self.automaticallyAdjustsScrollViewInsets = false
@@ -197,6 +202,8 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
                 self.tableView.reloadData()
                 self.tableView.mj_header.endRefreshing()
                 self.tableView.mj_footer.state = MJRefreshState.idle
+            }else{
+                self.tableView.mj_footer.state = MJRefreshState.noMoreData
             }
         }) { (error ) in
             mylog(error)

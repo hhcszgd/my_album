@@ -15,6 +15,8 @@ protocol GDCircleDetailCellHeaderDelete : NSObjectProtocol {
     func bigImageClick(mediaID:String)
     func bigImageClickToImageBrowser(model  : GDCircleDetailCellModel)
     func gotoUserDetail(userID:String )
+    func perforReport(mediaID : String , reporterID : String)
+    func blockSomeoneSuccess()
     
 }
 
@@ -32,12 +34,16 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
     let commentBtn = UIButton()
     let deleteBtn = UIButton()
     let ownerIcon = UIButton()
+    var longPress : UILongPressGestureRecognizer?
+    var alertvc : UIAlertController?
+    
     let ownerName = UILabel()
     let arrowView = UIImageView(image: UIImage(named:"sanjiao"))
     let descripLabel = UILabel()
     let creatTime = UILabel()
     let zanContainer = UIView()
     let line = UIView()
+    let reportBtn = UIButton()
     
     var model  : GDCircleDetailCellModel?{
         didSet{
@@ -80,10 +86,83 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
             self.layoutIfNeeded()
         }
     }
+    func setupLongPress()  {
+        let longpress = UILongPressGestureRecognizer.init(target: self , action: #selector(alertMessage))
+        self.longPress = longpress
+        self.ownerIcon.addGestureRecognizer(longpress)
+    }
+    func alertMessage()  {
+        print(self.alertvc)
+        if self.model?.mine ?? 0 == 1 {
+            return
+        }
+        if  self.alertvc == nil  {
+            let alertvc = UIAlertController.init(title: "屏蔽[\(self.model?.name ?? "此人")]", message: nil , preferredStyle: UIAlertControllerStyle.alert)
+            let action0 = UIAlertAction.init(title: "取消", style: UIAlertActionStyle.default) { (action ) in
+                alertvc.dismiss(animated: true , completion:{
+                    
+                })
+                self.alertvc = nil
+            }
+            let action = UIAlertAction.init(title: "确定", style: UIAlertActionStyle.default) { (action ) in
+                
+                alertvc.dismiss(animated: false  , completion:{
+                    
+                })
+                self.alertvc = nil
+                
+                self.perforReport(mediaID:self.model?.name ?? "", reporterID: "")////
+            }
+            alertvc.addAction( action0 )
+            alertvc.addAction(action)
+            self.alertvc = alertvc
+            GDKeyVC.share.present(alertvc, animated: true , completion: nil )
+            mylog("长按else")
+        }
+        
+        
+    }
+    /**拉黑*/
+    
+    func perforReport(mediaID : String , reporterID : String){
+        
+        
+        GDNetworkManager.shareManager.block(userID: self.model?.user_id ?? "", { (dataModel) in
+            print(dataModel.status)
+            print(dataModel.data)
+            if dataModel.status == 200{
+//                GDAlertView.alert("成功加入黑名单", image: nil , time: 2, complateBlock: nil)
+                self.cellDelegate?.blockSomeoneSuccess()
+            }else{
+                GDAlertView.alert("操作失败", image: nil , time: 2, complateBlock: nil)
+            }
+        }) { (error ) in
+            GDAlertView.alert("操作失败", image: nil , time: 2, complateBlock: nil)
+        }
+        
+//        GDNetworkManager.shareManager.report(mediaID: mediaID, { (model ) in
+//            mylog(model.status)
+//            var tips = ""
+//            switch model.status {
+//            case 200 :
+//                tips = "举报成功,等待审核"
+//            case 350 :
+//                tips = "请勿重复举报"
+//            default :
+//                tips = "未知错误"
+//            }
+//            GDAlertView.alert(tips, image: nil , time: 2, complateBlock: nil)
+//        }) { (error ) in
+//            GDAlertView.alert( "未知错误", image: nil , time: 2, complateBlock: nil)
+//        }
+        
+    }
+
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.setupSubViews()
+        self.setupLongPress()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -113,6 +192,15 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         deleteBtn.setImage(UIImage(named : "trash"), for: UIControlState.normal)
         self.contentView.addSubview(ownerIcon)
         ownerIcon.addTarget(self , action: #selector(commentUserClick(sender:)), for: UIControlEvents.touchUpInside)
+        /**举报*/
+        self.contentView.addSubview(reportBtn)
+        self.reportBtn.setTitleColor(UIColor.gray, for: UIControlState.normal)
+        self.reportBtn.titleLabel?.font = GDFont.systemFont(ofSize: 13)
+//        deleteBtn.setImage(UIImage(named : "trash"), for: UIControlState.normal)
+        self.reportBtn.setTitle("举报", for: UIControlState.normal)
+        reportBtn.addTarget(self , action: #selector(reportClick(sender:)), for: UIControlEvents.touchUpInside)
+        
+        
         self.contentView.addSubview(ownerName)
         self.contentView.addSubview(descripLabel)
         self.contentView.addSubview(arrowView)
@@ -143,6 +231,10 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         self.contentView.addSubview(line)
         line.backgroundColor = UIColor(red: 230 / 256, green:  230 / 256, blue:  230 / 256, alpha: 1)
     }
+    func reportClick(sender : UIButton)  {
+        mylog("reportClick")
+        self.cellDelegate?.perforReport(mediaID: self.model?.id ?? "" , reporterID: "")
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         let iconW  : CGFloat = 44
@@ -154,6 +246,8 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         }else{
             self.ownerIcon.frame = CGRect(x: 0, y: 0, width: iconW, height: iconW)
         }
+        
+        self.reportBtn.frame = CGRect(x: 0, y: bigImgW * 0.5 - 44 / 2, width: iconW, height: 44)
         
         self.zanBtn.frame = CGRect(x: SCREENWIDTH - iconW, y: ownerIcon.frame.maxY + besideBtnMargin , width: iconW, height: iconW)
         self.zanCount.frame = CGRect(x: zanBtn.frame.minX , y: zanBtn.frame.maxY , width: iconW , height: iconW / 3)

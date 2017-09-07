@@ -12,6 +12,7 @@ class GDPicView: GDBaseControl {
 
     let videoIcon = UIImageView(image: UIImage(named : "VideoCameraPreview"))
     var isVideo  = false
+    var longPress : UILongPressGestureRecognizer?
     
     /*
     // Only override draw() if you perform custom drawing.
@@ -20,16 +21,73 @@ class GDPicView: GDBaseControl {
         // Drawing code
     }
     */
-
+    var alertvc : UIAlertController?
      override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(self.imageView)
         self.addSubview(videoIcon)
         self.videoIcon.contentMode = UIViewContentMode.scaleAspectFit
         self.imageView.contentMode = UIViewContentMode.scaleAspectFill
+        self.setupLongPress()
 
 //        self.imageView.contentMode = [UIViewContentMode.center , UIViewContentMode.scaleToFill]
     }
+    func setupLongPress()  {
+       let longpress = UILongPressGestureRecognizer.init(target: self , action: #selector(alertMessage))
+        self.longPress = longpress
+        self.addGestureRecognizer(longpress)
+    }
+    func alertMessage()  {
+        print(self.alertvc)
+        if  self.alertvc == nil  {
+            let alertvc = UIAlertController.init(title: "举报该内容", message: nil , preferredStyle: UIAlertControllerStyle.alert)
+            let action0 = UIAlertAction.init(title: "取消", style: UIAlertActionStyle.default) { (action ) in
+                alertvc.dismiss(animated: true , completion:{
+                    
+                })
+                self.alertvc = nil
+            }
+            let action = UIAlertAction.init(title: "确定", style: UIAlertActionStyle.default) { (action ) in
+                
+                alertvc.dismiss(animated: false  , completion:{
+
+                })
+                self.alertvc = nil
+                
+                self.perforReport(mediaID:self.controlModel?.subTitle ?? "", reporterID: "")
+            }
+            alertvc.addAction( action0 )
+            alertvc.addAction(action)
+            self.alertvc = alertvc
+            GDKeyVC.share.present(alertvc, animated: true , completion: nil )
+            mylog("长按else")
+        }
+        
+
+    }
+    
+    /**举报*/
+    
+    func perforReport(mediaID : String , reporterID : String){
+        
+        GDNetworkManager.shareManager.report(mediaID: mediaID, { (model ) in
+            mylog(model.status)
+            var tips = ""
+            switch model.status {
+            case 200 :
+                tips = "举报成功,等待审核"
+            case 350 :
+                tips = "请勿重复举报"
+            default :
+                tips = "未知错误"
+            }
+            GDAlertView.alert(tips, image: nil , time: 2, complateBlock: nil)
+        }) { (error ) in
+            GDAlertView.alert( "未知错误", image: nil , time: 2, complateBlock: nil)
+        }
+        
+    }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -38,6 +96,7 @@ class GDPicView: GDBaseControl {
     override var controlModel: BaseControlModel?{
         set{
             super.controlModel = newValue
+            mylog(newValue?.subTitle)
             if let formate = newValue?.extensionTitle2 {
                 if formate == "jpeg" || formate == "png" || formate == "jpg" {
                     self.isVideo  = false

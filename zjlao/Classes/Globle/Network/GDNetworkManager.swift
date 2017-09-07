@@ -281,7 +281,45 @@ class GDNetworkManager: AFHTTPSessionManager {
         
     }
     
+    //: mark  举报
+    func report(mediaID : String , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url = "media_informed/\(mediaID)"
+        
+        let para = [
+            "token" : self.token ?? "看看",
+            ] as [String : Any]
+//        if GDKeyVC.share.initializationAccountInfo() {  return  }
+        
+        self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            
+            failure(error)
+        }
+        
+        
+    }
+    //: mark  拉黑
     
+    func block(userID : String , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url = "friend/\(userID)"
+        
+        let para = [
+            "token" : self.token ?? "",
+            ] as [String : Any]
+        //        if GDKeyVC.share.initializationAccountInfo() {  return  }
+        
+        self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            
+            failure(error)
+        }
+        
+        
+    }
+
+ 
     // MARK: 注释 : 查看全部评论
     
     

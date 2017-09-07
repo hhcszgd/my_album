@@ -32,6 +32,7 @@
 		151930FA1ED28B400018A5D7 /* Movie.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 151930F91ED28B400018A5D7 /* Movie.m4v */; };
 		151DF54C1DE564400035EF18 /* GDSwitchModelMangager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */; };
 		151F2F641E9342410071CA9A /* UIImage+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F631E9342410071CA9A /* UIImage+Extention.swift */; };
+		151F62401F4D56D20015559E /* GDPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F623F1F4D56D20015559E /* GDPhotoManager.swift */; };
 		15201FBE1E9490450066028C /* GDPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15201FBD1E9490450066028C /* GDPageControl.swift */; };
 		15201FC21E94E7CE0066028C /* GDHomeCircleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15201FC11E94E7CE0066028C /* GDHomeCircleCell.swift */; };
 		15201FC41E94E8250066028C /* GDHomeCircleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15201FC31E94E8250066028C /* GDHomeCircleCellModel.swift */; };
@@ -134,6 +135,7 @@
 		1589F5631DE6FEE2007CE639 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5621DE6FEE2007CE639 /* Security.framework */; };
 		1589F5651DE6FF06007CE639 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5641DE6FF06007CE639 /* SystemConfiguration.framework */; };
 		1589F5671DE6FF10007CE639 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5661DE6FF10007CE639 /* CoreTelephony.framework */; };
+		158A86321F453AAA001D4C3E /* ProvisionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A86311F453AAA001D4C3E /* ProvisionVC.swift */; };
 		159281C21E90DE1D0029105F /* GDTrendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159281C11E90DE1D0029105F /* GDTrendsCell.swift */; };
 		1594559A1F1A0740002DE664 /* GDDayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159455991F1A0740002DE664 /* GDDayLabel.swift */; };
 		1594559C1F1A074C002DE664 /* GDWeekLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1594559B1F1A074C002DE664 /* GDWeekLabel.swift */; };
@@ -416,6 +418,7 @@
 		151930F91ED28B400018A5D7 /* Movie.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Movie.m4v; sourceTree = "<group>"; };
 		151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSwitchModelMangager.swift; sourceTree = "<group>"; };
 		151F2F631E9342410071CA9A /* UIImage+Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extention.swift"; sourceTree = "<group>"; };
+		151F623F1F4D56D20015559E /* GDPhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDPhotoManager.swift; sourceTree = "<group>"; };
 		15201FBD1E9490450066028C /* GDPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDPageControl.swift; sourceTree = "<group>"; };
 		15201FC11E94E7CE0066028C /* GDHomeCircleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDHomeCircleCell.swift; sourceTree = "<group>"; };
 		15201FC31E94E8250066028C /* GDHomeCircleCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDHomeCircleCellModel.swift; sourceTree = "<group>"; };
@@ -534,6 +537,7 @@
 		1589F56C1DE6FF41007CE639 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		1589F56E1DE6FF58007CE639 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1589F5701DE6FF5F007CE639 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		158A86311F453AAA001D4C3E /* ProvisionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvisionVC.swift; sourceTree = "<group>"; };
 		159281C11E90DE1D0029105F /* GDTrendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDTrendsCell.swift; sourceTree = "<group>"; };
 		159455991F1A0740002DE664 /* GDDayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDDayLabel.swift; sourceTree = "<group>"; };
 		1594559B1F1A074C002DE664 /* GDWeekLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDWeekLabel.swift; sourceTree = "<group>"; };
@@ -1376,6 +1380,7 @@
 				1523AD1E1DCC8DDC00011F9A /* PanGestureVC.swift */,
 				15F5E5F21EAF27BB00265C1F /* GDUnNormalVC.swift */,
 				15F10FCE1EB32D3200B117E4 /* TestCustomVC.swift */,
+				158A86311F453AAA001D4C3E /* ProvisionVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1563,6 +1568,7 @@
 			isa = PBXGroup;
 			children = (
 				1523AE611DCC8E8900011F9A /* PCH.swift */,
+				151F623F1F4D56D20015559E /* GDPhotoManager.swift */,
 				1523AD4E1DCC8DDC00011F9A /* CaculateManager.swift */,
 				1523AD4F1DCC8DDC00011F9A /* GDLanguageManager.swift */,
 				1523AD501DCC8DDC00011F9A /* GDLocationManager.swift */,
@@ -3959,6 +3965,7 @@
 				15A4DCEF1E8CF5B6009A0DCE /* GPUImageExclusionBlendFilter.m in Sources */,
 				15A4DD5F1E8CF5B6009A0DCE /* GPUImageTwoInputCrossTextureSamplingFilter.m in Sources */,
 				1523AE501DCC8DDC00011F9A /* ProfileVC.swift in Sources */,
+				151F62401F4D56D20015559E /* GDPhotoManager.swift in Sources */,
 				15A4DD601E8CF5B6009A0DCE /* GPUImageTwoInputFilter.m in Sources */,
 				15A4DD2D1E8CF5B6009A0DCE /* GPUImageOutput.m in Sources */,
 				15151BDA1EA9B0AF009A5902 /* DayDetailCell.swift in Sources */,
@@ -4165,6 +4172,7 @@
 				150869741DCC74E70001B6EF /* AppDelegate.swift in Sources */,
 				15A4DCDA1E8CF5B6009A0DCE /* GPUImageColorConversion.m in Sources */,
 				15A4DD081E8CF5B6009A0DCE /* GPUImageHistogramGenerator.m in Sources */,
+				158A86321F453AAA001D4C3E /* ProvisionVC.swift in Sources */,
 				15A4DCC91E8CF5B6009A0DCE /* GPUImageAddBlendFilter.m in Sources */,
 				15A4DD231E8CF5B6009A0DCE /* GPUImageMotionBlurFilter.m in Sources */,
 				15A4DD3D1E8CF5B6009A0DCE /* GPUImageRGBErosionFilter.m in Sources */,

@@ -685,21 +685,35 @@ class GDSetupGPSVC: UIViewController{
 class GDSetupLocationEnableVC: UIViewController{
     
     let tipLbl  = UIButton()
+    let skipButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(tipLbl)
+        self.view.addSubview(skipButton)
         self.view.backgroundColor = UIColor.white
         //        self.tipLbl.textAlignment = NSTextAlignment.center
         //        self.tipLbl.text = "gps功能不可用"
-        self.tipLbl.setTitle("未开启定位功能,点击屏幕以开启定位功能", for: UIControlState.normal )
+        self.tipLbl.setTitle("开启定位", for: UIControlState.normal )
+        self.skipButton.setTitle("跳过", for: UIControlState.normal)
+        self.skipButton.titleLabel?.font = GDFont.systemFont(ofSize: 13)
         self.tipLbl.titleLabel?.font = GDFont.systemFont(ofSize: 13)
         self.tipLbl.titleLabel?.numberOfLines = 10
         self.tipLbl.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
+        self.skipButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
         self.tipLbl.addTarget(self , action: #selector(gotoSetting), for: UIControlEvents.touchUpInside)
-        self.tipLbl.frame = self.view.bounds
+        self.skipButton.addTarget(self , action: #selector(performSkip), for: UIControlEvents.touchUpInside)
+        self.tipLbl.bounds  = CGRect(x: 0, y: 0, width: self.view.bounds.size.width / 2 - 30, height: 30)
+        self.skipButton.bounds = CGRect(x: 0, y: 0, width: self.view.bounds.size.width / 2 - 30 , height: 30)
+        self.skipButton.center = CGPoint(x: 10 + (self.view.bounds.size.width / 2 - 10 ) / 2, y: self.view.bounds.size.height / 2)
+        self.tipLbl.center = CGPoint(x: self.view.bounds.size.width / 2  + (self.view.bounds.size.width / 2 - 10 ) / 2, y: self.view.bounds.size.height / 2)
+        
+        self.skipButton.backgroundColor = UIColor.init(red: 0.3, green: 0.8, blue: 0.8, alpha: 1)
+        self.tipLbl.backgroundColor = self.skipButton.backgroundColor
     }
-    
+    func performSkip()  {
+        self.setKeyvcToMain()
+    }
     func gotoSetting(){
         //        UIApplicationOpenSettingsURLString
         //        NSURL *url= [NSURL URLWithString:@"prefs:root=LOCATION_SERVICES"];
@@ -712,7 +726,21 @@ class GDSetupLocationEnableVC: UIViewController{
             UIApplication.shared.openURL(url)
         }
     }
-    
+    func setKeyvcToMain()  {
+        let appDelegateOption = UIApplication.shared.delegate
+        if let appDelegate  = appDelegateOption {
+            if let realAppdelegate = appDelegate as? AppDelegate {
+                if realAppdelegate.window?.rootViewController != GDKeyVC.share {
+                    realAppdelegate.window = nil
+                    realAppdelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                    realAppdelegate.window!.rootViewController = GDKeyVC.share
+                    realAppdelegate.window!.makeKeyAndVisible()
+                }
+                
+            }
+            
+        }
+    }
 }
 
 enum GDSetInfoSatatus : Int {
@@ -730,6 +758,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
     let authCodeInputTipLbl = UILabel()
     let authCodeInput = UITextField()
     let getAuthCodeButton = UIButton()
+    let provisionButton = UIButton()
     
     let czButton = UIButton()
     let czLeftButton = UIButton()
@@ -762,12 +791,14 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
         self.containerView.addSubview(mobileOrNameInputTipLbl)
         self.containerView.addSubview(mobileOrNameInput)
         self.containerView.addSubview(authCodeInputTipLbl)
+        
         getAuthCodeButton.backgroundColor = UIColor.orange
         getAuthCodeButton.setTitle("获取验证码", for: UIControlState.normal)
         getAuthCodeButton.setTitleColor(UIColor.black, for: UIControlState.disabled)
         getAuthCodeButton.setTitleColor(UIColor.white, for: UIControlState.normal)
         self.containerView.addSubview(authCodeInput)
         self.containerView.addSubview(getAuthCodeButton)
+        self.setupProvisionButton()
         self.containerView.addSubview(czButton)
         self.containerView.addSubview(czLeftButton)
         self.containerView.addSubview(czRightButton)
@@ -805,6 +836,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
         self.authCodeInput.layer.borderWidth = 1
         self.authCodeInput.borderStyle = UITextBorderStyle.roundedRect
         self.authCodeInput.layer.borderColor = UIColor.lightGray.cgColor
+        self.provisionButton.frame = CGRect(x: authCodeInput.frame.minX, y: authCodeInput.frame.maxY, width: authCodeInput.bounds.size.width * 2, height: authCodeInput.bounds.size.height)
         
         self.getAuthCodeButton.frame = CGRect(x: self.authCodeInput.frame.maxX + 10, y: self.authCodeInputTipLbl.frame.maxY + 22 , width: authButtonW, height: 38)
         
@@ -815,6 +847,23 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
         self.czLeftButton.frame = CGRect(x: 10, y: self.czButton.frame.minY, width: 64, height: 64)
         
         self.czRightButton.frame = CGRect(x: containerW - 10 - 64, y: self.czButton.frame.minY, width: 64, height: 64)
+    }
+    
+    func setupProvisionButton()  {
+        self.containerView.addSubview(provisionButton)
+        provisionButton.setTitle("用户使用协议", for: UIControlState.normal)
+        provisionButton.setTitleColor(UIColor.blue, for: UIControlState.normal)
+        //        provisionButton.backgroundColor = UIColor.green
+        provisionButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+        provisionButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        provisionButton.addTarget(self , action: #selector(provisionDetail), for: UIControlEvents.touchUpInside)
+        
+    }
+    func provisionDetail(){
+        let model = GDBaseModel.init(dict: nil )
+        model.actionkey = "ProvisionVC"
+        model.keyparamete = "http://www.123qz.cn/yinsi.html" as AnyObject//
+        GDSkipManager.skip(viewController: self , model: model)
     }
     func bandMobile()  {
         self.titleLbl.text = "验证手机号"
