@@ -12,6 +12,8 @@ class OriginalNetDataModel: NSObject , NSCoding /*, NSCopying*/{
     var data  : AnyObject? // 返回的数据
     var message : String?//状态信息
     var status : Int  = 0 //状态码
+    var comment_number = 0 // 消息数量
+    
     var additional : AnyObject? // 额外的信息 (备用)
     init(dict : [String : AnyObject]) {
         super.init()

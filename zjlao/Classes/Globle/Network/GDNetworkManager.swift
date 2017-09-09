@@ -16,10 +16,32 @@ enum RequestType: String {
     case GET = "GET"
     case PUT = "PUT"
 }
-private let hostName = "http://api.123qz.cn/"//新
+//private let hostName = "http://api.123qz.cn/"//新
+private let hostName = "http://api2.123qz.cn/v2/"//二版接口
 //private let hostName =    "http://123qz.ugshop.cn/"//旧
 private let dataErrorDomain = "com.someThingError"
 class GDNetworkManager: AFHTTPSessionManager {
+   // MARK: 注释 : v2 👇
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // MARK: 注释 : v2 👆
     // MARK: 注释 : 上传媒体成功的通知
    static let GDUpLoadMediaSuccess = Notification.Name.init("UpLoadMediaSuccess")
     //MARK:当前网络状态
@@ -723,7 +745,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     func QZFirstInit(_ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) -> () {
         let url = "init"
         let did = UIDevice.current.identifierForVendor?.uuidString
-        let para = ["deviceid" : did ]
+        let para = ["deviceid" : did , "app_type" : "2" ]
         QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             mylog("初始化状态码\(result.status)")
             if result.status == 202 {
@@ -896,9 +918,12 @@ class GDNetworkManager: AFHTTPSessionManager {
         } else if method == RequestType.POST{
             //实现POST请求
             
-            post(url, parameters: para, progress: nil, success: { (_, result) in
+            post(url, parameters: para, progress: nil, success: { (task, result) in
+                
+                self.printTaskInfo(task: task)
                 self.alert.gdHide()///////////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)
+//                mylog("测试打印数据 : \(result)")
                 if let dict = result as? [String : AnyObject] {
                     //执行成功回调
                     let model = OriginalNetDataModel.init(dict: dict)
@@ -909,7 +934,8 @@ class GDNetworkManager: AFHTTPSessionManager {
                 let error = NSError(domain: dataErrorDomain, code: -10000, userInfo: [NSLocalizedDescriptionKey : "(手动判断)数据格式错误"])
                 self.printMessage(urlString, paramete: error)
                 failure(error)
-            }, failure: { (_, error) in
+            }, failure: { (task, error) in
+                self.printTaskInfo(task: task)
                 self.alert.gdHide()///////////////////
                 //执行失败的回调
                 self.printMessage(urlString, paramete: error as AnyObject?)
@@ -948,7 +974,22 @@ class GDNetworkManager: AFHTTPSessionManager {
     
     
     
-    
+    // MARK: 注释 : 打印task数据
+    func printTaskInfo(task : URLSessionDataTask?)  {
+        if task == nil  {return}
+        mylog("测试打印数据 : \(task)")
+        //                URLSessionDataTask /
+        //                URLResponse
+        //                HTTPURLResponse
+        if let response  = task?.response as? HTTPURLResponse {
+            mylog("测试打印数据2 : \(response.allHeaderFields)")
+            mylog("测试打印数据3 : \(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))")
+            mylog("\(response.suggestedFilename)")
+            mylog("\(response.expectedContentLength)")
+            mylog("\(response.textEncodingName)")
+        }
+        
+    }
     
     
     

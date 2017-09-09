@@ -112,6 +112,8 @@
 		154BB6071E2B627400A9EF05 /* GDNavigatBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BB6061E2B627400A9EF05 /* GDNavigatBar.swift */; };
 		154BB6091E2B638E00A9EF05 /* GDKeyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BB6081E2B638E00A9EF05 /* GDKeyVC.swift */; };
 		154BB60B1E2B647900A9EF05 /* GDMainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BB60A1E2B647900A9EF05 /* GDMainTabbarVC.swift */; };
+		154BD4131F63D28900BF8BDD /* HomeVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BD4121F63D28900BF8BDD /* HomeVC2.swift */; };
+		154BD4151F63D35B00BF8BDD /* GDAutoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BD4141F63D35B00BF8BDD /* GDAutoScrollView.swift */; };
 		154E177B1E8B50F000FF328A /* FilterOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154E17791E8B50F000FF328A /* FilterOperations.swift */; };
 		154E177C1E8B50F000FF328A /* FilterOperationTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154E177A1E8B50F000FF328A /* FilterOperationTypes.swift */; };
 		154E177E1E8B51AB00FF328A /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154E177D1E8B51AB00FF328A /* FilterListViewController.swift */; };
@@ -508,6 +510,8 @@
 		154BB6061E2B627400A9EF05 /* GDNavigatBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNavigatBar.swift; sourceTree = "<group>"; };
 		154BB6081E2B638E00A9EF05 /* GDKeyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDKeyVC.swift; sourceTree = "<group>"; };
 		154BB60A1E2B647900A9EF05 /* GDMainTabbarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDMainTabbarVC.swift; sourceTree = "<group>"; };
+		154BD4121F63D28900BF8BDD /* HomeVC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC2.swift; sourceTree = "<group>"; };
+		154BD4141F63D35B00BF8BDD /* GDAutoScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDAutoScrollView.swift; sourceTree = "<group>"; };
 		154E17791E8B50F000FF328A /* FilterOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterOperations.swift; sourceTree = "<group>"; };
 		154E177A1E8B50F000FF328A /* FilterOperationTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterOperationTypes.swift; sourceTree = "<group>"; };
 		154E177D1E8B51AB00FF328A /* FilterListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
@@ -1420,6 +1424,7 @@
 				159455991F1A0740002DE664 /* GDDayLabel.swift */,
 				1594559B1F1A074C002DE664 /* GDWeekLabel.swift */,
 				1594559D1F1A075D002DE664 /* GDYearMonthLabel.swift */,
+				154BD4141F63D35B00BF8BDD /* GDAutoScrollView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1592,6 +1597,7 @@
 		1523AD541DCC8DDC00011F9A /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				154BD40E1F63D24700BF8BDD /* V2 */,
 				1523AD551DCC8DDC00011F9A /* Controller */,
 				1523AD581DCC8DDC00011F9A /* Model */,
 				1523AD591DCC8DDC00011F9A /* Sub */,
@@ -3071,6 +3077,38 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		154BD40E1F63D24700BF8BDD /* V2 */ = {
+			isa = PBXGroup;
+			children = (
+				154BD40F1F63D24700BF8BDD /* model */,
+				154BD4101F63D24700BF8BDD /* vc */,
+				154BD4111F63D24700BF8BDD /* view */,
+			);
+			path = V2;
+			sourceTree = "<group>";
+		};
+		154BD40F1F63D24700BF8BDD /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		154BD4101F63D24700BF8BDD /* vc */ = {
+			isa = PBXGroup;
+			children = (
+				154BD4121F63D28900BF8BDD /* HomeVC2.swift */,
+			);
+			path = vc;
+			sourceTree = "<group>";
+		};
+		154BD4111F63D24700BF8BDD /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		154E17741E8B505700FF328A /* GDCamera */ = {
 			isa = PBXGroup;
 			children = (
@@ -4124,6 +4162,7 @@
 				153546321EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift in Sources */,
 				15F10FCD1EB313C900B117E4 /* GDLoadControl.swift in Sources */,
 				15151BDC1EA9B0E0009A5902 /* DayDetailCellModel.swift in Sources */,
+				154BD4151F63D35B00BF8BDD /* GDAutoScrollView.swift in Sources */,
 				15A4DCCE1E8CF5B6009A0DCE /* GPUImageBilateralFilter.m in Sources */,
 				15E250D41DDEB123004D4509 /* GDDevice.swift in Sources */,
 				1523AE361DCC8DDC00011F9A /* UIButton+Extension.swift in Sources */,
@@ -4135,6 +4174,7 @@
 				15A4DCE71E8CF5B6009A0DCE /* GPUImageDifferenceBlendFilter.m in Sources */,
 				15A4DCD31E8CF5B6009A0DCE /* GPUImageCannyEdgeDetectionFilter.m in Sources */,
 				15A4DD521E8CF5B6009A0DCE /* GPUImageStretchDistortionFilter.m in Sources */,
+				154BD4131F63D28900BF8BDD /* HomeVC2.swift in Sources */,
 				15119F661EBAFB85002149B1 /* GDIBScrollView.swift in Sources */,
 				15A4DD441E8CF5B6009A0DCE /* GPUImageSharpenFilter.m in Sources */,
 				1523AE411DCC8DDC00011F9A /* NavTitleView.swift in Sources */,
