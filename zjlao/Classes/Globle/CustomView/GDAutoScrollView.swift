@@ -19,6 +19,7 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
     var models  : [BaseControlModel] = [BaseControlModel](){
         didSet{
             pageControl.numberOfPages = models.count
+            
             self.collectionView.reloadData()
             addTimer()
         }
@@ -87,6 +88,7 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         self.addSubview(pageControl)
+        pageControl.frame = CGRect(x: 0, y: self.bounds.height - 24, width: self.bounds.size.width, height: 24)
         pageControl.scrollView = collectionView
         
     }
@@ -97,6 +99,7 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
     }
     func setupCollectionFrame()  {
         collectionView.frame = self.bounds
+        
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize =  self.collectionView.bounds.size
             flowLayout.minimumLineSpacing = 0
@@ -249,12 +252,12 @@ class GDAutoPageControl: UIView {
                     if let tempSelectedImg = self.selectedImage {
                         btn.setImage(tempSelectedImg, for: UIControlState.selected)
                     }else{
-                        btn.setImage(UIImage(named: "tinyStar"), for: UIControlState.selected)
+                        btn.setImage(UIImage(named: "whiteDot"), for: UIControlState.selected)
                     }
                     if let tempNormalImg = self.normalImage {
                         btn.setImage(tempNormalImg, for: UIControlState.normal)
                     }else{
-                        btn.setImage(UIImage(named: "tinyBlackStar"), for: UIControlState.normal)
+                        btn.setImage(UIImage(named: "blackDot"), for: UIControlState.normal)
                     }
                     self.selectedBtn = btn
                     self.currentPage = 0
@@ -326,25 +329,33 @@ class GDAutoPageControl: UIView {
                 let count = scrollView!.contentSize.width / scrollView!.bounds.size.width
                 let index  : Int = Int( offset.x / scrollViewWidth )
                 if offset.x > self.previousOffset.x { // xiang you
-                    if offset.x > scrollView?.contentSize.width   ?? 0 - scrollViewWidth{return}
-                    let pass = offset.x -  CGFloat(index) * scrollViewWidth
-                    if abs(pass) > scrollViewWidth / 2 {
-                        if self.currentPage != index + 1 {
-                            
-                            self.currentPage = (index + 1) % Int(count / 3)//
-                            self.delegate?.currentPageChanged(currentPage: self.currentPage)
+                    if offset.x > scrollView?.contentSize.width   ?? 0 - scrollViewWidth{
+//                        return
+                    }else{
+                    
+                        let pass = offset.x -  CGFloat(index) * scrollViewWidth
+                        if abs(pass) > scrollViewWidth / 2 {
+                            if self.currentPage != index + 1 {
+                                
+                                self.currentPage = (index + 1) % Int(count / 3)//
+                                self.delegate?.currentPageChanged(currentPage: self.currentPage)
+                            }
+                            //                    mylog("nvnvnvnvvnvnvn")
                         }
-                        //                    mylog("nvnvnvnvvnvnvn")
                     }
                 }else{//xiang zuo
-                    if offset.x < 0  {return}
-                    let less = CGFloat(index + 1) * scrollViewWidth - offset.x
-                    //                mylog(abs(less))
-                    if abs(less) > scrollViewWidth / 2 {
-                        if self.currentPage != index {
-                            
-                            self.currentPage = (index + 1) % Int(count / 3)
-                            self.delegate?.currentPageChanged(currentPage: self.currentPage)
+                    if offset.x < 0  {
+//                        return
+                    }else{
+                    
+                        let less = CGFloat(index + 1) * scrollViewWidth - offset.x
+                        //                mylog(abs(less))
+                        if abs(less) > scrollViewWidth / 2 {
+                            if self.currentPage != index {
+                                
+                                self.currentPage = index % Int(count / 3)
+                                self.delegate?.currentPageChanged(currentPage: self.currentPage)
+                            }
                         }
                     }
                 }

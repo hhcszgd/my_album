@@ -41,6 +41,11 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate{
                     let model = BaseControlModel.init(dict: ["title" : value["link_url"] as AnyObject, "imageUrl" : value["image_url"] as AnyObject])
                     models.append(model)
                 }
+                let m1 =  BaseControlModel.init(dict: ["title" :"http://www.baidu.com" as AnyObject, "imageUrl" : "http://f0.ugshop.cn/advert/1504597809.jpg" as AnyObject])
+                let m2 =  BaseControlModel.init(dict: ["title" :"http://www.baidu.com" as AnyObject, "imageUrl" : "http://f0.ugshop.cn/advert/1504597809.jpg" as AnyObject])
+                
+                models.append(m1)
+                models.append(m2)
                 self.autoScrollView.models = models
             }
             
