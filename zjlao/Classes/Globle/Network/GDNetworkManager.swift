@@ -10,6 +10,8 @@
 
 import UIKit
 import Qiniu
+
+import Photos
 import AFNetworking
 enum RequestType: String {
     case POST = "POST"
@@ -21,27 +23,7 @@ private let hostName = "http://api2.123qz.cn/v2/"//二版接口
 //private let hostName =    "http://123qz.ugshop.cn/"//旧
 private let dataErrorDomain = "com.someThingError"
 class GDNetworkManager: AFHTTPSessionManager {
-   // MARK: 注释 : v2 👇
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // MARK: 注释 : v2 👆
+
     // MARK: 注释 : 上传媒体成功的通知
    static let GDUpLoadMediaSuccess = Notification.Name.init("UpLoadMediaSuccess")
     //MARK:当前网络状态
@@ -80,15 +62,7 @@ class GDNetworkManager: AFHTTPSessionManager {
 //        
 //    }
     
-    // MARK: 注释 : 七牛文件上传管理类
-    lazy var qnUploadManager: QNUploadManager = {
-        if let uploadMgr = QNUploadManager.init(){
-            return uploadMgr
-        }else{
-            return QNUploadManager.init()!
-        }
-    }()
-    
+
     static let shareManager : GDNetworkManager = {
         let url = URL(string: hostName)!
         let mgr = GDNetworkManager(baseURL: url)
@@ -493,7 +467,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         
     }
     
-// MARK: 注释 : 上传头像和设置姓名
+// MARK: 注释 : 上传头像和设置姓名(v1 , v2 ) 把七牛上传真是图片后的图片标识传给服务器
     func uploadAvatar(name : String ,original : String,size : String , descrip : String?, _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) {
         //        GDLocationManager.share.gotCurrentLocation { (location , error) in
         let location = GDLocationManager.share.locationManager.location
@@ -508,9 +482,9 @@ class GDNetworkManager: AFHTTPSessionManager {
             var para = [
 //                "coordinate" : "\(longtitude),\(latitude)" ,
 //                "coordinate" : "\(latitude),\(longtitude)" ,
-                "size" : size,
-                "location" : "china",
-                "format" : "jpeg",
+//                "size" : size,
+//                "location" : "china",
+//                "format" : "jpeg",
                 "name" : name,
                 "avatar" : original,//媒体base64
                 "token" : self.token,
@@ -522,10 +496,10 @@ class GDNetworkManager: AFHTTPSessionManager {
             //                let para = ["coordinate" : "\(116.293954),\(39.83799)" ]
             var url =  "users"
             
-            if let memberid  = Account.shareAccount.member_id {
-                url = url + "/\(memberid)"
-                
-            }
+//            if let memberid  = Account.shareAccount.member_id {//v2 不要userid了
+//                url = url + "/\(memberid)"
+//                
+//            }
             self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
                 success(result)
             }) { (error) in
@@ -977,16 +951,11 @@ class GDNetworkManager: AFHTTPSessionManager {
     // MARK: 注释 : 打印task数据
     func printTaskInfo(task : URLSessionDataTask?)  {
         if task == nil  {return}
-        mylog("测试打印数据 : \(task)")
         //                URLSessionDataTask /
         //                URLResponse
         //                HTTPURLResponse
         if let response  = task?.response as? HTTPURLResponse {
-            mylog("测试打印数据2 : \(response.allHeaderFields)")
-            mylog("测试打印数据3 : \(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))")
-            mylog("\(response.suggestedFilename)")
-            mylog("\(response.expectedContentLength)")
-            mylog("\(response.textEncodingName)")
+            mylog("网络任务:\(response.suggestedFilename) 请求状态:\(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))")
         }
         
     }
@@ -1325,7 +1294,96 @@ class GDNetworkManager: AFHTTPSessionManager {
             failure(error)
         }
     }
+    // MARK: 注释 : v2 👇
     
+    
+    // MARK: 注释 : 七牛文件上传管理类
+    lazy var qnUploadManager: QNUploadManager = {
+        let config  = QNConfiguration.build { (builder ) in
+            builder?.setZone(QNZone.zone1())
+        }
+        let mgr = QNUploadManager.init(configuration: config!)
+        return mgr!
+        
+    }()
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     3.获取系统广告
+     接口地址：sys_advert
+     请求方式：get
+     
+     */
+    func getAD( success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "sys_advert"
+        let para = ["token" : self.token ]
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("上传头像的请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
+    
+    
+    
+    func generateQNUploadMgr()  -> QNUploadManager{
+        let config  = QNConfiguration.build { (builder ) in
+            builder?.setZone(QNZone.zone1())
+        }
+        let mgr = QNUploadManager.init(configuration: config!)
+        return mgr!
+        
+    }
+    func getQiniuToken(success : @escaping (OriginalNetDataModel )->() , failure : @escaping (NSError)->()) {
+        
+        let url = "qiniu"
+        let para = [
+            "token" : self.token ?? "看看",
+            ] as [String : Any]
+        
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            
+            failure(error)
+        }
+        
+    }
+    
+    func uploadAvart(data:Data ,token : String , complite : @escaping QNUpCompletionHandler) {
+        qnUploadManager.put(data , key: "avarta", token: token, complete: { (responseInfo, theKey, successInfo) in
+            complite(responseInfo , theKey , successInfo)
+        }, option: nil )
+    }
+    
+    func testUpload(asset:PHAsset) {
+        
+        /**
+         *    上传完成后的回调函数
+         *
+         *    @param info 上下文信息，包括状态码，错误值
+         *    @param key  上传时指定的key，原样返回
+         *    @param resp 上传成功会返回文件信息，失败为nil; 可以通过此值是否为nil 判断上传结果
+         public typealias QNUpCompletionHandler = (QNResponseInfo?, String?, [AnyHashable : Any]?) -> Swift.Void
+         */
+        
+        qnUploadManager.put(asset , key: asset.localIdentifier, token: "", complete: { (responseInfo, Str , info ) in
+            //            QNResponseInfo
+            
+        }, option: nil )
+    }
+    
+    // MARK: 注释 : v2 👆
     //MARK:
     //MARK:
     //MARK:
@@ -1357,150 +1415,4 @@ class GDNetworkManager: AFHTTPSessionManager {
     //MARK:
     //MARK:
     //MARK:
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 }

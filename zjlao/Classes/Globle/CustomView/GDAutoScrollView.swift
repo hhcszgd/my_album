@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+protocol GDAutoScrollViewActionDelegate : NSObjectProtocol{
+    func performToWebAction(model : GDBaseModel)
+}
 class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDataSource{
     enum GDAlignment {
         case center
@@ -17,9 +19,11 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
     var models  : [BaseControlModel] = [BaseControlModel](){
         didSet{
             pageControl.numberOfPages = models.count
+            self.collectionView.reloadData()
             addTimer()
         }
     }
+    weak var delegate : GDAutoScrollViewActionDelegate?
     let pageControl = GDAutoPageControl.init(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
     var timer : Timer?
     
@@ -32,7 +36,7 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
     
     func addTimer()  {
         self.invalidTimer()
-        timer = Timer.init(timeInterval: 1, target: self, selector: #selector(startAutoScroll), userInfo: nil , repeats: true )
+        timer = Timer.init(timeInterval: 5, target: self, selector: #selector(startAutoScroll), userInfo: nil , repeats: true )
         RunLoop.main.add(self.timer!, forMode: RunLoopMode.commonModes)
     }
     
@@ -59,7 +63,7 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
         }
         let newCurrentContentOffset = collectionView.contentOffset
         let nextContentOffset = CGPoint(x:  newCurrentContentOffset.x + itemSize.width, y: 0)
-        mylog("当前下标\(currentContentOffset.x / itemSize.width )")
+//        mylog("当前下标\(currentContentOffset.x / itemSize.width )")
         collectionView.setContentOffset(nextContentOffset, animated: true )
     }
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -106,15 +110,19 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
         return models.count * 3
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let actionModel = GDBaseModel.init(dict: nil)
+        let dataModel = models[indexPath.item % models.count]
+        actionModel.keyparamete = (dataModel.title ?? "" ) as AnyObject
+        self.delegate?.performToWebAction(model: actionModel)
+    }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: "GDAutoScrollViewItem", for: indexPath)
         let itemIndex  = indexPath.item % models.count
         if let realItem  = item as? Item {
-            let title  = models[itemIndex].title
-        
-            realItem.label.text = "\(title)"
+            realItem.model = models[itemIndex]
         }
 //        mylog("数组取值时Index : \(itemIndex)")
 //        mylog("真是currentIndex : \(indexPath.item)")
@@ -132,21 +140,28 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
 
     class Item : UICollectionViewCell {
         let imageView = UIImageView.init(frame: CGRect.zero)
-        let label = UILabel.init()
+        var model : BaseControlModel?{
+            didSet{
+                if let url  =  URL(string:  model?.imageUrl ?? "") {
+                    imageView.sd_setImage(with: url)
+                    self.layoutIfNeeded()
+                    
+                }
+                
+            }
+        }
+        
         override init(frame: CGRect) {
             super.init(frame: frame )
             self.prepareSubviews()
         }
         func prepareSubviews() {
             self.contentView.addSubview(self.imageView)
-            imageView.image = UIImage.init(named: "bg_coupon_shop_specially")
-            self.contentView.addSubview(self.label)
-            
+            imageView.contentMode = UIViewContentMode.scaleAspectFit
         }
         override func layoutSubviews() {
             super.layoutSubviews()
             imageView.frame = self.bounds
-            label.frame = self.bounds
         }
         
         required init?(coder aDecoder: NSCoder) {

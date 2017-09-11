@@ -44,9 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
             novifiCenter.delegate = self
             novifiCenter.requestAuthorization(options: [UNAuthorizationOptions.alert , UNAuthorizationOptions.sound , UNAuthorizationOptions.badge], completionHandler: { (resule, error) in
                 if(resule ){
-                    mylog("成功")
+//                    mylog("成功")
                 }else{
-                    mylog("注册失败\(error)")
+//                    mylog("注册失败\(error)")
                 }
             })
         }else{
@@ -1120,39 +1120,100 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
                     let data =   UIImageJPEGRepresentation(editImageReal, 0.0) //  UIImagePNGRepresentation(editImageReal)
 //                     UIImage(data: data ?? Data())
                     
+                    // MARK: 注释 : 插入七牛存储👇
+                    GDNetworkManager.shareManager.getQiniuToken(success: { (model ) in
+                        
+                        if let token = model.data as? String {
+                            mylog("获取七牛touken请求的状态码\(model.status)  , data数据 : \(token)")
+                            GDNetworkManager.shareManager.uploadAvart(data: data! ,token : token , complite: { (responseInfo, theKey , successInfo) in
+                                
+                                if successInfo == nil {
+                                    GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                }else{
+                                    if let key = successInfo?["key"] as? String{
+                                        print(key)//get avarta key
+                                        
+//                                      process something start
+                                        let dataBase64 = data?.base64EncodedString()
+                                        let size = dataBase64?.characters.count
+                                        GDNetworkManager.shareManager.uploadAvatar(name: self.mobileOrNameInput.text!, original: key, size: "\(size!)", descrip: "", { (result) in
+                                            mylog(result.data)
+                                            mylog(result.status)
+                                            if (result.status == 200){
+                                                GDNetworkManager.shareManager.QZFirstInit({ (result ) in
+                                                }, failure: { (error ) in
+                                                })
+                                                let appDelegateOption = UIApplication.shared.delegate
+                                                if let appDelegate  = appDelegateOption {
+                                                    if let realAppdelegate = appDelegate as? AppDelegate {
+                                                        if realAppdelegate.window?.rootViewController == GDKeyVC.share {
+                                                            self.navigationController?.popViewController(animated: true)
+                                                        }else{
+                                                            self.setKeyvcToMain()
+                                                        }
+                                                    }
+                                                }
+                                            }else if (result.status == 316){//用户名不能为空
+                                                GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                            }else if (result.status == 309){//头像不能为空
+                                                GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                            }else if (result.status == 319){//头像的大小不能为空
+                                                
+                                                GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                                
+                                            }else if (result.status == 320){//头像的格式不能为空
+                                                GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                            }else if (result.status == 323){//用户所在国家不能为空
+                                                GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                            }else if (result.status == 314){//用户的坐标不能为空
+                                                GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                            }else if (result.status == 306){//更新失败
+                                                GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                            }else if (result.status == 339){//图片上传失败
+                                                GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                            }
+                                        }, failure: { (error) in
+                                            mylog(error)
+                                        })
+                                        //process something end
+                                        
+                                        
+                                    }else{
+                                        GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                                    }
+                                }
+                                
+                            })
+                            
+                        }
+                    }, failure: { (error ) in
+                        //未知错误
+                        GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                        mylog(error )
+                    })
+                   
+                    
+                    // MARK: 注释 : 插入七牛存储👆
+                    /*
                     let dataBase64 = data?.base64EncodedString()
                     let size = dataBase64?.characters.count
                     GDNetworkManager.shareManager.uploadAvatar(name: self.mobileOrNameInput.text!, original: dataBase64!, size: "\(size!)", descrip: "", { (result) in
                         mylog(result.data)
                         mylog(result.status)
-                        
                         if (result.status == 200){
-                            
                             GDNetworkManager.shareManager.QZFirstInit({ (result ) in
-                                
                             }, failure: { (error ) in
-                                
                             })
-                            
                             let appDelegateOption = UIApplication.shared.delegate
                             if let appDelegate  = appDelegateOption {
                                 if let realAppdelegate = appDelegate as? AppDelegate {
                                     if realAppdelegate.window?.rootViewController == GDKeyVC.share {
-                                        //                            self.dismiss(animated: true , completion: {  })
                                         self.navigationController?.popViewController(animated: true)
                                     }else{
                                         self.setKeyvcToMain()
                                     }
                                 }
-                                
                             }
-                            
-                            
-                            
-                            
-                            
-                            
-//                            self.setKeyvcToMain()
                         }else if (result.status == 316){//用户名不能为空
                             GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
                         }else if (result.status == 309){//头像不能为空
@@ -1172,11 +1233,9 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
                         }else if (result.status == 339){//图片上传失败
                             GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
                         }
-                        
-                        
                     }, failure: { (error) in
                         mylog(error)
-                    })
+                    })*/
                 }
             
             }

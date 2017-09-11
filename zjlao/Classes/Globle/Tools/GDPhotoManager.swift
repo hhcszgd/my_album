@@ -55,7 +55,13 @@ class GDPhotoManager: NSObject , PHPhotoLibraryChangeObserver {
         var imageArr : [UIImage]  = [UIImage]()
         let result = PHAsset.fetchAssets(with: nil)
         result.enumerateObjects({ (asset, index , pointer) in
+            mylog("输出一个照片资源的信息local \(asset.localIdentifier)")
+            let data  = try?  Data.init(contentsOf: URL(fileURLWithPath: asset.localIdentifier))
+            mylog("输出data数据 : \(data)")
+            let imgdata = UIImage.init(contentsOfFile: asset.localIdentifier)
+            mylog("输出imagedata数据: \(imgdata)")
             self.getMediaByPHAsset(asset: asset, targetSize: targetSize, contentMode: contentMode, callBack: { (imageOption, info ) in
+                
                 if let image = imageOption {
                     imageArr.append(image)
                 }
