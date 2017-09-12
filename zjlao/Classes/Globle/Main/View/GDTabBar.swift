@@ -30,7 +30,7 @@ class GDTabBar: UITabBar {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        for (index ,item)  in self.items!.enumerated() {
+        for (_ ,item)  in self.items!.enumerated() {
 //            if index == 0  {
 //                
 //            }

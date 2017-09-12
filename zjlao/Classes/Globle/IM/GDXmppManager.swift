@@ -134,7 +134,7 @@ class GDXmppManager: NSObject  , XMPPStreamDelegate,XMPPReconnectDelegate , XMPP
         mylog("🍣接收到了错误信息\(error)")
         let children = error.children?.enumerated()
         if let ch  = children {
-            for (index , node ) in ch  {
+            for (_ , node ) in ch  {
                 if (node.name == "conflict") {
 //                    self.isNeedReconnect = NO ;
                     
@@ -203,7 +203,7 @@ class GDXmppManager: NSObject  , XMPPStreamDelegate,XMPPReconnectDelegate , XMPP
      * </item>
      **/
     func xmppRoster(_ sender: XMPPRoster!, didReceiveRosterItem item: DDXMLElement!){
-        mylog("Sent when the roster receives a roster item : \(item.name)")
+        mylog("Sent when the roster receives a roster item : \(String(describing: item.name))")
     }
     
     

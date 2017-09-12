@@ -60,9 +60,9 @@ class GDChatVC: GDNormalVC , NSFetchedResultsControllerDelegate  , XMPPvCardTemp
             let fetchrequest = NSFetchRequest<NSFetchRequestResult>.init()//查询请求
             let entitys = NSEntityDescription.entity(forEntityName: "XMPPMessageArchiving_Message_CoreDataObject", in: XMPPMessageArchivingCoreDataStorage.sharedInstance().mainThreadManagedObjectContext)
             fetchrequest.entity = entitys ?? nil
-            let domain = "@\(self.toUserJid.domain)"
-            let source = "/\(self.toUserJid.resource)"
-            let bearStr = self.toUserJid.user.appending(domain).appending(source)
+//            let domain = "@\(self.toUserJid.domain)"
+//            let source = "/\(self.toUserJid.resource)"
+//            let bearStr = self.toUserJid.user.appending(domain).appending(source)
             let predicate = NSPredicate.init(format: "bareJidStr = %@", self.toUserJid.bare() as String ) //有疑问
             fetchrequest.predicate = predicate
             
@@ -102,7 +102,7 @@ class GDChatVC: GDNormalVC , NSFetchedResultsControllerDelegate  , XMPPvCardTemp
     func testGravity() {//重力行为
         let gravity = UIGravityBehavior(items: [self.myview])
         //gravity.gravityDirection = CGVector(dx: 0 , dy: 1)//方向和速度大小的矢量
-        gravity.angle = CGFloat(M_PI_2)//弧度
+        gravity.angle = CGFloat(Double.pi/2)//弧度
         gravity.magnitude = 9.8 //重力加速度
 //        gravity.setAngle(CGFloat(M_PI), magnitude: 0.8)//动态修改
         self.ani?.addBehavior(gravity)
@@ -141,7 +141,7 @@ class GDChatVC: GDNormalVC , NSFetchedResultsControllerDelegate  , XMPPvCardTemp
     }
     func testPush() {//和重力类似 , 只是没有加速度
         let push = UIPushBehavior(items: [self.myview], mode: UIPushBehaviorMode.continuous)
-        push.angle = CGFloat(M_PI_2)//决定方向
+        push.angle = CGFloat(Double.pi/2)//决定方向
         push.magnitude = 85
         //push.pushDirection = CGVector(dx: 0, dy: 1)//也能决定方向0,1向下 , 1,1是45度右下方向 , 1,0是向右 , 1,-1是45度右上 , 0,-1是向上 , -1,0是向左
         push.active = true

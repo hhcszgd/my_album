@@ -576,12 +576,12 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         }
         let  scale : CGFloat = min(size.width/image.size.width, size.height/image.size.height)
         mylog(scale)
-        let width : size_t = size_t(image.size.width)
+//        let width : size_t = size_t(image.size.width)
         let height : size_t = size_t(image.size.height)
 //        let cs = CGColorSpaceCreateDeviceCMYK()
         let cs = CGColorSpaceCreateDeviceRGB()
         let temp : CGFloat = 1
-        var bitmapRef =   CGContext.init(data: nil , width: size_t( CGFloat(size.width) * temp) , height: size_t(CGFloat(size.height)  * temp) , bitsPerComponent: 8, bytesPerRow: 0, space: cs , bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue /*CGImageAlphaInfo.alphaOnly.rawValue*/)
+        let bitmapRef =   CGContext.init(data: nil , width: size_t( CGFloat(size.width) * temp) , height: size_t(CGFloat(size.height)  * temp) , bitsPerComponent: 8, bytesPerRow: 0, space: cs , bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue /*CGImageAlphaInfo.alphaOnly.rawValue*/)
         mylog(size_t(CGFloat(height)  * temp))
 //        CGImageAlphaInfo
         //        CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone)

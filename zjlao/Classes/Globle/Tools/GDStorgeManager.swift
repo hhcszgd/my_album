@@ -11,7 +11,7 @@ import UIKit
 /// 存储类
 class GDStorgeManager: UserDefaults {
     func re ()  {
-        UserDefaults.standard
+//        UserDefaults.standard
     }
 //MARK:
     //MARK:增

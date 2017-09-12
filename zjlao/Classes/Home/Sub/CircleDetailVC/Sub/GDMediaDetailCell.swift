@@ -40,7 +40,7 @@ class GDMediaDetailCell: UITableViewCell {
         didSet{
             //            let fullCommtenStr = (singleComment?.title ?? "") + ":" + (singleComment?.subTitle ?? "")
             
-            var attributeStr  = NSMutableAttributedString(string: (singleComment?.title ?? ""))
+            let attributeStr  = NSMutableAttributedString(string: (singleComment?.title ?? ""))
             let nameColor : UIColor = UIColor(hexString: "#5A6D96")! // UIColor.blue
             attributeStr.addAttribute(NSForegroundColorAttributeName, value: nameColor, range: NSRange.init(location: 0, length: attributeStr.string.characters.count))
             attributeStr.append(NSAttributedString.init(string:  ": " + (singleComment?.subTitle ?? "")))

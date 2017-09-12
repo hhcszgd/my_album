@@ -105,7 +105,7 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         
         GDNetworkManager.shareManager.getPersonalHistory(page: "\(self.currentPage)" , createAt : nil , { (result ) in
             mylog("请求历史消息的状态码\(result.status)")
-            mylog("请求历史消息的数据\(result.data)")
+            mylog("请求历史消息的数据\(String(describing: result.data))")
             
             var tempDatas  : [GDTrendsCellModel] = [GDTrendsCellModel] ()
             if let infoDict = result.data as? [String : AnyObject]{
@@ -248,7 +248,7 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         headerView.addTarget(self , action: #selector(headerViewClick(sender:)), for: UIControlEvents.touchUpInside)
         
         
-        let margin : CGFloat = 10
+//        let margin : CGFloat = 10
         userCollection.delegate = self
         userCollection.dataSource = self
         userCollection.alwaysBounceVertical = false
@@ -331,7 +331,7 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         let margin : CGFloat = 1.0
         let topH : CGFloat = 44.0
         let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
-        let picH : CGFloat = picW
+//        let picH : CGFloat = picW
 //        var rows = ((model.items?.count)! + 1 ) /  4
 //        let left = ((model.items?.count)! + 1 ) % 4
         var rows = (model.items?.count)!  /  4

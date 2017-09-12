@@ -57,7 +57,7 @@ class GDIBScrollView: UIScrollView {
     }
     
     func fexImageViewFrame(image:UIImage)  {
-        let bili = UIScreen.main.bounds.size.width / UIScreen.main.bounds.size.height
+//        let bili = UIScreen.main.bounds.size.width / UIScreen.main.bounds.size.height
         var imageViewW : CGFloat = 0;
         var imageViewH : CGFloat = imageViewW
         let tempHeight = image.size.height * SCREENWIDTH / image.size.width //当前宽度满屏时对应的高度是
@@ -217,7 +217,7 @@ extension GDIBScrollView: UIScrollViewDelegate {
     }
     
     public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat){
-        mylog("\n contentSize:\(scrollView.contentSize) \n contentOffset:\(scrollView.contentOffset) \n imageViewFrame\(imageView.frame) \n imageSize\(imageView.image?.size)")
+        mylog("\n contentSize:\(scrollView.contentSize) \n contentOffset:\(scrollView.contentOffset) \n imageViewFrame\(imageView.frame) \n imageSize\(String(describing: imageView.image?.size))")
         if self.imageView.bounds.size.width > SCREENWIDTH && self.imageView.bounds.size.height > SCREENHEIGHT {
             
         }else if self.imageView.bounds.size.width > SCREENWIDTH {

@@ -15,7 +15,7 @@ protocol GDCircleDetailCellDelete : NSObjectProtocol {
 class GDCalculatorCircleDetailCellHeight : NSObject{
    class func getCellHeight (modelData : GDCircleDetailCellModel?) -> CGFloat{
         var height  : CGFloat = 0
-        if let model  = modelData {
+        if modelData != nil {
             height = 44
         }
         return height
@@ -48,7 +48,7 @@ class GDCircleDetailCell: UITableViewCell {
         didSet{
 //            let fullCommtenStr = (singleComment?.title ?? "") + ":" + (singleComment?.subTitle ?? "")
             
-            var attributeStr  = NSMutableAttributedString(string: (singleComment?.title ?? ""))
+            let attributeStr  = NSMutableAttributedString(string: (singleComment?.title ?? ""))
             let nameColor : UIColor = UIColor(hexString: "#5A6D96")! // UIColor.blue
             attributeStr.addAttribute(NSForegroundColorAttributeName, value: nameColor, range: NSRange.init(location: 0, length: attributeStr.string.characters.count))
             attributeStr.append(NSAttributedString.init(string:  ": " + (singleComment?.subTitle ?? "")))

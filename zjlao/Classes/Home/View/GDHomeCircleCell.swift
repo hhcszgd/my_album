@@ -133,8 +133,8 @@ class GDHomeCircleCell: UICollectionViewCell , UICollectionViewDelegate , UIColl
         
     }
     func setupCollection ()  {
-        let itemW : CGFloat = self.subcellWidth
-        let itemH = itemW
+//        let itemW : CGFloat = self.subcellWidth
+//        let itemH = itemW
         collection.delegate = self
         collection.dataSource = self
         collection.alwaysBounceVertical = false
@@ -156,7 +156,7 @@ class GDHomeCircleCell: UICollectionViewCell , UICollectionViewDelegate , UIColl
         return circleModels!.count
     }
     func bigImageClick()  {
-        mylog("点击大图 媒体id是 : \(self.selectedItemModel?.extensionTitle) imgUrl:\(self.selectedItemModel?.imageUrl)")
+        mylog("点击大图 媒体id是 : \(String(describing: self.selectedItemModel?.extensionTitle)) imgUrl:\(String(describing: self.selectedItemModel?.imageUrl))")
         self.delete?.collectionViewCellClick?(item: self)
         
     }
@@ -240,7 +240,7 @@ class GDHomeCircleCell: UICollectionViewCell , UICollectionViewDelegate , UIColl
             self.nameLbl.sizeToFit()
             self.timeLbl.sizeToFit()
             
-            let iconMarginToBorder : CGFloat = 5.0
+//            let iconMarginToBorder : CGFloat = 5.0
             self.nameLbl.frame = CGRect(x: self.iconImageView.frame.maxX + 5 , y: self.timeLbl.frame.origin.y, width: self.nameLbl.bounds.size.width, height: self.timeLbl.bounds.size.height)
             self.timeLbl.frame = CGRect(x: self.nameLbl.frame.maxX + 5, y: self.nameLbl.frame.minY, width: self.bounds.size.width - self.nameLbl.frame.maxX - 5 * 2 , height: self.timeLbl.bounds.size.height)
             

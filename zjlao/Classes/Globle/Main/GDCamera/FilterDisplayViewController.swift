@@ -222,11 +222,11 @@ class FilterDisplayViewController: UIViewController, UISplitViewControllerDelega
         guard let outputPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return }
         let originalPath = outputPath + "/originalImage.png"
         //        print("path: \(originalPath)")
-        let originalURL = URL(fileURLWithPath: originalPath)
+        _ = URL(fileURLWithPath: originalPath)
         
         let filteredPath = outputPath + "/filteredImage.png"
         //        print("path: \(filteredPath)")
-        let filteredlURL = URL(fileURLWithPath: filteredPath)
+        _ = URL(fileURLWithPath: filteredPath)
         self.filterOperation.useNextFrameForImageCapture()
         self.camera.useNextFrameForImageCapture()
         //        self.camera.capturePhotoAsPNGProcessedUp(toFilter: self.filterOperation , with: UIImageOrientation.up) { (data , error ) in
@@ -242,7 +242,7 @@ class FilterDisplayViewController: UIViewController, UISplitViewControllerDelega
                 let editImageData = UIImageJPEGRepresentation(image ?? UIImage(), 0.0)
                 UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
                 self.imageView.image = self.cropToBounds(image: UIImage(data: editImageData ?? Data())!, width: 1200, height: 1200)
-                mylog("原图:\(data)   压缩图:\(editImageData) 线程:\(Thread.current)")
+                mylog("原图:\(String(describing: data))   压缩图:\(String(describing: editImageData)) 线程:\(Thread.current)")
             }
         }
 

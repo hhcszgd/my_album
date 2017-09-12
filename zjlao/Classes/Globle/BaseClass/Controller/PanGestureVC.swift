@@ -28,7 +28,7 @@ import UIKit
         // Dispose of any resources that can be recreated.
     }
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         ///判断是否是根控制器
         if self.childViewControllers.count == 1
         {

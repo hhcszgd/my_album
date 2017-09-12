@@ -94,14 +94,14 @@ class ImgTxtView: GDBaseControl {
         let margin : CGFloat = 5.0 ;
         let bottomTitleW =  selfW
         let bottomTitleH = self.subTitleLabel.font.lineHeight
-        let bottomTitleX : CGFloat = 0.0 ;
+//        let bottomTitleX : CGFloat = 0.0 ;
         let bottomTitleY = selfH - bottomTitleH - margin
         
         let leftH = self.container.bounds.size.height - margin * 3 - bottomTitleH //conainer的剩余高度
         
         let imageViewH = leftH
         let imageViewW = imageViewH
-        let imageViewX = margin
+//        let imageViewX = margin
         let imageViewY = margin
         
         self.imageView.frame = CGRect(x: 0, y: 0, width: imageViewW, height: imageViewH)

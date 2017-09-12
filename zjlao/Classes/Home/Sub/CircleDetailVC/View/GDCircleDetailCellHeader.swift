@@ -78,7 +78,7 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
                 let zan = GDZanUser()
                 
                 zan.model = zanModel
-                mylog("点赞人模型赋值时姓名列表:\(zanModel.title)")
+                mylog("点赞人模型赋值时姓名列表:\(String(describing: zanModel.title))")
                 zan.addTarget(self , action: #selector(zanUserClick(sender:)), for: UIControlEvents.touchUpInside)
                 self.zanContainer.addSubview(zan)
             }
@@ -92,7 +92,7 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         self.ownerIcon.addGestureRecognizer(longpress)
     }
     func alertMessage()  {
-        print(self.alertvc)
+//        print(self.alertvc)
         if self.model?.mine ?? 0 == 1 {
             return
         }
@@ -129,7 +129,7 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         
         GDNetworkManager.shareManager.block(userID: self.model?.user_id ?? "", { (dataModel) in
             print(dataModel.status)
-            print(dataModel.data)
+//            print(dataModel.data)
             if dataModel.status == 200{
 //                GDAlertView.alert("成功加入黑名单", image: nil , time: 2, complateBlock: nil)
                 self.cellDelegate?.blockSomeoneSuccess()
@@ -279,10 +279,10 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         self.creatTime.frame  = CGRect(x: iconW + bigImgW / 2, y: bigImgW, width: bigImgW / 2, height: nameH)
         self.arrowView.frame = CGRect(x: iconW + 10, y: self.ownerName.frame.maxY, width: 12, height: 8)
         
-        var zanContainerW = bigImgW
-        var zanContainerH : CGFloat = 0
-        let verticalMargin : CGFloat = 10
-        let horizontalMargin : CGFloat = 10
+//        var zanContainerW = bigImgW
+//        var zanContainerH : CGFloat = 0
+//        let verticalMargin : CGFloat = 10
+//        let horizontalMargin : CGFloat = 10
         
     
         
@@ -307,7 +307,7 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
 //                    tempmodel?.switchState = true
                     zanView.model = tempmodel
                     if zanView.bounds.size.width > zanContainerMaxW - currentW - margin {
-                        mylog("点赞人布局时 处于一行中第一个位置的姓名:\(tempmodel?.title)")
+                        mylog("点赞人布局时 处于一行中第一个位置的姓名:\(String(describing: tempmodel?.title))")
                         currentH += (zanView.bounds.size.height + margin)
                         currentW = margin 
                         if index == (self.model?.goods?.count ?? 0) {//所有点赞人中 , 最后一个点赞的人逗号隐藏
@@ -346,7 +346,7 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
                         currentW += (zanView.bounds.size.width + margin)
                         
                         zanView.model = tempmodel
-                        mylog("点赞人布局时不在一行中第一个位置的姓名:\(tempmodel?.title)")
+                        mylog("点赞人布局时不在一行中第一个位置的姓名:\(String(describing: tempmodel?.title))")
                     }
                 }
             }

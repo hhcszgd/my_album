@@ -130,10 +130,10 @@ class GDSetUserinfoVC: GDUnNormalVC {
     }
     
     func getUserInfo()  {
-        mylog("打印用户ididididid\(Account.shareAccount.member_id)")
+        mylog("打印用户ididididid\(String(describing: Account.shareAccount.member_id))")
         GDNetworkManager.shareManager.getUserinfo(userid: Account.shareAccount.member_id ?? "", { (result ) in
             mylog("获取个人信息:\(result.status)")
-            mylog("获取个人信息:\(result.data)")
+            mylog("获取个人信息:\(String(describing: result.data))")
             if let dict = result.data as? [String : AnyObject]{
                 if let name = dict["name"] as? String{
                     self.nameTextField.text = name
@@ -290,7 +290,7 @@ extension GDSetUserinfoVC : UIImagePickerControllerDelegate , UINavigationContro
             DispatchQueue.global().async {
                 let data =   UIImageJPEGRepresentation(editImageReal, 1) //  UIImagePNGRepresentation(editImageReal)
                 let dataBase64 = data?.base64EncodedString()
-                let size = dataBase64?.characters.count
+                _ = dataBase64?.characters.count
                 GDNetworkManager.shareManager.changeUserinfo(   avatar: dataBase64, { (model) in
                     mylog("头像上传结果:\(model.status)")
                     self.avatarImageView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), for: UIControlState.normal, placeholderImage: placePolderImage, options:  [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])

@@ -48,7 +48,7 @@ class GDCircleTrendsCell: GDBaseCell {
                 
              let count  = cellModel.pictures.count
             let margin : CGFloat = 2.0
-            let topH : CGFloat = 44.0
+//            let topH : CGFloat = 44.0
             let averWidth = (SCREENWIDTH - margin * 5 ) / 4
                 let picH : CGFloat = averWidth
 
@@ -176,7 +176,7 @@ class GDCircleTrendsCell: GDBaseCell {
         let margin : CGFloat = 1.0
         let topH : CGFloat = 44.0
 //        let picH : CGFloat = 64
-        let rows = 1
+//        let rows = 1
         var bottomH : CGFloat = 0
 //        let averWidth = (SCREENWIDTH - margin * 5 ) / 4
         let averWidth = (SCREENWIDTH - margin * 3 ) / 4

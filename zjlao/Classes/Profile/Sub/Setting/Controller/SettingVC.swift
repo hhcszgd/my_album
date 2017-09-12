@@ -82,7 +82,7 @@ class SettingVC: GDNormalVC {
                     rowView.additionalImageView.isHidden = true
                     DispatchQueue.global(qos: .userInitiated).async {
                         //your code here
-                        DispatchQueue.main.async { [weak self] in
+                        DispatchQueue.main.async { /*[weak self] in*/
                             rowView.subTitleLabel.text = "\(SDImageCache.shared().getSize()/1024/1024) MB"
                         }
                     }

@@ -70,10 +70,10 @@ class GDBaseModel: NSObject {
 func dictArrToModelArr(value  : [AnyObject] , modelType : String) -> [AnyObject]? {
     var models = [AnyObject]()
     for item in value {//遍历数组
-        if let itemreal = item as? [String] {//取出并判断子数组元素类型是否是字符串类型,基本不会
+        if item is [String] {//取出并判断子数组元素类型是否是字符串类型,基本不会
             
         }
-        if let itemreal = item as? [AnyObject] {//取出并判断子数组元素类型是否是数组类型,基本不会
+        if item is [AnyObject] {//取出并判断子数组元素类型是否是数组类型,基本不会
             
         }
         if let itemreal = item as? [String : AnyObject] {//取出并判断子数组元素类型是否是字典类型,基本都是

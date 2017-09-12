@@ -199,17 +199,17 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
             mylog("全部位置信息\(location)")
             let placemark = CLPlacemarkArr?.first
             
-            mylog("name : \(placemark?.name)")
-            mylog("thoroughfare : \(placemark?.thoroughfare)")
-            mylog("locality : \(placemark?.name)")
-            mylog("administrativeArea : \(placemark?.administrativeArea)")
-            mylog("country : \(placemark?.country)")
-            mylog("postalCode : \(placemark?.postalCode)")
+            mylog("name : \(String(describing: placemark?.name))")
+            mylog("thoroughfare : \(String(describing: placemark?.thoroughfare))")
+            mylog("locality : \(String(describing: placemark?.name))")
+            mylog("administrativeArea : \(String(describing: placemark?.administrativeArea))")
+            mylog("country : \(String(describing: placemark?.country))")
+            mylog("postalCode : \(String(describing: placemark?.postalCode))")
             
-            mylog("isoCountryCode : \(placemark?.isoCountryCode)")
-            mylog("subAdministrativeArea : \(placemark?.subAdministrativeArea)")
-            mylog("subLocality : \(placemark?.subLocality)")//区
-            mylog("addressDictionary : \(placemark?.addressDictionary)")//区
+            mylog("isoCountryCode : \(String(describing: placemark?.isoCountryCode))")
+            mylog("subAdministrativeArea : \(String(describing: placemark?.subAdministrativeArea))")
+            mylog("subLocality : \(String(describing: placemark?.subLocality))")//区
+            mylog("addressDictionary : \(String(describing: placemark?.addressDictionary))")//区
             
             let  resultArrM = placemark?.addressDictionary?["FormattedAddressLines"] as? [AnyObject]
             if let formatterStr  = resultArrM?.first {
@@ -233,7 +233,7 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
                 for item in placeMarks!{
                     let locationName =  item.name
                     let clLocation = item.location!
-                    mylog("位置名称:\(locationName) , 坐标是:\(clLocation.description)")
+                    mylog("位置名称:\(String(describing: locationName)) , 坐标是:\(clLocation.description)")
                 }
             
             }
@@ -248,7 +248,7 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
                 for item in placeMarks!{
                     let locationName =  item.name
                     let clLocation = item.location!
-                    mylog("位置名称:\(locationName) , 坐标是:\(clLocation.description)")
+                    mylog("位置名称:\(String(describing: locationName)) , 坐标是:\(clLocation.description)")
 
                 }
                 

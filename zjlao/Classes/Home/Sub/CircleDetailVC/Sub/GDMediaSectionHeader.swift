@@ -77,7 +77,7 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
                 self.creatTime.font = UIFont.systemFont(ofSize: 10)
             }
             
-            var attriStr = NSMutableAttributedString.init(string: "")
+            let attriStr = NSMutableAttributedString.init(string: "")
             let attachCity = NSTextAttachment()
             attachCity.image = UIImage.init(named: "mediaDetaillocation")
             let attachCityStr = NSAttributedString.init(attachment: attachCity)
@@ -216,7 +216,7 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
         let lineBottomOfDescripH = margin //44
         
         var zanY = bigImageView.frame.maxY + lineBottomOfDescripH
-        var zanH : CGFloat = 44 //55
+        let zanH : CGFloat = 44 //55
         if !(self.model?.descrip?.isEmpty ?? true)   && self.model?.descrip?.characters.count ?? 0 > 0{
             self.descripLabel.isHidden = false
             self.lineBottomOfDescrip.frame = CGRect(x: 0 , y: descripLabel.frame.maxY, width: bigImgW , height: lineBottomOfDescripH)//
@@ -239,7 +239,7 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
         self.deleteBtn.frame =  CGRect(x: SCREENWIDTH / 3 * 2, y: zanY, width: SCREENWIDTH / 3, height: zanH)
 //        self.deleteBtn.isHidden = self.model?.mine == 1 ? false : true
         
-        let lineBottomOfZanbtnH  = margin //66
+//        let lineBottomOfZanbtnH  = margin //66
         
         self.lineBottomOfZanbtn.frame = CGRect(x: 0, y: self.zanBtn.frame.maxY, width: SCREENWIDTH, height: margin)
         
@@ -250,12 +250,12 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
         let arrowViewH : CGFloat = 8.0//77
         self.arrowView.frame = CGRect(x: margin + 10.0, y: lineBottomOfZanbtn.frame.maxY, width: 12.0, height: arrowViewH)
         
-        var zanContainerW = bigImgW
-        var zanContainerH : CGFloat = 0
-        let verticalMargin : CGFloat = 10
-        let horizontalMargin : CGFloat = 10
-        
-        
+//        var zanContainerW = bigImgW
+//        var zanContainerH : CGFloat = 0
+//        let verticalMargin : CGFloat = 10
+//        let horizontalMargin : CGFloat = 10
+//        
+//        
         
         self.zanContainer.frame = CGRect.zero
         let zanContainerMaxW :CGFloat = SCREENWIDTH - margin * 2

@@ -21,7 +21,7 @@ class PTableHeaderSub: GDBaseControl {
     var model  = ProfileSubModel(dict:nil) {
         didSet{
             if model.number != nil {
-                self.titleLabel.text = "\(model.number)"
+                self.titleLabel.text = "\(String(describing: model.number))"
             }else if model.number == nil && model.localImgName == nil  {
                 self.titleLabel.text = "0"
             }else if model.number == nil && model.localImgName != nil{

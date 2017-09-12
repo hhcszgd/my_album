@@ -295,14 +295,14 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        let model = self.datas[indexPath.row]
+//        let model = self.datas[indexPath.row]
         
         let margin : CGFloat = 1.0
         let topH : CGFloat = 44.0
         let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
         
         let picH : CGFloat = picW
-        var rows = 1
+        let rows = 1
         var bottomH : CGFloat = 0
         bottomH = topH + picH + CGFloat(rows + 1) * margin
         return bottomH

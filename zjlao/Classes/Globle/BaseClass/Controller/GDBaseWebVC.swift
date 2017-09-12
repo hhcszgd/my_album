@@ -17,7 +17,7 @@ class GDBaseWebVC: GDNormalVC , WKScriptMessageHandler ,  WKNavigationDelegate,W
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        mylog("\(self.keyModel)")
+        mylog("\(String(describing: self.keyModel))")
         self.view.addSubview(self.webView)
         self.layoutsubviews()
         // Do any additional setup after loading the view.
@@ -37,18 +37,18 @@ class GDBaseWebVC: GDNormalVC , WKScriptMessageHandler ,  WKNavigationDelegate,W
         
         self.webView.frame = CGRect(x: 0.0, y: NavigationBarHeight, width: GDDevice.width, height: GDDevice.height - NavigationBarHeight)
         guard let model = self.keyModel else {
-            mylog("webViewController的关键模型为nil\(self.keyModel)")
+            mylog("webViewController的关键模型为nil\(String(describing: self.keyModel))")
             return
         }
         guard let keyParamete = model.keyparamete else {
-            mylog("webViewController的模型关键参数为空\(self.keyModel)")
+            mylog("webViewController的模型关键参数为空\(String(describing: self.keyModel))")
             return
         }
         guard let urlStr = keyParamete as? String else {
-            mylog("webViewController对应的url字符串不存在\(self.keyModel)")
+            mylog("webViewController对应的url字符串不存在\(String(describing: self.keyModel))")
             return
         }
-        print(GDNetworkManager.shareManager.token)
+//        print(GDNetworkManager.shareManager.token)
         if  urlStr == "http://www.123qz.cn/yinsi.html" {
 //            let urlStrAppendToken  = urlStr
             if  urlStr.hasPrefix("https://") || urlStr.hasPrefix("http://") {

@@ -140,7 +140,7 @@ class GDSKSceneA: SKScene {
         mylog("转换后\("得到")")
         let touch : UITouch = touches.first!
         let pointInNode :CGPoint = touch.location(in: self)
-        let previousPointInNode = touch.previousLocation(in: self)
+//        let previousPointInNode = touch.previousLocation(in: self)
         let shipPoint =  self.convert(pointInNode, to: self.spaceship)
         if shipPoint.x > -32 && shipPoint.x < 32 && shipPoint.y > -16 && shipPoint.y < 16 {
             

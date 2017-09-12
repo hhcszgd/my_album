@@ -80,7 +80,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         
         return mgr
-        NotificationCenter.default.addObserver(self, selector: #selector(locationChanged(info:)), name: GDLocationManager.GDLocationChanged, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(locationChanged(info:)), name: GDLocationManager.GDLocationChanged, object: nil)
     }()
     static var isFirst = false//第一次监听不提示
     
@@ -89,8 +89,8 @@ class GDNetworkManager: AFHTTPSessionManager {
             isFirst = true
             return
         }
-        guard let userInfo = (note as NSNotification).userInfo else {return}
-        let currentNetworkStatus = userInfo[AFNetworkingReachabilityNotificationStatusItem] as! Int
+        guard (note as NSNotification).userInfo != nil else {return}
+//        let currentNetworkStatus = userInfo[AFNetworkingReachabilityNotificationStatusItem] as! Int
         /**
          AFNetworkReachabilityStatusUnknown          = -1,
          AFNetworkReachabilityStatusNotReachable     = 0,
@@ -323,7 +323,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         let url =  "media_comment/" + mediaID
         var para : [String : Any] = [
             "token" : self.token ?? "",
-            "message_id" : messageID
+            "message_id" : messageID ?? "nil"
             ]
         if let circleIDStr = circleID {
             para["circle_id"] = circleIDStr
@@ -471,8 +471,8 @@ class GDNetworkManager: AFHTTPSessionManager {
     func uploadAvatar(name : String ,original : String,size : String , descrip : String?, _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) {
         //        GDLocationManager.share.gotCurrentLocation { (location , error) in
         let location = GDLocationManager.share.locationManager.location
-        let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
-        let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
+//        let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
+//        let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
         //            mylog("定位成功")
 //        mylog(location?.coordinate.longitude)
 //        mylog(location?.coordinate.latitude)
@@ -494,7 +494,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                 para["description"] = descrip!
             }
             //                let para = ["coordinate" : "\(116.293954),\(39.83799)" ]
-            var url =  "users"
+            let url =  "users"
             
 //            if let memberid  = Account.shareAccount.member_id {//v2 不要userid了
 //                url = url + "/\(memberid)"
@@ -692,7 +692,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         let para = ["mobile" : mobile ]
         QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             if result.status == 200 {//获取成功
-                if let authCode = result.data  as? String{
+                if (result.data  as? String) != nil{
 
                 }
             }else if (result.status == 308){//验证码获取失败
@@ -858,7 +858,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         if (para?.isEmpty)! {
             para = nil
         }
-        mylog("-*请求链接*->\(urlString)--*请求类型*-->\(method)--*请求参数*-->\(para)<--*****--")
+        mylog("-*请求链接*->\(urlString)--*请求类型*-->\(method)--*请求参数*-->\(String(describing: para))<--*****--")
 //        mylog("ddddddddasdfasdf\(para)")
         var url   =  hostName
         url = url + urlString
@@ -955,7 +955,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         //                URLResponse
         //                HTTPURLResponse
         if let response  = task?.response as? HTTPURLResponse {
-            mylog("网络任务:\(response.suggestedFilename) 请求状态:\(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))")
+            mylog("网络任务:\(String(describing: response.suggestedFilename)) 请求状态:\(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))")
         }
         
     }

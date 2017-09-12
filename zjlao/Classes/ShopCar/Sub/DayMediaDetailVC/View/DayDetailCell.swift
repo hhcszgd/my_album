@@ -38,7 +38,7 @@ class DayDetailCell: GDBaseCell {
 
                 self.myLbl.text = targetText
                 if (cellModel.items == nil  ){return}
-                for (index , model) in (cellModel.items?.enumerated())! {
+                for (_ , model) in (cellModel.items?.enumerated())! {
                     let pic = GDPicView.init(frame: CGRect.zero)
                     pic.addTarget(self , action: #selector(subitemClick(sender:)), for: UIControlEvents.touchUpInside)
                     if let controlModel  = model as? BaseControlModel {

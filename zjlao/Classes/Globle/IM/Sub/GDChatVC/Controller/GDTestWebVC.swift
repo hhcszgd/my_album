@@ -18,13 +18,13 @@ class GDTestWebVC: GDNormalVC ,  WKNavigationDelegate,WKUIDelegate {
         let html = "<html><head></head><body><p style=\"text-align:center ; font-size:44px ; font-family:'arial'\">萨沙讲史堂第一百五十四期（军事系列第81讲）</p>   <img style=\"center\" , src=\"http://d.ifengimg.com/mw640_q75/p0.ifengimg.com/pmop/2016/1226/F19FC9FA3A476FA3FDEF86D6A4EC301E7BE1B258_size12_w640_h355.jpeg\" />  </body></html>"
     func test() -> String {
         
-        gotResourceInSubBundle("mg", type: "gif", directory: "face_img")
+        _ = gotResourceInSubBundle("mg", type: "gif", directory: "face_img")
         //let path =  gotResourceInSubBundle("icon_payfail@3x", type: "png", directory: "Image")
         
         let path =  Bundle.main.path(forResource: "loading", ofType: "gif")
-         let subBundlePath = Bundle.main.path(forResource: "Resource", ofType: "bundle")
-         let subBundle = Bundle(path: subBundlePath!)!
-         subBundle.bundlePath
+//         let subBundlePath = Bundle.main.path(forResource: "Resource", ofType: "bundle")
+//         let subBundle = Bundle(path: subBundlePath!)!
+//         subBundle.bundlePath
 
         
         mylog(path)
@@ -38,10 +38,10 @@ class GDTestWebVC: GDNormalVC ,  WKNavigationDelegate,WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        mylog("\(self.keyModel)")
+        mylog("\(String(describing: self.keyModel))")
         self.view.addSubview(self.webView)
         self.layoutsubviews()
-        test()
+        _ = test()
         // Do any additional setup after loading the view.
     }
     

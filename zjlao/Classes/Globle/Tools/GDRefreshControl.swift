@@ -354,7 +354,7 @@ extension GDRefreshControl {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if keyPath != nil && keyPath! == "contentOffset" {
-            if let newPoint = change?[NSKeyValueChangeKey.newKey] as? CGPoint{
+            if (change?[NSKeyValueChangeKey.newKey] as? CGPoint) != nil{
                 //                mylog(newPoint)//下拉变小
                 //                self.prepareRefresh(contentOffset: newPoint)
             }

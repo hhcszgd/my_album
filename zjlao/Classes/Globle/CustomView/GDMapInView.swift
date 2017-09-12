@@ -158,16 +158,16 @@ class GDMapInView: UIView , MKMapViewDelegate {
             let placeMark = arr?.first
             userLocation.title = placeMark?.country
             userLocation.subtitle = placeMark?.name
-            mylog("country->\(placeMark?.country)")
-            mylog("name->\(placeMark?.name)")
-            mylog("administrativeArea->\(placeMark?.administrativeArea)")
-            mylog("locality->\(placeMark?.locality)")
-            mylog("ocean->\(placeMark?.ocean)")
-            mylog("postalCode->\(placeMark?.postalCode)")
-            mylog("subAdministrativeArea->\(placeMark?.subAdministrativeArea)")
-            mylog("subLocality->\(placeMark?.subLocality)")
-            mylog("subThoroughfare->\(placeMark?.subThoroughfare)")
-            mylog("thoroughfare->\(placeMark?.thoroughfare)")
+            mylog("country->\(String(describing: placeMark?.country))")
+            mylog("name->\(String(describing: placeMark?.name))")
+            mylog("administrativeArea->\(String(describing: placeMark?.administrativeArea))")
+            mylog("locality->\(String(describing: placeMark?.locality))")
+            mylog("ocean->\(String(describing: placeMark?.ocean))")
+            mylog("postalCode->\(String(describing: placeMark?.postalCode))")
+            mylog("subAdministrativeArea->\(String(describing: placeMark?.subAdministrativeArea))")
+            mylog("subLocality->\(String(describing: placeMark?.subLocality))")
+            mylog("subThoroughfare->\(String(describing: placeMark?.subThoroughfare))")
+            mylog("thoroughfare->\(String(describing: placeMark?.thoroughfare))")
             
             /*
              country->Optional("中国")//国家

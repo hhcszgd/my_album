@@ -56,7 +56,7 @@ class GDLanguageManager: NSObject {
         
         
         let noticStr_currentLanguageIs = NSLocalizedString(LCurrentLanguageIs, tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "") // 提示语 中文的话 :@"当前语言是"   , 英文的花 : @"currentLanguageIs" (提示语也要国际化)
-        let noticeStr_changeing = NSLocalizedString(LLanguageChangeing, tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "") // 提示语 中文的话 @"语言更改中"  英文的话 @"languageChangeing" (提示语也要国际化)
+//        let noticeStr_changeing = NSLocalizedString(LLanguageChangeing, tableName: LanguageTableName, bundle: Bundle.main, value:"", comment: "") // 提示语 中文的话 @"语言更改中"  英文的话 @"languageChangeing" (提示语也要国际化)
         
         if targetLanguage == LanguageTableName && targetLanguage == LFollowSystemLanguage {//切换前后语言相同 , 除了提示之外不做任何变化
             GDAlertView.alert(self.titleByKey(key: LApplyAfterRestart), image: nil, time: 2, complateBlock: nil)

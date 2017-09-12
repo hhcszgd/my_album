@@ -82,7 +82,7 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         if textView.text.characters.count > 0  {
             if self.currentMediaID != nil  {
                 GDNetworkManager.shareManager.commentAndLike(mediaID: self.currentMediaID!, isLike: "0", content: self.textView.text, { (result ) in
-                    mylog("评论成功\(result.data)")
+                    mylog("评论成功\(String(describing: result.data))")
                     self.requestData(loadDataType: LoadDataType.initialize)
                 }, failure: { (error ) in
                     mylog("发表评论请求失败 : \(error)")
@@ -507,7 +507,7 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
             phtots.append(photo)
         }
         
-        GDIBContentView.init(photos: phtots , showingPage : index)
+         _ = GDIBContentView.init(photos: phtots , showingPage : index)
     }
     
     func bigImageClick(mediaID:String){
@@ -518,7 +518,7 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         if text == "\n" {//点return键走这里
             if self.currentMediaID != nil  {
                 GDNetworkManager.shareManager.commentAndLike(mediaID: self.currentMediaID!, isLike: "0", content: self.textView.text, { (result ) in
-                    mylog("评论成功\(result.data)")
+                    mylog("评论成功\(String(describing: result.data))")
                     self.requestData(loadDataType: LoadDataType.initialize)
                 }, failure: { (error ) in
                     mylog("发表评论请求失败 : \(error)")

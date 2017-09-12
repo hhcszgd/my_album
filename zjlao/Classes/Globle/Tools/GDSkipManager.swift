@@ -85,7 +85,7 @@ class GDSkipManager: NSObject {
             if let naviVC  = viewController as? UINavigationController {
                 naviVC.pushViewController(vc, animated: true )
             }else{
-                if let naviVC  = viewController.navigationController {
+                if viewController.navigationController != nil {
                     viewController.navigationController?.pushViewController(vc, animated: true )
                 }else{
                     viewController.present(vc, animated: true , completion: { 

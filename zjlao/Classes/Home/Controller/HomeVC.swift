@@ -85,7 +85,7 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
     var circleMembers  : [BaseControlModel] = [BaseControlModel](){//当前展示的单个圈子里成员的 数组集合
         didSet{//动态设置附近的人现实还是隐藏
 //            let prefixStr = "\(circleMembers.count) 📷"
-            var attriStr = NSMutableAttributedString.init(string: "\(circleMembers.count) ")
+            let attriStr = NSMutableAttributedString.init(string: "\(circleMembers.count) ")
             let attach = NSTextAttachment()
             attach.image = UIImage.init(named: "camera_icon_white")
             let attachStr = NSAttributedString.init(attachment: attach)
@@ -615,7 +615,7 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
                     var circleModels : [BaseControlModel] = [BaseControlModel]()
                     if let circlesAny = info["circle_id"] {
                         if let circles = circlesAny as? [Any]{
-                            for (index , item) in circles.enumerated() {
+                            for (_ , item) in circles.enumerated() {
                                 
                                 let model = BaseControlModel(dict: ["title": "\(item)" as AnyObject])
                                 circleModels.append(model)

@@ -38,7 +38,7 @@ class GDPicView: GDBaseControl {
         self.addGestureRecognizer(longpress)
     }
     func alertMessage()  {
-        print(self.alertvc)
+//        print(self.alertvc ?? <#default value#>)
         if  self.alertvc == nil  {
             let alertvc = UIAlertController.init(title: "举报该内容", message: nil , preferredStyle: UIAlertControllerStyle.alert)
             let action0 = UIAlertAction.init(title: "取消", style: UIAlertActionStyle.default) { (action ) in
@@ -149,7 +149,7 @@ class GDPicView: GDBaseControl {
         
         let contextImage: UIImage = UIImage(cgImage: image.cgImage!)
         
-        let contextSize: CGSize = contextImage.size
+//        let contextSize: CGSize = contextImage.size
         
 
         

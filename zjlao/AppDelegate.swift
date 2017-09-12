@@ -159,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
                     if let value  = userinfo["value"] {
                         mylog("good成功\(value)")
 //                        let chatVC  = ChatVC()
-                        if let user  = value as? String {
+                        if value is String {
 //                            let jid : XMPPJID = XMPPJID.init(user: user , domain: "jabber.zjlao.com", resource: "ios")
 //                            chatVC.userJid = jid
 //                            KeyVC.share.pushViewController(chatVC, animated: true )
@@ -248,7 +248,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     func initAccountInfo()  {
 //        if   GDNetworkManager.shareManager.token != nil && GDNetworkManager.shareManager.token != "nil"{//不判断了,当手机在别处被找回时有问题
             GDNetworkManager.shareManager.QZFirstInit({ (model) in
-                mylog("首次调用初始化接口成功 status:\(model.status) message:\(model.message) data:\(model.data)")
+                mylog("首次调用初始化接口成功 status:\(model.status) message:\(String(describing: model.message)) data:\(String(describing: model.data))")
                 if model.status == 202 {
                     Account.shareAccount.resetAccountStatus(status: AccountStatus.authenticated)
                 }else if (model.status == 310){
@@ -360,7 +360,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         
         GDLocationManager.share.startUpdatingLocation()
         GDNetworkManager.shareManager.QZFirstInit({ (model) in//之所以先初始化, 是怕手机在别的设备被找回
-            mylog("首次调用初始化接口成功 status:\(model.status) message:\(model.message) data:\(model.data)")
+            mylog("首次调用初始化接口成功 status:\(model.status) message:\(String(describing: model.message)) data:\(String(describing: model.data))")
             if model.status == 202 {
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.authenticated)
             }else if (model.status == 310){
@@ -538,12 +538,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         JPUSHService.registerDeviceToken(deviceToken)
         //        [registrationIDCompletionHandler:]?
         JPUSHService.registrationIDCompletionHandler { (respondsCode, registrationID) in
-            mylog("极光注册远程通知成功后获取的注册ID\(registrationID)\n\n状态码是\(respondsCode)")//需要传给服务器
+            mylog("极光注册远程通知成功后获取的注册ID\(String(describing: registrationID))\n\n状态码是\(respondsCode)")//需要传给服务器
             
             
             GDNetworkManager.shareManager.changeUserinfo( registration_id: registrationID, { (result) in
                 mylog("保存极光id回调\(result.status)")
-                mylog("保存极光id回调\(result.data)")
+                mylog("保存极光id回调\(String(describing: result.data))")
             }, failure: { (error) in
                 mylog("保存极光id失败\(error)")
             })
@@ -821,7 +821,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
         self.mobileOrNameInputTipLbl.frame = CGRect(x: (containerW - mobileInputW ) / 2, y: 44, width: mobileInputW, height: self.mobileOrNameInputTipLbl.font.lineHeight)
         
         self.mobileOrNameInput.frame = CGRect(x: (containerW - mobileInputW ) / 2, y: self.mobileOrNameInputTipLbl.frame.maxY + 22, width: mobileInputW, height: 38)
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 10))
+        _ = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 10))
 //        leftView.backgroundColor = UIColor.red
 //        self.mobileOrNameInput.leftViewMode = UITextFieldViewMode.always
 //        self.mobileOrNameInput.leftView = leftView

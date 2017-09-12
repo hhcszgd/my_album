@@ -8,9 +8,16 @@
 
 import UIKit
 
-class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate{
+class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDelegate , UICollectionViewDataSource{
 
     let autoScrollView = GDAutoScrollView.init(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width * 0.5))
+//    let backView = UIView()
+//    let nearbyCircleLabel = UILabel()
+//    let createdNewCircleButton = UIButton()
+		
+//    let seeAllCircles = UIButton()
+    
+    var circleView : UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
@@ -19,10 +26,44 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate{
         self.getAD()
     }
     func prepareSubViews()  {
+        ///:autoScrollView
         autoScrollView.backgroundColor = UIColor.red
         autoScrollView.delegate = self
         self.view.addSubview(autoScrollView)
+        ///:circleView
+        
+        let flowLayout = UICollectionViewFlowLayout.init()
+        flowLayout.minimumLineSpacing = 20
+        flowLayout.minimumInteritemSpacing = 20
+//        let itemW = (self.view.frame.size.width - 20 * 3 ) / 3
+        flowLayout.itemSize =  CGSize.zero
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+        circleView = UICollectionView.init(frame: CGRect(x : 0 , y : autoScrollView.frame.maxY + 44 , width : self.view.bounds.size.width , height : 2) , collectionViewLayout: flowLayout)
+        self.view.addSubview(circleView)
+        circleView.register(CircleItem.self , forCellWithReuseIdentifier: "CircleItem")
+        circleView.delegate = self
+        circleView.dataSource = self
+        circleView.isPagingEnabled = true
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+        return  3
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        let item = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleItem", for: indexPath)
+//        let itemIndex  = indexPath.item % models.count
+//        if let realItem  = item as? Item {
+//            realItem.model = models[itemIndex]
+//        }
+        item.backgroundColor = UIColor.randomColor()
+        return item
+    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let actionModel = GDBaseModel.init(dict: nil)
+//        let dataModel = models[indexPath.item % models.count]
+//        actionModel.keyparamete = (dataModel.title ?? "" ) as AnyObject
+//        self.delegate?.performToWebAction(model: actionModel)
+//    }
     func performToWebAction(model: GDBaseModel) {
         model.actionkey = "webpage"
      GDSkipManager.skip(viewController: self , model: model )
@@ -34,10 +75,10 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate{
     
     func getAD() {
         GDNetworkManager.shareManager.getAD(success: { (model ) in
-            mylog("获取广告状态码:\(model.status) , 相应数据 : \(model.data )")
+            mylog("获取广告状态码:\(model.status) , 相应数据 : \(String(describing: model.data ))")
             if let arr  = model.data , let dictArr = arr as? [[String  : String]] {
                 var models = [BaseControlModel]()
-                for (key , value) in dictArr.enumerated(){
+                for (_ , value) in dictArr.enumerated(){
                     let model = BaseControlModel.init(dict: ["title" : value["link_url"] as AnyObject, "imageUrl" : value["image_url"] as AnyObject])
                     models.append(model)
                 }
@@ -62,5 +103,8 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate{
         // Pass the selected object to the new view controller.
     }
     */
+    class CircleItem : UICollectionViewCell {
 
+    }
 }
+

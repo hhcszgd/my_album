@@ -57,9 +57,9 @@ class GDPhotoManager: NSObject , PHPhotoLibraryChangeObserver {
         result.enumerateObjects({ (asset, index , pointer) in
             mylog("输出一个照片资源的信息local \(asset.localIdentifier)")
             let data  = try?  Data.init(contentsOf: URL(fileURLWithPath: asset.localIdentifier))
-            mylog("输出data数据 : \(data)")
+            mylog("输出data数据 : \(String(describing: data))")
             let imgdata = UIImage.init(contentsOfFile: asset.localIdentifier)
-            mylog("输出imagedata数据: \(imgdata)")
+            mylog("输出imagedata数据: \(String(describing: imgdata))")
             self.getMediaByPHAsset(asset: asset, targetSize: targetSize, contentMode: contentMode, callBack: { (imageOption, info ) in
                 
                 if let image = imageOption {
@@ -83,7 +83,7 @@ class GDPhotoManager: NSObject , PHPhotoLibraryChangeObserver {
     //: 测试保存图片
     func testSaveImage() {
         self.saveImage(image: UIImage(named: "test")!) { (imageID) in
-            print("回调的图片id\(imageID)")
+            print("回调的图片id\(String(describing: imageID))")
         }
     }
     //: 保存图片,并将保存的图片id通过回调返回
@@ -114,7 +114,7 @@ class GDPhotoManager: NSObject , PHPhotoLibraryChangeObserver {
                 print("保存成功")
                 complate(id)//回调id
             }else{
-                print("保存失败\(error)")
+                print("保存失败\(String(describing: error))")
                 complate(nil)
             }
         }

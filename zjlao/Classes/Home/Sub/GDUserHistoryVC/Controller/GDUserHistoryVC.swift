@@ -235,7 +235,7 @@ class GDUserHistoryVC: GDUnNormalVC , GDTrendsCellDelegate {
         let margin : CGFloat = 2.0
         let topH : CGFloat = 44.0
         let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
-        let picH : CGFloat = picW
+//        let picH : CGFloat = picW
         //        var rows = ((model.items?.count)! + 1 ) /  4
         //        let left = ((model.items?.count)! + 1 ) % 4
         var rows = (model.items?.count)!  /  4

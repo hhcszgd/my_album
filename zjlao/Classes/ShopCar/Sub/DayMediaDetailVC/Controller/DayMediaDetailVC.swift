@@ -44,7 +44,7 @@ class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
             var subDatas  : [BaseControlModel] = [BaseControlModel] ()
 
             if let infoDict = result.data as? [String : AnyObject]{
-                if let mediasArr = infoDict["user"] as? [[String : AnyObject]]{
+                if (infoDict["user"] as? [[String : AnyObject]]) != nil{
                 }
                 if let mediasArr = infoDict["medias"] as? [[String : AnyObject]]{
                     for mediaDict in mediasArr{
@@ -229,7 +229,7 @@ class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
         let margin : CGFloat = 2.0
         let topH : CGFloat = 44.0
         let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
-        let picH : CGFloat = picW
+//        let picH : CGFloat = picW
         var rows = (model.items?.count)!  /  4
         let left = (model.items?.count)!  % 4
         var bottomH : CGFloat = 0
