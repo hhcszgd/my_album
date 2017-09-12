@@ -56,7 +56,7 @@ class GDSKSceneA: SKScene {
         //船体叫做hull
         let hull = SKSpriteNode(color: SKColor.gray, size: CGSize(width : 64, height : 32))
         //创建动作 sequence传入的要是一个数组[],里面有4个动作，简单！
-        let hover = SKAction.sequence([
+        _ = SKAction.sequence([
             SKAction.wait(forDuration: 1.0),
             SKAction.moveBy(x: self.frame.size.width - 88, y: 0, duration: 1.0),
             SKAction.wait(forDuration: 1.0),

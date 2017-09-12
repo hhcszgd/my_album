@@ -10,7 +10,7 @@ import UIKit
 
 class GDSwitchModelMangager: NSObject {
     class func switchToModel(by:[String : AnyObject]?){
-        let obj = NSObject()
+        _ = NSObject()
         
     }
 }

@@ -214,7 +214,7 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
                 return true
             }else{
                 
-                self.initializationAccountInfo()
+                _ = self.initializationAccountInfo()
                 return false
             }
         }

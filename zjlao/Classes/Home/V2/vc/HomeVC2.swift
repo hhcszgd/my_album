@@ -11,17 +11,17 @@ import UIKit
 class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDelegate , UICollectionViewDataSource{
 
     let autoScrollView = GDAutoScrollView.init(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width * 0.5))
-//    let backView = UIView()
+    let backView = UIView()
 //    let nearbyCircleLabel = UILabel()
 //    let createdNewCircleButton = UIButton()
 		
-//    let seeAllCircles = UIButton()
+    let seeAllCircles = UIButton()
     
     var circleView : UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
-        self.view.backgroundColor = UIColor.black 
+        self.view.backgroundColor = UIColor.black
         self.prepareSubViews()
         self.getAD()
     }
@@ -30,24 +30,44 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         autoScrollView.backgroundColor = UIColor.red
         autoScrollView.delegate = self
         self.view.addSubview(autoScrollView)
+        ///:backView
+        self.view.addSubview(backView)
+        backView.backgroundColor = UIColor.white
+        backView.frame = CGRect(x: 0, y: autoScrollView.frame.maxY, width: self.view.bounds.size.width , height: self.view.bounds.size.height - autoScrollView.bounds.size.height)
         ///:circleView
-        
         let flowLayout = UICollectionViewFlowLayout.init()
-        flowLayout.minimumLineSpacing = 20
-        flowLayout.minimumInteritemSpacing = 20
-//        let itemW = (self.view.frame.size.width - 20 * 3 ) / 3
-        flowLayout.itemSize =  CGSize.zero
+        let cellMargin : CGFloat = 20
+        let circleNameH : CGFloat = 25
+        flowLayout.minimumLineSpacing = cellMargin
+        flowLayout.minimumInteritemSpacing = cellMargin
+//        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        let collectionW = self.view.bounds.size.width - cellMargin * 2
+        let itemW = (collectionW - cellMargin * 2 ) / 3
+        let collectionH = (itemW + circleNameH ) * 2 + cellMargin
+        flowLayout.itemSize =  CGSize(width: itemW, height: itemW + circleNameH)
         flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
-        circleView = UICollectionView.init(frame: CGRect(x : 0 , y : autoScrollView.frame.maxY + 44 , width : self.view.bounds.size.width , height : 2) , collectionViewLayout: flowLayout)
+        circleView = UICollectionView.init(frame: CGRect(x : cellMargin , y : autoScrollView.frame.maxY + 44 , width : collectionW  , height : collectionH) , collectionViewLayout: flowLayout)
         self.view.addSubview(circleView)
+        self.circleView.backgroundColor = UIColor.white
         circleView.register(CircleItem.self , forCellWithReuseIdentifier: "CircleItem")
         circleView.delegate = self
         circleView.dataSource = self
         circleView.isPagingEnabled = true
+        
+        ///:seeAllCircles
+        self.view.addSubview(seeAllCircles)
+        seeAllCircles.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        seeAllCircles.setTitle("查看所有的圈子 >>>  ", for: UIControlState.normal)
+        seeAllCircles.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+        seeAllCircles.sizeToFit()
+        seeAllCircles.center = CGPoint(x: self.view.bounds.size.width - seeAllCircles.bounds.width / 2 , y:  self.view.bounds.size.height - 49 - self.seeAllCircles.bounds.height / 2 )
+        seeAllCircles.addTarget(self , action: #selector(performSeeAllCircles), for: UIControlEvents.touchUpInside)
     }
-    
+    func performSeeAllCircles()  {
+        mylog("see all circles")
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
-        return  3
+        return  6
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleItem", for: indexPath)

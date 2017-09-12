@@ -403,8 +403,8 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.00000001 // delete footer
-        let  model = self.datas[section]
-        return (model.comment_count?.intValue ?? 0 ) > 2 ? (30 + 10) : 10
+//        let  model = self.datas[section]
+//        return (model.comment_count?.intValue ?? 0 ) > 2 ? (30 + 10) : 10
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -425,20 +425,20 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil //deletefooter
-        let  model = self.datas[section]
-        let footerOption = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GDMediaSectionFooter")
-        if let footer = footerOption as? GDMediaSectionFooter {
-            footer.commentCount = model.comment_count?.intValue ?? 0
-            footer.mediaID = model.id
-            footer.delegate = self
-            return footer
-        }else{
-            let footer = GDMediaSectionFooter.init(reuseIdentifier: "GDMediaSectionFooter")
-            footer.commentCount = model.comment_count?.intValue ?? 0
-            footer.mediaID = model.id
-            footer.delegate = self
-            return footer
-        }
+//        let  model = self.datas[section]
+//        let footerOption = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GDMediaSectionFooter")
+//        if let footer = footerOption as? GDMediaSectionFooter {
+//            footer.commentCount = model.comment_count?.intValue ?? 0
+//            footer.mediaID = model.id
+//            footer.delegate = self
+//            return footer
+//        }else{
+//            let footer = GDMediaSectionFooter.init(reuseIdentifier: "GDMediaSectionFooter")
+//            footer.commentCount = model.comment_count?.intValue ?? 0
+//            footer.mediaID = model.id
+//            footer.delegate = self
+//            return footer
+//        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         let cell =  GDCircleDetailCell()
