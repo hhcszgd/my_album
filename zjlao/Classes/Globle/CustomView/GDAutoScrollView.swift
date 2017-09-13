@@ -145,6 +145,7 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
         let imageView = UIImageView.init(frame: CGRect.zero)
         var model : BaseControlModel?{
             didSet{
+                mylog(model?.imageUrl)
                 if let url  =  URL(string:  model?.imageUrl ?? "") {
                     imageView.sd_setImage(with: url)
                     self.layoutIfNeeded()

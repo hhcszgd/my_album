@@ -988,3 +988,18 @@ class GDFilterCell : UICollectionViewCell {
     }
     
 }
+
+extension UINavigationController{
+    //实现statusBarStyle 跟随控制器的style
+    //1 : info.plist 设置 View controller-based status bar appearance  值为yes
+    //2 : 在根控制器中重写childViewControllerForStatusBarStyle方法返回当前可视控制器 
+        //注意 : 当rootVC是UINavigationController时就在navigatVC分类中重写 , 是tabbarVc时就在tabbarVC的分类中重写 , 如果要想用普通控
+    //3 : 在普通控制器中重写override var preferredStatusBarStyle: UIStatusBarStyle , 返回想要的style 
+    //4 : 在需要改变时再在普通vc里调用setNeedsStatusBarAppearanceUpdate()
+    override open var childViewControllerForStatusBarStyle: UIViewController?{
+        return self.visibleViewController
+    }
+    override open var childViewControllerForStatusBarHidden: UIViewController?{
+        return self.visibleViewController
+    }
+}

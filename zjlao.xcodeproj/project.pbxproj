@@ -331,6 +331,7 @@
 		15CFDE761ED4240A002B48DB /* GDCommentArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CFDE751ED4240A002B48DB /* GDCommentArea.swift */; };
 		15D037951E9A26C000581B77 /* GDTrendsMsgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D037941E9A26C000581B77 /* GDTrendsMsgCell.swift */; };
 		15D292421EAD876A008E23F2 /* GDUserHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D292411EAD876A008E23F2 /* GDUserHistoryVC.swift */; };
+		15DB2B1F1F68041D0002BE1A /* GDCreateNewCircleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DB2B1E1F68041D0002BE1A /* GDCreateNewCircleVC.swift */; };
 		15DBADE61E8145ED0059F513 /* GDLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DBADE51E8145ED0059F513 /* GDLocation.swift */; };
 		15DF3DF01E9B373500955EF5 /* GDHomeUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DF3DEF1E9B373500955EF5 /* GDHomeUserCell.swift */; };
 		15E250D01DDEA73E004D4509 /* GDStorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */; };
@@ -912,6 +913,7 @@
 		15CFDE751ED4240A002B48DB /* GDCommentArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDCommentArea.swift; sourceTree = "<group>"; };
 		15D037941E9A26C000581B77 /* GDTrendsMsgCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDTrendsMsgCell.swift; sourceTree = "<group>"; };
 		15D292411EAD876A008E23F2 /* GDUserHistoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDUserHistoryVC.swift; sourceTree = "<group>"; };
+		15DB2B1E1F68041D0002BE1A /* GDCreateNewCircleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDCreateNewCircleVC.swift; sourceTree = "<group>"; };
 		15DBADE51E8145ED0059F513 /* GDLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDLocation.swift; sourceTree = "<group>"; };
 		15DF3DEF1E9B373500955EF5 /* GDHomeUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDHomeUserCell.swift; sourceTree = "<group>"; };
 		15E250CF1DDEA73E004D4509 /* GDStorgeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDStorgeManager.swift; sourceTree = "<group>"; };
@@ -996,6 +998,38 @@
 				39ADA3DD6442FE1337131D68 /* Pods_zjlao.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1506E63D1F67D5F800AC6F73 /* sub */ = {
+			isa = PBXGroup;
+			children = (
+				1506E63E1F67D5F800AC6F73 /* model */,
+				1506E63F1F67D5F800AC6F73 /* vc */,
+				1506E6401F67D5F800AC6F73 /* view */,
+			);
+			path = sub;
+			sourceTree = "<group>";
+		};
+		1506E63E1F67D5F800AC6F73 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		1506E63F1F67D5F800AC6F73 /* vc */ = {
+			isa = PBXGroup;
+			children = (
+				15DB2B1E1F68041D0002BE1A /* GDCreateNewCircleVC.swift */,
+			);
+			path = vc;
+			sourceTree = "<group>";
+		};
+		1506E6401F67D5F800AC6F73 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 		150869671DCC74E70001B6EF = {
@@ -3080,6 +3114,7 @@
 		154BD40E1F63D24700BF8BDD /* V2 */ = {
 			isa = PBXGroup;
 			children = (
+				1506E63D1F67D5F800AC6F73 /* sub */,
 				154BD40F1F63D24700BF8BDD /* model */,
 				154BD4101F63D24700BF8BDD /* vc */,
 				154BD4111F63D24700BF8BDD /* view */,
@@ -3943,6 +3978,7 @@
 				15A4DD1C1E8CF5B6009A0DCE /* GPUImageLuminosity.m in Sources */,
 				15A4DD701E8CF5B6009A0DCE /* GPUImagePicture+TextureSubimage.m in Sources */,
 				15A4DD011E8CF5B6009A0DCE /* GPUImageHarrisCornerDetectionFilter.m in Sources */,
+				15DB2B1F1F68041D0002BE1A /* GDCreateNewCircleVC.swift in Sources */,
 				154BB60B1E2B647900A9EF05 /* GDMainTabbarVC.swift in Sources */,
 				1529EFCF1E91DC8B00800A6E /* GDTrendsCellModel.swift in Sources */,
 				154E177C1E8B50F000FF328A /* FilterOperationTypes.swift in Sources */,
@@ -4449,6 +4485,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/zjlao/Classes/Globle/Library",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiezi.cmr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4475,6 +4512,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/zjlao/Classes/Globle/Library",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiezi.cmr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

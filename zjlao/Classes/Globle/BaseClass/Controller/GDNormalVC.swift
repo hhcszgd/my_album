@@ -194,6 +194,7 @@ class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.naviBar.backgroundColor = UIColor.white
         if naviBar.superview == nil  {
             self.view.addSubview(naviBar)
         }

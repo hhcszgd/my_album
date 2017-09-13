@@ -406,7 +406,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     func getCircleTrends(page : String , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
         let url =  "circles"
         let para = [
-            "page" : page,//媒体base64
+            "page" : page,//
             "token" : self.token,
             ]
         
@@ -1382,6 +1382,30 @@ class GDNetworkManager: AFHTTPSessionManager {
             
         }, option: nil )
     }
+    
+    /**
+     1.获取附近的圈子
+        接口地址：circle
+        请求方式：get
+
+     
+     */
+    func getNearbyCircles( success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "circle"
+        let location = GDLocationManager.share.locationManager.location
+        let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
+        let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
+        let para = ["token" : self.token , "circle_number" : "6" , "coordinate" : "\(longtitude),\(latitude)" ,]
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("上传头像的请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
     
     // MARK: 注释 : v2 👆
     //MARK:

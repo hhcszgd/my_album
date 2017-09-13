@@ -40,13 +40,7 @@ class GDBaseVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
-//        self.setNeedsStatusBarAppearanceUpdate()
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         self.view.backgroundColor = UIColor.black
-//        self.navigationController?.navigationBar.barStyle = UIBarStyle.default
-//        self.view.backgroundColor = UIColor.randomColor()
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,7 +52,9 @@ class GDBaseVC: UIViewController {
         self.addSubViews()
         self.setupContentAndFrame()
     }
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return UIStatusBarStyle.lightContent
+    }
     func addSubViews () {
         
     }

@@ -12,11 +12,11 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
 
     let autoScrollView = GDAutoScrollView.init(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width * 0.5))
     let backView = UIView()
-//    let nearbyCircleLabel = UILabel()
-//    let createdNewCircleButton = UIButton()
+    let nearbyCircleLabel = UILabel()
+    let createdNewCircleButton = UIButton()
 		
     let seeAllCircles = UIButton()
-    
+    var models : [CircleItemModel]?
     var circleView : UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,16 +24,21 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         self.view.backgroundColor = UIColor.black
         self.prepareSubViews()
         self.getAD()
+        self.gerCircles()
     }
     func prepareSubViews()  {
         ///:autoScrollView
+        
         autoScrollView.backgroundColor = UIColor.red
         autoScrollView.delegate = self
+        
         self.view.addSubview(autoScrollView)
         ///:backView
         self.view.addSubview(backView)
         backView.backgroundColor = UIColor.white
         backView.frame = CGRect(x: 0, y: autoScrollView.frame.maxY, width: self.view.bounds.size.width , height: self.view.bounds.size.height - autoScrollView.bounds.size.height)
+
+        
         ///:circleView
         let flowLayout = UICollectionViewFlowLayout.init()
         let cellMargin : CGFloat = 20
@@ -53,7 +58,14 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         circleView.delegate = self
         circleView.dataSource = self
         circleView.isPagingEnabled = true
-        
+        ///:createCircle
+        self.view.addSubview(createdNewCircleButton)
+        createdNewCircleButton.setTitle("新建圈子+", for: UIControlState.normal)
+        createdNewCircleButton.sizeToFit()
+        createdNewCircleButton.titleLabel?.sizeToFit()
+        createdNewCircleButton.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+        createdNewCircleButton.center = CGPoint(x: circleView.frame.maxX - createdNewCircleButton.bounds.size.width / 2 , y: circleView.frame.minY - createdNewCircleButton.bounds.size.height / 2 )
+        createdNewCircleButton.addTarget(self , action: #selector(createCircle), for: UIControlEvents.touchUpInside)
         ///:seeAllCircles
         self.view.addSubview(seeAllCircles)
         seeAllCircles.titleLabel?.font = UIFont.systemFont(ofSize: 13)
@@ -62,34 +74,49 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         seeAllCircles.sizeToFit()
         seeAllCircles.center = CGPoint(x: self.view.bounds.size.width - seeAllCircles.bounds.width / 2 , y:  self.view.bounds.size.height - 49 - self.seeAllCircles.bounds.height / 2 )
         seeAllCircles.addTarget(self , action: #selector(performSeeAllCircles), for: UIControlEvents.touchUpInside)
+        ///:nearbyCircleLabel
+        self.view.addSubview(nearbyCircleLabel)
+        nearbyCircleLabel.textColor = UIColor.lightGray
+        nearbyCircleLabel.text = "附近的圈子"
+        nearbyCircleLabel.sizeToFit()
+        nearbyCircleLabel.center = CGPoint(x: cellMargin + createdNewCircleButton.bounds.size.width / 2 , y: circleView.frame.minY - createdNewCircleButton.bounds.size.height / 2 )
+
+    }
+    func createCircle()  {
+        print("create new circle ")
+        let model  = GDBaseModel.init(dict: nil)
+        model.actionkey =  "GDCreateNewCircleVC"
+        GDSkipManager.skip(viewController: self , model: model)
     }
     func performSeeAllCircles()  {
         mylog("see all circles")
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
-        return  6
+        return  models?.count ?? 0
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleItem", for: indexPath)
-//        let itemIndex  = indexPath.item % models.count
-//        if let realItem  = item as? Item {
-//            realItem.model = models[itemIndex]
-//        }
+        let itemIndex  = indexPath.item % models!.count
+        if let realItem  = item as? CircleItem {
+            realItem.model = models![itemIndex]
+        }
         item.backgroundColor = UIColor.randomColor()
         return item
     }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let actionModel = GDBaseModel.init(dict: nil)
-//        let dataModel = models[indexPath.item % models.count]
-//        actionModel.keyparamete = (dataModel.title ?? "" ) as AnyObject
-//        self.delegate?.performToWebAction(model: actionModel)
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let dataModel = models![indexPath.item % models!.count]
+
+        mylog("点击的圈子信息 : id:\(dataModel.id) , 权限 : \(String(describing: dataModel.permission))")
+        
+        
+    }
     func performToWebAction(model: GDBaseModel) {
         model.actionkey = "webpage"
      GDSkipManager.skip(viewController: self , model: model )
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
     
@@ -102,16 +129,58 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
                     let model = BaseControlModel.init(dict: ["title" : value["link_url"] as AnyObject, "imageUrl" : value["image_url"] as AnyObject])
                     models.append(model)
                 }
-                let m1 =  BaseControlModel.init(dict: ["title" :"http://www.baidu.com" as AnyObject, "imageUrl" : "http://f0.ugshop.cn/advert/1504597809.jpg" as AnyObject])
-                let m2 =  BaseControlModel.init(dict: ["title" :"http://www.baidu.com" as AnyObject, "imageUrl" : "http://f0.ugshop.cn/advert/1504597809.jpg" as AnyObject])
-                
-                models.append(m1)
-                models.append(m2)
+//                let m1 =  BaseControlModel.init(dict: ["title" :"http://www.baidu.com" as AnyObject, "imageUrl" : "http://f0.ugshop.cn/advert/1504597809.jpg" as AnyObject])
+//                let m2 =  BaseControlModel.init(dict: ["title" :"http://www.baidu.com" as AnyObject, "imageUrl" : "http://f0.ugshop.cn/advert/1504597809.jpg" as AnyObject])
+//                
+//                models.append(m1)
+//                models.append(m2)
                 self.autoScrollView.models = models
             }
             
         }) { (error ) in
             mylog("获取广告错误\(error)")
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return UIStatusBarStyle.lightContent
+    }
+    func gerCircles() {
+        GDNetworkManager.shareManager.getNearbyCircles(success: { (model ) in
+            mylog("首页获取附近的圈子成功 status : \(model.status) , data : \(String(describing: model.data ))")
+            
+            if let arr = model.data as? [[String : AnyObject]]{
+                var tempModels = [CircleItemModel]()
+                for (_ , dict ) in arr.enumerated(){
+                    let tempModel = CircleItemModel.init(dict: dict )
+//                    mylog(tempModel.circle_image)
+//                    mylog(tempModel.circle_member_count)
+//                    mylog(tempModel.circle_name)
+//                    mylog(tempModel.circle_type)
+//                    mylog(tempModel.permission)
+//                    mylog(tempModel.id)
+                    tempModels.append(tempModel)
+                    
+                }
+                if tempModels.count > 0 {
+                    self.circleView.isHidden = false
+                    self.models = tempModels
+                    self.circleView.reloadData()
+                }else{
+                    self.circleView.isHidden = true
+                }
+                /**
+                 ["circle_image": , "id": 1125, "circle_type": 2, "circle_name": 圈子11112222, "circle_member_count": 1, "circle_member_number": 80, "permission": 0]
+                 */
+                
+            }else{
+                mylog("首页获取附近的圈子类型转换失败")
+            }
+        }) { (error ) in
+            mylog("首页获取附近的圈子失败: \(error)")
         }
     }
     /*
@@ -123,8 +192,76 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         // Pass the selected object to the new view controller.
     }
     */
+    
+    class CircleItemModel : GDBaseModel {
+        override init(dict: [String : AnyObject]?) {
+            super.init(dict: dict)
+        }
+        var circle_image : String?
+        var id : NSNumber?
+        var circle_type : String?
+        var circle_name : String?
+        var circle_member_count : NSNumber?
+        var circle_member_number : Int?
+        var permission : NSNumber?
+    }
     class CircleItem : UICollectionViewCell {
-
+        let  circleImage = UIImageView()
+        let circleMemberLabel = UILabel()
+        let  lockIcon = UIButton()
+        let  circleName = UILabel()
+        var model  = CircleItemModel.init(dict: nil){
+            didSet{
+                if let url  = URL.init(string: model.circle_image ?? "") {//image
+                    circleImage.sd_setImage(with: url  )
+                }
+                mylog(model.circle_name)
+                circleName.text = model.circle_name ?? ""
+                circleMemberLabel.text =  "\(model.circle_member_number ?? 0)" + "/" + "\(model.circle_member_count ?? 0)"
+                
+                self.layoutIfNeeded()
+            }
+        }
+        
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame )
+            self.contentView.addSubview(circleImage)
+            circleImage.backgroundColor = UIColor.randomColor()
+            self.contentView.addSubview(circleMemberLabel)
+            circleMemberLabel.textColor = UIColor.lightGray
+            self.contentView.addSubview(lockIcon)
+            lockIcon.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0 )
+            self.contentView.addSubview(circleName)
+            circleName.font =  UIFont.systemFont(ofSize: 13)
+            lockIcon.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+            lockIcon.titleLabel?.font = circleName.font
+            
+        }
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            let margin : CGFloat = 5
+            let imageViewW = self.bounds.size.width - margin * 2
+            self.circleImage.frame = CGRect(x: margin , y: margin , width: imageViewW, height: imageViewW)
+            if model.permission ?? 0 == 2 {//没有权限
+                self.lockIcon.setTitle("🔐" , for: UIControlState.normal)
+            }else{
+                self.lockIcon.setTitle("公开" , for: UIControlState.normal)
+            }
+            self.lockIcon.sizeToFit()
+            let lockCenterY = self.circleImage.frame.maxY +  (self.bounds.size.height - self.circleImage.frame.maxY ) * 0.5
+            
+            self.lockIcon.center = CGPoint(x: self.bounds.size.width - margin - lockIcon.bounds.width * 0.3, y: lockCenterY)
+            
+            ///: circleName
+            self.circleName.frame = CGRect(x: margin , y:  lockCenterY - circleName.font.lineHeight / 2, width: lockIcon.frame.minX - margin, height: circleName.font.lineHeight)
+            ///:memberCount
+            circleMemberLabel.sizeToFit()
+            circleMemberLabel.center = CGPoint(x: margin + circleMemberLabel.bounds.size.width / 2 , y: margin + circleMemberLabel.bounds.size.height / 2 )
+        }
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
     }
 }
 

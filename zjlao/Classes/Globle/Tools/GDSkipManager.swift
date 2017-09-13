@@ -75,6 +75,9 @@ class GDSkipManager: NSObject {
             targetVC = GDSetUserinfoVC()
             break
             
+        case "GDCreateNewCircleVC":
+            targetVC = GDCreateNewCircleVC()
+            break
             
         default:
             mylog("\(realActionKey)是无效actionKey ,找不到跳转控制器")

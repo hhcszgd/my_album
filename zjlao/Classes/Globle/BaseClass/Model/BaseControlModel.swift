@@ -13,6 +13,8 @@ class BaseControlModel: GDBaseModel {
     override init(dict: [String : AnyObject]?) {
         super.init(dict: dict)
     }
+    var id : String?
+    
     
     var title : String?
      var subTitle : String?
