@@ -39,7 +39,7 @@ class ImgTxtView: GDBaseControl {
     }
     var bottomTitle : String?{
         didSet{
-            self.titleLabel.text = bottomTitle ?? ""
+            self.subTitleLabel.text = bottomTitle ?? ""
             self.setNeedsLayout()
             self.layoutIfNeeded()
         }

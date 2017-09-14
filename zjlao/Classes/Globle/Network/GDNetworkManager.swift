@@ -449,7 +449,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     // MARK: 注释 : 个人历史记录
     
     func getPersonalHistory(page : String , createAt : String? , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
-        let url =  "media"
+        let url =  "users"
         var para = [
             "page" : page,//
             "token" : self.token,
@@ -1359,11 +1359,15 @@ class GDNetworkManager: AFHTTPSessionManager {
         }
         
     }
+    /**
+     传七牛获取图片链接
+     */
     
     func uploadAvart(data:Data ,token : String , complite : @escaping QNUpCompletionHandler) {
-        qnUploadManager.put(data , key: "avarta", token: token, complete: { (responseInfo, theKey, successInfo) in
+        qnUploadManager.put(data , key: nil , token: token, complete: { (responseInfo, theKey, successInfo) in
             complite(responseInfo , theKey , successInfo)
         }, option: nil )
+        
     }
     
     func testUpload(asset:PHAsset) {
@@ -1395,7 +1399,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         let location = GDLocationManager.share.locationManager.location
         let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
         let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
-        let para = ["token" : self.token , "circle_number" : "6" , "coordinate" : "\(longtitude),\(latitude)" ,]
+        let para = ["token" : self.token , "circle_number" : "0" , "coordinate" : "\(longtitude),\(latitude)" ,]
         self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             success(result)
         }) { (error) in
@@ -1405,7 +1409,105 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         
     }
+    /**
+     3.创建圈子
+     接口地址：circle
+     请求方式：post
+     请求参数：
+     
+     */
+    func createNewCircle(name : String ,memberNum : String? = "20" , password : String? ,  success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "circle"
+        let location = GDLocationManager.share.locationManager.location
+        let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
+        let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
+        var para = ["token" : self.token ?? "" , "circle_member_number" : memberNum ?? "20" , "coordinate" : "\(longtitude),\(latitude)" ,  "circle_name" : name] as [String : Any]
+        if let pwd   = password{
+            para["circle_password"] = pwd
+        }
+        self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("上传头像的请求失败")
+            failure(error)
+        }
+        
+        
+    }
     
+    /**
+     2.获取圈子的详情
+     接口地址：circle/<id>
+     请求方式：get
+     
+     */
+    func getCircleDetail(circleID : String , page : String = "0" , password : String? ,  success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "circle/" + circleID
+//        let location = GDLocationManager.share.locationManager.location
+//        let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
+//        let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
+        var para = ["token" : self.token ?? "" , "page" : page ] as [String : Any]
+        if let pwd   = password{
+            para["circle_password"] = pwd
+        }
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("获取圈子详情 请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
+    /**
+     1.创建媒体
+     接口地址：media
+     请求方式：post
+     请求参数：
+     
+     */
+    func insertMediaToCircle(circleID : String ,original:String ,  type : String  , description : String? ,  media_spec : String ,success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "media"
+        var para = [ "circle_id" : circleID  , "token" : self.token ?? "" , "original" : original , "media_type" : type , "media_spec" : media_spec  ] as [String : Any]
+        if let descrip   = description{
+            para["description"] = descrip
+        }
+        self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("获取圈子详情 请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
+    
+    /**
+     5.我的首页
+     接口地址：users
+     请求方式：get
+     */
+    
+    func myHistory( page : String?  , create_at : String? ,success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "media"
+        var para = [  "token" : self.token ?? ""  ] as [String : Any]
+        if let create_at   = create_at{
+            para["create_at"] = create_at
+        }
+        if let page   = page{
+            para["page"] = page
+        }
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("获取我的发布历史 请求失败")
+            failure(error)
+        }
+        
+        
+    }
     
     // MARK: 注释 : v2 👆
     //MARK:

@@ -15,83 +15,148 @@
 import UIKit
 import MJRefresh
 import SDWebImage
-class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTrendsCellDelegate ,  UICollectionViewDelegate , UICollectionViewDataSource {
+class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTrendsCellDelegate {
+    let customNaviBar  = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64))
+    let naviTitleLabel = UILabel.init()
     
-    var iconView = UIImageView()
+    var iconView = UIButton()
     var  editProfileIcon = UIImageView(image: UIImage(named: "camera_icon_white"))
     var nameLbl = UILabel.init()
+    var descripLabel = UILabel()
+    
+    var friend = TxtAndTxtView()
+    var message = TxtAndTxtView()
+    var setting = ShopCarView()
+    var print = ShopCarView()
     
     
     
     
-    let headerViewH : CGFloat = 88
+    let tableHeaderView : UIView = UIView()
+    
+    
     var currentPage : Int = 1//媒体内容分页
-    var friendPage : Int = 1
     var datas  : [GDTrendsCellModel] = {
         var tempDatas = [GDTrendsCellModel]()
         return tempDatas
     }()
-    var friends = [BaseControlModel]()
-    
-    lazy var userCollection : UICollectionView = {
-        let flowLayout = UICollectionViewFlowLayout.init()
-        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
-        flowLayout.minimumLineSpacing = 0
-        flowLayout.minimumInteritemSpacing = 0
-        flowLayout.itemSize = CGSize(width: 44, height: 44)
-        let temp = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: flowLayout)
-        //        temp.isPagingEnabled = true
-        temp.register(GDHomeUserCell.self , forCellWithReuseIdentifier: "GDHomeUserCell")
-        return temp
-    }()
-    
     let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: GDDevice.width, height: 0), style: UITableViewStyle.plain)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(self.headerView())
+        self.view.backgroundColor = UIColor.black
+        
         self.setupTableView()
+        self.setupNaviBar()
         self.requestData(loadDataType: LoadDataType.initialize)
-        self.getFriends(loadDataType:LoadDataType.initialize)
+    }
+    func setupTableView()  {
+        self.setupTableHeaderView()
+        self.view.addSubview(self.tableView)
+        self.tableView.frame =  CGRect.init(x: 0, y: 20, width: GDDevice.width, height: GDDevice.height - 49.0 - 20  )
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.tableView.delegate  = self
+        self.tableView.dataSource = self
+        self.tableView.tableHeaderView = self.tableHeaderView
+        self.tableView.backgroundColor = UIColor.white
+        self.tableView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refreshOrInit))
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
+        } else {
+            self.navigationController?.automaticallyAdjustsScrollViewInsets = false
+        }
+        //        self.tableView.tableHeaderView = self.headerView()
+    }
+    func setupNaviBar() {
+        naviTitleLabel.text = Account.shareAccount.name
+        naviTitleLabel.sizeToFit()
+        naviTitleLabel.textColor = UIColor.white
+        naviTitleLabel.center = CGPoint(x: self.customNaviBar.center.x, y: self.customNaviBar.center.y + naviTitleLabel.bounds.height/2)
+        self.customNaviBar.addSubview(naviTitleLabel)
+        self.customNaviBar.backgroundColor = UIColor.black
+        self.customNaviBar.alpha = 0
+        self.view.addSubview(self.customNaviBar)
         
     }
     
-    
-    func getFriends(loadDataType:LoadDataType)  {
-        if loadDataType == LoadDataType.initialize || loadDataType == LoadDataType.reload{
-            self.friendPage = 1
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        mylog(scrollView.contentOffset.y)
+        let trigerValue = tableHeaderView.bounds.size.height
+        if scrollView.contentOffset.y < 0 {
+            self.customNaviBar.alpha = 0
+        }else if scrollView.contentOffset.y >= 0 && scrollView.contentOffset.y <= trigerValue{
+            let scale = scrollView.contentOffset.y / (trigerValue - 64)
+            mylog(scale)
+            mylog(trigerValue)
+            self.customNaviBar.alpha = scale
         }else{
-            self.friendPage += 1
+            self.customNaviBar.alpha = 1
         }
-        GDNetworkManager.shareManager.getFriends(page: friendPage, { (result) in
-            mylog("获取好友\(result.status)")
-            if let dictArr = result.data as? [[String : AnyObject]]{
-                var tempFriendsArr = [BaseControlModel]()
-                for dict in dictArr {
-                    let userModel = BaseControlModel.init(dict: nil)
-                    if let avatar = dict["avatar"] as? String{
-                        userModel.imageUrl = avatar
-                    }
-                    if let id = dict["id"] as? String{
-                        userModel.subTitle = id
-                    }
-                    tempFriendsArr.append(userModel)
-                }
-                if loadDataType == LoadDataType.initialize || loadDataType == LoadDataType.reload{
-                    self.friends = tempFriendsArr
-                }else{
-                    self.friends.append(contentsOf: tempFriendsArr)
-                }
-                self.userCollection.reloadData()
-            }
-        }) { (error ) in
-            
-        }
+    }
+    func setupTableHeaderView()  {
+        self.tableHeaderView.backgroundColor = UIColor.white
+        self.tableHeaderView.frame  = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 128 + 4 /*4 是header末端间隔*/)
+        ///:间隔
+        let jiange = UIView.init(frame: CGRect(x: 0, y: 64, width: tableHeaderView.bounds.width, height: 1))
+        jiange.backgroundColor = UIColor.lightGray
+        tableHeaderView.addSubview(jiange)
         
+        
+        
+        
+        ///:头像姓名等
+        tableHeaderView.addSubview(nameLbl)
+        tableHeaderView.addSubview(descripLabel)
+        tableHeaderView.addSubview(iconView)
+        tableHeaderView.addSubview(editProfileIcon)
+        nameLbl.text = Account.shareAccount.name
+        descripLabel.text = "this is description"
+        descripLabel.font = GDFont.systemFont(ofSize: 14)
+        
+        
+        if let url  =  URL(string: Account.shareAccount.head_images ?? ""){
+            iconView.sd_setImage(with:url, for: UIControlState.normal)
+        }else{
+            iconView.setImage(UIImage(named:"icon_set up"), for: UIControlState.normal)
+        }
+        editProfileIcon.image = UIImage(named: "icon_set up" )
+        iconView.frame = CGRect(x: tableHeaderView.bounds.width - 10 - 44, y: 10 , width: 44 , height: 44)
+        editProfileIcon.frame = CGRect(x: iconView.frame.maxX - 10 , y: iconView.frame.maxY - 10 , width: 10 , height: 10 )
+        nameLbl.frame = CGRect(x: 10, y: 10, width: iconView.frame.minX - 10 , height: 20)
+        descripLabel.frame = CGRect(x: 10, y: nameLbl.frame.maxY, width: iconView.frame.minX - 10 , height: 20)
+        
+        
+        
+        
+        ///:消息好友设置等
+        self.setTxtAndTxt(view: self.friend, x: 0, y: jiange.frame.maxY, topTitle: "0", bottomTitle: "好友")
+        self.setTxtAndTxt(view: self.message, x: friend.frame.maxX, y: jiange.frame.maxY, topTitle: "0", bottomTitle: "消息")
+        self.setImgTxtView(imgTxt: self.setting, x: message.frame.maxX, y: jiange.frame.maxY, imgName: "icon_set up", bottomTitle: "设置")
+        self.setImgTxtView(imgTxt: print, x: setting.frame.maxX, y: jiange.frame.maxY, imgName: "icon_set up", bottomTitle: "打印")
+        
+        ///:间隔2
+        let jiange2 = UIView.init(frame: CGRect(x: 0, y: 128, width: tableHeaderView.bounds.width, height: 1))
+        jiange2.backgroundColor = UIColor.lightGray
+        tableHeaderView.addSubview(jiange2)
         
         
     }
-        func requestData(loadDataType:LoadDataType)  {
+    func setTxtAndTxt(view:TxtAndTxtView ,x : CGFloat , y : CGFloat , topTitle:String , bottomTitle:String)  {
+        let subW = tableHeaderView.bounds.width  / 4
+        view.frame = CGRect(x: x, y: y , width: subW, height: 63)
+        view.topTitle = topTitle
+        view.bottomTitle = bottomTitle
+        self.tableHeaderView.addSubview(view)
+    }
+    func setImgTxtView(imgTxt:ShopCarView ,x : CGFloat,y : CGFloat, imgName : String , bottomTitle:String)  {
+        self.tableHeaderView.addSubview(imgTxt)
+        imgTxt.bottomTitle = bottomTitle
+        imgTxt.image = UIImage(named: imgName)
+        imgTxt.frame = CGRect(x: x, y: y, width: tableHeaderView.bounds.width  / 4, height: 63)
+    }
+    func requestData(loadDataType:LoadDataType)  {
         
         switch loadDataType {
         case LoadDataType.initialize , LoadDataType.reload:
@@ -163,10 +228,6 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
                     }
                 }
             }
-            
-            
-            
-            
             /////
             
             if(tempDatas.count == 0 ){
@@ -187,95 +248,24 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
             self.tableView.mj_header.endRefreshing()
             self.tableView.mj_footer.state = MJRefreshState.idle
             
-            
-            /////
-//            self.datas = tempDatas
-//            self.tableView.reloadData()
-            
-            
-            
         }) { (error ) in
             mylog(error)
         }
         
     }
-    func setupTableView()  {
-        self.view.addSubview(self.tableView)
-        self.tableView.frame =  CGRect.init(x: 0, y: self.headerViewH, width: GDDevice.width, height: GDDevice.height - 49.0 - self.headerViewH)
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        self.automaticallyAdjustsScrollViewInsets = false
-        self.tableView.delegate  = self
-        self.tableView.dataSource = self
-        self.tableView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
-        self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refreshOrInit))
-        
-//        self.tableView.tableHeaderView = self.headerView()
-    }
+
     func loadMore () {
         self.requestData(loadDataType: LoadDataType.loadMore)
     }
     func refreshOrInit()  {
         self.requestData(loadDataType: LoadDataType.initialize)
     }
-
-    
-    func headerView() -> GDBaseControl {
-        let headerView = GDBaseControl(frame: CGRect(x: 0, y: 0, width: SCREENWIDTH, height: self.headerViewH))
-            let iconView = UIImageView.init(frame: CGRect(x: 0, y: headerView.bounds.size.height - 64, width: 64, height: 64))
-//        iconView.image = UIImage.init(named: "bg_nohead")
-        self.iconView = iconView
-        iconView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
-        headerView.addSubview(iconView)
-        
-        
-        let  editProfileIcon = UIImageView(image: UIImage(named: "camera_icon_white"))
-        editProfileIcon.contentMode = UIViewContentMode.scaleAspectFit
-        editProfileIcon.frame = CGRect(x: 44, y: 70, width: 16, height: 16)
-        self.editProfileIcon = editProfileIcon
-        
-        headerView.addSubview(editProfileIcon)
-        
-        
-        
-        
-        let nameLbl = UILabel.init()
-        nameLbl.textColor = UIColor.white
-        self.nameLbl = nameLbl
-        nameLbl.text = Account.shareAccount.name
-        nameLbl.frame =  CGRect(x: iconView.bounds.size.width + 8, y: iconView.frame.minY, width: SCREENWIDTH - iconView.bounds.size.width - 8 , height: nameLbl.font.lineHeight)
-        headerView.addSubview(nameLbl)
-        headerView.backgroundColor = UIColor.black
-        headerView.addTarget(self , action: #selector(headerViewClick(sender:)), for: UIControlEvents.touchUpInside)
-        
-        
-//        let margin : CGFloat = 10
-        userCollection.delegate = self
-        userCollection.dataSource = self
-        userCollection.alwaysBounceVertical = false
-        userCollection.showsHorizontalScrollIndicator = false
-        userCollection.showsVerticalScrollIndicator = false
-        userCollection.backgroundColor = UIColor.clear
-        userCollection.frame = CGRect(x:  iconView.frame.maxX , y:  iconView.frame.maxY - 40 , width: SCREENWIDTH -  iconView.frame.maxX, height: 40)
-
-        
-        headerView.addSubview(userCollection)
-        
-        
-        
-        
-        
-        
-        
-        return headerView
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.getFriends(loadDataType:LoadDataType.initialize)
         
-        
-        iconView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
-        nameLbl.text = Account.shareAccount.name
+//        iconView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
+//        nameLbl.text = Account.shareAccount.name
     }
     
     func headerViewClick(sender:GDBaseControl)  {
@@ -348,228 +338,119 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         return topH + bottomH
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
-        mylog(friends)
-        return friends.count
-    }
-    
-    
-    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
-
-        
-            let item  = collectionView.dequeueReusableCell(withReuseIdentifier: "GDHomeUserCell", for: indexPath)
-            if let cell  = item as? GDHomeUserCell {
-                //set model
-                cell.model = friends[indexPath.item]
-                return cell
-            }
-        mylog(friends)
-
-            return item
-    }
-    
-    // MARK: 注释 : didSelect
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == self.userCollection {
-            mylog("点击附近的人头像")
-            let model = self.friends[indexPath.item]
-            //            mylog("\(model.title)  \(model.subTitle)  \(model.imageUrl)")
-            let skipModel = GDBaseModel.init(dict: nil )
-            skipModel.actionkey = "GDUserHistoryVC"
-            skipModel.keyparamete = model.subTitle as AnyObject//用户id
-            GDSkipManager.skip(viewController: self , model: skipModel)
-            
-        }
-    }
-    
-    
-    
-    
-    
-    
-    /*
-    
-    var  currentIndexPath = IndexPath(row: 0, section: 0)
-    var choosedIndexPaths = [String : IndexPath]()
-    let editBtn = UIButton(imageName: "message", backImage: nil)
-    let messageBtn  = UIButton(imageName: "message", backImage: nil)
-    let shopDict = [String :AnyObject]()
-    let goodDict = [String :AnyObject]()
-    var datas = [0]
-    
-    func operatorTheSelectGoodOrShop(model: [String :AnyObject]) -> () {
-        
-        //优先遍历shopDict
-        
-        if let shopID =  model["shopID"] as? String  {//取出当前模型的shopid
-            if  shopDict["shopID"] as! String == shopID {//先拿shopid 去shopdict字典取模型 ,1 如果取到 , 就设置当前model的select 为true    2 取不到 , 为false
-                
-            }else{//取不到的话 , 再拿当前模型的goodID当键  去gooddict 中取   , 1 ,取到 选中, 2 , 取不到 非选中
-            
-            }
-        }else{
-        
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupNavigationBar()
-        self.setupTableView()
-        self.gotShopCarData(type: LoadDataType.initialize, { (model) in }) { (error ) in }
-        self.setupNotification()
-        let tempView =  UIView.init(frame: CGRect(x: 0, y: 64, width: SCREENWIDTH, height: 44))
-            tempView.backgroundColor = UIColor.purple
-            self.naviBar.addSubview(tempView);
-        self.view.backgroundColor = UIColor.green
-        GDKeyVC.share.settabBarItem(number: "6" , index: 3)
-        GDKeyVC.share.settabBarItem(number: "", index: 4)
-
-//        let images = [UIImage(named: "bg_collocation")!,UIImage(named: "bg_coupon")!,UIImage(named: "bg_Direct selling")!,UIImage(named: "bg_electric")!,UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
-//         let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
-//        header?.lastUpdatedTimeLabel.isHidden = true
-//        header?.setImages(images , for: MJRefreshState.idle)
-//        header?.setImages(images , for: MJRefreshState.refreshing)
-//        self.tableView.mj_header = header
-//        let footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
-//        footer?.setImages(images , for: MJRefreshState.idle)
-//        footer?.setImages(images , for: MJRefreshState.refreshing)
-//        self.tableView.mj_footer = footer
-    }
-
-    override func setupContentAndFrame() {
-        self.attritNavTitle = NSAttributedString.init(string: GDLanguageManager.titleByKey(key: LTabBar_shopcar));  
-    }
-    override func refresh ()  {
-        self.tableView.mj_header.endRefreshing()
-        self.tableView.mj_footer.state = MJRefreshState.idle
-    }
-    override func loadMore ()  {
-        //self.tableView.mj_footer.endRefreshingWithNoMoreData()
-        self.tableView.mj_footer.state = MJRefreshState.idle
-        for _  in 0...4 {
-            
-            self.datas.append( self.datas.last ?? 0 + 1   )
-        }
-        self.tableView.insertRows(at: [IndexPath(row: self.datas.count-5, section: 0),IndexPath(row: self.datas.count-4, section: 0),IndexPath(row: self.datas.count-3, section: 0),IndexPath(row: self.datas.count-2, section: 0),IndexPath(row: self.datas.count-1, section: 0)], with: UITableViewRowAnimation.fade)
-    }
-    func setupNavigationBar() {
-        
-      self.naviBar.rightBarButtons = [editBtn , messageBtn]
-        let someview = UIView.init(frame: CGRect(x: ( messageBtn.imageView?.bounds.size.width ?? 38) - 15, y:   0, width: 15, height: 15))
-        someview.backgroundColor = UIColor.randomColor()
-        messageBtn.imageView?.backgroundColor = UIColor.randomColor()
-        messageBtn.imageView?.addSubview(someview)
-    }
-    func setupTableView() {
-        tableView.contentInset = UIEdgeInsets(top: NavigationBarHeight, left: 0, bottom: TabBarHeight, right: 0)
-        
-    }
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.datas.count
-    }
-    //MARK: tableViewDelegate
-    //func scrollViewDidScroll(_ scrollView: UIScrollView) {
-     //   self.naviBar.change(by: scrollView)
-    //}
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currentStr = "\(indexPath.row)"
-        if  let _ = self.choosedIndexPaths[currentStr] {//键能找到值
-            self.choosedIndexPaths.removeValue(forKey: currentStr)
-        }else{//找不到就加进去
-            self.choosedIndexPaths[currentStr] = indexPath
-        }
-        
-        
-        self.currentIndexPath = indexPath
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let currentStr = "\(indexPath.row)"
-        if  let _ = self.choosedIndexPaths[currentStr] {
-            return 88
-        }else{return 66}
-        
-    }
-    //MARK:网络请求方法(初始化,刷新,加载更多)
-    func gotShopCarData(type : LoadDataType , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) {
-        switch type {
-        case .initialize , .reload:
-            GDNetworkManager.shareManager.gotShopCarData({ (originalNetDataModel) in
-                
-                if (true){/**选项卡栏显示,布局*/
-                    guard let dataAnyObj = originalNetDataModel.data else{
-                        GDAlertView.alert("购物车为空", image: nil , time: 2, complateBlock: nil)
-                        return
-                    }
-                }else{//如果隐藏
-                
-                }
-                
-            }) { (error) in
-                mylog(error)
-                GDAlertView.alert("购物车获取失败", image: nil , time: 2, complateBlock: nil)
-
-            }
-            break
-     
-        case .loadMore:
-            
-            break
-        }
-
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-//        alert("a;lskdjfla", image: UIImage(named:"icon_payfail")!, time: 2) {
-            
-//        }
-//        GDAlertView.alert11(nil, image: nil, time: 2, complateBlock: nil)
-        GDAlertView.alert("dalskdfj", image: nil, time: 2) {
-            mylog("点击了购物车")
-        }
-        
-        
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    func shopcarReclick() {
-        self.tableView.mj_header.state = MJRefreshState.refreshing
-
-        //self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
-    }
-    func setupNotification() {
-        NotificationCenter.default.addObserver(self , selector: #selector(shopcarReclick), name: GDShopcarTabBarReclick, object: nil)
-    }
-    deinit  {
-        NotificationCenter.default.removeObserver(self)
-    }
- */
 }
+
+
+class ShopCarView: GDBaseControl {
+    
+    /*
+     lazy var titleLabel = UILabel()//底部标题
+     lazy var subTitleLabel = UILabel()//头部数量标题
+     lazy var imageView = UIImageView()//图片视图
+     lazy var additionalLabel = UILabel()//额外的文字标题(bedge数量)
+     */
+    
+    let container = UIView()
+    
+    var model  = ProfileSubModel(dict:nil) {
+        didSet{
+            //当图片为网络图片链接时
+            //当图片不是网络链接时
+            if model.localImgName != nil {
+                if let imgName = model.localImgName {
+                    self.imageView.image = UIImage(named: imgName)
+                }
+            }else{
+                //                self.imageView.sd_setImage(with: imgStrConvertToUrl("服务器图片地址"))//
+            }
+            //            self.topTitleLabel.text = "\(model.number)"
+            self.subTitleLabel.text = model.name
+//                        self.setNeedsLayout()
+//                        self.layoutIfNeeded()
+        }
+        
+    }
+    var bottomTitle : String?{
+        didSet{
+            self.subTitleLabel.text = bottomTitle ?? "nil"
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
+        }
+    }
+    var image : UIImage?{
+        didSet{
+            self.imageView.image = image ?? UIImage()
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
+        }
+    }
+    
+    
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        //        self.backgroundColor = UIColor.randomColor()
+        self.addSubview(self.container)
+        self.container.addSubview(self.imageView)
+        self.imageView.contentMode = UIViewContentMode.scaleAspectFit
+        
+        self.subTitleLabel.font = GDFont.systemFont(ofSize: 14)//UIFont.systemFont(ofSize: 14*SCALE)
+        self.subTitleLabel.textColor = UIColor.lightGray
+        self.subTitleLabel.textAlignment = NSTextAlignment.center
+        self.container.addSubview(self.subTitleLabel)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let  selfW = self.bounds.size.width
+        let  selfH = self.bounds.size.height
+        
+        var containerW : CGFloat = 0.0
+        var  containerH : CGFloat = 0.0
+        if selfW < selfH {
+            containerW = selfW
+            containerH = containerW
+        }else {
+            
+            containerH = selfH
+            containerW = containerH
+        }
+        self.container.bounds = CGRect(x: 0, y: 0, width: containerW, height: containerH)
+        self.container.center = CGPoint(x: selfW/2, y: selfH/2)
+        
+        //        self.bottomTitleLabel.sizeToFit()
+        let margin : CGFloat = 5.0 ;
+        let bottomTitleW =  selfW
+        let bottomTitleH = self.subTitleLabel.font.lineHeight
+        //        let bottomTitleX : CGFloat = 0.0 ;
+        let bottomTitleY = selfH - bottomTitleH - margin
+        
+        let leftH = self.container.bounds.size.height - margin * 3 - bottomTitleH //conainer的剩余高度
+        
+        let imageViewH = leftH * 0.7
+        let imageViewW = imageViewH
+        //        let imageViewX = margin
+        let imageViewY = margin * 2
+        
+        self.imageView.frame = CGRect(x: 0, y: 0, width: imageViewW, height: imageViewH)
+        self.imageView.center = CGPoint(x: self.container.bounds.size.width/2, y: imageViewY + imageViewH/2)
+        self.subTitleLabel.bounds = CGRect(x: 0, y: 0, width: bottomTitleW, height: bottomTitleH)
+        self.subTitleLabel.center = CGPoint(x: self.container.bounds.size.width/2, y: bottomTitleY + bottomTitleH/2)
+        
+    }
+    
+    /*
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
+    
+}
+

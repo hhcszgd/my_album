@@ -75,8 +75,13 @@ class GDSkipManager: NSObject {
             targetVC = GDSetUserinfoVC()
             break
             
-        case "GDCreateNewCircleVC":
-            targetVC = GDCreateNewCircleVC()
+        case "GDCreateCircleVC":
+            targetVC = GDCreateCircleVC()
+            break
+            
+            
+        case "GDCircleDetailVC2":
+            targetVC = GDCircleDetailVC2()
             break
             
         default:

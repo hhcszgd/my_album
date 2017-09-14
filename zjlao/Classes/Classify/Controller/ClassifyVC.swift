@@ -134,7 +134,7 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
                         cellModel.city = city
                     }
                     
-                    if let membersArr = infoDict["member"] as? [[String : AnyObject]]{
+                    if let membersArr = infoDict["members"] as? [[String : AnyObject]]{
                         var tempMembers = [BaseControlModel]()
                         for memberDict in membersArr{
                             let memberModel : BaseControlModel = BaseControlModel.init(dict: nil)
@@ -155,7 +155,7 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
                     }
                     
                     
-                    if let mediasArr = infoDict["media"] as? [[String : AnyObject]]{
+                    if let mediasArr = infoDict["medias"] as? [[String : AnyObject]]{
                         var tempmedias = [BaseControlModel]()
                         for mediaDict in mediasArr{
                             let picModel : BaseControlModel = BaseControlModel.init(dict: nil)

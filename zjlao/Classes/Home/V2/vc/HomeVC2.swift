@@ -85,7 +85,7 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
     func createCircle()  {
         print("create new circle ")
         let model  = GDBaseModel.init(dict: nil)
-        model.actionkey =  "GDCreateNewCircleVC"
+        model.actionkey = "GDCreateCircleVC"//  "GDCreateNewCircleVC"
         GDSkipManager.skip(viewController: self , model: model)
     }
     func performSeeAllCircles()  {
@@ -106,8 +106,16 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let dataModel = models![indexPath.item % models!.count]
 
-        mylog("点击的圈子信息 : id:\(dataModel.id) , 权限 : \(String(describing: dataModel.permission))")
-        
+        mylog("点击的圈子信息 : id:\(String(describing: dataModel.id)) , 权限 : \(String(describing: dataModel.permission))")
+        if dataModel.permission == 1 {
+            dataModel.actionkey = "GDCircleDetailVC2"
+            let para = ["id" : "\(dataModel.id ?? 0)" , "title" : dataModel.circle_name ?? "圈子详情"] as [String : String]
+            dataModel.keyparamete = para as AnyObject
+            GDSkipManager.skip(viewController: self , model: dataModel)
+        }else{//输入密码再进
+            
+            
+        }
         
     }
     func performToWebAction(model: GDBaseModel) {

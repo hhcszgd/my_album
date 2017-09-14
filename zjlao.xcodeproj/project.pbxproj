@@ -25,6 +25,8 @@
 		15119F641EBAF92A002149B1 /* GDIBCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15119F631EBAF92A002149B1 /* GDIBCollectionView.swift */; };
 		15119F661EBAFB85002149B1 /* GDIBScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15119F651EBAFB85002149B1 /* GDIBScrollView.swift */; };
 		15119F681EBB070D002149B1 /* GDIBPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15119F671EBB070D002149B1 /* GDIBPhoto.swift */; };
+		15147E171F6912AE00179844 /* GDCreateCircleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15147E151F6912AE00179844 /* GDCreateCircleVC.swift */; };
+		15147E181F6912AE00179844 /* GDCreateCircleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15147E161F6912AE00179844 /* GDCreateCircleVC.xib */; };
 		15151BD81EA9B061009A5902 /* DayMediaDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15151BD71EA9B061009A5902 /* DayMediaDetailVC.swift */; };
 		15151BDA1EA9B0AF009A5902 /* DayDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15151BD91EA9B0AF009A5902 /* DayDetailCell.swift */; };
 		15151BDC1EA9B0E0009A5902 /* DayDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15151BDB1EA9B0E0009A5902 /* DayDetailCellModel.swift */; };
@@ -129,8 +131,10 @@
 		156584821EA73C85000469F2 /* GDZanUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156584811EA73C85000469F2 /* GDZanUser.swift */; };
 		156584861EA73EA2000469F2 /* GDCommentShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156584851EA73EA2000469F2 /* GDCommentShort.swift */; };
 		156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156858711DE2A077009DF996 /* GDNormalVC.swift */; };
+		157E42D31F6A175E00CBE4BA /* GDCircleDetailVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157E42D21F6A175E00CBE4BA /* GDCircleDetailVC2.swift */; };
 		1586B8C21E7D030700957A81 /* GDMapInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1586B8C11E7D030700957A81 /* GDMapInView.swift */; };
 		1586B8C41E7D0DEE00957A81 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1586B8C31E7D0DEE00957A81 /* MapKit.framework */; };
+		15876E7E1F6A530400E7CAB5 /* GDTableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15876E7D1F6A530400E7CAB5 /* GDTableViewProtocol.swift */; };
 		1589F55D1DE6FEC8007CE639 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F55C1DE6FEC8007CE639 /* libresolv.tbd */; };
 		1589F55F1DE6FED1007CE639 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F55E1DE6FED1007CE639 /* UserNotifications.framework */; };
 		1589F5611DE6FEDA007CE639 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5601DE6FEDA007CE639 /* libz.tbd */; };
@@ -327,6 +331,7 @@
 		15A8D10D1EA8D0F5009BFA3B /* GDFullMediaUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A8D10C1EA8D0F5009BFA3B /* GDFullMediaUserView.swift */; };
 		15C627941EEA33B200227F76 /* GDCircleDetailCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C627931EEA33B200227F76 /* GDCircleDetailCellHeader.swift */; };
 		15C627961EEA33C300227F76 /* GDCircleDetailCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C627951EEA33C300227F76 /* GDCircleDetailCellFooter.swift */; };
+		15C7F38E1F6A9D780016ACB3 /* TxtAndTxtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C7F38D1F6A9D780016ACB3 /* TxtAndTxtView.swift */; };
 		15CFDE721ED423E5002B48DB /* GDZanArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CFDE711ED423E5002B48DB /* GDZanArea.swift */; };
 		15CFDE761ED4240A002B48DB /* GDCommentArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CFDE751ED4240A002B48DB /* GDCommentArea.swift */; };
 		15D037951E9A26C000581B77 /* GDTrendsMsgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D037941E9A26C000581B77 /* GDTrendsMsgCell.swift */; };
@@ -414,6 +419,8 @@
 		15119F631EBAF92A002149B1 /* GDIBCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDIBCollectionView.swift; sourceTree = "<group>"; };
 		15119F651EBAFB85002149B1 /* GDIBScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDIBScrollView.swift; sourceTree = "<group>"; };
 		15119F671EBB070D002149B1 /* GDIBPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDIBPhoto.swift; sourceTree = "<group>"; };
+		15147E151F6912AE00179844 /* GDCreateCircleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDCreateCircleVC.swift; sourceTree = "<group>"; };
+		15147E161F6912AE00179844 /* GDCreateCircleVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GDCreateCircleVC.xib; sourceTree = "<group>"; };
 		15151BD71EA9B061009A5902 /* DayMediaDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayMediaDetailVC.swift; sourceTree = "<group>"; };
 		15151BD91EA9B0AF009A5902 /* DayDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayDetailCell.swift; sourceTree = "<group>"; };
 		15151BDB1EA9B0E0009A5902 /* DayDetailCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayDetailCellModel.swift; sourceTree = "<group>"; };
@@ -529,8 +536,10 @@
 		156584811EA73C85000469F2 /* GDZanUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDZanUser.swift; sourceTree = "<group>"; };
 		156584851EA73EA2000469F2 /* GDCommentShort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDCommentShort.swift; sourceTree = "<group>"; };
 		156858711DE2A077009DF996 /* GDNormalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNormalVC.swift; sourceTree = "<group>"; };
+		157E42D21F6A175E00CBE4BA /* GDCircleDetailVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDCircleDetailVC2.swift; sourceTree = "<group>"; };
 		1586B8C11E7D030700957A81 /* GDMapInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDMapInView.swift; sourceTree = "<group>"; };
 		1586B8C31E7D0DEE00957A81 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		15876E7D1F6A530400E7CAB5 /* GDTableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDTableViewProtocol.swift; sourceTree = "<group>"; };
 		1589F55C1DE6FEC8007CE639 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		1589F55E1DE6FED1007CE639 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		1589F5601DE6FEDA007CE639 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -909,6 +918,7 @@
 		15A8D10C1EA8D0F5009BFA3B /* GDFullMediaUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDFullMediaUserView.swift; sourceTree = "<group>"; };
 		15C627931EEA33B200227F76 /* GDCircleDetailCellHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDCircleDetailCellHeader.swift; sourceTree = "<group>"; };
 		15C627951EEA33C300227F76 /* GDCircleDetailCellFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDCircleDetailCellFooter.swift; sourceTree = "<group>"; };
+		15C7F38D1F6A9D780016ACB3 /* TxtAndTxtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxtAndTxtView.swift; sourceTree = "<group>"; };
 		15CFDE711ED423E5002B48DB /* GDZanArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDZanArea.swift; sourceTree = "<group>"; };
 		15CFDE751ED4240A002B48DB /* GDCommentArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDCommentArea.swift; sourceTree = "<group>"; };
 		15D037941E9A26C000581B77 /* GDTrendsMsgCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDTrendsMsgCell.swift; sourceTree = "<group>"; };
@@ -1003,8 +1013,9 @@
 		1506E63D1F67D5F800AC6F73 /* sub */ = {
 			isa = PBXGroup;
 			children = (
+				157E42CE1F6A16F300CBE4BA /* circleDetail */,
 				1506E63E1F67D5F800AC6F73 /* model */,
-				1506E63F1F67D5F800AC6F73 /* vc */,
+				1506E63F1F67D5F800AC6F73 /* createCircle */,
 				1506E6401F67D5F800AC6F73 /* view */,
 			);
 			path = sub;
@@ -1017,12 +1028,14 @@
 			path = model;
 			sourceTree = "<group>";
 		};
-		1506E63F1F67D5F800AC6F73 /* vc */ = {
+		1506E63F1F67D5F800AC6F73 /* createCircle */ = {
 			isa = PBXGroup;
 			children = (
 				15DB2B1E1F68041D0002BE1A /* GDCreateNewCircleVC.swift */,
+				15147E151F6912AE00179844 /* GDCreateCircleVC.swift */,
+				15147E161F6912AE00179844 /* GDCreateCircleVC.xib */,
 			);
-			path = vc;
+			path = createCircle;
 			sourceTree = "<group>";
 		};
 		1506E6401F67D5F800AC6F73 /* view */ = {
@@ -1451,6 +1464,7 @@
 				1523AD2A1DCC8DDC00011F9A /* GDAlertView.swift */,
 				1523AD2B1DCC8DDC00011F9A /* GDErrorView.swift */,
 				1523AD2C1DCC8DDC00011F9A /* ImgTxtView.swift */,
+				15C7F38D1F6A9D780016ACB3 /* TxtAndTxtView.swift */,
 				154BB5FE1E2B5EDA00A9EF05 /* GDRowView.swift */,
 				155BB8381E73C55200BF875B /* GDMapView.swift */,
 				1586B8C11E7D030700957A81 /* GDMapInView.swift */,
@@ -1624,6 +1638,7 @@
 				15F10FC81EB313BA00B117E4 /* GDRefreshControl.swift */,
 				15F10FCC1EB313C900B117E4 /* GDLoadControl.swift */,
 				15119F551EBAF609002149B1 /* ImageBrowser */,
+				15876E7D1F6A530400E7CAB5 /* GDTableViewProtocol.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -3157,6 +3172,38 @@
 			path = GDCamera;
 			sourceTree = "<group>";
 		};
+		157E42CE1F6A16F300CBE4BA /* circleDetail */ = {
+			isa = PBXGroup;
+			children = (
+				157E42CF1F6A16F300CBE4BA /* model */,
+				157E42D01F6A16F300CBE4BA /* vc */,
+				157E42D11F6A16F300CBE4BA /* view */,
+			);
+			path = circleDetail;
+			sourceTree = "<group>";
+		};
+		157E42CF1F6A16F300CBE4BA /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		157E42D01F6A16F300CBE4BA /* vc */ = {
+			isa = PBXGroup;
+			children = (
+				157E42D21F6A175E00CBE4BA /* GDCircleDetailVC2.swift */,
+			);
+			path = vc;
+			sourceTree = "<group>";
+		};
+		157E42D11F6A16F300CBE4BA /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		15A4DB4F1E8CF5B5009A0DCE /* GPUImageFrameWork */ = {
 			isa = PBXGroup;
 			children = (
@@ -3898,6 +3945,7 @@
 				15A6ED991F176963009AE6C1 /* loading.gif in Resources */,
 				15A4DD6D1E8CF5B6009A0DCE /* Info.plist in Resources */,
 				1523AE6B1DCC937300011F9A /* InfoPlist.strings in Resources */,
+				15147E181F6912AE00179844 /* GDCreateCircleVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4134,6 +4182,7 @@
 				15A4DD2A1E8CF5B6009A0DCE /* GPUImageNormalBlendFilter.m in Sources */,
 				1523AE451DCC8DDC00011F9A /* GDLanguageManager.swift in Sources */,
 				15A4DD341E8CF5B6009A0DCE /* GPUImagePoissonBlendFilter.m in Sources */,
+				15C7F38E1F6A9D780016ACB3 /* TxtAndTxtView.swift in Sources */,
 				15E250D21DDEB05C004D4509 /* GDSettingManager.swift in Sources */,
 				15A4DD131E8CF5B6009A0DCE /* GPUImageLevelsFilter.m in Sources */,
 				15A4DD0A1E8CF5B6009A0DCE /* GPUImageHSBFilter.m in Sources */,
@@ -4233,6 +4282,8 @@
 				15FBD2EF1E21E9FD0074187D /* GDChatVC.swift in Sources */,
 				1523AE561DCC8DDC00011F9A /* PTableCellHeader.swift in Sources */,
 				1523AE261DCC8DDC00011F9A /* PanGestureVC.swift in Sources */,
+				157E42D31F6A175E00CBE4BA /* GDCircleDetailVC2.swift in Sources */,
+				15147E171F6912AE00179844 /* GDCreateCircleVC.swift in Sources */,
 				15A4DCC71E8CF5B6009A0DCE /* GPUImage3x3TextureSamplingFilter.m in Sources */,
 				15A4DD051E8CF5B6009A0DCE /* GPUImageHighPassFilter.m in Sources */,
 				1594559A1F1A0740002DE664 /* GDDayLabel.swift in Sources */,
@@ -4255,6 +4306,7 @@
 				15A4DD331E8CF5B6009A0DCE /* GPUImagePixellatePositionFilter.m in Sources */,
 				15EB0BFE1DCDAD670009640A /* GDFont.swift in Sources */,
 				15CFDE721ED423E5002B48DB /* GDZanArea.swift in Sources */,
+				15876E7E1F6A530400E7CAB5 /* GDTableViewProtocol.swift in Sources */,
 				15A4DCFA1E8CF5B6009A0DCE /* GPUImageGaussianBlurFilter.m in Sources */,
 				15A4DCD91E8CF5B6009A0DCE /* GPUImageColorBurnBlendFilter.m in Sources */,
 				155BB8391E73C55200BF875B /* GDMapView.swift in Sources */,
