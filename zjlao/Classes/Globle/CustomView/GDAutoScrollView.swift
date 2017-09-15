@@ -87,6 +87,8 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
+        collectionView.backgroundColor = UIColor.white
+
         self.addSubview(pageControl)
         pageControl.frame = CGRect(x: 0, y: self.bounds.height - 24, width: self.bounds.size.width, height: 24)
         pageControl.scrollView = collectionView
@@ -129,7 +131,7 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
         }
 //        mylog("数组取值时Index : \(itemIndex)")
 //        mylog("真是currentIndex : \(indexPath.item)")
-        item.backgroundColor = UIColor.randomColor()
+//        item.backgroundColor = UIColor.randomColor()
         return item
     }
 

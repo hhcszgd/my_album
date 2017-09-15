@@ -17,6 +17,7 @@ class GDCreateCircleVC: GDNormalVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.naviBar.backBtn.isHidden = false
         //        self.view.backgroundColor = UIColor.white
         self.setupCreateButton()
         //        self.naviBar.currentBarActionType = .color//.alpha //
@@ -24,12 +25,16 @@ class GDCreateCircleVC: GDNormalVC {
         // Do any additional setup after loading the view.
     }
     func setupCreateButton()  {
-        createButton.frame = CGRect(   x: UIScreen.main.bounds.size.width - 84, y: 20, width: 84, height: 44)
+        
         createButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
         createButton.setTitle("创建圈子", for: UIControlState.normal)
+        createButton.sizeToFit()
+        createButton.frame = CGRect(   x: UIScreen.main.bounds.size.width - createButton.frame.width, y: 20, width: createButton.frame.width, height: 44)
         createButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         createButton.addTarget(self , action: #selector(performCreate), for: UIControlEvents.touchUpInside)
         self.naviBar.customViews = [createButton]
+        self.naviBar.title = "新建圈子"
+//        self.naviBar.backBtn.isHidden = false
     }
     func performCreate()  {
         mylog("performCreate")

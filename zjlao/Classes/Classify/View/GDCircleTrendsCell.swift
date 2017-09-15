@@ -19,7 +19,7 @@ class GDCircleTrendsCell: GDBaseCell {
     let timeLbl = UILabel()
     let topContainer = UIView()
     let picsContainer = UIView()
-    
+
     override var model: GDBaseModel?{
         set{
             super.model = newValue
@@ -42,10 +42,6 @@ class GDCircleTrendsCell: GDBaseCell {
                 }
                 self.namesLbl.text = usersStr
 
-                
-                
-                
-                
              let count  = cellModel.pictures.count
             let margin : CGFloat = 2.0
 //            let topH : CGFloat = 44.0
@@ -173,26 +169,27 @@ class GDCircleTrendsCell: GDBaseCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        let margin : CGFloat = 1.0
+        let margin : CGFloat = 3.0
         let topH : CGFloat = 44.0
 //        let picH : CGFloat = 64
 //        let rows = 1
         var bottomH : CGFloat = 0
-//        let averWidth = (SCREENWIDTH - margin * 5 ) / 4
-        let averWidth = (SCREENWIDTH - margin * 3 ) / 4
+        let averWidth = (SCREENWIDTH - margin * 5 ) / 4
+//        let averWidth = (SCREENWIDTH - margin * 3 ) / 4
         let picH : CGFloat = averWidth
         bottomH = picH + 2 * margin
         
         
 
-        picsContainer.frame = CGRect(x: 0, y: 0, width: self.bounds.size.width, height: bottomH)
-        
+//        picsContainer.frame = CGRect(x: 0, y: 0, width: self.bounds.size.width, height: bottomH)
+        picsContainer.frame = CGRect(x: 0, y: topH, width: self.bounds.size.width, height: bottomH)
             switch self.picsContainer.subviews.count {
             case 1:
                 
                 for (index , view) in self.picsContainer.subviews.enumerated() {
                     if index == 0 {
-                        view.frame = CGRect(x: 0, y: 0, width: SCREENWIDTH , height: picH)
+//                        view.frame = CGRect(x: 0, y: 0, width: SCREENWIDTH , height: picH)
+                        view.frame = CGRect(x: margin, y: 0, width: SCREENWIDTH - margin * 2  , height: picH)
                     }
                 }
                 
@@ -200,9 +197,11 @@ class GDCircleTrendsCell: GDBaseCell {
             case 2:
                 for (index , view) in self.picsContainer.subviews.enumerated() {
                     if index == 0{
-                         view.frame = CGRect(x: 0, y: 0, width: SCREENWIDTH - margin  - averWidth, height: picH)
+//                         view.frame = CGRect(x: 0, y: 0, width: SCREENWIDTH - margin  - averWidth, height: picH)
+                        view.frame = CGRect(x: margin, y: 0, width: SCREENWIDTH - margin * 3  - averWidth, height: picH)
                     }else if (index == 1 ){
-                        view.frame = CGRect(x: SCREENWIDTH  - averWidth, y: 0, width: averWidth, height: picH)
+//                        view.frame = CGRect(x: SCREENWIDTH  - averWidth - margin * 2, y: 0, width: averWidth, height: picH)
+                        view.frame = CGRect(x: SCREENWIDTH  - averWidth - margin, y: 0, width: averWidth, height: picH)
                     }
                 }
                 
@@ -210,11 +209,14 @@ class GDCircleTrendsCell: GDBaseCell {
             case 3:
                 for (index , view) in self.picsContainer.subviews.enumerated() {
                     if index == 0{
-                        view.frame = CGRect(x: 0, y: 0, width: SCREENWIDTH - margin * 2 - averWidth * 2, height: picH)
+//                        view.frame = CGRect(x: 0, y: 0, width: SCREENWIDTH - margin * 2 - averWidth * 2, height: picH)
+                        view.frame = CGRect(x: margin, y: 0, width: SCREENWIDTH - margin * 4 - averWidth * 2, height: picH)
                     }else if (index == 1 ){
-                        view.frame = CGRect(x: SCREENWIDTH - margin - averWidth * 2, y: 0, width: averWidth, height: picH)
+//                        view.frame = CGRect(x: SCREENWIDTH - margin - averWidth * 2, y: 0, width: averWidth, height: picH)
+                        view.frame = CGRect(x: SCREENWIDTH - margin * 2 - averWidth * 2, y: 0, width: averWidth, height: picH)
                     }else if (index == 2 ){
-                        view.frame = CGRect(x: SCREENWIDTH  - averWidth, y: 0, width: averWidth, height: picH)
+//                        view.frame = CGRect(x: SCREENWIDTH  - averWidth, y: 0, width: averWidth, height: picH)
+                        view.frame = CGRect(x: SCREENWIDTH  - averWidth - margin , y: 0, width: averWidth, height: picH)
                     }
                 }
                 
@@ -224,7 +226,8 @@ class GDCircleTrendsCell: GDBaseCell {
                 for (index , view) in self.picsContainer.subviews.enumerated() {
  
                     if index >= 4 {return }
-                     view.frame = CGRect(x:  CGFloat(index) * (margin + averWidth), y: 0, width: averWidth, height: picH)
+//                     view.frame = CGRect(x:  CGFloat(index) * (margin + averWidth), y: 0, width: averWidth, height: picH)
+                     view.frame = CGRect(x:  CGFloat(index) * (margin + averWidth) + margin, y: 0, width: averWidth, height: picH)
                 }
                 
                 break
@@ -235,8 +238,10 @@ class GDCircleTrendsCell: GDBaseCell {
             }
         
         
-        let sb : CGFloat = 10
-        topContainer.frame = CGRect(x: 0, y: bottomH, width: self.bounds.width, height: topH)
+//        let sb : CGFloat = 10
+//        topContainer.frame = CGRect(x: 0, y: bottomH, width: self.bounds.width, height: topH)
+        let sb : CGFloat = 8
+        topContainer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: topH)
 //        numLabel.frame = CGRect(x: 0, y: 0, width: 16, height: topH - sb * 2 )
         numLabel.sizeToFit()
         timeLbl.sizeToFit()
@@ -245,11 +250,11 @@ class GDCircleTrendsCell: GDBaseCell {
         numLabel.frame = CGRect(x: rightMargin, y: 0, width: numLabel.bounds.size.width , height: topH - sb * 2 )
         let cameraIconH = topH - 2 * sb
         let cameraIconW = cameraIconH * 0.8
-        cameraIcon.frame = CGRect(x: numLabel.frame.maxX + 4, y: 0  , width: cameraIconW , height: cameraIconH )
-        timeLbl.frame = CGRect(x: SCREENWIDTH - timeLbl.frame.size.width - rightMargin , y: 0 , width: timeLbl.frame.size.width, height: topH - sb * 2 )
+        cameraIcon.frame = CGRect(x: numLabel.frame.maxX + 4, y:(topH - cameraIconH ) * 0.5  , width: cameraIconW , height: cameraIconH )
+        timeLbl.frame = CGRect(x: SCREENWIDTH - timeLbl.frame.size.width - rightMargin , y:  sb , width: timeLbl.frame.size.width, height: topH - sb * 2 )
         let namesMaxWidth : CGFloat = timeLbl.frame.minX - cameraIcon.frame.maxX
         
-        namesLbl.frame = CGRect(x: cameraIcon.frame.maxX + 2 , y: 0, width: namesMaxWidth, height: topH - sb * 2)
+        namesLbl.frame = CGRect(x: cameraIcon.frame.maxX + 2 , y:  sb , width: namesMaxWidth, height: topH - sb * 2)
 
 //            view.frame = CGRect(x: CGFloat(indexInRow) * picW + CGFloat(indexInRow + 1 ) * margin, y: CGFloat(theRow) * picH + CGFloat(theRow + 1) * margin, width: picW, height: picH)
     }

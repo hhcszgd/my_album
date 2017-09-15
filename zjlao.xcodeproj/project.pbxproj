@@ -100,6 +100,7 @@
 		1529EFD71E922EBD00800A6E /* GDCircleTrendsCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529EFD61E922EBD00800A6E /* GDCircleTrendsCellModel.swift */; };
 		152C91931E90A8A00006A3E2 /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 152C91921E90A8A00006A3E2 /* NSString+Hash.m */; };
 		153546321EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153546311EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift */; };
+		15460F411F6BC73E00D4A7FE /* GDAllCirclesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */; };
 		154B76DE1E1F69C300436CD9 /* GDXmppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B76DD1E1F69C300436CD9 /* GDXmppManager.swift */; };
 		154BB5F31E2B507600A9EF05 /* GDBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BB5F21E2B507600A9EF05 /* GDBaseVC.swift */; };
 		154BB5F51E2B515900A9EF05 /* GDBaseWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BB5F41E2B515900A9EF05 /* GDBaseWebVC.swift */; };
@@ -504,6 +505,7 @@
 		152C91921E90A8A00006A3E2 /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
 		153546311EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsMsgCellModel.swift; sourceTree = "<group>"; };
 		1536B9F61E0BEA38008CCB31 /* zjlao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = zjlao.entitlements; sourceTree = "<group>"; };
+		15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDAllCirclesVC.swift; sourceTree = "<group>"; };
 		154B76DD1E1F69C300436CD9 /* GDXmppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDXmppManager.swift; sourceTree = "<group>"; };
 		154BB5F21E2B507600A9EF05 /* GDBaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBaseVC.swift; sourceTree = "<group>"; };
 		154BB5F41E2B515900A9EF05 /* GDBaseWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBaseWebVC.swift; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 		1506E63D1F67D5F800AC6F73 /* sub */ = {
 			isa = PBXGroup;
 			children = (
+				15460F3C1F6BC71300D4A7FE /* AllCircles */,
 				157E42CE1F6A16F300CBE4BA /* circleDetail */,
 				1506E63E1F67D5F800AC6F73 /* model */,
 				1506E63F1F67D5F800AC6F73 /* createCircle */,
@@ -3126,6 +3129,38 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		15460F3C1F6BC71300D4A7FE /* AllCircles */ = {
+			isa = PBXGroup;
+			children = (
+				15460F3D1F6BC71300D4A7FE /* model */,
+				15460F3E1F6BC71300D4A7FE /* vc */,
+				15460F3F1F6BC71300D4A7FE /* view */,
+			);
+			path = AllCircles;
+			sourceTree = "<group>";
+		};
+		15460F3D1F6BC71300D4A7FE /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		15460F3E1F6BC71300D4A7FE /* vc */ = {
+			isa = PBXGroup;
+			children = (
+				15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */,
+			);
+			path = vc;
+			sourceTree = "<group>";
+		};
+		15460F3F1F6BC71300D4A7FE /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		154BD40E1F63D24700BF8BDD /* V2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4320,6 +4355,7 @@
 				1523AE5D1DCC8DDC00011F9A /* GoodsModel.swift in Sources */,
 				15A4DCFC1E8CF5B6009A0DCE /* GPUImageGaussianSelectiveBlurFilter.m in Sources */,
 				15A4DCDF1E8CF5B6009A0DCE /* GPUImageColorPackingFilter.m in Sources */,
+				15460F411F6BC73E00D4A7FE /* GDAllCirclesVC.swift in Sources */,
 				1523AE481DCC8DDC00011F9A /* GDRefreshHeader.swift in Sources */,
 				15A4DD321E8CF5B6009A0DCE /* GPUImagePixellateFilter.m in Sources */,
 				15A674C31F1865C8001873AD /* GDMediaSectionFooter.swift in Sources */,

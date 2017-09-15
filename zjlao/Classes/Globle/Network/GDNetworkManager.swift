@@ -1394,12 +1394,12 @@ class GDNetworkManager: AFHTTPSessionManager {
 
      
      */
-    func getNearbyCircles( success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+    func getNearbyCircles(circleNum : String = "6" , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
         let url =  "circle"
         let location = GDLocationManager.share.locationManager.location
         let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
         let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
-        let para = ["token" : self.token , "circle_number" : "0" , "coordinate" : "\(longtitude),\(latitude)" ,]
+        let para = ["token" : self.token , "circle_number" : circleNum , "coordinate" : "\(longtitude),\(latitude)" ,]
         self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             success(result)
         }) { (error) in

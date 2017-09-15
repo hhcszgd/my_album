@@ -98,10 +98,10 @@ class GDTrendsCell: GDBaseCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        let margin : CGFloat = 1.0
+        let margin : CGFloat = 5.0
         let topH : CGFloat = 44.0
-//        let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
-        let picW : CGFloat = (SCREENWIDTH - 3 * margin ) / 4
+        let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
+//        let picW : CGFloat = (SCREENWIDTH - 3 * margin ) / 4
 
         let picH : CGFloat = picW
         let rows = self.picsContainer.subviews.count / 4
@@ -123,7 +123,7 @@ class GDTrendsCell: GDBaseCell {
         for (index , view) in self.picsContainer.subviews.enumerated() {
             let theRow = index  / 4
             let indexInRow = index  % 4
-            view.frame = CGRect(x: CGFloat(indexInRow) * (picW +  margin )/*CGFloat(indexInRow + 1 ) * margin*/, y: CGFloat(theRow) * picH + CGFloat(theRow + 1) * margin, width: picW, height: picH)
+            view.frame = CGRect(x: CGFloat(indexInRow) * (picW +  margin ) + margin/*CGFloat(indexInRow + 1 ) * margin*/, y: CGFloat(theRow) * picH + CGFloat(theRow + 1) * margin, width: picW, height: picH)
         }
 //        if self.model?.items?.count ?? 0 >= 12  {
 //            self.seeMore.isHidden = false

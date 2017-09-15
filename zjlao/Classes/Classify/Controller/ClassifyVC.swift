@@ -20,7 +20,7 @@ import MJRefresh
 //}
 import UIKit
 
-class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCircleTrendsCellDelete{
+class ClassifyVC: GDNormalVC , GDCircleTrendsCellDelete{
 
     var currentPage : Int = 1
     var datas  : [GDCircleTrendsCellModel] = {
@@ -64,10 +64,14 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
             
         }
     }
-    let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 20, width: GDDevice.width, height: GDDevice.height - 49.0 - 20 ), style: UITableViewStyle.plain)
+//    let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 20, width: GDDevice.width, height: GDDevice.height - 49.0 - 20 ), style: UITableViewStyle.plain)
     override func viewDidLoad() {
-        self.view.backgroundColor = UIColor.white
         super.viewDidLoad()
+        self.naviBar.backgroundColor = UIColor.black
+//        self.naviBar.title = "好友动态"
+        var attritit = NSMutableAttributedString.init(string: "好友动态")
+        attritit.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
+        self.naviBar.attributeTitle = attritit
         self.setupTableView()
         self.requestData(loadDataType: LoadDataType.initialize)
         self.setupNotification()
@@ -77,10 +81,12 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
     }
     
     func setupTableView()  {
-        self.view.addSubview(self.tableView)
+//        self.view.addSubview(self.tableView)
+        self.tableView.frame =  CGRect.init(x: 0, y: 20, width: GDDevice.width, height: GDDevice.height - 49.0 - 20 )
         self.automaticallyAdjustsScrollViewInsets = false
-        self.tableView.delegate  = self
-        self.tableView.dataSource = self
+        self.tableView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
+//        self.tableView.delegate  = self
+//        self.tableView.dataSource = self
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         self.tableView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
         self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refreshOrInit))
@@ -89,7 +95,7 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
         func headerViewClick(sender:GDBaseControl)  {
         mylog("头视图点击")
     }
-    func loadMore () {
+    override func loadMore () {
         self.requestData(loadDataType: LoadDataType.loadMore)
     }
     func refreshOrInit()  {
@@ -114,7 +120,18 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
             mylog(result.data)
             var tempDatas  : [GDCircleTrendsCellModel] = [GDCircleTrendsCellModel] ()
             
-            
+            /**
+             {
+             id = 1178;
+             update_at = 31分钟前;
+             areas = (
+             北京市,
+             );
+             members = (
+             JohnLock,
+             );
+             }
+             */
             if let infoArr = result.data as? [[String : AnyObject]]{
                 for infoDict in infoArr {
                     let cellModel = GDCircleTrendsCellModel.init(dict: nil)
@@ -134,27 +151,38 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
                         cellModel.city = city
                     }
                     
-                    if let membersArr = infoDict["members"] as? [[String : AnyObject]]{
+//                    if let membersArr = infoDict["members"] as? [[String : AnyObject]]{
+//                        var tempMembers = [BaseControlModel]()
+//                        for memberDict in membersArr{
+//                            let memberModel : BaseControlModel = BaseControlModel.init(dict: nil)
+//
+//                            if let name = memberDict["name"] as? String{
+//                                memberModel.title = name
+//                            }
+//                            if let avatar = memberDict["avatar"] as? String{
+//                                memberModel.imageUrl = avatar
+//                            }
+//                            if let id = memberDict["id"] as? String{
+//                                memberModel.subTitle = id
+//                            }
+//                            tempMembers.append(memberModel)
+//                        }
+//                        cellModel.members = tempMembers
+//
+//                    }
+                    
+                    if let membersArr = infoDict["members"] as? [String]{
                         var tempMembers = [BaseControlModel]()
-                        for memberDict in membersArr{
+                        for memberName in membersArr{
                             let memberModel : BaseControlModel = BaseControlModel.init(dict: nil)
                             
-                            if let name = memberDict["name"] as? String{
-                                memberModel.title = name
-                            }
-                            if let avatar = memberDict["avatar"] as? String{
-                                memberModel.imageUrl = avatar
-                            }
-                            if let id = memberDict["id"] as? String{
-                                memberModel.subTitle = id
-                            }
+                                memberModel.title = memberName
+                         
                             tempMembers.append(memberModel)
                         }
                         cellModel.members = tempMembers
                         
                     }
-                    
-                    
                     if let mediasArr = infoDict["medias"] as? [[String : AnyObject]]{
                         var tempmedias = [BaseControlModel]()
                         for mediaDict in mediasArr{
@@ -275,12 +303,12 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
 //            mylog(error)
 //        }
 //    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return self.datas.count
     }
     
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell = tableView.dequeueReusableCell(withIdentifier: "GDCircleTrendsCell")
         if cell == nil  {
             cell = GDCircleTrendsCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "GDCircleTrendsCell")
@@ -294,7 +322,7 @@ class ClassifyVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDCir
     }
     
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
 //        let model = self.datas[indexPath.row]
         
         let margin : CGFloat = 1.0

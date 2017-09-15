@@ -268,8 +268,8 @@ class GDNavigatBar: GDView {
                 self.addSubview(view)
                 view.frame = tempFrame
             }
+            self.layoutIfNeeded()
         }
-        
     }
     var navTitleView   =  NavTitleView(){
         willSet {

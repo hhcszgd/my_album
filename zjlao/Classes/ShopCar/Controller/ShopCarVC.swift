@@ -55,7 +55,7 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         self.view.addSubview(self.tableView)
         self.tableView.frame =  CGRect.init(x: 0, y: 20, width: GDDevice.width, height: GDDevice.height - 49.0 - 20  )
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        self.automaticallyAdjustsScrollViewInsets = false
+//        self.automaticallyAdjustsScrollViewInsets = false
         self.tableView.delegate  = self
         self.tableView.dataSource = self
         self.tableView.tableHeaderView = self.tableHeaderView
@@ -100,7 +100,7 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         self.tableHeaderView.frame  = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 128 + 4 /*4 是header末端间隔*/)
         ///:间隔
         let jiange = UIView.init(frame: CGRect(x: 0, y: 64, width: tableHeaderView.bounds.width, height: 1))
-        jiange.backgroundColor = UIColor.lightGray
+        jiange.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         tableHeaderView.addSubview(jiange)
         
         
@@ -112,6 +112,8 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         tableHeaderView.addSubview(iconView)
         tableHeaderView.addSubview(editProfileIcon)
         nameLbl.text = Account.shareAccount.name
+        iconView.addTarget(self , action: #selector(editIcon), for: UIControlEvents.touchUpInside)
+        
         descripLabel.text = "this is description"
         descripLabel.font = GDFont.systemFont(ofSize: 14)
         
@@ -131,14 +133,19 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         
         
         ///:消息好友设置等
-        self.setTxtAndTxt(view: self.friend, x: 0, y: jiange.frame.maxY, topTitle: "0", bottomTitle: "好友")
-        self.setTxtAndTxt(view: self.message, x: friend.frame.maxX, y: jiange.frame.maxY, topTitle: "0", bottomTitle: "消息")
+        
+        self.setTxtAndTxt(view: self.friend, x: 0, y: jiange.frame.maxY, topTitle: "", bottomTitle: "好友")
+        self.setTxtAndTxt(view: self.message, x: friend.frame.maxX, y: jiange.frame.maxY, topTitle: "", bottomTitle: "消息")
         self.setImgTxtView(imgTxt: self.setting, x: message.frame.maxX, y: jiange.frame.maxY, imgName: "icon_set up", bottomTitle: "设置")
         self.setImgTxtView(imgTxt: print, x: setting.frame.maxX, y: jiange.frame.maxY, imgName: "icon_set up", bottomTitle: "打印")
+        self.friend.addTarget(self , action: #selector(gotoFriendsList), for: UIControlEvents.touchUpInside)
+        self.message.addTarget(self , action: #selector(gotoMessagesList), for: UIControlEvents.touchUpInside)
+        self.setting.addTarget(self , action: #selector(gotoSetting), for: UIControlEvents.touchUpInside)
+        self.print.addTarget(self , action: #selector(performPrint), for: UIControlEvents.touchUpInside)
         
         ///:间隔2
-        let jiange2 = UIView.init(frame: CGRect(x: 0, y: 128, width: tableHeaderView.bounds.width, height: 1))
-        jiange2.backgroundColor = UIColor.lightGray
+        let jiange2 = UIView.init(frame: CGRect(x: 0, y: 128, width: tableHeaderView.bounds.width, height: 3))
+        jiange2.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         tableHeaderView.addSubview(jiange2)
         
         
@@ -155,6 +162,21 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         imgTxt.bottomTitle = bottomTitle
         imgTxt.image = UIImage(named: imgName)
         imgTxt.frame = CGRect(x: x, y: y, width: tableHeaderView.bounds.width  / 4, height: 63)
+    }
+    func editIcon() {
+        mylog("edit icon")
+    }
+    func gotoFriendsList()  {
+        mylog("got friends list ")
+    }
+    func gotoMessagesList()  {
+        mylog("goto message list")
+    }
+    func gotoSetting()  {
+        mylog("go and setting")
+    }
+    func performPrint()  {
+        mylog("perfomr print action")
     }
     func requestData(loadDataType:LoadDataType)  {
         
@@ -227,6 +249,23 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
                         
                     }
                 }
+                if let userDict = infoDict["user"] as? [String : AnyObject]{
+//                    if let description = userDict["desctiption"] as? String{
+//                    }
+                    
+                    if let messageNum  = userDict["message_number"] as? Int  {
+                        self.message.topTitle = "\(messageNum)"
+                    }
+                    
+//                    let name   = userDict["name"]
+                    if let friendNum  = userDict["friend_number"] as? Int {
+                        self.friend.topTitle = "\(friendNum)"
+                    }
+                    
+               
+                    
+                }
+            
             }
             /////
             
@@ -399,6 +438,7 @@ class ShopCarView: GDBaseControl {
         self.subTitleLabel.textColor = UIColor.lightGray
         self.subTitleLabel.textAlignment = NSTextAlignment.center
         self.container.addSubview(self.subTitleLabel)
+        self.container.isUserInteractionEnabled = false 
     }
     
     required init?(coder aDecoder: NSCoder) {

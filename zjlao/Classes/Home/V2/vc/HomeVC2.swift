@@ -35,13 +35,13 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         self.view.addSubview(autoScrollView)
         ///:backView
         self.view.addSubview(backView)
-        backView.backgroundColor = UIColor.white
+        backView.backgroundColor = UIColor.init(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)
         backView.frame = CGRect(x: 0, y: autoScrollView.frame.maxY, width: self.view.bounds.size.width , height: self.view.bounds.size.height - autoScrollView.bounds.size.height)
 
         
         ///:circleView
         let flowLayout = UICollectionViewFlowLayout.init()
-        let cellMargin : CGFloat = 20
+        let cellMargin : CGFloat = 11
         let circleNameH : CGFloat = 25
         flowLayout.minimumLineSpacing = cellMargin
         flowLayout.minimumInteritemSpacing = cellMargin
@@ -53,7 +53,7 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         circleView = UICollectionView.init(frame: CGRect(x : cellMargin , y : autoScrollView.frame.maxY + 44 , width : collectionW  , height : collectionH) , collectionViewLayout: flowLayout)
         self.view.addSubview(circleView)
-        self.circleView.backgroundColor = UIColor.white
+        self.circleView.backgroundColor = UIColor.init(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)
         circleView.register(CircleItem.self , forCellWithReuseIdentifier: "CircleItem")
         circleView.delegate = self
         circleView.dataSource = self
@@ -90,6 +90,9 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
     }
     func performSeeAllCircles()  {
         mylog("see all circles")
+        let model = GDBaseModel.init(dict: nil )
+        model.actionkey = "GDAllCirclesVC"
+        GDSkipManager.skip(viewController: self , model: model )
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return  models?.count ?? 0
@@ -100,7 +103,6 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         if let realItem  = item as? CircleItem {
             realItem.model = models![itemIndex]
         }
-        item.backgroundColor = UIColor.randomColor()
         return item
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -201,75 +203,75 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
     }
     */
     
-    class CircleItemModel : GDBaseModel {
-        override init(dict: [String : AnyObject]?) {
-            super.init(dict: dict)
-        }
-        var circle_image : String?
-        var id : NSNumber?
-        var circle_type : String?
-        var circle_name : String?
-        var circle_member_count : NSNumber?
-        var circle_member_number : Int?
-        var permission : NSNumber?
+}
+class CircleItemModel : GDBaseModel {
+    override init(dict: [String : AnyObject]?) {
+        super.init(dict: dict)
     }
-    class CircleItem : UICollectionViewCell {
-        let  circleImage = UIImageView()
-        let circleMemberLabel = UILabel()
-        let  lockIcon = UIButton()
-        let  circleName = UILabel()
-        var model  = CircleItemModel.init(dict: nil){
-            didSet{
-                if let url  = URL.init(string: model.circle_image ?? "") {//image
-                    circleImage.sd_setImage(with: url  )
-                }
-                mylog(model.circle_name)
-                circleName.text = model.circle_name ?? ""
-                circleMemberLabel.text =  "\(model.circle_member_number ?? 0)" + "/" + "\(model.circle_member_count ?? 0)"
-                
-                self.layoutIfNeeded()
+    var circle_image : String?
+    var id : NSNumber?
+    var circle_type : String?
+    var circle_name : String?
+    var circle_member_count : NSNumber?
+    var circle_member_number : Int?
+    var permission : NSNumber?
+}
+class CircleItem : UICollectionViewCell {
+    let  circleImage = UIImageView()
+    let circleMemberLabel = UILabel()
+    let  lockIcon = UIButton()
+    let  circleName = UILabel()
+    var model  = CircleItemModel.init(dict: nil){
+        didSet{
+            if let url  = URL.init(string: model.circle_image ?? "") {//image
+                circleImage.sd_setImage(with: url  )
             }
+            mylog(model.circle_name)
+            circleName.text = model.circle_name ?? ""
+            circleMemberLabel.text =  "\(model.circle_member_number ?? 0)" + "/" + "\(model.circle_member_count ?? 0)"
+            
+            self.layoutIfNeeded()
         }
+    }
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame )
+        self.contentView.addSubview(circleImage)
+        self.contentView.addSubview(circleMemberLabel)
+        circleMemberLabel.textColor = UIColor.lightGray
+        self.contentView.backgroundColor = UIColor.white
+        self.contentView.addSubview(lockIcon)
+        lockIcon.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0 )
+        self.contentView.addSubview(circleName)
+        circleName.font =  UIFont.systemFont(ofSize: 13)
+        lockIcon.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+        lockIcon.titleLabel?.font = circleName.font
         
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let margin : CGFloat = 5
+        let imageViewW = self.bounds.size.width - margin * 2
+        self.circleImage.frame = CGRect(x: margin , y: margin , width: imageViewW, height: imageViewW)
+        if model.permission ?? 0 == 2 {//没有权限
+            self.lockIcon.setTitle("🔐" , for: UIControlState.normal)
+        }else{
+            self.lockIcon.setTitle("公开" , for: UIControlState.normal)
+        }
+        self.lockIcon.sizeToFit()
+        let lockCenterY = self.circleImage.frame.maxY +  (self.bounds.size.height - self.circleImage.frame.maxY ) * 0.5
         
-        override init(frame: CGRect) {
-            super.init(frame: frame )
-            self.contentView.addSubview(circleImage)
-            circleImage.backgroundColor = UIColor.randomColor()
-            self.contentView.addSubview(circleMemberLabel)
-            circleMemberLabel.textColor = UIColor.lightGray
-            self.contentView.addSubview(lockIcon)
-            lockIcon.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0 )
-            self.contentView.addSubview(circleName)
-            circleName.font =  UIFont.systemFont(ofSize: 13)
-            lockIcon.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
-            lockIcon.titleLabel?.font = circleName.font
-            
-        }
-        override func layoutSubviews() {
-            super.layoutSubviews()
-            let margin : CGFloat = 5
-            let imageViewW = self.bounds.size.width - margin * 2
-            self.circleImage.frame = CGRect(x: margin , y: margin , width: imageViewW, height: imageViewW)
-            if model.permission ?? 0 == 2 {//没有权限
-                self.lockIcon.setTitle("🔐" , for: UIControlState.normal)
-            }else{
-                self.lockIcon.setTitle("公开" , for: UIControlState.normal)
-            }
-            self.lockIcon.sizeToFit()
-            let lockCenterY = self.circleImage.frame.maxY +  (self.bounds.size.height - self.circleImage.frame.maxY ) * 0.5
-            
-            self.lockIcon.center = CGPoint(x: self.bounds.size.width - margin - lockIcon.bounds.width * 0.3, y: lockCenterY)
-            
-            ///: circleName
-            self.circleName.frame = CGRect(x: margin , y:  lockCenterY - circleName.font.lineHeight / 2, width: lockIcon.frame.minX - margin, height: circleName.font.lineHeight)
-            ///:memberCount
-            circleMemberLabel.sizeToFit()
-            circleMemberLabel.center = CGPoint(x: margin + circleMemberLabel.bounds.size.width / 2 , y: margin + circleMemberLabel.bounds.size.height / 2 )
-        }
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+        self.lockIcon.center = CGPoint(x: self.bounds.size.width - margin - lockIcon.bounds.width * 0.3, y: lockCenterY)
+        
+        ///: circleName
+        self.circleName.frame = CGRect(x: margin , y:  lockCenterY - circleName.font.lineHeight / 2, width: lockIcon.frame.minX - margin, height: circleName.font.lineHeight)
+        ///:memberCount
+        circleMemberLabel.sizeToFit()
+        circleMemberLabel.center = CGPoint(x: margin + circleMemberLabel.bounds.size.width / 2 , y: margin + circleMemberLabel.bounds.size.height / 2 )
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

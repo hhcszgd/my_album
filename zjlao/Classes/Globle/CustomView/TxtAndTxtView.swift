@@ -42,6 +42,7 @@ class TxtAndTxtView: GDBaseControl {
         self.subTitleLabel.textColor = UIColor.lightGray
         self.subTitleLabel.textAlignment = NSTextAlignment.center
         self.container.addSubview(self.subTitleLabel)
+         self.container.isUserInteractionEnabled = false
     }
     
     required init?(coder aDecoder: NSCoder) {
