@@ -1467,9 +1467,9 @@ class GDNetworkManager: AFHTTPSessionManager {
      请求参数：
      
      */
-    func insertMediaToCircle(circleID : String ,original:String ,  type : String  , description : String? ,  media_spec : String ,success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+    func insertMediaToCircle(circleID : String ,original:String ,  type : String  , description : String? ,  media_spec : CGSize ,success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
         let url =  "media"
-        var para = [ "circle_id" : circleID  , "token" : self.token ?? "" , "original" : original , "media_type" : type , "media_spec" : media_spec  ] as [String : Any]
+        var para = [ "circle_id" : circleID  , "token" : self.token ?? "" , "original" : original , "media_type" : type ,"media_width":media_spec.width , "media_height":media_spec.height  ] as [String : Any]
         if let descrip   = description{
             para["description"] = descrip
         }
@@ -1508,32 +1508,8 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         
     }
-    
+
     // MARK: 注释 : v2 👆
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
     //MARK:
     //MARK:
     //MARK:

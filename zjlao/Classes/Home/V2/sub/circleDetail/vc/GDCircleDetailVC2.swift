@@ -26,20 +26,44 @@ class GDCircleDetailVC2: GDNormalVC {
     let qieziButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
     var circleID  = "0"
     var picker : UIImagePickerController?
+    var models : [GDCircleDetailItemModel]?
+    var page  : Int = 1
+    var pwd : String?
+    
+    var circleName : String = "" {
+        didSet{
+            let attritit = NSMutableAttributedString.init(string: circleName)
+        attritit.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
+        self.naviBar.attributeTitle = attritit
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
+        self.setupNaviBar()
         mylog(keyModel?.keyparamete)
         if let para  = keyModel?.keyparamete as? [String:String] {
-            self.naviBar.title = para["title"]!
+            circleName = para["title"]!
             self.circleID = para["id"]!
-            self.getCircleDetail(id: self.circleID)
         }
+        self.setupQZButton()
+        // Do any additional setup after loading the view.
+        self.prepareSubViews()
+        self.getCircles()
+    }
+    
+    func setupQZButton() {
         self.view.addSubview(qieziButton)
         qieziButton.setImage(UIImage(named:"logo"), for: UIControlState.normal)
         qieziButton.center = CGPoint(x: self.view.bounds.size.width / 2 , y: self.view.bounds.size.height - (qieziButton.bounds.size.height) / 2 )
         qieziButton.addTarget(self , action: #selector(createMedia), for: UIControlEvents.touchUpInside)
-        // Do any additional setup after loading the view.
+    }
+    func setupNaviBar() {
+        self.naviBar.backgroundColor = UIColor.black
+
+        self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
     }
     func createMedia()  {
         mylog("I'm going to create media")
@@ -48,13 +72,6 @@ class GDCircleDetailVC2: GDNormalVC {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    func getCircleDetail(id : String)  {
-        GDNetworkManager.shareManager.getCircleDetail(circleID: id , page: "0", password: nil , success: { (model ) in
-            mylog("status : \(model.status) , data : \(model.data)")
-        }) { (error ) in
-            mylog(error)
-        }
     }
 
     /*
@@ -66,8 +83,183 @@ class GDCircleDetailVC2: GDNormalVC {
         // Pass the selected object to the new view controller.
     }
     */
-
+    func prepareSubViews()  {
+        
+        ///:circleView
+        //        guard let flowLayout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+        //            return
+        //        }
+        let layout =  GDFlowLayout.init()
+        collectionView.collectionViewLayout = layout
+        layout.delegate = self
+        let cellMargin : CGFloat = 11
+        let circleNameH : CGFloat = 25
+        //        flowLayout.minimumLineSpacing = cellMargin
+        //        flowLayout.minimumInteritemSpacing = cellMargin
+        let collectionW = self.view.bounds.size.width
+        let itemW = (collectionW - cellMargin * 4 ) / 3
+        let collectionH = UIScreen.main.bounds.size.height - 20
+        //        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+        collectionView.frame =  CGRect(x : 0 , y : 20 , width : collectionW  , height : collectionH)
+        collectionView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
+        self.collectionView.backgroundColor = UIColor.init(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)
+        collectionView.register(GDCircleDetailItem.self , forCellWithReuseIdentifier: "GDCircleDetailItem")
+        ///:createCircle
+        
+    }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+        mylog(models?.count ?? 0)
+        return  models?.count ?? 0
+    }
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        let item = collectionView.dequeueReusableCell(withReuseIdentifier: "GDCircleDetailItem", for: indexPath)
+        let itemIndex  = indexPath.item % models!.count
+        if let realItem  = item as? GDCircleDetailItem {
+            realItem.model = models![itemIndex]
+        }
+        return item
+    }
 }
+
+extension GDCircleDetailVC2 : GDFlowLayoutProtocol{
+    func provideColumnCount(layout: GDFlowLayout?) -> Int {return 3}
+    func provideRowMargin(layout: GDFlowLayout?) -> CGFloat {return 0}
+    func provideColumnMargin(layout: GDFlowLayout?) -> CGFloat {return 10}
+    func provideEdgeInsets(layout: GDFlowLayout?) -> UIEdgeInsets {return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)}
+    func provideItemWidth(layout: GDFlowLayout?) -> CGFloat {
+        if self.models != nil  {
+            let insetWidth = self.provideEdgeInsets(layout: nil).left * 2
+            let columnCount = self.provideColumnCount(layout: nil)
+            let marginsWidth = self.provideColumnMargin(layout: nil) * (CGFloat(columnCount - 1))
+            let imageShowWidth = (self.collectionView.bounds.size.width - insetWidth - marginsWidth ) / CGFloat(columnCount)
+            return imageShowWidth
+        }
+        return 0
+    }
+    func provideItemHeight(layout: GDFlowLayout?, indexPath: IndexPath) -> CGFloat {
+        if self.models != nil  {
+            let model = self.models![indexPath.item]
+            let imageMargin : CGFloat = 0
+            let tempWidth = Float.init(model.media_width ?? "0")
+            let imageWidth = CGFloat.init(tempWidth ?? 0.0)
+            let tempHeight = Float.init(model.media_height ?? "0")
+            if tempWidth == 0 || tempHeight == 0 {
+                return 0
+            }
+            let imageHeight = CGFloat.init(tempHeight ?? 0.0)
+            let insetWidth = self.provideEdgeInsets(layout: nil).left * 2
+            let columnCount = self.provideColumnCount(layout: nil)
+            let marginsWidth = self.provideRowMargin(layout: nil) * CGFloat(columnCount)
+            let imageShowWidth = (self.collectionView.bounds.size.width - insetWidth - marginsWidth ) / CGFloat(columnCount)
+            
+            let imageShowHeidht =  imageShowWidth / imageWidth * imageHeight //* (self.bounds.size.height - bottomH - 2 * imageMargin)
+//            imageView.frame = CGRect(x: imageMargin, y: imageMargin, width: imageShowWidth, height: imageShowHeidht )
+            let bottomH  : CGFloat =  44
+            return bottomH + imageShowHeidht
+        }
+        
+        return 0
+    }
+}
+
+extension GDCircleDetailVC2 {
+//    func prepareSubViews()  {
+//
+//        ///:circleView
+////        guard let flowLayout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+////            return
+////        }
+//        let layout =  GDFlowLayout.init()
+//        collectionView.collectionViewLayout = layout
+//        layout.delegate = self
+//        let cellMargin : CGFloat = 11
+//        let circleNameH : CGFloat = 25
+////        flowLayout.minimumLineSpacing = cellMargin
+////        flowLayout.minimumInteritemSpacing = cellMargin
+//        let collectionW = self.view.bounds.size.width
+//        let itemW = (collectionW - cellMargin * 4 ) / 3
+//        let collectionH = UIScreen.main.bounds.size.height
+//        //        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+//        collectionView.frame =  CGRect(x : 0 , y : 20 , width : collectionW  , height : collectionH)
+//        collectionView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
+//        self.collectionView.backgroundColor = UIColor.init(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)
+//        collectionView.register(GDCircleDetailItem.self , forCellWithReuseIdentifier: "GDCircleDetailItem")
+//        ///:createCircle
+//
+//    }
+//
+//
+//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+//        return  models?.count ?? 0
+//    }
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+//        let item = collectionView.dequeueReusableCell(withReuseIdentifier: "GDCircleDetailItem", for: indexPath)
+//        let itemIndex  = indexPath.item % models!.count
+//        if let realItem  = item as? GDCircleDetailItem {
+//            realItem.model = models![itemIndex]
+//        }
+//        return item
+//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let dataModel = models![indexPath.item % models!.count]
+        
+        
+    }
+    
+    
+    func getCircles() {
+        GDNetworkManager.shareManager.getCircleDetail(circleID: circleID, page: "\(page)" , password: pwd, success: { (model ) in
+            mylog("获取圈子详情 : \(model.data)")
+            if let outSideDict = model.data as? [String : AnyObject]{
+                if let arr = outSideDict["media"] as? [[String : AnyObject]]{
+                    var tempModels = [GDCircleDetailItemModel]()
+                    for (_ , dict ) in arr.enumerated(){
+//                        mylog(dict)
+                        let tempModel = GDCircleDetailItemModel.init(dict: dict )
+//                        dump(tempModel)
+                        tempModels.append(tempModel)
+                    }
+                    if tempModels.count > 0 {
+                        self.models = tempModels
+                        self.collectionView.reloadData()
+                    }
+                }
+                if let datetime = outSideDict["datetime"] as? String{
+                    mylog(datetime)
+                }
+                
+                if let media_count = outSideDict["media_count"] as? NSNumber{
+                    mylog(media_count)
+                }
+                if let permission = outSideDict["permission"] as? NSNumber{
+                    mylog(permission)
+                }
+                if let address = outSideDict["address"] as? String{
+                    mylog(address)
+                }
+                mylog(outSideDict["members"])
+                if let members = outSideDict["members"] as? [String]{
+                    mylog(members)
+                }
+                /**
+                 ["circle_image": , "id": 1125, "circle_type": 2, "circle_name": 圈子11112222, "circle_member_count": 1, "circle_member_number": 80, "permission": 0]
+                 */
+                
+            }else{
+                mylog("获取圈子详情 类型转换失败")
+            }
+        }) { (error ) in
+            mylog("获取圈子详情失败: \(error)")
+        }
+       
+        
+        
+    }
+    
+}
+
 import MobileCoreServices
 extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationControllerDelegate  {
     
@@ -199,7 +391,7 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
         if theImage != nil  {
             let imageDate = UIImagePNGRepresentation(theImage!)
             if imageDate != nil {
-                self.upload(data: imageDate!, type: "1")
+                self.upload(data: imageDate!, rectSize : theImage!.size, type: "1")
                 
             }
             
@@ -208,7 +400,7 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
     }
 
     
-    func upload(data : Data , type : String /**1:image  , 2 movie*/)  {
+    func upload(data : Data ,rectSize : CGSize = CGSize(width: 100, height: 100) ,  type : String /**1:image  , 2 movie*/)  {
         // MARK: 注释 : 插入七牛存储👇
         GDNetworkManager.shareManager.getQiniuToken(success: { (model ) in
             
@@ -222,7 +414,7 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
                         if let key = successInfo?["key"] as? String{
                             print(key)//get avarta key
                             //save  mediaKey to our server
-                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.circleID, original: key , type: type , description: nil , media_spec: "111,111", success: { (model ) in
+                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.circleID, original: key , type: type , description: nil , media_spec:  rectSize, success: { (model ) in
                                 mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
                             }, failure: { (error ) in
                                 mylog("插入媒体到圈子 请求结果 : \(error)")
@@ -241,5 +433,164 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
             mylog(error )
         })
         
+    }
+}
+
+
+class GDCircleDetailItem: UICollectionViewCell {
+    let  imageView = UIImageView()
+    let nameLabel  = UILabel()
+    let zanBtn = UIButton()
+    let commentBtn = UIButton()
+    let locationAndTime = UILabel()
+    
+    
+    
+    
+    var model :  GDCircleDetailItemModel = GDCircleDetailItemModel.init(dict: nil){
+        didSet{
+            if let url  = URL(string: model.thumbnail ?? "") {
+                imageView.sd_setImage(with: url)
+            }
+            self.layoutIfNeeded()
+        }
+        
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame )
+        self.setupSubviews()
+        self.contentView.backgroundColor = UIColor.randomColor()
+    }
+    func setupSubviews()  {
+        self.contentView.addSubview(imageView)
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let imageMargin : CGFloat = 0
+        
+        let tempWidth = Float.init(model.media_width ?? "0")
+        let imageWidth = CGFloat.init(tempWidth ?? 0.0)
+        let tempHeight = Float.init(model.media_height ?? "0")
+        if tempWidth == 0 || tempHeight == 0 {
+            return
+        }
+        let imageHeight = CGFloat.init(tempHeight ?? 0.0)
+        let imageShowWidth = self.bounds.size.width - imageMargin * 2
+        
+        let imageShowHeidht =  imageShowWidth / imageWidth * imageHeight //* (self.bounds.size.height - bottomH - 2 * imageMargin)
+        imageView.frame = CGRect(x: imageMargin, y: imageMargin, width: imageShowWidth, height: imageShowHeidht )
+        let buttomY  =  imageView.frame.maxY + imageMargin
+        let bottomH  : CGFloat =  self.bounds.size.height - buttomY
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+class GDCircleDetailItemModel: GDBaseModel {
+    var id  : String?
+    var media_type  : String?
+    var media_width  : String?
+    var media_height  : String?
+    var user_id  : String?
+    var media_spec  : String?
+    var create_user_name  : String?
+    var thumbnail  : String?
+    var media_comment_count  : String?
+    var media_good_count  : String?
+    var create_date  : String?
+    
+    var country  : String?
+    var province  : String?//省
+    var city  : String?//市
+    
+    /**
+     id = 2715;
+     create_date = 2017-09-16;
+     media_type = 1;
+     province = 北京市;
+     media_width = 600;
+     user_id = 219;
+     media_good_count = 0;
+     media_spec = 0,0;
+     city = 北京市;
+     media_height = 400;
+     create_user_name = JohnLock;
+     thumbnail = http://f0.ugshop.cn/Fpdgi530aMQG35S_vHQ8D-kHfBw3?imageView2/1/w/200/h/200;
+     media_comment_count = 0;
+     country = 中国;
+     */
+}
+
+
+@objc protocol GDFlowLayoutProtocol : NSObjectProtocol{
+    func provideItemHeight(layout:GDFlowLayout? , indexPath : IndexPath) -> CGFloat
+    func provideItemWidth(layout: GDFlowLayout?) -> CGFloat
+    @objc optional func provideColumnCount(layout:GDFlowLayout?) -> Int
+    @objc optional func provideColumnMargin(layout:GDFlowLayout?) -> CGFloat
+    @objc optional func provideRowMargin(layout:GDFlowLayout?) -> CGFloat
+    @objc optional func provideEdgeInsets(layout:GDFlowLayout?) -> UIEdgeInsets
+}
+class GDFlowLayout: UICollectionViewLayout {
+    weak var  delegate :GDFlowLayoutProtocol?
+    var columnCount : Int {
+        if let column = self.delegate?.provideColumnCount?(layout: self) {
+            mylog(columns.count)
+            mylog(column)
+            if columns.count != column {
+                columns = Array.init(repeating: 0, count: column)
+            }
+            return  column
+        }else{
+            columns = [0]
+            return 1
+        }
+    }
+    var columnMargin : CGFloat {
+       if let columnMargin = self.delegate?.provideColumnMargin?(layout: self) {return  columnMargin}else{return 0}
+    }
+    var rowMargin: CGFloat{
+       if let rowMargin = self.delegate?.provideRowMargin?(layout: self) {return  rowMargin}else{return 0}
+    }
+    var edgeInsets : UIEdgeInsets {
+       if let edgeInsets = self.delegate?.provideEdgeInsets?(layout: self) {return  edgeInsets}else{return UIEdgeInsets.zero}
+    }
+    var attributes : [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
+    var maxY : CGFloat = 0
+    var minY : CGFloat = 0
+    var columns : [CGFloat] = [CGFloat]()
+    override func prepare() {
+        super.prepare()
+        attributes.removeAll()
+        //先考虑只有一组的情况, 而且没有header
+        let _ = columnCount
+        let itemsCount = self.collectionView?.numberOfItems(inSection: 0) ?? 0
+        for index  in 0..<itemsCount {
+            let currentIndex = IndexPath(item: index, section: 0)
+            if let attribute = self.layoutAttributesForItem(at: currentIndex){
+                attributes.append(attribute)
+            }
+        }
+    }
+    override var collectionViewContentSize: CGSize{
+        return CGSize(width: self.collectionView?.bounds.size.width ?? UIScreen.main.bounds.size.width, height: self.columns.max() ?? 0)
+    }
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        return attributes
+    }
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        let attribute = UICollectionViewLayoutAttributes.init(forCellWith: indexPath)
+        let width = self.delegate?.provideItemWidth(layout: self)  ?? 0
+        let height = self.delegate?.provideItemHeight(layout: self, indexPath: indexPath) ?? 0
+        let shortestYvalue = self.columns.min() ?? 0
+        let shortestYvalueCol = self.columns.index(of: shortestYvalue)
+        let columNum = shortestYvalueCol 
+        let x = self.edgeInsets.left + CGFloat(columNum ?? 0) * (width + self.columnMargin)
+        let y = columns[columNum ?? 0]  + rowMargin
+        self.columns[columNum ?? 0] = columns[columNum ?? 0] + height
+        attribute.frame = CGRect(x: x , y: y , width: width, height: height)
+        return attribute
     }
 }

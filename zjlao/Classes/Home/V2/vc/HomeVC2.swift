@@ -159,7 +159,7 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         return UIStatusBarStyle.lightContent
     }
     func gerCircles() {
-        GDNetworkManager.shareManager.getNearbyCircles(success: { (model ) in
+        GDNetworkManager.shareManager.getNearbyCircles(circleNum : "0" ,success: { (model ) in
             mylog("首页获取附近的圈子成功 status : \(model.status) , data : \(String(describing: model.data ))")
             
             if let arr = model.data as? [[String : AnyObject]]{
