@@ -123,6 +123,13 @@ class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITable
     }
 
     //MARK:collectViewDataSource
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView{
+        return UICollectionReusableView.init()
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize{
+        return CGSize(width: collectionView.bounds.width, height: 0.0000001)
+    }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

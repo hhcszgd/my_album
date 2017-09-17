@@ -41,7 +41,7 @@ class GDCircleDetailVC2: GDNormalVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.black
         self.setupNaviBar()
         mylog(keyModel?.keyparamete)
         if let para  = keyModel?.keyparamete as? [String:String] {
@@ -89,6 +89,8 @@ class GDCircleDetailVC2: GDNormalVC {
         //        guard let flowLayout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
         //            return
         //        }
+        collectionView.register(GDCircleDetailItem.self , forCellWithReuseIdentifier: "GDCircleDetailItem")
+        collectionView.register(GDCircleSessionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "GDCircleSessionHeader")
         let layout =  GDFlowLayout.init()
         collectionView.collectionViewLayout = layout
         layout.delegate = self
@@ -103,12 +105,23 @@ class GDCircleDetailVC2: GDNormalVC {
         collectionView.frame =  CGRect(x : 0 , y : 20 , width : collectionW  , height : collectionH)
         collectionView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
         self.collectionView.backgroundColor = UIColor.init(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)
-        collectionView.register(GDCircleDetailItem.self , forCellWithReuseIdentifier: "GDCircleDetailItem")
         ///:createCircle
         
     }
-    
-    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView{
+//        UICollectionViewDelegate
+        
+        if kind == UICollectionElementKindSectionHeader {
+            let header =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "GDCircleSessionHeader", for: indexPath)
+//            let header = GDCircleSessionHeader.init(frame: CGRect(x: 0, y: 0, width: 200, height: 64))
+            header.backgroundColor = UIColor.red
+            return header
+        }
+        return GDCircleSessionHeader.init(frame: CGRect(x: 0, y: 0, width: 200, height: 64))
+    }
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize{
+        return CGSize(width: collectionView.bounds.width, height: 64)
+    }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         mylog(models?.count ?? 0)
         return  models?.count ?? 0
@@ -124,7 +137,10 @@ class GDCircleDetailVC2: GDNormalVC {
 }
 
 extension GDCircleDetailVC2 : GDFlowLayoutProtocol{
-    func provideColumnCount(layout: GDFlowLayout?) -> Int {return 3}
+    func provideSessionHeaderHeight(layout: GDFlowLayout?) -> CGFloat {
+        return 64
+    }
+    func provideColumnCount(layout: GDFlowLayout?) -> Int {return 2}
     func provideRowMargin(layout: GDFlowLayout?) -> CGFloat {return 0}
     func provideColumnMargin(layout: GDFlowLayout?) -> CGFloat {return 10}
     func provideEdgeInsets(layout: GDFlowLayout?) -> UIEdgeInsets {return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)}
@@ -436,6 +452,24 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
     }
 }
 
+class GDCircleSessionHeader: UICollectionReusableView {
+    let label1 = UILabel()
+    let label2 = UILabel()
+    override init(frame: CGRect) {
+        super.init(frame: frame )
+        self.addSubview(label1)
+        label1.font = UIFont.systemFont(ofSize: 13)
+        self.addSubview(label2)
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        label1.frame = CGRect(x: 20, y: 0, width: self.bounds.width - 20 * 2, height: self.bounds.height * 0.5)
+        label2.frame = CGRect(x: 20, y: self.bounds.height * 0.5, width: self.bounds.width - 20 * 2, height: self.bounds.height * 0.5)
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 class GDCircleDetailItem: UICollectionViewCell {
     let  imageView = UIImageView()
@@ -532,19 +566,22 @@ class GDCircleDetailItemModel: GDBaseModel {
     @objc optional func provideColumnMargin(layout:GDFlowLayout?) -> CGFloat
     @objc optional func provideRowMargin(layout:GDFlowLayout?) -> CGFloat
     @objc optional func provideEdgeInsets(layout:GDFlowLayout?) -> UIEdgeInsets
+    @objc optional func provideSessionHeaderHeight(layout:GDFlowLayout?) -> CGFloat
 }
 class GDFlowLayout: UICollectionViewLayout {
     weak var  delegate :GDFlowLayoutProtocol?
     var columnCount : Int {
+        let sessionHeaderH  = self.delegate?.provideSessionHeaderHeight?(layout: self) ?? 0
+        
         if let column = self.delegate?.provideColumnCount?(layout: self) {
             mylog(columns.count)
             mylog(column)
             if columns.count != column {
-                columns = Array.init(repeating: 0, count: column)
+                columns = Array.init(repeating: sessionHeaderH, count: column)
             }
             return  column
         }else{
-            columns = [0]
+            columns = [sessionHeaderH]
             return 1
         }
     }
@@ -567,6 +604,12 @@ class GDFlowLayout: UICollectionViewLayout {
         //先考虑只有一组的情况, 而且没有header
         let _ = columnCount
         let itemsCount = self.collectionView?.numberOfItems(inSection: 0) ?? 0
+        let sectionCount = self.collectionView?.numberOfSections ?? 0
+        if sectionCount > 0  {
+            if let header = self.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: IndexPath(item: 0, section: 0)){
+                attributes.append(header)
+            }
+        }
         for index  in 0..<itemsCount {
             let currentIndex = IndexPath(item: index, section: 0)
             if let attribute = self.layoutAttributesForItem(at: currentIndex){
@@ -579,6 +622,14 @@ class GDFlowLayout: UICollectionViewLayout {
     }
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return attributes
+    }
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes?{
+        if indexPath.section == 0  {
+            let headerAttribute  = UICollectionViewLayoutAttributes.init(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: indexPath)
+            headerAttribute.frame = CGRect(x: 0, y: 0, width: self.collectionView?.bounds.width ?? UIScreen.main.bounds.width, height: 64)
+            return headerAttribute
+        }
+        return nil
     }
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         let attribute = UICollectionViewLayoutAttributes.init(forCellWith: indexPath)
