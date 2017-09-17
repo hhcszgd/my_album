@@ -29,6 +29,7 @@ class GDCircleDetailVC2: GDNormalVC {
     var models : [GDCircleDetailItemModel]?
     var page  : Int = 1
     var pwd : String?
+    var circleInfoModel : GDCircleSessionHeaderModel?
     
     var circleName : String = "" {
         didSet{
@@ -114,7 +115,10 @@ class GDCircleDetailVC2: GDNormalVC {
         if kind == UICollectionElementKindSectionHeader {
             let header =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "GDCircleSessionHeader", for: indexPath)
 //            let header = GDCircleSessionHeader.init(frame: CGRect(x: 0, y: 0, width: 200, height: 64))
-            header.backgroundColor = UIColor.red
+//            header.backgroundColor = UIColor.red
+            if let realHeader = header as? GDCircleSessionHeader, self.circleInfoModel != nil {
+                realHeader.model = self.circleInfoModel
+            }
             return header
         }
         return GDCircleSessionHeader.init(frame: CGRect(x: 0, y: 0, width: 200, height: 64))
@@ -239,30 +243,32 @@ extension GDCircleDetailVC2 {
                     }
                     if tempModels.count > 0 {
                         self.models = tempModels
-                        self.collectionView.reloadData()
+                        
                     }
                 }
+                let tempCircleModel = GDCircleSessionHeaderModel.init(dict: nil  )
                 if let datetime = outSideDict["datetime"] as? String{
-                    mylog(datetime)
+                    tempCircleModel.datetime = datetime
                 }
                 
                 if let media_count = outSideDict["media_count"] as? NSNumber{
-                    mylog(media_count)
+                    tempCircleModel.media_count  = media_count
                 }
                 if let permission = outSideDict["permission"] as? NSNumber{
-                    mylog(permission)
+                    tempCircleModel.permission = permission
                 }
                 if let address = outSideDict["address"] as? String{
-                    mylog(address)
+                    tempCircleModel.address = address
                 }
                 mylog(outSideDict["members"])
                 if let members = outSideDict["members"] as? [String]{
-                    mylog(members)
+                    tempCircleModel.members = members
                 }
+                self.circleInfoModel = tempCircleModel
                 /**
                  ["circle_image": , "id": 1125, "circle_type": 2, "circle_name": 圈子11112222, "circle_member_count": 1, "circle_member_number": 80, "permission": 0]
                  */
-                
+                self.collectionView.reloadData()
             }else{
                 mylog("获取圈子详情 类型转换失败")
             }
@@ -451,20 +457,63 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
         
     }
 }
-
+class GDCircleSessionHeaderModel: GDBaseModel {
+    var datetime : String?
+    var media_count : NSNumber?
+    var permission : NSNumber?
+    var address : String?
+    var members : [String]?
+}
 class GDCircleSessionHeader: UICollectionReusableView {
     let label1 = UILabel()
     let label2 = UILabel()
+    var model : GDCircleSessionHeaderModel? {
+        didSet{
+            let upAttributeStr = NSMutableAttributedString.init()
+            let locationAtchment = NSTextAttachment.init()
+            locationAtchment.bounds = CGRect(x: 0, y: -3, width: label1.font.lineHeight , height: label1.font.lineHeight  )
+            locationAtchment.image = UIImage(named: "mediaDetaillocation")
+            let timeAtchment = NSTextAttachment.init()
+            timeAtchment.image = UIImage(named: "mediaDetailTime")
+            timeAtchment.bounds = CGRect(x: 0, y: -3, width: label1.font.lineHeight , height: label1.font.lineHeight  )
+            upAttributeStr.append(NSAttributedString.init(attachment: locationAtchment))
+            upAttributeStr.append(NSAttributedString.init(string: model?.address ?? ""))
+            upAttributeStr.append(NSAttributedString.init(attachment: timeAtchment))
+            upAttributeStr.append(NSAttributedString.init(string: model?.datetime ?? ""))
+            
+            label1.attributedText  = upAttributeStr
+            let downAttributeStr = NSMutableAttributedString.init()
+            let cameraAtchment = NSTextAttachment.init()
+            cameraAtchment.image = UIImage(named: "camera_icon_black")
+            cameraAtchment.bounds = CGRect(x: 0, y: 0, width: label1.font.lineHeight , height: label1.font.lineHeight  * 0.8 )
+            downAttributeStr.append(NSAttributedString.init(attachment: cameraAtchment))
+            var tempStr  = ""
+            mylog(model)
+            mylog(model?.members)
+            for (index  , str ) in (model?.members?.enumerated())! {
+                if index != (model?.members?.count ?? 0) - 1{
+                    tempStr.append(str  + "&")
+                }else{                tempStr.append(str)}
+                
+            }
+            downAttributeStr.append(NSAttributedString.init(string: tempStr))
+            
+            label2.attributedText = downAttributeStr
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame )
         self.addSubview(label1)
-        label1.font = UIFont.systemFont(ofSize: 13)
+        label1.font = UIFont.systemFont(ofSize: 12)
+        label1.textColor = UIColor.lightGray
         self.addSubview(label2)
+        label2.textColor = UIColor.gray
     }
     override func layoutSubviews() {
         super.layoutSubviews()
         label1.frame = CGRect(x: 20, y: 0, width: self.bounds.width - 20 * 2, height: self.bounds.height * 0.5)
-        label2.frame = CGRect(x: 20, y: self.bounds.height * 0.5, width: self.bounds.width - 20 * 2, height: self.bounds.height * 0.5)
+        label2.frame = CGRect(x: 20, y: self.bounds.height * 0.4, width: self.bounds.width - 20 * 2, height: self.bounds.height * 0.5)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -474,31 +523,50 @@ class GDCircleSessionHeader: UICollectionReusableView {
 class GDCircleDetailItem: UICollectionViewCell {
     let  imageView = UIImageView()
     let nameLabel  = UILabel()
-    let zanBtn = UIButton()
-    let commentBtn = UIButton()
+    let zanAndCommentLabel = UILabel()
     let locationAndTime = UILabel()
-    
-    
-    
     
     var model :  GDCircleDetailItemModel = GDCircleDetailItemModel.init(dict: nil){
         didSet{
             if let url  = URL(string: model.thumbnail ?? "") {
                 imageView.sd_setImage(with: url)
             }
+            let upAttributeStr = NSMutableAttributedString.init()
+            let locationAtchment = NSTextAttachment.init()
+            locationAtchment.bounds = CGRect(x: 0, y: -3, width: zanAndCommentLabel.font.lineHeight , height: zanAndCommentLabel.font.lineHeight  )
+            locationAtchment.image = UIImage(named: "mediaDetaillocation")
+            let timeAtchment = NSTextAttachment.init()
+            timeAtchment.image = UIImage(named: "mediaDetailTime")
+            timeAtchment.bounds = CGRect(x: 0, y: -3, width: zanAndCommentLabel.font.lineHeight , height: zanAndCommentLabel.font.lineHeight  )
+            upAttributeStr.append(NSAttributedString.init(attachment: locationAtchment))
+            upAttributeStr.append(NSAttributedString.init(string:model.media_good_count ?? ""))
+            upAttributeStr.append(NSAttributedString.init(attachment: timeAtchment))
+            upAttributeStr.append(NSAttributedString.init(string: model.media_comment_count ?? ""))
+            
+            zanAndCommentLabel.attributedText  = upAttributeStr
+            
+            nameLabel.text = model.create_user_name
+            locationAndTime.text = (model.country ?? "")/* + (model.province ?? "")*/ + (model.city ?? "" )  + (model.create_date ?? "")
             self.layoutIfNeeded()
         }
-        
     }
-    
     override init(frame: CGRect) {
         super.init(frame: frame )
         self.setupSubviews()
-        self.contentView.backgroundColor = UIColor.randomColor()
     }
     func setupSubviews()  {
         self.contentView.addSubview(imageView)
         imageView.contentMode = UIViewContentMode.scaleAspectFill
+        self.contentView.addSubview(nameLabel)
+        self.contentView.addSubview(zanAndCommentLabel)
+        self.contentView.addSubview(locationAndTime)
+        zanAndCommentLabel.textAlignment = NSTextAlignment.right
+        zanAndCommentLabel.font = UIFont.systemFont(ofSize: 13)
+        nameLabel.font = UIFont.systemFont(ofSize: 13)
+        locationAndTime.font = UIFont.systemFont(ofSize: 13)
+        zanAndCommentLabel.textColor = UIColor.lightGray
+        nameLabel.textColor = UIColor.lightGray
+        locationAndTime.textColor = UIColor.lightGray
     }
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -517,6 +585,10 @@ class GDCircleDetailItem: UICollectionViewCell {
         imageView.frame = CGRect(x: imageMargin, y: imageMargin, width: imageShowWidth, height: imageShowHeidht )
         let buttomY  =  imageView.frame.maxY + imageMargin
         let bottomH  : CGFloat =  self.bounds.size.height - buttomY
+        
+        nameLabel.frame = CGRect(x: 0, y: buttomY, width: self.bounds.width * 0.5, height: bottomH * 0.6)
+        zanAndCommentLabel.frame = CGRect(x: self.bounds.width * 0.5, y: buttomY, width: self.bounds.width * 0.5, height: bottomH * 0.6)
+        locationAndTime.frame = CGRect(x: 0, y:buttomY + bottomH * 0.5, width: self.bounds.width , height: bottomH * 0.4)
     }
     
     required init?(coder aDecoder: NSCoder) {
