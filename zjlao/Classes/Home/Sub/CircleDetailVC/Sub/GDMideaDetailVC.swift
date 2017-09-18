@@ -467,7 +467,8 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     
     
     
-    //媒体详情
+    //媒体详情版本1
+    /*
     func requestData(loadDataType:LoadDataType)  {
         
         switch loadDataType {
@@ -494,73 +495,47 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
         }
         
     }
-    
-    //圈子详情
-    /*
+    */
+    //媒体详情版本2
     func requestData(loadDataType:LoadDataType)  {
         
         switch loadDataType {
         case LoadDataType.initialize , LoadDataType.reload:
-            self.offset = 0
+            //            self.offset = 0
             break
         case LoadDataType.loadMore:
             break
         }
-        
-        var tempCircleID = ""
-        if let circleID  =  self.keyModel?.keyparamete as? String {
-            tempCircleID = circleID
-        }else{return}
-        GDNetworkManager.shareManager.getCircleMediasList(circleID: tempCircleID, offset: self.offset, { (result) in
-            mylog("请求纵向圈子详情结果 : \(result.status)")
-            mylog(result.data)
+        GDNetworkManager.shareManager.getMediaDetail(circleID: self.circleID, messageID: self.messageID, mediaID: self.mediaID ?? "0", { (result ) in
+            mylog("获取媒体详情 sttus: \(result.status) , data : \(result.data)")
             var tempDatas  : [GDCircleDetailCellModel] = [GDCircleDetailCellModel] ()
             if let infoDict = result.data as? [String : AnyObject]{
-                
-                var offSet : Int = 0
-                var pageSize : Int = 0
-                var mediaCount : Int = 0
-                if let media_Count = infoDict["mediaCount"] as? Int{
-                    mediaCount = media_Count
-                }
-                if let off_set = infoDict["offset"] as? Int{
-                    offSet = off_set
-                }
-                if let page_Size = infoDict["pageSize"] as? Int{
-                    pageSize = page_Size
-                }
-                self.offset = offSet + pageSize
-                if let subMediasArr = infoDict["resultMedia"] as? [[String : AnyObject]]{
-                    for subMediaDict in subMediasArr{
-                        let picModel : GDCircleDetailCellModel = GDCircleDetailCellModel.init(dict: subMediaDict)
-                        tempDatas.append(picModel)
-                    }
-                }
+                let picModel : GDCircleDetailCellModel = GDCircleDetailCellModel.init(dict: infoDict["resultMedia"] as! [String : AnyObject])
+                tempDatas.append(picModel)
             }
-            /////
-            if(tempDatas.count == 0 ){
-                self.tableView.mj_header.endRefreshing()
-                self.tableView.mj_footer.state = MJRefreshState.noMoreData
-                return
-            }
-            switch loadDataType {
-            case LoadDataType.initialize , LoadDataType.reload:
-                self.datas = tempDatas
-                break
-            case LoadDataType.loadMore:
-                self.datas.append(contentsOf: tempDatas)
-                break
-            }
+            self.datas = tempDatas
             self.tableView.reloadData()
-            self.tableView.mj_header.endRefreshing()
-            self.tableView.mj_footer.state = MJRefreshState.idle
-            
         }) { (error ) in
-            mylog(error)
+            mylog("获取媒体详情失败")
         }
         
+        
+//        GDNetworkManager.shareManager.seeMoreComments(circleID: self.circleID, messageID: self.messageID, mediaID: self.mediaID ?? "0", offset: nil , create_at: self.create_at  , { (result) in
+//            mylog("查看媒体全部评论 : \(result.status)")
+//            //            mylog(result.data)
+//
+//            var tempDatas  : [GDCircleDetailCellModel] = [GDCircleDetailCellModel] ()
+//            if let infoDict = result.data as? [String : AnyObject]{
+//                let picModel : GDCircleDetailCellModel = GDCircleDetailCellModel.init(dict: infoDict)
+//                tempDatas.append(picModel)
+//            }
+//            self.datas = tempDatas
+//            self.tableView.reloadData()
+//        }) { (error ) in
+//            mylog(error)
+//        }
+        
     }
-    */
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.textView.resignFirstResponder()
     }

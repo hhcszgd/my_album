@@ -48,10 +48,11 @@ class GDCircleDetailVC2: GDNormalVC {
         if let para  = keyModel?.keyparamete as? [String:String] {
             circleName = para["title"]!
             self.circleID = para["id"]!
+            self.pwd = para["password"]
         }
-        self.setupQZButton()
         // Do any additional setup after loading the view.
         self.prepareSubViews()
+        self.setupQZButton()
         self.getCircles()
     }
     
@@ -123,7 +124,7 @@ class GDCircleDetailVC2: GDNormalVC {
         }
         return GDCircleSessionHeader.init(frame: CGRect(x: 0, y: 0, width: 200, height: 64))
     }
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize{
         return CGSize(width: collectionView.bounds.width, height: 64)
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
@@ -223,7 +224,12 @@ extension GDCircleDetailVC2 {
 //        return item
 //    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let dataModel = models![indexPath.item % models!.count]
+        let model = models![indexPath.item % models!.count]
+//        getMediaDetail
+        model.actionkey = "GDMideaDetailVC"
+        let keyParamete : [String : String ] = ["circleID":self.circleID , "mediaID":model.id ?? ""]
+        model.keyparamete = keyParamete as AnyObject
+        GDSkipManager.skip(viewController: self , model: model)
         
         
     }
@@ -438,6 +444,7 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
                             //save  mediaKey to our server
                             GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.circleID, original: key , type: type , description: nil , media_spec:  rectSize, success: { (model ) in
                                 mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
+                                self.getCircles()
                             }, failure: { (error ) in
                                 mylog("插入媒体到圈子 请求结果 : \(error)")
                             })
@@ -674,7 +681,8 @@ class GDFlowLayout: UICollectionViewLayout {
         super.prepare()
         attributes.removeAll()
         //先考虑只有一组的情况, 而且没有header
-        let _ = columnCount
+        columns.removeAll()
+        let _ = columnCount//chushihua
         let itemsCount = self.collectionView?.numberOfItems(inSection: 0) ?? 0
         let sectionCount = self.collectionView?.numberOfSections ?? 0
         if sectionCount > 0  {

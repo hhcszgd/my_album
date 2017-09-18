@@ -93,7 +93,7 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
             attachTime.bounds = CGRect(x: 0, y: -self.creatTime.font.lineHeight * 0.2, width: self.creatTime.font.lineHeight , height: self.creatTime.font.lineHeight)
             let attachTimeStr = NSAttributedString.init(attachment: attachTime)
             attriStr.append(attachTimeStr)
-            let time : NSAttributedString = NSAttributedString.init(string: " " + (model?.create_at ?? "" ))
+            let time : NSAttributedString = NSAttributedString.init(string: " " + (model?.create_date/*create_at*/ ?? "" ))
             attriStr.append(time )
             self.creatTime.attributedText = attriStr
             

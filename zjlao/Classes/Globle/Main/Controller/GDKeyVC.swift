@@ -11,7 +11,8 @@ import CoreGraphics
 //import GPUImage
 import CoreLocation
 class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelegate  {
-
+    var keyBoardSize : CGSize = CGSize(width: UIScreen.main.bounds.width, height: 258.0)
+    
     var avPlayerVC : AVPlayerViewController?
     lazy var customViewContainer = UIControl()
     lazy var imageView = UIImageView()
@@ -103,7 +104,8 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
         let tempMainTabbarVC = GDMainTabbarVC()
         let tempKeyVC = GDKeyVC(rootViewController: tempMainTabbarVC)
         tempMainTabbarVC.delegate = tempKeyVC
-        
+        NotificationCenter.default.addObserver(tempKeyVC , selector: #selector(keyboardWillHide(info:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(tempKeyVC , selector: #selector(keyboardWillShow(info:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         return tempKeyVC
     }()
     //    override init(rootViewController: UIViewController) {
@@ -759,8 +761,8 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
 //            self.imageView.frame = CGRect(x: 0, y: margin , width: SCREENWIDTH, height: SCREENWIDTH)
         }
         self.imageView.image = self.captureEditImage
-        NotificationCenter.default.addObserver(self , selector: #selector(keyboardWillHide(info:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self , selector: #selector(keyboardWillShow(info:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+//        NotificationCenter.default.addObserver(self , selector: #selector(keyboardWillHide(info:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+//        NotificationCenter.default.addObserver(self , selector: #selector(keyboardWillShow(info:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         self.filtersView.reloadData()
     }
 
@@ -846,6 +848,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         
         if let keyboardFrame = keyboardEndFrame {
             if let keyboardFrameRect = keyboardFrame as? CGRect {
+                self.keyBoardSize = keyboardFrameRect.size
                 mylog(keyboardFrameRect)
                 UIView.animate(withDuration: realTime) {
                     self.textFieldContainer.center = CGPoint(x: self.customViewContainer.bounds.size.width / 2, y: keyboardFrameRect.origin.y - self.textFieldContainer.bounds.size.height / 2)

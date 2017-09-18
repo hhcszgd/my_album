@@ -511,7 +511,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.showTime()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) { 
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
             //        UserDefaults.standard.set(nil, forKey: "LanguageTableName")
             self.setupRootVC()
             self.initnetWorkManager()
@@ -519,7 +519,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
             self.setupJpush(launchOptions: launchOptions)
             self.setupOriginPushNotification()
             
-        }
+//        }
 
         // Override point for customization after application launch.
         return true

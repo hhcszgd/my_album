@@ -147,6 +147,7 @@
 		1594559A1F1A0740002DE664 /* GDDayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159455991F1A0740002DE664 /* GDDayLabel.swift */; };
 		1594559C1F1A074C002DE664 /* GDWeekLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1594559B1F1A074C002DE664 /* GDWeekLabel.swift */; };
 		1594559E1F1A075D002DE664 /* GDYearMonthLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1594559D1F1A075D002DE664 /* GDYearMonthLabel.swift */; };
+		159A47DF1F6F627500FE1BD0 /* GDCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159A47DE1F6F627500FE1BD0 /* GDCoverView.swift */; };
 		15A4DCC51E8CF5B6009A0DCE /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB551E8CF5B5009A0DCE /* GLProgram.m */; };
 		15A4DCC61E8CF5B6009A0DCE /* GPUImage3x3ConvolutionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB581E8CF5B5009A0DCE /* GPUImage3x3ConvolutionFilter.m */; };
 		15A4DCC71E8CF5B6009A0DCE /* GPUImage3x3TextureSamplingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB5A1E8CF5B5009A0DCE /* GPUImage3x3TextureSamplingFilter.m */; };
@@ -558,6 +559,7 @@
 		159455991F1A0740002DE664 /* GDDayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDDayLabel.swift; sourceTree = "<group>"; };
 		1594559B1F1A074C002DE664 /* GDWeekLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDWeekLabel.swift; sourceTree = "<group>"; };
 		1594559D1F1A075D002DE664 /* GDYearMonthLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDYearMonthLabel.swift; sourceTree = "<group>"; };
+		159A47DE1F6F627500FE1BD0 /* GDCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDCoverView.swift; sourceTree = "<group>"; };
 		15A4DB541E8CF5B5009A0DCE /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
 		15A4DB551E8CF5B5009A0DCE /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
 		15A4DB561E8CF5B5009A0DCE /* GPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImage.h; sourceTree = "<group>"; };
@@ -1457,6 +1459,7 @@
 				154BB6001E2B5FAE00A9EF05 /* GDTableView.swift */,
 				154BB6021E2B600100A9EF05 /* GDView.swift */,
 				150D06CB1EAB3ED00043D80D /* GDImageView.swift */,
+				159A47DE1F6F627500FE1BD0 /* GDCoverView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4070,6 +4073,7 @@
 				15D037951E9A26C000581B77 /* GDTrendsMsgCell.swift in Sources */,
 				15A4DD671E8CF5B6009A0DCE /* GPUImageVignetteFilter.m in Sources */,
 				15A4DCEB1E8CF5B6009A0DCE /* GPUImageDissolveBlendFilter.m in Sources */,
+				159A47DF1F6F627500FE1BD0 /* GDCoverView.swift in Sources */,
 				15A8D1071EA8A7F7009BFA3B /* GDCommentFullCell.swift in Sources */,
 				15A4DCD81E8CF5B6009A0DCE /* GPUImageColorBlendFilter.m in Sources */,
 				15A4DD6E1E8CF5B6009A0DCE /* GPUImageContext.m in Sources */,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDelegate , UICollectionViewDataSource{
+class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDelegate , UICollectionViewDataSource , UITextFieldDelegate{
 
     let autoScrollView = GDAutoScrollView.init(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width * 0.5))
     let backView = UIView()
@@ -18,6 +18,12 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
     let seeAllCircles = UIButton()
     var models : [CircleItemModel]?
     var circleView : UICollectionView!
+    let pwdTextField = UITextField.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+    let unlockBtn = UIButton.init(frame: CGRect(x: 0, y: 0, width: 64, height: 44))
+    weak var cover  : GDCoverView?
+    var selectedCircleID = ""
+    var selectedTitle = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
@@ -25,7 +31,10 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         self.prepareSubViews()
         self.getAD()
         self.gerCircles()
+        unlockBtn.addTarget(self , action: #selector(unlockBtnClick), for: UIControlEvents.touchUpInside)
+        
     }
+    
     func prepareSubViews()  {
         ///:autoScrollView
         
@@ -109,17 +118,92 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         let dataModel = models![indexPath.item % models!.count]
 
         mylog("点击的圈子信息 : id:\(String(describing: dataModel.id)) , 权限 : \(String(describing: dataModel.permission))")
+        self.selectedCircleID = "\(dataModel.id ?? 0)"
+        self.selectedTitle = dataModel.circle_name ?? ""
         if dataModel.permission == 1 {
             dataModel.actionkey = "GDCircleDetailVC2"
             let para = ["id" : "\(dataModel.id ?? 0)" , "title" : dataModel.circle_name ?? "圈子详情"] as [String : String]
             dataModel.keyparamete = para as AnyObject
             GDSkipManager.skip(viewController: self , model: dataModel)
         }else{//输入密码再进
-            
-            
+            self.setupPwdInput()
         }
-        
     }
+    func setupPwdInput() {
+        let cover = GDCoverView.init(superView: self.view)
+        self.cover = cover
+        self.pwdTextField.frame = CGRect(x: cover.contentView.frame.minX + 10 , y: 40, width:  cover.contentView.frame.width - 20, height: 44)
+        cover.contentView.addSubview(self.pwdTextField)
+        self.pwdTextField.borderStyle = UITextBorderStyle.roundedRect
+        self.pwdTextField.backgroundColor = UIColor.white
+        self.pwdTextField.placeholder = "输入密码进入圈子"
+        self.unlockBtn.setTitle("解锁", for: UIControlState.normal)
+        cover.contentView.backgroundColor = UIColor.init(red: 65/100, green: 59/100, blue: 36/100, alpha: 1)
+        self.unlockBtn.frame = CGRect( x: cover.contentView.frame.midX - 64 / 2 , y: pwdTextField.frame.maxY + 44, width: 64, height: 40   )
+        self.unlockBtn.backgroundColor = UIColor.init(red: 36/100, green: 57/100, blue: 76/100, alpha: 1)
+        self.cover?.contentView.addSubview(self.unlockBtn)
+        
+        self.pwdTextField.delegate = self
+        self.pwdTextField.becomeFirstResponder()
+        mylog(UIApplication.shared.windows)
+    }
+    func unlockBtnClick(){
+        if self.pwdTextField.text?.isEmpty ?? false  {
+            GDAlertView.alert("请输入密码", image: nil, time: 2, complateBlock: nil )
+            return
+        }
+        GDNetworkManager.shareManager.getCircleDetail(circleID: selectedCircleID, page: "1", password: self.pwdTextField.text, success: { (model ) in
+            switch model.status {
+            case 200 :
+
+                //接口判断密码的有效性
+                let tempmodel = GDBaseModel.init(dict: nil )
+                tempmodel.actionkey = "GDCircleDetailVC2"
+                let para = ["id" : "\(self.selectedCircleID )" ,"title" : self.selectedTitle , "password" : self.pwdTextField.text ?? ""] as [String : String]
+                tempmodel.keyparamete = para as AnyObject
+                        GDSkipManager.skip(viewController: self , model: tempmodel)
+            case 324 :
+                GDAlertView.alert("圈子已失效", image: nil, time: 2, complateBlock: nil )
+                
+                
+            case 345 :
+                GDAlertView.alert("密码错误", image: nil, time: 2, complateBlock: nil )
+                
+                
+            case 354 :
+                GDAlertView.alert("加入失败", image: nil, time: 2, complateBlock: nil )
+                
+                
+            case 356 :
+                GDAlertView.alert("圈子人数已满", image: nil, time: 2, complateBlock: nil )
+                
+                
+            default :
+                GDAlertView.alert("未知错误", image: nil, time: 2, complateBlock: nil )
+                
+            }
+        }) { (errr) in
+            GDAlertView.alert("操作失败 请重试", image: nil , time: 2 , complateBlock: nil )
+
+            mylog("操作失败  请重试")
+        }
+        self.pwdTextField.text = nil
+        self.cover?.remove()
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        mylog(GDKeyVC.share.keyBoardSize)
+        let keyboardMinY = UIScreen.main.bounds.height - GDKeyVC.share.keyBoardSize.height - 20
+        let needMoveY = keyboardMinY - (self.cover?.contentView.frame.maxY ?? 0)
+        self.cover?.moveContent(offset: needMoveY)
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+         mylog(UIApplication.shared.windows)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        return true
+    }
+    
     func performToWebAction(model: GDBaseModel) {
         model.actionkey = "webpage"
      GDSkipManager.skip(viewController: self , model: model )

@@ -318,7 +318,7 @@ class GDNetworkManager: AFHTTPSessionManager {
  
     // MARK: 注释 : 查看全部评论
     
-    
+    //第一版媒体详情
     func seeMoreComments(circleID : String?/*圈子详情点进去时要传*/ ,messageID : String?/*回复别人是传*/,mediaID : String , offset : Int?/*左右分页时传,暂定-1*/ ,create_at : String?/*回去时传*/ , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
         let url =  "media_comment/" + mediaID
         var para : [String : Any] = [
@@ -1509,6 +1509,39 @@ class GDNetworkManager: AFHTTPSessionManager {
         
     }
 
+    /**
+     2.查看媒体
+     接口地址：media/<id>
+     请求方式：get
+     
+     */
+    func getMediaDetail(circleID : String?/*圈子详情点进去时要传*/ ,messageID : String?/*回复别人是传*/,mediaID : String , offset : Int?/*左右分页时传,暂定-1*/  = nil ,create_at : String?/*回去时传*/ = nil  , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "media/" + mediaID
+        var para : [String : Any] = [
+            "token" : self.token ?? ""
+        ]
+        
+        if let circleIDStr = circleID {
+            para["circle_id"] = circleIDStr
+        }
+        if let offSetInt = offset {
+            para["offset"] = offSetInt
+        }
+        if let messageIDStr = messageID {
+            para["message_id"] = messageIDStr
+        }
+        if let creatTime = create_at {
+            para["create_at"] = creatTime
+        }
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            
+            failure(error)
+        }
+        
+        
+    }
     // MARK: 注释 : v2 👆
     //MARK:
     //MARK:
