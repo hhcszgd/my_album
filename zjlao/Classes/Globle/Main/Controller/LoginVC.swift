@@ -27,7 +27,7 @@ class LoginVC: GDNormalVC {
         btn.addTarget(self , action: #selector(click), for: UIControlEvents.touchUpInside)
         
     }
-    func click () {
+    @objc func click () {
         mylog("sadfasd")
         self.navigationController?.dismiss(animated: true , completion: nil )
     }

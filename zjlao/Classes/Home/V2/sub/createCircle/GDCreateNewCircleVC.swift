@@ -27,7 +27,7 @@ class GDCreateNewCircleVC: GDNormalVC {
         createButton.addTarget(self , action: #selector(performCreate), for: UIControlEvents.touchUpInside)
         self.naviBar.customViews = [createButton]
     }
-    func performCreate()  {
+    @objc func performCreate()  {
         mylog("performCreate")
     }
     

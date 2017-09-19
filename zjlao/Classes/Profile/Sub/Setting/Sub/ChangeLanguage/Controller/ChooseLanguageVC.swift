@@ -143,7 +143,7 @@ class ChooseLanguageVC: GDNormalVC/*,UITableViewDelegate ,*/ /*, UITableViewData
         
     }
     //MARK:customMethod
-    func sureClick(sender : UIButton) {
+    @objc func sureClick(sender : UIButton) {
         mylog(GDStorgeManager.standard.object(forKey: "AppleLanguages"))
         mylog(GDLanguageManager.gotcurrentSystemLanguage())
         if self.selectedLanguage == "" {

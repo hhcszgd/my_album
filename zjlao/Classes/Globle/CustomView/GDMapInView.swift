@@ -61,12 +61,12 @@ class GDMapInView: UIView , MKMapViewDelegate {
         self.button1.addTarget(self , action: #selector(button1Click(sender:)), for: UIControlEvents.touchUpInside)
         self.button2.addTarget(self , action: #selector(button2Click(sender:)), for: UIControlEvents.touchUpInside)
     }
-    func button1Click(sender:UIButton)  {
+    @objc func button1Click(sender:UIButton)  {
         self.setup3D()
         //self.getshotScreen()
     }
 
-    func button2Click(sender:UIButton)  {
+    @objc func button2Click(sender:UIButton)  {
         //GDLocationManager.share.startNaviBySystemMap()
         self.drawNaviLine()
 

@@ -33,7 +33,7 @@ class LaoNaviVC: UINavigationController {
 //        self.tabBarItem.title = "🌱🌱🌱"
         // Do any additional setup after loading the view.
     }
-    func languageChanged() {
+    @objc func languageChanged() {
 //        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_lao)  // gotTitleStr(key: "tabBar_lao")
 //        self.tabBarItem.title = "🌱🌱🌱"
     }

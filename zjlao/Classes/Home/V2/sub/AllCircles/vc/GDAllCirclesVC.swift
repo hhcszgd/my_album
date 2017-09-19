@@ -21,7 +21,7 @@ class GDAllCirclesVC: GDNormalVC , UITextFieldDelegate {
         super.viewDidLoad()
         self.naviBar.backgroundColor = UIColor.black
         var attritit = NSMutableAttributedString.init(string: "所有圈子")
-        attritit.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
+        attritit.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
         self.naviBar.attributeTitle = attritit
         self.setupCreateButton()
         self.prepareSubViews()
@@ -47,7 +47,7 @@ class GDAllCirclesVC: GDNormalVC , UITextFieldDelegate {
         let itemW = (collectionW - cellMargin * 4 ) / 3
         flowLayout.itemSize = CGSize(width: itemW, height: itemW+circleNameH)
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: cellMargin, bottom: 0, right: cellMargin)
-        let collectionH = UIScreen.main.bounds.size.height
+        let collectionH = UIScreen.main.bounds.size.height - 20
 //        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         collectionView.frame =  CGRect(x : 0 , y : 20 , width : collectionW  , height : collectionH)
         collectionView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
@@ -105,7 +105,7 @@ class GDAllCirclesVC: GDNormalVC , UITextFieldDelegate {
         self.pwdTextField.becomeFirstResponder()
         mylog(UIApplication.shared.windows)
     }
-    func unlockBtnClick(){
+    @objc func unlockBtnClick(){
         if self.pwdTextField.text?.isEmpty ?? false  {
             GDAlertView.alert("请输入密码", image: nil, time: 2, complateBlock: nil )
             return
@@ -210,7 +210,7 @@ class GDAllCirclesVC: GDNormalVC , UITextFieldDelegate {
         self.naviBar.customViews = [createButton]
         //        self.naviBar.backBtn.isHidden = false
     }
-    func performCreate() {
+    @objc func performCreate() {
         let model  = GDBaseModel.init(dict: nil)
         model.actionkey = "GDCreateCircleVC"//  "GDCreateNewCircleVC"
         GDSkipManager.skip(viewController: self , model: model)

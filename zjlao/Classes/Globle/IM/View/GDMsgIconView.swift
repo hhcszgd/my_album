@@ -145,7 +145,7 @@ class GDMsgIconView: GDBaseControl {
     }
     */
     
-    func messageCountChanged()  {
+    @objc func messageCountChanged()  {
         //重置消息图标
     }
     deinit {

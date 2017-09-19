@@ -55,7 +55,7 @@ class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITable
     }()
     lazy var tableView : UITableView = {
         self.scrollViewType = "table"
-        let temp = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)//
+        let temp = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain )//
         self.view.addSubview(temp)
         temp.dataSource = self
         temp.delegate = self
@@ -101,7 +101,7 @@ class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITable
         return images
     }()
 
-    func refresh ()  {
+    @objc func refresh ()  {
         if self.scrollViewType == "collect" {
             self.collectionView.mj_header.endRefreshing()
             self.collectionView.mj_header.state = MJRefreshState.idle
@@ -113,7 +113,7 @@ class GDNormalVC: GDBaseVC , CustomNaviBarDelegate , UITableViewDelegate,UITable
         }
 
     }
-    func loadMore ()  {
+    @objc func loadMore ()  {
         if self.scrollViewType == "collect" {
             self.collectionView.mj_footer.endRefreshingWithNoMoreData()
         }else if self.scrollViewType == "table"{

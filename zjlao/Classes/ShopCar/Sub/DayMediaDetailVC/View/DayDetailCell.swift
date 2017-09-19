@@ -52,7 +52,7 @@ class DayDetailCell: GDBaseCell {
         get{return super.model}
     }
     
-    func subitemClick(sender:GDPicView)  {
+    @objc func subitemClick(sender:GDPicView)  {
         mylog(sender.controlModel?.title)
         mylog(sender.controlModel?.subTitle)
         mylog(sender.controlModel?.imageUrl)

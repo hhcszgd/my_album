@@ -44,7 +44,7 @@ class TestCustomVC: GDUnNormalVC {
         gdLoad.direction = GDDirection.bottom
         self.collectionView.gdLoadControl = gdLoad
     }
-    func load()  {
+    @objc func load()  {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             
             self.collectionView.reloadData()
@@ -70,7 +70,7 @@ class TestCustomVC: GDUnNormalVC {
         
     }
     
-    func tableViewPerforRefresh()  {
+    @objc func tableViewPerforRefresh()  {
 //        cells = 4 + cells
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) { 
@@ -79,9 +79,9 @@ class TestCustomVC: GDUnNormalVC {
             
             self.tableView.gdRefreshControl?.endRefresh(result: GDRefreshResult.success)
         }
-    }
+        }
     
-    func collectionViewPerforRefresh()  {
+    @objc  func collectionViewPerforRefresh()  {
                 cells = 4 + cells
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {

@@ -7,7 +7,7 @@
 //
 let homeBackgroundColor = UIColor.init(hexString:"#353434")
 //let contentBackgroundColor = UIColor.white
-let contentBackgroundColor = UIColor.init(colorLiteralRed: 0.98, green: 0.98, blue: 0.95, alpha: 1)
+let contentBackgroundColor = UIColor.init(red: 0.98, green: 0.98, blue: 0.95, alpha: 1)
 let homeTextColor = UIColor.white
 import UIKit
 import MBProgressHUD
@@ -242,7 +242,7 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         self.noBodyTitle.isHidden = true
         
     }
-    func uploadMediaSuccessCallback()  {
+    @objc func uploadMediaSuccessCallback()  {
         self.needReload = true
         if self.navigationController?.visibleViewController == self  {
             self.needReload = false
@@ -598,7 +598,7 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
     
     //获取附近所有圈子
     
-    func getNearbyCircles()  {
+    @objc  func getNearbyCircles()  {
         if !isNeedReloadData  {
            isNeedReloadData = true
             return

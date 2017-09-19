@@ -91,13 +91,13 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         nearbyCircleLabel.center = CGPoint(x: cellMargin + createdNewCircleButton.bounds.size.width / 2 , y: circleView.frame.minY - createdNewCircleButton.bounds.size.height / 2 )
 
     }
-    func createCircle()  {
+    @objc func createCircle()  {
         print("create new circle ")
         let model  = GDBaseModel.init(dict: nil)
         model.actionkey = "GDCreateCircleVC"//  "GDCreateNewCircleVC"
         GDSkipManager.skip(viewController: self , model: model)
     }
-    func performSeeAllCircles()  {
+    @objc func performSeeAllCircles()  {
         mylog("see all circles")
         let model = GDBaseModel.init(dict: nil )
         model.actionkey = "GDAllCirclesVC"
@@ -146,8 +146,8 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         self.pwdTextField.delegate = self
         self.pwdTextField.becomeFirstResponder()
         mylog(UIApplication.shared.windows)
-    }
-    func unlockBtnClick(){
+        }
+    @objc func unlockBtnClick(){
         if self.pwdTextField.text?.isEmpty ?? false  {
             GDAlertView.alert("请输入密码", image: nil, time: 2, complateBlock: nil )
             return
@@ -243,7 +243,7 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         return UIStatusBarStyle.lightContent
     }
     func gerCircles() {
-        GDNetworkManager.shareManager.getNearbyCircles(circleNum : "0" ,success: { (model ) in
+        GDNetworkManager.shareManager.getNearbyCircles(circleNum : "6" ,success: { (model ) in
             mylog("首页获取附近的圈子成功 status : \(model.status) , data : \(String(describing: model.data ))")
             
             if let arr = model.data as? [[String : AnyObject]]{

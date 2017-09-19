@@ -163,19 +163,23 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         imgTxt.image = UIImage(named: imgName)
         imgTxt.frame = CGRect(x: x, y: y, width: tableHeaderView.bounds.width  / 4, height: 63)
     }
-    func editIcon() {
+    @objc func editIcon() {
         mylog("edit icon")
     }
-    func gotoFriendsList()  {
+    @objc func gotoFriendsList()  {
         mylog("got friends list ")
     }
-    func gotoMessagesList()  {
+    @objc func gotoMessagesList()  {
         mylog("goto message list")
     }
-    func gotoSetting()  {
+    @objc func gotoSetting()  {
         mylog("go and setting")
     }
-    func performPrint()  {
+    @objc func performPrint()  {
+        let model  = GDBaseModel.init(dict: nil)
+        model.actionkey = "GDPhotoPickerVC"
+        GDSkipManager.skip(viewController: self , model: model )
+        
         mylog("perfomr print action")
     }
     func requestData(loadDataType:LoadDataType)  {
@@ -293,10 +297,10 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         
     }
 
-    func loadMore () {
+    @objc func loadMore () {
         self.requestData(loadDataType: LoadDataType.loadMore)
     }
-    func refreshOrInit()  {
+    @objc func refreshOrInit()  {
         self.requestData(loadDataType: LoadDataType.initialize)
     }
     

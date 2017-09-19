@@ -84,7 +84,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     }()
     static var isFirst = false//第一次监听不提示
     
-    class func noticeNetworkChanged(_ note : Notification) -> () {
+    @objc class func noticeNetworkChanged(_ note : Notification) -> () {
         if !isFirst  {
             isFirst = true
             return

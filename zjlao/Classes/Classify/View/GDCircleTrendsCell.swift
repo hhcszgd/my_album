@@ -297,7 +297,7 @@ class GDCircleTrendsCell: GDBaseCell {
     }
     
     
-    func picClick(sender : GDPicView)  {
+    @objc func picClick(sender : GDPicView)  {
         self.delete?.imageControlClick(model: sender.controlModel ?? BaseControlModel.init(dict: nil), imageControl: sender)
     }
 

@@ -121,7 +121,7 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     // MARK: 注释 : methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.naviBar.backgroundColor = UIColor.init(colorLiteralRed: 0.99, green: 0.99, blue: 0.99, alpha: 1)
+        self.naviBar.backgroundColor = UIColor.init(red: 0.99, green: 0.99, blue: 0.99, alpha: 1)
         self.automaticallyAdjustsScrollViewInsets = false
         
         //////////
@@ -160,7 +160,7 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     func setupTextView()  {
         self.inputContainer.addSubview(self.textView)
         
-        self.inputContainer.backgroundColor =  UIColor.init(colorLiteralRed: 0.95, green: 0.95, blue: 0.95, alpha: 1)
+        self.inputContainer.backgroundColor =  UIColor.init(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
         self.view.addSubview(self.inputContainer)
         self.textView.enablesReturnKeyAutomatically = true
         self.inputContainer.frame = CGRect(x: 0, y: SCREENHEIGHT, width: SCREENWIDTH, height: SCREENWIDTH * 0.4)
@@ -183,10 +183,10 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
         NotificationCenter.default.addObserver(self , selector: #selector(keyboardWillShow(info:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
-    func cancleBtnClick()  {
+    @objc func cancleBtnClick()  {
         self.textView.resignFirstResponder()
     }
-    func confirmBtnClick()  {
+    @objc func confirmBtnClick()  {
         if textView.text.characters.count > 0  {
             if self.currentMediaID != nil  {
                 GDNetworkManager.shareManager.commentAndLike(mediaID: self.currentMediaID!, isLike: "0", content: self.textView.text, { (result ) in
@@ -202,7 +202,7 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
         self.cancleBtnClick( )
         
     }
-    func keyboardWillHide(info:NSNotification)  {
+    @objc func keyboardWillHide(info:NSNotification)  {
         var realTime : TimeInterval = 0.25
         let timeInterval = info.userInfo?[UIKeyboardAnimationDurationUserInfoKey]
         if let timeAny  = timeInterval  {
@@ -215,7 +215,7 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
         }
         
     }
-    func keyboardWillShow(info:NSNotification)  {
+    @objc func keyboardWillShow(info:NSNotification)  {
         var realTime : TimeInterval = 0.25
         let timeInterval = info.userInfo?[UIKeyboardAnimationDurationUserInfoKey]
         let keyboardEndFrame = info.userInfo?[UIKeyboardFrameEndUserInfoKey] ; // as CGRect

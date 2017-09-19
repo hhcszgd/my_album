@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     }
     
     
-    // The method will be called on the delegate when the user responded to the notification by opening the application, dismissing the notification or choosing a UNNotificationAction. The delegate must be set before the application returns from applicationDidFinishLaunching:.
+    // The method will be called on the delegate @objc @objc @objc @objc @objc @objc @objc @objc @objc when the user responded to the notification by opening the application, dismissing the notification or choosing a UNNotificationAction. The delegate must be set before the application returns from applicationDidFinishLaunching:.
     @available(iOS 10.0, *)//程序在后台或退出时的通知
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void){
         let userInfo = response.notification.request.content.userInfo
@@ -327,7 +327,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
        
 
     }
-    func authorizationStatusChanged(status : CLAuthorizationStatus)  {
+    @objc func authorizationStatusChanged(status : CLAuthorizationStatus)  {
         
             if CLLocationManager.locationServicesEnabled() {
                 switch CLLocationManager.authorizationStatus() {
@@ -711,10 +711,10 @@ class GDSetupLocationEnableVC: UIViewController{
         self.skipButton.backgroundColor = UIColor.init(red: 0.3, green: 0.8, blue: 0.8, alpha: 1)
         self.tipLbl.backgroundColor = self.skipButton.backgroundColor
     }
-    func performSkip()  {
+    @objc func performSkip()  {
         self.setKeyvcToMain()
     }
-    func gotoSetting(){
+    @objc func gotoSetting(){
         //        UIApplicationOpenSettingsURLString
         //        NSURL *url= [NSURL URLWithString:@"prefs:root=LOCATION_SERVICES"];
         //        if( [[UIApplicationsharedApplication]canOpenURL:url] ) {
@@ -859,7 +859,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
         provisionButton.addTarget(self , action: #selector(provisionDetail), for: UIControlEvents.touchUpInside)
         
     }
-    func provisionDetail(){
+    @objc func provisionDetail(){
         let model = GDBaseModel.init(dict: nil )
         model.actionkey = "ProvisionVC"
         model.keyparamete = "http://www.123qz.cn/yinsi.html" as AnyObject//
@@ -878,7 +878,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
         self.czButton.isEnabled = false
     }
     
-    func cancleAuth(sender:UIButton)  {//取消认证
+    @objc func cancleAuth(sender:UIButton)  {//取消认证
         
         let appDelegateOption = UIApplication.shared.delegate
         if let appDelegate  = appDelegateOption {
@@ -917,7 +917,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
 //    
 //    }
     
-    func getPicture()  {
+    @objc func getPicture()  {
         mylog(self.mobileOrNameInput.text)
         if self.mobileOrNameInput.text == nil || self.mobileOrNameInput.text!.isEmpty {
             GDAlertView.alert("请输入您的姓名", image: nil , time: 2, complateBlock: nil)
@@ -936,7 +936,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
 
     }
     
-    func performAuth(sender:UIButton)  {//验证手机
+    @objc func performAuth(sender:UIButton)  {//验证手机
         //验证手机格式是否正确 todo
         if !self.mobileLawful(mobileStr: self.mobileOrNameInput.text ?? "") {//非法
             if self.mobileOrNameInput.text?.characters.count ?? 0 == 0 {
@@ -1034,7 +1034,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
         
     }
     
-    func countDown() {
+    @objc func countDown() {
         self.timeInterval -= 1
         if self.timeInterval <= 0  {
             self.getAuthCodeButton.isEnabled = true
@@ -1046,7 +1046,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
         }
     }
     
-    func getAuthClick(sender:UIButton)  {//获取验证码
+    @objc func getAuthClick(sender:UIButton)  {//获取验证码
         //验证手机格式是否正确 todo
         if !self.mobileLawful(mobileStr: self.mobileOrNameInput.text ?? "") {//非法
             if self.mobileOrNameInput.text?.characters.count ?? 0 == 0 {

@@ -160,10 +160,10 @@ class GDUserHistoryVC: GDUnNormalVC , GDTrendsCellDelegate {
         
         self.tableView.tableHeaderView = self.headerView()
     }
-    override func loadMore () {
+    @objc override func loadMore () {
         self.requestData(loadDataType: LoadDataType.loadMore)
     }
-    func refreshOrInit()  {
+    @objc func refreshOrInit()  {
         self.requestData(loadDataType: LoadDataType.initialize)
     }
     
@@ -186,7 +186,7 @@ class GDUserHistoryVC: GDUnNormalVC , GDTrendsCellDelegate {
         headerView.addTarget(self , action: #selector(headerViewClick(sender:)), for: UIControlEvents.touchUpInside)
         return headerView
     }
-    func headerViewClick(sender:GDBaseControl)  {
+    @objc func headerViewClick(sender:GDBaseControl)  {
         mylog("头视图点击")
     }
     // MARK: 注释 : 代理

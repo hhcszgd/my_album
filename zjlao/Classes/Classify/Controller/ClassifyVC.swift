@@ -70,7 +70,7 @@ class ClassifyVC: GDNormalVC , GDCircleTrendsCellDelete{
         self.naviBar.backgroundColor = UIColor.black
 //        self.naviBar.title = "好友动态"
         var attritit = NSMutableAttributedString.init(string: "好友动态")
-        attritit.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
+        attritit.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
         self.naviBar.attributeTitle = attritit
         self.setupTableView()
         self.requestData(loadDataType: LoadDataType.initialize)
@@ -98,7 +98,7 @@ class ClassifyVC: GDNormalVC , GDCircleTrendsCellDelete{
     override func loadMore () {
         self.requestData(loadDataType: LoadDataType.loadMore)
     }
-    func refreshOrInit()  {
+    @objc func refreshOrInit()  {
         self.requestData(loadDataType: LoadDataType.initialize)
     }
     

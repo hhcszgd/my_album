@@ -88,6 +88,11 @@ class GDSkipManager: NSObject {
         case "GDAllCirclesVC":
             targetVC = GDAllCirclesVC()
             break
+            
+            
+        case "GDPhotoPickerVC":
+            targetVC = GDPhotoPickerVC()
+            break
         default:
             mylog("\(realActionKey)是无效actionKey ,找不到跳转控制器")
         }

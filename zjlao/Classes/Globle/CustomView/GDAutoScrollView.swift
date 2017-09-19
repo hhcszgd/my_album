@@ -55,7 +55,7 @@ class GDAutoScrollView: UIView  , UICollectionViewDelegate , UICollectionViewDat
     deinit {
         self.invalidTimer()
     }
-    func startAutoScroll() {
+    @objc func startAutoScroll() {
         guard let flowLayout =  collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {return}
         let currentContentOffset = collectionView.contentOffset
         let itemSize = flowLayout.itemSize

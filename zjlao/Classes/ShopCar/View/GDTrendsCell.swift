@@ -61,7 +61,7 @@ class GDTrendsCell: GDBaseCell {
         get{return super.model}
     }
     
-    func subitemClick(sender:GDPicView)  {
+    @objc func subitemClick(sender:GDPicView)  {
         mylog(sender.controlModel?.title)
         mylog(sender.controlModel?.subTitle)
         mylog(sender.controlModel?.imageUrl)
@@ -90,7 +90,7 @@ class GDTrendsCell: GDBaseCell {
         self.selectionStyle = UITableViewCellSelectionStyle.none
         
     }
-    func seeMoreClick(sender:UIButton) {
+    @objc func seeMoreClick(sender:UIButton) {
         if let targetModel  = self.model as? GDTrendsCellModel{
             self.delegate?.trendsCellMoreClick(model: targetModel)
             

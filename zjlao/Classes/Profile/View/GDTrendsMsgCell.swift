@@ -124,7 +124,7 @@ class GDTrendsMsgCell: UITableViewCell {
         self.mediaIconView.contentMode = UIViewContentMode.scaleToFill
     }
     
-    func otherIconClick(sender : UIButton)  {
+    @objc func otherIconClick(sender : UIButton)  {
         self.msgCelldelegate?.otherIconClick(view: self )
     }
     

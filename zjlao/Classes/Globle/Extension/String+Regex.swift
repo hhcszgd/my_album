@@ -22,10 +22,10 @@ extension String {
             return (nil,nil)
         }
    
-        let range1 = result.rangeAt(1)
+        let range1 = result.range(at: 1)
         let subStr1 = (self as NSString).substring(with: range1)
         
-        let range2 = result.rangeAt(2)
+        let range2 = result.range(at: 2)
         let subStr2 = (self as NSString).substring(with: range2)
         
         
@@ -74,7 +74,7 @@ extension String {
         }else{
             tempMaxSize = maxSize
         }
-        let attribute = Dictionary(dictionaryLiteral: (NSFontAttributeName,font) )
+        let attribute = Dictionary(dictionaryLiteral: (NSAttributedStringKey.font,font) )
        let size = self.boundingRect(with: tempMaxSize, options: [NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading], attributes: attribute, context: nil).size
         return  size
     }
@@ -86,12 +86,12 @@ extension String {
         }else{
             tempMaxSize = CGSize(width: maxWidth, height: CGFloat(MAXFLOAT))
         }
-        let attribute = Dictionary(dictionaryLiteral: (NSFontAttributeName,font) )
+        let attribute = Dictionary(dictionaryLiteral: (NSAttributedStringKey.font,font) )
         let size = self.boundingRect(with: tempMaxSize, options: [NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading], attributes: attribute, context: nil).size
         return  size
     }
     //MARK:计算单行字符串的size
     func sizeSingleLine(font : UIFont ) -> CGSize  {
-        return self.size(attributes: Dictionary(dictionaryLiteral: (NSFontAttributeName,font) ))
+        return self.size(withAttributes: Dictionary(dictionaryLiteral: (NSAttributedStringKey.font,font) ))
     }
 }

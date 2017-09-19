@@ -34,7 +34,7 @@ class GDCircleDetailVC2: GDNormalVC {
     var circleName : String = "" {
         didSet{
             let attritit = NSMutableAttributedString.init(string: circleName)
-        attritit.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
+            attritit.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
         self.naviBar.attributeTitle = attritit
         }
         
@@ -67,7 +67,7 @@ class GDCircleDetailVC2: GDNormalVC {
 
         self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
     }
-    func createMedia()  {
+    @objc func createMedia()  {
         mylog("I'm going to create media")
         self.choseMediaType()
     }
@@ -497,7 +497,8 @@ class GDCircleSessionHeader: UICollectionReusableView {
             var tempStr  = ""
             mylog(model)
             mylog(model?.members)
-            for (index  , str ) in (model?.members?.enumerated())! {
+            
+            for (index  , str ) in ((model?.members ?? []).enumerated()) {
                 if index != (model?.members?.count ?? 0) - 1{
                     tempStr.append(str  + "&")
                 }else{                tempStr.append(str)}

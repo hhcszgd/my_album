@@ -87,7 +87,7 @@ class GDBaseVC: UIViewController {
         
     }
     //MARK://子类重写它 , 在方法中调hiddenErrorView()
-    func errorViewClick ()  {
+    @objc func errorViewClick ()  {
         
     }
     func hiddenErrorView()  {

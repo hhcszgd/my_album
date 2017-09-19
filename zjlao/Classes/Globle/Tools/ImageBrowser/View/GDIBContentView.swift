@@ -22,7 +22,7 @@ class GDIBContentView: UIView {
             let showStr = currentPage + totalPage
             let attStr = NSMutableAttributedString.init(string: showStr)
             
-            attStr.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: 29) ?? UIFont(), range: NSRange.init(location: 0, length: currentPage.characters.count) )
+            attStr.addAttribute(NSAttributedStringKey.font, value: UIFont(name: "HelveticaNeue-Bold", size: 29) ?? UIFont(), range: NSRange.init(location: 0, length: currentPage.characters.count) )
             self.pageIndicater.attributedText = attStr
         }
     }
@@ -101,7 +101,7 @@ extension GDIBContentView {
         pageIndicater.textColor = UIColor.white
         pageIndicater.textAlignment  =  NSTextAlignment.right
     }
-    func cancle()  {
+    @objc func cancle()  {
         self.removeFromSuperview()
     }
     

@@ -14,7 +14,7 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
     let lineView = UIImageView()//上下扫描的线
     let session = AVCaptureSession()
     var sublayer    : AVCaptureVideoPreviewLayer!
-    let videoCaptureDevice: AVCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+    let videoCaptureDevice: AVCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)!//.defaultDevice(withMediaType: AVMediaTypeVideo)
     let flashLightBtn = UIButton(type: UIButtonType.contactAdd)
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +34,7 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
         self.lineView.image = UIImage.init(named: "line")
         
     }
-    func flashBtnClick(sender:UIButton) {
+    @objc func flashBtnClick(sender:UIButton) {
         sender.isSelected = !sender.isSelected
         
         self.videoCaptureDevice.torchMode = sender.isSelected ? .off : .on
@@ -71,13 +71,13 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
                 self.session.addOutput(metadataOutput)
                 
                 metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-                metadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode,AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypePDF417Code]
+                metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr,AVMetadataObject.ObjectType.ean8, AVMetadataObject.ObjectType.ean13, AVMetadataObject.ObjectType.pdf417]
             } else {
                 print("Could not add metadata output")
             }
             
             let previewLayer = AVCaptureVideoPreviewLayer(session: self.session)
-            previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
             self.sublayer = previewLayer
             self.layer.addSublayer(self.sublayer)
 //            previewLayer?.frame = self.view.layer.bounds
@@ -102,11 +102,11 @@ class QRView: UIView ,AVCaptureMetadataOutputObjectsDelegate{
         
         for item in metadataObjects {
             if let obj  = item as? AVMetadataMachineReadableCodeObject {
-                if obj.stringValue.characters.count > 0 {
+                if (obj.stringValue ?? "").characters.count > 0 {
                     let isRespondOption = (self.delegate?.responds(to: #selector(QRViewDelegate.qrView(view:didCompletedWithQRValue:))))
                     if let isRespond = isRespondOption  {
                         if isRespond {
-                            self.delegate?.qrView(view: self, didCompletedWithQRValue: obj.stringValue)
+                            self.delegate?.qrView(view: self, didCompletedWithQRValue: obj.stringValue!)
                             self.session.stopRunning();
                             return
                         }

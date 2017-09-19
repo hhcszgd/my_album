@@ -54,7 +54,7 @@ class FilterDisplayViewController: UIViewController, UISplitViewControllerDelega
         self.init()
         if type == GDCameraType.video {
             cameraType = GDCameraType.video
-            camera = GPUImageVideoCamera(sessionPreset: AVCaptureSessionPreset640x480, cameraPosition: AVCaptureDevicePosition.back)
+            camera = GPUImageVideoCamera(sessionPreset: AVCaptureSession.Preset.vga640x480.rawValue, cameraPosition: AVCaptureDevice.Position.back)
             camera.outputImageOrientation = UIInterfaceOrientation.portrait
         }
         
@@ -164,17 +164,17 @@ class FilterDisplayViewController: UIViewController, UISplitViewControllerDelega
         self.camera.startCapture()
     }
     
-    func confirm(sender:UIButton)  {
+    @objc func confirm(sender:UIButton)  {
 //        mylog("确定")
         self.changeFilter(filter: nil)
     }
     
-    func switchCamera(sender:UIButton) {
+    @objc func switchCamera(sender:UIButton) {
         mylog("切换相机")
         sender.isSelected = !sender.isSelected
         self.camera.rotateCamera()
         self.camera.horizontallyMirrorFrontFacingCamera = true
-        if self.camera.cameraPosition() == AVCaptureDevicePosition.front {
+        if self.camera.cameraPosition() == AVCaptureDevice.Position.front {
             self.flashButton.isHidden = true
         }else{
             self.flashButton.isHidden = false
@@ -182,12 +182,12 @@ class FilterDisplayViewController: UIViewController, UISplitViewControllerDelega
 //        self.camera.outputImageOrientation = UIInterfaceOrientation.portrait
 
     }
-    func changeFlashMode(sender:UIButton)  {
-        if self.camera.cameraPosition() == AVCaptureDevicePosition.front {  return }
+    @objc func changeFlashMode(sender:UIButton)  {
+        if self.camera.cameraPosition() == AVCaptureDevice.Position.front {  return }
         do{
           try  self.camera.inputCamera.lockForConfiguration()
                 sender.isSelected = !sender.isSelected
-                let value : AVCaptureTorchMode = sender.isSelected ? AVCaptureTorchMode.on : AVCaptureTorchMode.off
+            let value : AVCaptureDevice.TorchMode = sender.isSelected ? AVCaptureDevice.TorchMode.on : AVCaptureDevice.TorchMode.off
                 self.camera.inputCamera.torchMode = value
                 self.camera.inputCamera.unlockForConfiguration()
        
@@ -199,12 +199,12 @@ class FilterDisplayViewController: UIViewController, UISplitViewControllerDelega
         mylog("闪光灯设置")
     }
     
-    func cancleButtonClick(sender:UIButton)  {
+    @objc func cancleButtonClick(sender:UIButton)  {
         mylog("取消")
         self.dismiss(animated: true) {
         }
     }
-    func captureButtonClick(sender:UIButton) {
+    @objc func captureButtonClick(sender:UIButton) {
         
         if cameraType == GDCameraType.photo {
              performCapturePhoto()
@@ -852,7 +852,7 @@ extension FilterDisplayViewController{
         
     }
     
-    func countDown() {
+    @objc func countDown() {
         self.timeInterval -= 1
         if self.timeInterval <= 0  {
             self.timeInterval = 12

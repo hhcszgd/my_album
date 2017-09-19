@@ -345,25 +345,27 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
      // Drawing code
      }
      */
-    func zanClick(sender:UIButton)  {
+    @objc func zanClick(sender:UIButton)  {
         self.cellDelegate?.zanClick(mediaID: self.model?.id ?? "0")
     }
-    func zanUserClick(sender : GDZanUser)  {
+     @objc func zanUserClick(sender : GDZanUser)  {
         mylog("点击点赞的人")
         if let userID = sender.model?.additionalTitle {
             self.cellDelegate?.gotoUserDetail(userID: userID)
         }
     }
-    func commentClick(sender:UIButton) {
+    @objc func commentClick(sender:UIButton) {
         self.cellDelegate?.commentClick(mediaID: self.model?.id ?? "0")
     }
-    func deleteClick(sender:UIButton)  {
+    @objc func deleteClick(sender:UIButton)  {
 //        self.cellDelegate?.deleteClick(mediaID: self.model?.id ?? "0")
          self.cellDelegate?.deleteClick(mediaID: self.createTheUrlstrWillBeShare())
     }
     func createTheUrlstrWillBeShare() -> String {
         //      http://www.123qz.cn/share.php?media_id=123i38434&token=md5(媒体ID+用户ID+创建时间+token)
-        let paramete = (self.model?.id ?? ""  ) + (self.model?.user_id  ?? "") + (self.model?.create_date ?? "") // + (GDNetworkManager.shareManager.token ?? "")
+        let prefixStr = (self.model?.id ?? ""  ) + (self.model?.user_id  ?? "")
+        
+        let paramete = (prefixStr + (self.model?.create_date ?? "")) // + (GDNetworkManager.shareManager.token ?? "")
         mylog(paramete)
         let md5Str = paramete.md5() ?? ""
         let mediaID = self.model?.id ?? "0"
@@ -371,14 +373,14 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
 //        self.cellDelegate?.shareClick(mediaID: shareString)
         return shareString
     }
-    func commentUserClick(sender : UIButton)  {
+    @objc func commentUserClick(sender : UIButton)  {
         mylog("点击点赞的人")
         if let userID = self.model?.user_id {
             self.cellDelegate?.gotoUserDetail(userID: userID)
         }
     }
     // MARK: 注释 : 进入图片浏览器  新/旧
-    func bigImageClick(sender:UIButton)  {
+    @objc func bigImageClick(sender:UIButton)  {
         //self.cellDelegate?.bigImageClick(mediaID: self.model?.id ?? "0")
         if let realModel = model {
             

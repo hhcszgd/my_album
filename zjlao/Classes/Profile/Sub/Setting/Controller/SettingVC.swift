@@ -117,7 +117,7 @@ class SettingVC: GDNormalVC {
         self.loginOutButton.embellishView(redius: 5)
       }
    
-    func performLoginOut() {
+    @objc func performLoginOut() {
         mylog("退出登录")
         if Account.shareAccount.isLogin {
             GDNetworkManager.shareManager.loginOut({ (result) in
@@ -139,7 +139,7 @@ class SettingVC: GDNormalVC {
         }
         
     }
-    func valuation(sender : GDRowView){
+    @objc func valuation(sender : GDRowView){
         mylog("评分")
         let urlStr = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1133780608"
         let url = URL(string: urlStr)
@@ -154,24 +154,24 @@ class SettingVC: GDNormalVC {
         super.viewWillAppear(animated)
             self.loginOutButton.isHidden = !Account.shareAccount.isLogin
     }
-    func clearCache(sender : GDRowView){
+    @objc func clearCache(sender : GDRowView){
         mylog("清除缓存")
         SDImageCache.shared().clearMemory()
         SDImageCache.shared().cleanDisk()
         GDAlertView.alert("清除成功", image: nil, time: 2, complateBlock: nil)
         sender.subTitleLabel.text = "0 MB"
     }
-    func changeImageQuality(sender : GDRowView){
+    @objc func changeImageQuality(sender : GDRowView){
         mylog("改变图片质量")
     }
-    func changeNoticeCustomSound(sender : UISwitch){
+    @objc func changeNoticeCustomSound(sender : UISwitch){
         mylog("改变声音")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func performChangeLanguage(sender : GDRowView){
+    @objc func performChangeLanguage(sender : GDRowView){
         mylog("更改语言")
         let chooseLanguageVCModel = GDBaseModel(dict: nil)
         chooseLanguageVCModel.actionkey = "ChooseLuanguageVC"

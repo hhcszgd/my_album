@@ -192,7 +192,7 @@ class PTableHeaderView: GDView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func click(sender : GDBaseControl ) -> () {
+    @objc func click(sender : GDBaseControl ) -> () {
         if let transSender = sender as? PTableHeaderSub {
             self.actionDelegate?.performAction(model: transSender.model)
         }else{

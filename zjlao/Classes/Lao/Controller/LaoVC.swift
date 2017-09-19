@@ -72,7 +72,7 @@ class LaoVC: GDNormalVC {
     func setupNotification()  {
         NotificationCenter.default.addObserver(self , selector: #selector(laotabBarReclick), name: GDLaoTabBarReclick, object: nil )
     }
-    func laotabBarReclick()  {
+    @objc func laotabBarReclick()  {
 //        let cameraVC = FilterDisplayViewController()
 //        let filterInList = filterOperations[19]
 //        cameraVC.filterOperation = filterInList

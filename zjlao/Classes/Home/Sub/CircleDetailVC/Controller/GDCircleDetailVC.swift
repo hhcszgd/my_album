@@ -34,7 +34,7 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
     // MARK: 注释 : methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.naviBar.backgroundColor = UIColor.init(colorLiteralRed: 0.99, green: 0.99, blue: 0.99, alpha: 1)
+        self.naviBar.backgroundColor = UIColor.init(red: 0.99, green: 0.99, blue: 0.99, alpha: 1)
         self.automaticallyAdjustsScrollViewInsets = false
         if let circleIDStr  =  self.keyModel?.keyparamete as? String {
             self.circleID  = circleIDStr
@@ -53,7 +53,7 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
     func setupTextView()  {
         self.inputContainer.addSubview(self.textView)
         
-        self.inputContainer.backgroundColor =  UIColor.init(colorLiteralRed: 0.95, green: 0.95, blue: 0.95, alpha: 1)
+        self.inputContainer.backgroundColor =  UIColor.init(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
         self.view.addSubview(self.inputContainer)
         self.textView.enablesReturnKeyAutomatically = true
         self.inputContainer.frame = CGRect(x: 0, y: SCREENHEIGHT, width: SCREENWIDTH, height: SCREENWIDTH * 0.4)
@@ -76,10 +76,10 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         NotificationCenter.default.addObserver(self , selector: #selector(keyboardWillShow(info:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
-    func cancleBtnClick()  {
+    @objc func cancleBtnClick()  {
         self.textView.resignFirstResponder()
     }
-    func confirmBtnClick()  {
+    @objc func confirmBtnClick()  {
         if textView.text.characters.count > 0  {
             if self.currentMediaID != nil  {
                 GDNetworkManager.shareManager.commentAndLike(mediaID: self.currentMediaID!, isLike: "0", content: self.textView.text, { (result ) in
@@ -95,7 +95,7 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         self.cancleBtnClick( )
         
     }
-    func keyboardWillHide(info:NSNotification)  {
+    @objc func keyboardWillHide(info:NSNotification)  {
         mylog(info.userInfo)
         self.performSomethingWhenKeyboardWillHide(info: info)
     }
@@ -114,7 +114,7 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
             self.inputContainer.center = CGPoint(x: self.view.bounds.size.width / 2, y: self.inputContainer.bounds.size.width / 2 + SCREENHEIGHT)
         }
     }
-    func keyboardWillShow(info:NSNotification)  {
+    @objc func keyboardWillShow(info:NSNotification)  {
         self.keyboardInfo = info
         self.performSomethingWhenKeyboardWillShow(info: info)
     }
@@ -170,10 +170,10 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         
         
     }
-    override func loadMore () {
+    @objc override func loadMore () {
         self.requestData(loadDataType: LoadDataType.loadMore)
     }
-    override func refresh()  {
+    @objc override func refresh()  {
         self.requestData(loadDataType: LoadDataType.initialize)
     }
     

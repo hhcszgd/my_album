@@ -179,7 +179,7 @@ class GDSKSceneA: SKScene {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         mylog("触摸取消")
     }
-    func some ()  {
+    @objc func some ()  {
         let light1 = newLight()
         light1.color = UIColor.red
         light1.position = CGPoint(x: self.spaceship.frame.origin.x + 32 , y:self.spaceship.frame.origin.y + 32 )//CGPointMake(-28.0,6.0)

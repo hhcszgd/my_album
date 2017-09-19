@@ -34,7 +34,7 @@ class ClassifyNaviVC: UINavigationController {
 //        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_classify)  // gotTitleStr(key: "tabBar_lao")
     }
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        if self.childViewControllers.count != 0 {
+               if self.childViewControllers.count != 0 {
             viewController.hidesBottomBarWhenPushed = true
         }
         super.pushViewController(viewController, animated: animated)

@@ -156,7 +156,7 @@ class GDIBScrollView: UIScrollView {
     }
     */
     // MARK: 注释 : 双击
-    func handleDoubleTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func handleDoubleTap(_ recognizer: UITapGestureRecognizer) {
         mylog("双击")
         if self.maximumZoomScale == 1 { return  }
         let touchPoint = recognizer.location(in: self.imageView)
@@ -184,12 +184,12 @@ class GDIBScrollView: UIScrollView {
         return CGRect(x: x, y: y, width: w, height: h)
     }
     // MARK: 注释 : 单击
-    func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         mylog("单击")
     }
 
     // MARK: 注释 : 长按
-    func longPress(_ recognizer: UILongPressGestureRecognizer)  {
+    @objc func longPress(_ recognizer: UILongPressGestureRecognizer)  {
         mylog("长按")
         if self.maximumZoomScale == 1 { return  }
 
@@ -264,17 +264,17 @@ extension GDIBScrollView{
             window?.addSubview(alertViewContainer)
         }
     }
-    func cancleSaveImage()  {
+     @objc func cancleSaveImage()  {
         self.alertView?.removeFromSuperview()
         self.alertView = nil
     }
-    func saveImage()  {
+    @objc func saveImage()  {
         if let image  = self.imageView.image {
             UIImageWriteToSavedPhotosAlbum(image , nil , nil, nil )
         }
         self.cancleSaveImage()
     }
-    func saveImageComplate()  {
+    @objc func saveImageComplate()  {
         mylog("保存成功")
     }
 }

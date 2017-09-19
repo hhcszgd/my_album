@@ -29,7 +29,7 @@ class GDSetUserinfoVC: GDUnNormalVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.init(colorLiteralRed: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+        self.view.backgroundColor = UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
         self.setupSubviews()
         self.getUserInfo()
 
@@ -118,7 +118,7 @@ class GDSetUserinfoVC: GDUnNormalVC {
         self.provisionButton.center = CGPoint(x: self.view.bounds.size.width / 2 , y: self.view.bounds.size.height - 80 )
         
     }
-    func provisionDetail(){
+    @objc func provisionDetail(){
         let model = GDBaseModel.init(dict: nil )
         model.actionkey = "webpage"
         model.keyparamete = "http://www.123qz.cn/yinsi.html" as AnyObject//
@@ -175,7 +175,7 @@ class GDSetUserinfoVC: GDUnNormalVC {
     }
     */
 
-    func iconClick()  {
+    @objc func iconClick()  {
         mylog("头像点击")
         self.chooseImageSourceType()
     }
@@ -200,7 +200,7 @@ class GDSetUserinfoVC: GDUnNormalVC {
         }
     }
     
-    func saveClick() {
+    @objc func saveClick() {
         mylog("保存点击")
           GDNetworkManager.shareManager.changeUserinfo(name: self.nameTextField.text, { (result ) in
             mylog("修改用户名成功\(result.status)")

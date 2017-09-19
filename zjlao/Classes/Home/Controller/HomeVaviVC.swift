@@ -29,7 +29,7 @@ class HomeVaviVC: UINavigationController {
     func languageChanged() {
 //        self.tabBarItem.title = GDLanguageManager.titleByKey(key: LTabBar_classify)  // gotTitleStr(key: "tabBar_lao")
     }
-    override func didReceiveMemoryWarning() {
+    @objc    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

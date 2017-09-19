@@ -24,7 +24,7 @@ class NumberTool: NSObject {
         
     }
     
-    func repeatChangeValue() -> () {
+    @objc func repeatChangeValue() -> () {
         
         theReturnType = self.returnType(i)
         if theReturnType == "+" {

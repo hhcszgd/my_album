@@ -87,7 +87,7 @@ class GDUnNormalVC: GDBaseVC , UITableViewDelegate,UITableViewDataSource ,UIColl
         return images
     }()
     
-    func refresh ()  {
+    @objc  func refresh ()  {
         if self.scrollViewType == "collect" {
             self.collectionView.mj_header.endRefreshing()
             self.collectionView.mj_header.state = MJRefreshState.idle
@@ -98,8 +98,8 @@ class GDUnNormalVC: GDBaseVC , UITableViewDelegate,UITableViewDataSource ,UIColl
             //self.tableView.mj_footer.state = MJRefreshState.idle
         }
         
-    }
-    func loadMore ()  {
+         }
+    @objc func loadMore ()  {
         if self.scrollViewType == "collect" {
             self.collectionView.mj_footer.endRefreshingWithNoMoreData()
         }else if self.scrollViewType == "table"{
@@ -191,7 +191,7 @@ class GDUnNormalVC: GDBaseVC , UITableViewDelegate,UITableViewDataSource ,UIColl
         
         
     }
-    func popToPreviousVC() {
+    @objc func popToPreviousVC() {
         _ = self.navigationController?.popViewController(animated: true)
     }
 }

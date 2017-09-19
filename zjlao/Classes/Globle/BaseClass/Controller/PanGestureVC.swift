@@ -20,7 +20,7 @@ import UIKit
          self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false ;
         // Do any additional setup after loading the view.
     }
-    func handleNavigationTransition(_:Any){
+    @objc func handleNavigationTransition(_:Any){
     
     }
     override func didReceiveMemoryWarning() {

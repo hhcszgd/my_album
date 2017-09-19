@@ -40,7 +40,7 @@ class GDCoverView: UIControl {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func remove() {
+    @objc func remove() {
         UIView.animate(withDuration: 0.3, animations: {
             self.alpha = 0
         }) { (bool ) in

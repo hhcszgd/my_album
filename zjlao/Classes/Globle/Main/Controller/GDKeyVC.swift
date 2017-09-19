@@ -719,7 +719,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                 window.addSubview(self.customViewContainer)
                 self.customViewContainer.backgroundColor = UIColor.black
                 self.customViewContainer.addTarget(self , action: #selector(whiteSpaceClick), for: UIControlEvents.touchUpInside)
-                self.textFieldContainer.backgroundColor = UIColor.init(colorLiteralRed: 0.92, green: 0.92, blue: 0.92, alpha: 1)
+                self.textFieldContainer.backgroundColor =  UIColor.init(red:0.92, green: 0.92, blue: 0.92, alpha: 1)// UIColor.init(colorLiteralRed: 0.92, green: 0.92, blue: 0.92, alpha: 1)
                 self.textField.backgroundColor = UIColor.white
                 self.customViewContainer.addSubview(self.imageView)
                 self.customViewContainer.addSubview(self.textFieldContainer)
@@ -814,7 +814,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
     }
      */
 
-    func whiteSpaceClick() {
+    @objc func whiteSpaceClick() {
         self.textField.resignFirstResponder()
     }
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool  {
@@ -822,7 +822,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         mylog(UIApplication.shared.windows)
         return true
     }
-    func keyboardWillHide(info:NSNotification)  {
+    @objc func keyboardWillHide(info:NSNotification)  {
         var realTime : TimeInterval = 0.25
         let timeInterval = info.userInfo?[UIKeyboardAnimationDurationUserInfoKey]
         if let timeAny  = timeInterval  {
@@ -836,7 +836,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         }
         
     }
-    func keyboardWillShow(info:NSNotification)  {
+    @objc func keyboardWillShow(info:NSNotification)  {
         var realTime : TimeInterval = 0.25
         let timeInterval = info.userInfo?[UIKeyboardAnimationDurationUserInfoKey]
         let keyboardEndFrame = info.userInfo?[UIKeyboardFrameEndUserInfoKey] ; // as CGRect
@@ -858,13 +858,13 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         }
         
     }
-    func cancleClick()  {
+    @objc func cancleClick()  {
         self.performRrmoveNitification()
         self.textField.text = nil
         
 
     }
-    func sendClick()  {
+    @objc func sendClick()  {
         self.performRrmoveNitification()
         DispatchQueue.global().async {
             var image = UIImage()
@@ -974,7 +974,7 @@ class GDFilterCell : UICollectionViewCell {
                 let stillImageSource = GPUImagePicture.init(image: image)
                 stillImageSource?.addTarget(filter as! GPUImageInput)
                 filter.useNextFrameForImageCapture()
-                stillImageSource?.processImageUp(toFilter: filter, withCompletionHandler: { (img ) in
+                stillImageSource?.processImageUp(toFilter: filter as! GPUImageOutput & GPUImageInput, withCompletionHandler: { (img ) in
                     mylog(Thread.current)
                     DispatchQueue.main.async {
                         self.imageview.image = img

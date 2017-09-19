@@ -36,7 +36,7 @@ class GDCreateCircleVC: GDNormalVC {
         self.naviBar.title = "新建圈子"
 //        self.naviBar.backBtn.isHidden = false
     }
-    func performCreate()  {
+    @objc func performCreate()  {
         mylog("performCreate")
         if circleName.text == nil  {
             GDAlertView.alert("请输入圈子名称", image: nil , time: 2 , complateBlock: nil)
@@ -45,7 +45,7 @@ class GDCreateCircleVC: GDNormalVC {
         self.performCreateCircle()
     }
     func performCreateCircle() {
-        GDNetworkManager.shareManager.createNewCircle(name: self.circleName.text!, memberNum: self.memberLimit.text, password: self.memberLimit.text, success: { (model ) in
+        GDNetworkManager.shareManager.createNewCircle(name: self.circleName.text!, memberNum: self.memberLimit.text, password: self.circlePasscode.text, success: { (model ) in
             mylog(model.status)
             mylog(model.data)
         }) { (error ) in

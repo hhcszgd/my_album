@@ -148,6 +148,8 @@
 		1594559C1F1A074C002DE664 /* GDWeekLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1594559B1F1A074C002DE664 /* GDWeekLabel.swift */; };
 		1594559E1F1A075D002DE664 /* GDYearMonthLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1594559D1F1A075D002DE664 /* GDYearMonthLabel.swift */; };
 		159A47DF1F6F627500FE1BD0 /* GDCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159A47DE1F6F627500FE1BD0 /* GDCoverView.swift */; };
+		159AC2D01F70AAC600C63DA6 /* GDImagePickview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159AC2CF1F70AAC600C63DA6 /* GDImagePickview.swift */; };
+		159AC2D61F70ABD000C63DA6 /* GDPhotoPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159AC2D51F70ABD000C63DA6 /* GDPhotoPickerVC.swift */; };
 		15A4DCC51E8CF5B6009A0DCE /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB551E8CF5B5009A0DCE /* GLProgram.m */; };
 		15A4DCC61E8CF5B6009A0DCE /* GPUImage3x3ConvolutionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB581E8CF5B5009A0DCE /* GPUImage3x3ConvolutionFilter.m */; };
 		15A4DCC71E8CF5B6009A0DCE /* GPUImage3x3TextureSamplingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB5A1E8CF5B5009A0DCE /* GPUImage3x3TextureSamplingFilter.m */; };
@@ -560,6 +562,8 @@
 		1594559B1F1A074C002DE664 /* GDWeekLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDWeekLabel.swift; sourceTree = "<group>"; };
 		1594559D1F1A075D002DE664 /* GDYearMonthLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDYearMonthLabel.swift; sourceTree = "<group>"; };
 		159A47DE1F6F627500FE1BD0 /* GDCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDCoverView.swift; sourceTree = "<group>"; };
+		159AC2CF1F70AAC600C63DA6 /* GDImagePickview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDImagePickview.swift; sourceTree = "<group>"; };
+		159AC2D51F70ABD000C63DA6 /* GDPhotoPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPhotoPickerVC.swift; sourceTree = "<group>"; };
 		15A4DB541E8CF5B5009A0DCE /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
 		15A4DB551E8CF5B5009A0DCE /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
 		15A4DB561E8CF5B5009A0DCE /* GPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImage.h; sourceTree = "<group>"; };
@@ -1460,6 +1464,7 @@
 				154BB6021E2B600100A9EF05 /* GDView.swift */,
 				150D06CB1EAB3ED00043D80D /* GDImageView.swift */,
 				159A47DE1F6F627500FE1BD0 /* GDCoverView.swift */,
+				159AC2CF1F70AAC600C63DA6 /* GDImagePickview.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1774,6 +1779,7 @@
 		1523AD6A1DCC8DDC00011F9A /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				159AC2D11F70AB8800C63DA6 /* PhohoPicker */,
 				1523AD6B1DCC8DDC00011F9A /* AccountInfo */,
 				1523AD711DCC8DDC00011F9A /* AfterCost */,
 				1523AD771DCC8DDC00011F9A /* Assets */,
@@ -3242,6 +3248,38 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		159AC2D11F70AB8800C63DA6 /* PhohoPicker */ = {
+			isa = PBXGroup;
+			children = (
+				159AC2D21F70AB8800C63DA6 /* model */,
+				159AC2D31F70AB8800C63DA6 /* vc */,
+				159AC2D41F70AB8800C63DA6 /* view */,
+			);
+			path = PhohoPicker;
+			sourceTree = "<group>";
+		};
+		159AC2D21F70AB8800C63DA6 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		159AC2D31F70AB8800C63DA6 /* vc */ = {
+			isa = PBXGroup;
+			children = (
+				159AC2D51F70ABD000C63DA6 /* GDPhotoPickerVC.swift */,
+			);
+			path = vc;
+			sourceTree = "<group>";
+		};
+		159AC2D41F70AB8800C63DA6 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		15A4DB4F1E8CF5B5009A0DCE /* GPUImageFrameWork */ = {
 			isa = PBXGroup;
 			children = (
@@ -4347,6 +4385,7 @@
 				15CFDE721ED423E5002B48DB /* GDZanArea.swift in Sources */,
 				15876E7E1F6A530400E7CAB5 /* GDTableViewProtocol.swift in Sources */,
 				15A4DCFA1E8CF5B6009A0DCE /* GPUImageGaussianBlurFilter.m in Sources */,
+				159AC2D01F70AAC600C63DA6 /* GDImagePickview.swift in Sources */,
 				15A4DCD91E8CF5B6009A0DCE /* GPUImageColorBurnBlendFilter.m in Sources */,
 				155BB8391E73C55200BF875B /* GDMapView.swift in Sources */,
 				15A4DD161E8CF5B6009A0DCE /* GPUImageLineGenerator.m in Sources */,
@@ -4355,6 +4394,7 @@
 				15A4DD001E8CF5B6009A0DCE /* GPUImageHardLightBlendFilter.m in Sources */,
 				15A4DD181E8CF5B6009A0DCE /* GPUImageLookupFilter.m in Sources */,
 				1523AE5C1DCC8DDC00011F9A /* ShopCarVC.swift in Sources */,
+				159AC2D61F70ABD000C63DA6 /* GDPhotoPickerVC.swift in Sources */,
 				15F5E60D1EAF65CB00265C1F /* GDSetUserinfoVC.swift in Sources */,
 				1523AE5D1DCC8DDC00011F9A /* GoodsModel.swift in Sources */,
 				15A4DCFC1E8CF5B6009A0DCE /* GPUImageGaussianSelectiveBlurFilter.m in Sources */,
@@ -4583,7 +4623,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/zjlao/zjlao-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4609,7 +4649,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/zjlao/zjlao-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

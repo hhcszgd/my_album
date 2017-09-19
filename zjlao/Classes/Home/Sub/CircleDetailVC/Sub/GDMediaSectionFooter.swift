@@ -56,7 +56,7 @@ class GDMediaSectionFooter: UITableViewHeaderFooterView {
             self.seeMoreBtn.isHidden = true
         }
     }
-    func seeMoreCmmments(sender:UIButton)  {
+    @objc func seeMoreCmmments(sender:UIButton)  {
         self.delegate?.seeMoreCmmments(mediaID: self.mediaID ?? "0")
     }
     required init?(coder aDecoder: NSCoder) {

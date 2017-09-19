@@ -56,11 +56,11 @@ class GDImagePickerVC: GDNormalVC {
         }
     }
     
-    func cancleClick() {
+    @objc func cancleClick() {
         mylog("sadfasd")
         self.dismiss(animated: true , completion: nil )
     }
-    func doneClick() {
+    @objc func doneClick() {
         mylog("done")
         self.dismiss(animated: true , completion: nil )
 

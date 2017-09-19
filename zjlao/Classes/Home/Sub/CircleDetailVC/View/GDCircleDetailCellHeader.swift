@@ -69,7 +69,8 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
             }
             
             self.ownerName.text = " " + (model?.name ?? "")
-            self.creatTime.text = (model?.city ?? "" ) + " " + (model?.create_at ?? "") + "\t "
+            let prefixStr = (model?.city ?? "" ) + " " + (model?.create_at ?? "")
+            self.creatTime.text = prefixStr  + "\t "
             for subview in self.zanContainer.subviews {
                 subview.removeFromSuperview()
             }
@@ -91,7 +92,7 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         self.longPress = longpress
         self.ownerIcon.addGestureRecognizer(longpress)
     }
-    func alertMessage()  {
+    @objc func alertMessage()  {
 //        print(self.alertvc)
         if self.model?.mine ?? 0 == 1 {
             return
@@ -231,7 +232,7 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         self.contentView.addSubview(line)
         line.backgroundColor = UIColor(red: 230 / 256, green:  230 / 256, blue:  230 / 256, alpha: 1)
     }
-    func reportClick(sender : UIButton)  {
+    @objc func reportClick(sender : UIButton)  {
         mylog("reportClick")
         self.cellDelegate?.perforReport(mediaID: self.model?.id ?? "" , reporterID: "")
     }
@@ -377,29 +378,29 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         // Drawing code
     }
     */
-    func zanClick(sender:UIButton)  {
+    @objc func zanClick(sender:UIButton)  {
         self.cellDelegate?.zanClick(mediaID: self.model?.id ?? "0")
     }
-    func zanUserClick(sender : GDZanUser)  {
+    @objc func zanUserClick(sender : GDZanUser)  {
         mylog("点击点赞的人")
         if let userID = sender.model?.additionalTitle {
             self.cellDelegate?.gotoUserDetail(userID: userID)
         }
     }
-    func commentClick(sender:UIButton) {
+    @objc func commentClick(sender:UIButton) {
         self.cellDelegate?.commentClick(mediaID: self.model?.id ?? "0")
     }
-    func deleteClick(sender:UIButton)  {
+    @objc func deleteClick(sender:UIButton)  {
         self.cellDelegate?.deleteClick(mediaID: self.model?.id ?? "0")
     }
-    func commentUserClick(sender : UIButton)  {
+    @objc func commentUserClick(sender : UIButton)  {
         mylog("点击点赞的人")
         if let userID = self.model?.user_id {
             self.cellDelegate?.gotoUserDetail(userID: userID)
         }
     }
     // MARK: 注释 : 进入图片浏览器  新/旧
-    func bigImageClick(sender:UIButton)  {
+    @objc func bigImageClick(sender:UIButton)  {
         //self.cellDelegate?.bigImageClick(mediaID: self.model?.id ?? "0")
         if let realModel = model {
             

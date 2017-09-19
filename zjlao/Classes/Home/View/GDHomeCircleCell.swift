@@ -145,7 +145,7 @@ class GDHomeCircleCell: UICollectionViewCell , UICollectionViewDelegate , UIColl
         collection.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
         
     }
-    func loadMore()  {
+    @objc func loadMore()  {
         self.delete?.circleMediaLoadmore!(item: self)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
@@ -154,8 +154,8 @@ class GDHomeCircleCell: UICollectionViewCell , UICollectionViewDelegate , UIColl
             return 0
         }
         return circleModels!.count
-    }
-    func bigImageClick()  {
+         }
+    @objc func bigImageClick()  {
         mylog("点击大图 媒体id是 : \(String(describing: self.selectedItemModel?.extensionTitle)) imgUrl:\(String(describing: self.selectedItemModel?.imageUrl))")
         self.delete?.collectionViewCellClick?(item: self)
         
