@@ -724,7 +724,7 @@ class GDNetworkManager: AFHTTPSessionManager {
             mylog("初始化状态码\(result.status)")
             if result.status == 202 {
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.authenticated)
-                if let info = result.data as? Dictionary<String, Any> {
+                if let info = result.data as? [String : AnyObject] {
 //                    Account.shareAccount.name = info["name"] as! String?
                     if let name = info["name"] as? String{
                         Account.shareAccount.name = name
@@ -893,14 +893,15 @@ class GDNetworkManager: AFHTTPSessionManager {
             //实现POST请求
             
             post(url, parameters: para, progress: nil, success: { (task, result) in
-                
+                mylog("请求参数:\(para) , 请求结果:\(result)")
                 self.printTaskInfo(task: task)
                 self.alert.gdHide()///////////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)
 //                mylog("测试打印数据 : \(result)")
                 if let dict = result as? [String : AnyObject] {
                     //执行成功回调
-                    let model = OriginalNetDataModel.init(dict: dict)
+//                    let model = OriginalNetDataModel.init(dict: dict)
+                    let model = OriginalNetDataModel.init(dictionary: dict)
                     success(model)
                     return
                 }
@@ -1323,10 +1324,11 @@ class GDNetworkManager: AFHTTPSessionManager {
     func getAD( success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
         let url =  "sys_advert"
         let para = ["token" : self.token ]
+        mylog("获取广告是 , 打印token \(self.token)")
         self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             success(result)
         }) { (error) in
-            mylog("上传头像的请求失败")
+            mylog("获取广告的请求失败")
             failure(error)
         }
         

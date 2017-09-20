@@ -292,13 +292,13 @@ class CircleItemModel : GDBaseModel {
     override init(dict: [String : AnyObject]?) {
         super.init(dict: dict)
     }
-    var circle_image : String?
-    var id : NSNumber?
-    var circle_type : String?
-    var circle_name : String?
-    var circle_member_count : NSNumber?
+    @objc var circle_image : String?
+    @objc var id : NSNumber?
+    @objc var circle_type : String?
+    @objc var circle_name : String?
+    @objc var circle_member_count : NSNumber?
     var circle_member_number : Int?
-    var permission : NSNumber?
+    @objc var permission : NSNumber?
 }
 class CircleItem : UICollectionViewCell {
     let  circleImage = UIImageView()

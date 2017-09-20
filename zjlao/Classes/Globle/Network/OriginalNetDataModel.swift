@@ -8,29 +8,46 @@
 
 import UIKit
 
-class OriginalNetDataModel: NSObject , NSCoding /*, NSCopying*/{
-    var data  : AnyObject? // 返回的数据
-    var message : String?//状态信息
-    var status : Int  = 0 //状态码
-    var comment_number = 0 // 消息数量
+ class OriginalNetDataModel: NSObject , NSCoding /*, NSCopying*/{
+   @objc var data  : Any? // 返回的数据
+   @objc  var message : String?//状态信息
+    @objc var status : Int  = 0 //状态码
+    @objc var comment_number = 0 // 消息数量
     
     var additional : AnyObject? // 额外的信息 (备用)
     init(dict : [String : AnyObject]) {
         super.init()
         self.setValuesForKeys(dict)
     }
-
+    init(dictionary : [String : Any]) {
+        super.init()
+        self.setValuesForKeys(dictionary)
+    }
     override func setValue(_ value: Any?, forKey key: String) {
         if key == "message" {
             self.message  = (value as! String).unicodeStr
 //            mylog((value as! String).unicodeStr)
             return
         }
+        if key == "status" {
+            mylog(value)
+            if let status = value as? String{
+                mylog(status)
+                self.status = Int(status) ?? 0
+                return 
+            }
+//            self.status = value!
+        }
+        if key == "data" {
+            mylog(value)
+            mylog(type(of: value))
+            self.data = value as AnyObject
+        }
         super.setValue(value, forKey: key)
     }
     
     override func setValue(_ value: Any?, forUndefinedKey key: String) {
-        
+        mylog("未找到定义的key : \(key) , 对应的value值 : \(value)")
     }
     //MARK: fileManage
     func save ()  {

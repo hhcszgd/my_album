@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     func test() {
         let animat = CABasicAnimation.init()
         animat.keyPath = "aaa"
+//        let osSuatus = SecItemAdd(CFDictionary, UnsafeMutablePointer<CFTypeRef?>?)
+//        CFDictionary
     }
 }
 

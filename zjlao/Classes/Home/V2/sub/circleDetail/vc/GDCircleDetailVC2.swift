@@ -604,21 +604,21 @@ class GDCircleDetailItem: UICollectionViewCell {
     }
 }
 class GDCircleDetailItemModel: GDBaseModel {
-    var id  : String?
-    var media_type  : String?
-    var media_width  : String?
-    var media_height  : String?
-    var user_id  : String?
-    var media_spec  : String?
-    var create_user_name  : String?
-    var thumbnail  : String?
-    var media_comment_count  : String?
-    var media_good_count  : String?
-    var create_date  : String?
+   @objc  var id  : String?
+    @objc var media_type  : String?
+    @objc var media_width  : String?
+    @objc var media_height  : String?
+    @objc var user_id  : String?
+    @objc var media_spec  : String?
+    @objc var create_user_name  : String?
+    @objc var thumbnail  : String?
+    @objc var media_comment_count  : String?
+    @objc var media_good_count  : String?
+    @objc var create_date  : String?
     
-    var country  : String?
-    var province  : String?//省
-    var city  : String?//市
+    @objc var country  : String?
+    @objc var province  : String?//省
+    @objc var city  : String?//市
     
     /**
      id = 2715;
