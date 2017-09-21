@@ -13,8 +13,8 @@ class GDPhotoPickerVC: GDNormalVC , GDImagePickerviewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imgPicker.frame =  CGRect(x: 0, y: 0, width:
-            self.view.bounds.width, height: self.view.bounds.height)
+        imgPicker.frame =  CGRect(x: 0, y: 64, width:
+            self.view.bounds.width, height: self.view.bounds.height - 64)
         self.view.addSubview(imgPicker)
         imgPicker.delegate  = self
         // Do any additional setup after loading the view.

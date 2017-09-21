@@ -893,7 +893,7 @@ class GDNetworkManager: AFHTTPSessionManager {
             //实现POST请求
             
             post(url, parameters: para, progress: nil, success: { (task, result) in
-                mylog("请求参数:\(para) , 请求结果:\(result)")
+//                mylog("请求参数:\(para) , 请求结果:\(result)")
                 self.printTaskInfo(task: task)
                 self.alert.gdHide()///////////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)

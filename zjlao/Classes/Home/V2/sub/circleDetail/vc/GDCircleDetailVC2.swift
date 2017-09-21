@@ -497,13 +497,20 @@ class GDCircleSessionHeader: UICollectionReusableView {
             var tempStr  = ""
             mylog(model)
             mylog(model?.members)
-            
-            for (index  , str ) in ((model?.members ?? []).enumerated()) {
-                if index != (model?.members?.count ?? 0) - 1{
-                    tempStr.append(str  + "&")
-                }else{                tempStr.append(str)}
-                
+            if let arr  = model?.members {
+                var  result = arr.reduce("", { (result , item ) -> String in
+                    result  + item + "&"
+                })
+                result.removeLast()
+                tempStr = result
+                mylog(result)
             }
+//            for (index  , str ) in ((model?.members ?? []).enumerated()) {
+//                if index != (model?.members?.count ?? 0) - 1{
+//                    tempStr.append(str  + "&")
+//                }else{                tempStr.append(str)}
+//
+//            }
             downAttributeStr.append(NSAttributedString.init(string: tempStr))
             
             label2.attributedText = downAttributeStr
