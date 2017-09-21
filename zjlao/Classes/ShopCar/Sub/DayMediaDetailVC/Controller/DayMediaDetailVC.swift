@@ -146,6 +146,12 @@ class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
     }
     func setupTableView()  {
         self.tableView.frame = CGRect.init(x: 0, y: 0, width: GDDevice.width, height: GDDevice.height )
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
+        } else {
+            self.navigationController?.automaticallyAdjustsScrollViewInsets = false
+            // Fallback on earlier versions
+        }
         self.view.addSubview(self.tableView)
         self.tableView.backgroundColor = UIColor(red: 240 / 256, green:  240 / 256, blue:  240 / 256, alpha: 1)
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
@@ -189,12 +195,25 @@ class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
     // MARK: 注释 : 代理
     func trendsCellItemClick(model : BaseControlModel ,  imageControl : GDPicView){
         mylog(model.title)
+//        if let circleID = model.title {
+//            let model = GDBaseModel.init(dict: nil)
+//            model.actionkey = "GDCircleDetailVC"
+//            model.keyparamete = circleID as AnyObject?
+//            GDSkipManager.skip(viewController: self , model: model)
+//
+//        }
         if let circleID = model.title {
-            let model = GDBaseModel.init(dict: nil)
-            model.actionkey = "GDCircleDetailVC"
-            model.keyparamete = circleID as AnyObject?
-            GDSkipManager.skip(viewController: self , model: model)
-            
+            let dataModel = GDBaseModel.init(dict: nil )
+            let selectedCircleID = circleID
+            //            self.selectedTitle = dataModel.circle_name ?? ""
+            //            if dataModel.permission == 1 {
+            dataModel.actionkey = "GDCircleDetailVC2"
+            let para = ["id" : selectedCircleID ] as [String : String]
+            dataModel.keyparamete = para as AnyObject
+            GDSkipManager.skip(viewController: self , model: dataModel)
+            //            }else{//输入密码再进
+            //                self.setupPwdInput()
+            //            }
         }
     }
     func trendsCellMoreClick(model : GDTrendsCellModel){//没用 , 但又不删

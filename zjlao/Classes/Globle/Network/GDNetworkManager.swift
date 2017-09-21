@@ -1478,7 +1478,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             success(result)
         }) { (error) in
-            mylog("获取圈子详情 请求失败")
+            mylog("插入媒体 请求失败")
             failure(error)
         }
         
@@ -1543,6 +1543,32 @@ class GDNetworkManager: AFHTTPSessionManager {
         }
         
         
+    }
+    
+    
+    func uploadPHAssets(assets:[PHAsset]?)  {
+        
+        self.getQiniuToken(success: { (model ) in
+            if let token = model.data as? String {
+                for ( _ , asset) in (assets ?? []).enumerated() {
+                    
+                    self.qnUploadManager.put(asset, key: nil , token: token, complete: { (response, key , info ) in
+                    //1185
+                        if let key = info?["key"] as? String{
+                            
+                            self.insertMediaToCircle(circleID: "1190", original: key  , type: "1" , description: nil , media_spec:  CGSize(width: asset.pixelWidth, height: asset.pixelHeight), success: { (model ) in
+                                mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
+                            }, failure: { (error ) in
+                                mylog("插入媒体到圈子 请求结果 : \(error)")
+                            })
+                        }
+                    }, option: nil )
+                    
+                }
+            }
+        }) { (error ) in
+            mylog("获取七牛token失败\(error)")
+        }
     }
     // MARK: 注释 : v2 👆
     //MARK:

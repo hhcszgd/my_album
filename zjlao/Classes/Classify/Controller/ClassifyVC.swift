@@ -57,12 +57,29 @@ class ClassifyVC: GDNormalVC , GDCircleTrendsCellDelete{
     func imageControlClick(model : BaseControlModel ,  imageControl : GDPicView){
 //        mylog(model.title)
         if let circleID = model.title {
-            let model = GDBaseModel.init(dict: nil)
-            model.actionkey = "GDCircleDetailVC"
-            model.keyparamete = circleID as AnyObject?
-            GDSkipManager.skip(viewController: self , model: model)
-            
+//            let model = GDBaseModel.init(dict: nil)
+//            model.actionkey = "GDCircleDetailVC"
+//            model.keyparamete = circleID as AnyObject?
+//            GDSkipManager.skip(viewController: self , model: model)
+//
+            let dataModel = GDBaseModel.init(dict: nil )
+            let selectedCircleID = circleID
+//            self.selectedTitle = dataModel.circle_name ?? ""
+//            if dataModel.permission == 1 {
+                dataModel.actionkey = "GDCircleDetailVC2"
+                let para = ["id" : selectedCircleID ] as [String : String]
+                dataModel.keyparamete = para as AnyObject
+                GDSkipManager.skip(viewController: self , model: dataModel)
+//            }else{//输入密码再进
+//                self.setupPwdInput()
+//            }
         }
+        
+        
+        
+        
+        
+        
     }
 //    let tableView = UITableView.init(frame: CGRect.init(x: 0, y: 20, width: GDDevice.width, height: GDDevice.height - 49.0 - 20 ), style: UITableViewStyle.plain)
     override func viewDidLoad() {

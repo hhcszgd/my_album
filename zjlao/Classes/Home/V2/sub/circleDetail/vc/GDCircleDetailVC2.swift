@@ -46,7 +46,7 @@ class GDCircleDetailVC2: GDNormalVC {
         self.setupNaviBar()
         mylog(keyModel?.keyparamete)
         if let para  = keyModel?.keyparamete as? [String:String] {
-            circleName = para["title"]!
+            circleName = para["title"] ?? "nil"
             self.circleID = para["id"]!
             self.pwd = para["password"]
         }
