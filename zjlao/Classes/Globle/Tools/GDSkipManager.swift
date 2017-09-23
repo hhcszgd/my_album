@@ -10,7 +10,7 @@ import UIKit
 
 class GDSkipManager: NSObject {
     
-    class func skip(viewController : UIViewController , model : GDBaseModel){
+    class func skip(viewController : UIViewController , model : GDBaseModel , complated : (()->())? = nil  ){
         guard var realActionKey = model.actionkey else {
             mylog("actionKey为空")
             return
@@ -101,12 +101,14 @@ class GDSkipManager: NSObject {
             vc.keyModel = model
             if let naviVC  = viewController as? UINavigationController {
                 naviVC.pushViewController(vc, animated: true )
+                complated?()
             }else{
                 if viewController.navigationController != nil {
                     viewController.navigationController?.pushViewController(vc, animated: true )
+                    complated?()
                 }else{
                     viewController.present(vc, animated: true , completion: { 
-                        
+                        complated?()
                     })
                 }
             }

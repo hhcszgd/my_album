@@ -1570,6 +1570,47 @@ class GDNetworkManager: AFHTTPSessionManager {
             mylog("获取七牛token失败\(error)")
         }
     }
+    /**
+     7.点赞/取消点赞
+     接口地址：good
+     请求方式：post
+     请求参数：
+     
+ */
+    func performZan(mediaID  : String  , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "good"
+     
+        let para = ["token" : self.token , "media_id" : mediaID ]
+        self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("点赞的请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
+    
+    /**
+ 4.评论
+ 接口地址：comment
+ 请求方式：post
+ */
+    func performComment(mediaID  : String , content : String , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "comment"
+        
+        let para = ["token" : self.token , "media_id" : mediaID , "content" : content ]
+        self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("评论的请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
     // MARK: 注释 : v2 👆
     //MARK:
     //MARK:

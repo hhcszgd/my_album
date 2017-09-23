@@ -8,27 +8,29 @@
 
 import UIKit
 
+
 class GDCircleDetailCellModel: GDBaseModel {
-    var thumbnail  : String?
-    var create_at  : String?
-    var create_date : String?
+    @objc var thumbnail  : String?
+    @objc var create_at  : String?
+    @objc var create_date : String?
     
-    var avatar  : String?
-    var comment_count  : NSNumber?//评论总数
-    var original  : String?
-    var video_url : String?
-    var user_id : String?
-    var format : String?
-    var name : String?
-    var mine : NSNumber? //1代表我的
-    var my_good : NSNumber? //1代表已经点赞
-    var browse_count : String? //浏览量
-    var good_count : NSNumber?
-    var id : String? //媒体id
-    var descrip : String?
-    var city : String?
-    var goods : [BaseControlModel]?
-    var good : [[String : Any]]?{
+//    @objc var avatar  : String?
+    @objc var media_create_avatar : String?
+    @objc var comment_count  : NSNumber?//评论总数
+    @objc var original  : String?
+    @objc var video_url : String?
+    @objc var user_id : String?
+    @objc var format : String?
+    @objc var name : String?
+    @objc var mine : NSNumber? //1代表我的
+    @objc var my_good : NSNumber? //1代表已经点赞
+    @objc var browse_count : String? //浏览量
+    @objc var good_count : NSNumber?
+    @objc var id : String? //媒体id
+    @objc var descrip : String?
+    @objc var city : String?
+    @objc var goods : [BaseControlModel]?
+    @objc var good : [[String : Any]]?{
         willSet{
             var tempArr = [BaseControlModel]()
             if let goodDictArr =  newValue{
@@ -43,6 +45,7 @@ class GDCircleDetailCellModel: GDBaseModel {
 
                     if let comment_user_id = goodDict["comment_user_id"] as? String{
                         goodModel.additionalTitle = comment_user_id
+                        goodModel.title = comment_user_id
                     }
                     tempArr.append(goodModel)
                 }
@@ -57,8 +60,8 @@ class GDCircleDetailCellModel: GDBaseModel {
         }
     }
     
-    var comments  : [BaseControlModel]?
-    var comment  : [[String:Any]]?{
+    @objc var comments  : [BaseControlModel]?
+    @objc var comment  : [[String:Any]]?{
         willSet{
             var tempArr = [BaseControlModel]()
             if let commentDictArr =  newValue{

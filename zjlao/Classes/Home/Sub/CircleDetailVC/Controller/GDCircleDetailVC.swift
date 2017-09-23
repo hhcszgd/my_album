@@ -389,10 +389,24 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
                 if let page_Size = infoDict["pageSize"] as? Int{
                     pageSize = page_Size
                 }
+
                 self.offset = offSet + pageSize
                 if let subMediasArr = infoDict["resultMedia"] as? [[String : AnyObject]]{
                     for subMediaDict in subMediasArr{
-                        let picModel : GDCircleDetailCellModel = GDCircleDetailCellModel.init(dict: subMediaDict)
+                        var reMakeDict  = subMediaDict
+                        
+                        if let mediaCommentList = infoDict["mediaCommentList"] as? [[String : AnyObject]]{
+                            reMakeDict["comment"] = "mediaCommentList" as AnyObject
+                            
+                        }
+                        if let mediaGoodDict = infoDict["mediaCommentList"] as? [String : AnyObject]{
+                            if let list = mediaGoodDict["list"]{
+                                reMakeDict["good"] = list as AnyObject
+                                
+                            }
+                        }
+                        
+                        let picModel : GDCircleDetailCellModel = GDCircleDetailCellModel.init(dict: reMakeDict)
                         tempDatas.append(picModel)
                     }
                 }
@@ -431,12 +445,20 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         self.postRefreshNotification()
     }
     func zanClick(mediaID:String){
-        GDNetworkManager.shareManager.commentAndLike(mediaID: mediaID, isLike: "1", content: nil, { (result ) in
+        
+        GDNetworkManager.shareManager.performZan(mediaID: mediaID, success: { (result  ) in
             mylog("点赞结果\(result.status)")
             self.requestData(loadDataType: LoadDataType.initialize)
-        }, failure: { (error ) in
-            mylog("点赞请求失败 : \(error)")
-        })
+        }) { (error ) in
+             mylog("点赞请求失败 : \(error)")
+        }
+        
+//        GDNetworkManager.shareManager.commentAndLike(mediaID: mediaID, isLike: "1", content: nil, { (result ) in
+//            mylog("点赞结果\(result.status)")
+//            self.requestData(loadDataType: LoadDataType.initialize)
+//        }, failure: { (error ) in
+//            mylog("点赞请求失败 : \(error)")
+//        })
     }
     //    var currentMediaID : String?
     

@@ -189,12 +189,21 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     @objc func confirmBtnClick()  {
         if textView.text.characters.count > 0  {
             if self.currentMediaID != nil  {
-                GDNetworkManager.shareManager.commentAndLike(mediaID: self.currentMediaID!, isLike: "0", content: self.textView.text, { (result ) in
+                
+                GDNetworkManager.shareManager.performComment(mediaID: self.currentMediaID!, content: self.textView.text ?? "", success: { (result ) in
                     mylog("评论成功\(String(describing: result.data))")
                     self.requestData(loadDataType: LoadDataType.initialize)
                 }, failure: { (error ) in
                     mylog("发表评论请求失败 : \(error)")
                 })
+                
+                
+//                GDNetworkManager.shareManager.commentAndLike(mediaID: self.currentMediaID!, isLike: "0", content: self.textView.text, { (result ) in
+//                    mylog("评论成功\(String(describing: result.data))")
+//                    self.requestData(loadDataType: LoadDataType.initialize)
+//                }, failure: { (error ) in
+//                    mylog("发表评论请求失败 : \(error)")
+//                })
             }
             self.textView.text = nil
             self.currentMediaID = nil
@@ -510,8 +519,25 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
             mylog("获取媒体详情 sttus: \(result.status) , data : \(result.data)")
             var tempDatas  : [GDCircleDetailCellModel] = [GDCircleDetailCellModel] ()
             if let infoDict = result.data as? [String : AnyObject]{
-                let picModel : GDCircleDetailCellModel = GDCircleDetailCellModel.init(dict: infoDict["resultMedia"] as! [String : AnyObject])
-                tempDatas.append(picModel)
+                
+                if   var  reMakeDict  = infoDict["resultMedia"] as? [String : AnyObject]{
+                    
+                    if let mediaCommentList = infoDict["mediaCommentList"] as? [[String : AnyObject]]{
+                        reMakeDict["comment"] = mediaCommentList as AnyObject
+                        
+                    }
+                    if let mediaGoodlist = infoDict["mediaGoodList"] as? [String : AnyObject]{
+                        if let list = mediaGoodlist["list"] as? [[String : AnyObject]]{
+                            
+                            reMakeDict["good"] = list  as AnyObject
+                        }
+                    }
+                    let picModel : GDCircleDetailCellModel = GDCircleDetailCellModel.init(dict: reMakeDict )
+                    tempDatas.append(picModel)
+                }
+                
+//                let picModel : GDCircleDetailCellModel = GDCircleDetailCellModel.init(dict: infoDict["resultMedia"] as! [String : AnyObject])
+//                tempDatas.append(picModel)
             }
             self.datas = tempDatas
             self.tableView.reloadData()
@@ -542,12 +568,18 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     
     // MARK: 注释 : customDelegate
     func zanClick(mediaID:String){
-        GDNetworkManager.shareManager.commentAndLike(mediaID: mediaID, isLike: "1", content: nil, { (result ) in
+        GDNetworkManager.shareManager.performZan(mediaID: mediaID, success: { (result  ) in
             mylog("点赞结果\(result.status)")
             self.requestData(loadDataType: LoadDataType.initialize)
-        }, failure: { (error ) in
+        }) { (error ) in
             mylog("点赞请求失败 : \(error)")
-        })
+        }
+//        GDNetworkManager.shareManager.commentAndLike(mediaID: mediaID, isLike: "1", content: nil, { (result ) in
+//            mylog("点赞结果\(result.status)")
+//            self.requestData(loadDataType: LoadDataType.initialize)
+//        }, failure: { (error ) in
+//            mylog("点赞请求失败 : \(error)")
+//        })
     }
     //    var currentMediaID : String?
     
@@ -613,7 +645,13 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool{
         if text == "\n" {//点return键走这里
             if self.currentMediaID != nil  {
-                GDNetworkManager.shareManager.commentAndLike(mediaID: self.currentMediaID!, isLike: "0", content: self.textView.text, { (result ) in
+//                GDNetworkManager.shareManager.commentAndLike(mediaID: self.currentMediaID!, isLike: "0", content: self.textView.text, { (result ) in
+//                    mylog("评论成功\(String(describing: result.data))")
+//                    self.requestData(loadDataType: LoadDataType.initialize)
+//                }, failure: { (error ) in
+//                    mylog("发表评论请求失败 : \(error)")
+//                })
+                GDNetworkManager.shareManager.performComment(mediaID: self.currentMediaID!, content: self.textView.text ?? "", success: { (result ) in
                     mylog("评论成功\(String(describing: result.data))")
                     self.requestData(loadDataType: LoadDataType.initialize)
                 }, failure: { (error ) in

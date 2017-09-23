@@ -49,7 +49,7 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         didSet{
             mylog("xxxxxxxxxxxxxxxxxxxx\(String(describing: model?.my_good))")
             self.zanBtn.isEnabled = model?.my_good == 1 ?   false : true
-            self.ownerIcon.sd_setImage(with: URL(string: model?.avatar ?? ""), for: UIControlState.normal)
+            self.ownerIcon.sd_setImage(with: URL(string: model?.media_create_avatar ?? ""), for: UIControlState.normal)
             
             self.bigImageView.sd_setImage(with: URL(string: model?.original ?? ""), for: UIControlState.normal)
             if let format = model?.format {

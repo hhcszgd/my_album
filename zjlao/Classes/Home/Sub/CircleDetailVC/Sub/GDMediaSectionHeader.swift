@@ -44,7 +44,7 @@ class GDMediaSectionHeader: UITableViewHeaderFooterView {
     
     var model  : GDCircleDetailCellModel?{
         didSet{
-            self.ownerIcon.sd_setImage(with: URL(string: model?.avatar ?? ""), for: UIControlState.normal)
+            self.ownerIcon.sd_setImage(with: URL(string: model?.media_create_avatar ?? ""), for: UIControlState.normal)
             
             self.bigImageView.sd_setImage(with: URL(string: model?.original ?? ""), for: UIControlState.normal)
             if let format = model?.format {

@@ -1333,10 +1333,10 @@ class GDLaunchVC: UIViewController {
         label.textColor = UIColor.white
         let calander = Calendar.current
         let result = calander.dateComponents(in: TimeZone.current, from: Date())
-        mylog(result.day)
-        mylog(result.weekday)
-        mylog(result.month)
-        mylog(result.year)
+//        mylog(result.day)
+//        mylog(result.weekday)
+//        mylog(result.month)
+//        mylog(result.year)
         let dayH : CGFloat = 88.0
         let offset : CGFloat = 5.0 //年月和周 相对于水平中线的上下偏移量
         switch type {

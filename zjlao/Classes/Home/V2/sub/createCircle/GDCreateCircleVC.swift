@@ -47,6 +47,17 @@ class GDCreateCircleVC: GDNormalVC {
     func performCreateCircle() {
         GDNetworkManager.shareManager.createNewCircle(name: self.circleName.text!, memberNum: self.memberLimit.text, password: self.circlePasscode.text, success: { (model ) in
             mylog(model.status)
+            if model.status == 200 || model.status == 348{
+                if let dict = model.data as? [String : String] , let circledID = dict["circle_id"] {
+                        let dataModel = GDBaseModel.init(dict: nil )
+                        dataModel.actionkey = "GDCircleDetailVC2"
+                        let para = ["id" : circledID] as [String : String]
+                        dataModel.keyparamete = para as AnyObject
+                    GDSkipManager.skip(viewController: self , model: dataModel, complated: {
+                        self.removeFromParentViewController()
+                    })
+                }
+            }
             mylog(model.data)
         }) { (error ) in
             mylog(error)
@@ -60,7 +71,9 @@ class GDCreateCircleVC: GDNormalVC {
         return UIStatusBarStyle.default
     }
 
-
+    deinit {
+        mylog("create circle vc deinit")
+    }
     /*
     // MARK: - Navigation
 
