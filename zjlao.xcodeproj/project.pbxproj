@@ -136,6 +136,9 @@
 		1586B8C21E7D030700957A81 /* GDMapInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1586B8C11E7D030700957A81 /* GDMapInView.swift */; };
 		1586B8C41E7D0DEE00957A81 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1586B8C31E7D0DEE00957A81 /* MapKit.framework */; };
 		15876E7E1F6A530400E7CAB5 /* GDTableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15876E7D1F6A530400E7CAB5 /* GDTableViewProtocol.swift */; };
+		158801691F775C63007525C9 /* GDFriendListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158801681F775C63007525C9 /* GDFriendListVC.swift */; };
+		1588016B1F775D17007525C9 /* GDFriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1588016A1F775D17007525C9 /* GDFriendModel.swift */; };
+		1588016D1F7760F1007525C9 /* GDFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1588016C1F7760F1007525C9 /* GDFriendCell.swift */; };
 		1589F55D1DE6FEC8007CE639 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F55C1DE6FEC8007CE639 /* libresolv.tbd */; };
 		1589F55F1DE6FED1007CE639 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F55E1DE6FED1007CE639 /* UserNotifications.framework */; };
 		1589F5611DE6FEDA007CE639 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589F5601DE6FEDA007CE639 /* libz.tbd */; };
@@ -545,6 +548,9 @@
 		1586B8C11E7D030700957A81 /* GDMapInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDMapInView.swift; sourceTree = "<group>"; };
 		1586B8C31E7D0DEE00957A81 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		15876E7D1F6A530400E7CAB5 /* GDTableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDTableViewProtocol.swift; sourceTree = "<group>"; };
+		158801681F775C63007525C9 /* GDFriendListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFriendListVC.swift; sourceTree = "<group>"; };
+		1588016A1F775D17007525C9 /* GDFriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFriendModel.swift; sourceTree = "<group>"; };
+		1588016C1F7760F1007525C9 /* GDFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFriendCell.swift; sourceTree = "<group>"; };
 		1589F55C1DE6FEC8007CE639 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		1589F55E1DE6FED1007CE639 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		1589F5601DE6FEDA007CE639 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -3040,6 +3046,8 @@
 		1523AE101DCC8DDC00011F9A /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				1527D3311F7785DB001EF4C3 /* ProfileEditVC */,
+				158801641F775C2F007525C9 /* FriendList */,
 				15F5E6061EAF63E900265C1F /* GDSetUserinfoVC */,
 				15151BCF1EA9B01B009A5902 /* DayMediaDetailVC */,
 				1523AE111DCC8DDC00011F9A /* Empty */,
@@ -3136,6 +3144,37 @@
 				159281C11E90DE1D0029105F /* GDTrendsCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1527D3311F7785DB001EF4C3 /* ProfileEditVC */ = {
+			isa = PBXGroup;
+			children = (
+				1527D3321F7785DB001EF4C3 /* model */,
+				1527D3331F7785DB001EF4C3 /* vc */,
+				1527D3341F7785DB001EF4C3 /* view */,
+			);
+			path = ProfileEditVC;
+			sourceTree = "<group>";
+		};
+		1527D3321F7785DB001EF4C3 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		1527D3331F7785DB001EF4C3 /* vc */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = vc;
+			sourceTree = "<group>";
+		};
+		1527D3341F7785DB001EF4C3 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 		15460F3C1F6BC71300D4A7FE /* AllCircles */ = {
@@ -3244,6 +3283,40 @@
 		157E42D11F6A16F300CBE4BA /* view */ = {
 			isa = PBXGroup;
 			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		158801641F775C2F007525C9 /* FriendList */ = {
+			isa = PBXGroup;
+			children = (
+				158801651F775C2F007525C9 /* model */,
+				158801661F775C2F007525C9 /* vc */,
+				158801671F775C2F007525C9 /* view */,
+			);
+			path = FriendList;
+			sourceTree = "<group>";
+		};
+		158801651F775C2F007525C9 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				1588016A1F775D17007525C9 /* GDFriendModel.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		158801661F775C2F007525C9 /* vc */ = {
+			isa = PBXGroup;
+			children = (
+				158801681F775C63007525C9 /* GDFriendListVC.swift */,
+			);
+			path = vc;
+			sourceTree = "<group>";
+		};
+		158801671F775C2F007525C9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				1588016C1F7760F1007525C9 /* GDFriendCell.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -4113,6 +4186,7 @@
 				15A4DCEB1E8CF5B6009A0DCE /* GPUImageDissolveBlendFilter.m in Sources */,
 				159A47DF1F6F627500FE1BD0 /* GDCoverView.swift in Sources */,
 				15A8D1071EA8A7F7009BFA3B /* GDCommentFullCell.swift in Sources */,
+				1588016D1F7760F1007525C9 /* GDFriendCell.swift in Sources */,
 				15A4DCD81E8CF5B6009A0DCE /* GPUImageColorBlendFilter.m in Sources */,
 				15A4DD6E1E8CF5B6009A0DCE /* GPUImageContext.m in Sources */,
 				154BB5F71E2B529200A9EF05 /* GDBaseModel.swift in Sources */,
@@ -4152,6 +4226,7 @@
 				15E32F521EA60875004CECA7 /* GDCircleDetailCell.swift in Sources */,
 				1523AE461DCC8DDC00011F9A /* GDLocationManager.swift in Sources */,
 				1523AE531DCC8DDC00011F9A /* SettingVC.swift in Sources */,
+				1588016B1F775D17007525C9 /* GDFriendModel.swift in Sources */,
 				15A4DD531E8CF5B6009A0DCE /* GPUImageSubtractBlendFilter.m in Sources */,
 				15A4DD2F1E8CF5B6009A0DCE /* GPUImageParallelCoordinateLineTransformFilter.m in Sources */,
 				1508697C1DCC74E70001B6EF /* zjlao.xcdatamodeld in Sources */,
@@ -4265,6 +4340,7 @@
 				15A4DD0A1E8CF5B6009A0DCE /* GPUImageHSBFilter.m in Sources */,
 				1559D1B81E87B06D0032F9D7 /* GDImageCaptureVC.swift in Sources */,
 				15A4DD1D1E8CF5B6009A0DCE /* GPUImageLuminosityBlendFilter.m in Sources */,
+				158801691F775C63007525C9 /* GDFriendListVC.swift in Sources */,
 				15A4DD151E8CF5B6009A0DCE /* GPUImageLinearBurnBlendFilter.m in Sources */,
 				15A4DD381E8CF5B6009A0DCE /* GPUImagePrewittEdgeDetectionFilter.m in Sources */,
 				15119F621EBAF908002149B1 /* GDIBCollectionCell.swift in Sources */,

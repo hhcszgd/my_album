@@ -234,8 +234,8 @@ class GDNetworkManager: AFHTTPSessionManager {
     
     // MARK: 注释 : 查看评论点赞动态
     func getReceivedTrends( page : Int , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
-        let url = "comment"
-        
+//        let url = "comment"
+         let url = "users_message"
         let para = [
             "page" : page,//媒体base64
             "token" : self.token ?? "看看",
@@ -1610,7 +1610,43 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         
     }
+    /**
+ 6.我的信息
+ 接口地址：users_message
+ 请求方式：get
+ 请求参数：
+ */
     
+    func getMessageList(mediaID  : String , page : Int , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "users_message"
+        
+        let para = ["token" : self.token , "page" : page ] as [String : Any]
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("消息列表的请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    /*
+ 3.我的好友
+ 接口地址：friend
+ 请求方式：get
+ */
+    func getFriendList( page : Int , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "friend"
+        let para = ["token" : self.token , "page" : page ] as [String : Any]
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("好友列表的请求失败")
+            failure(error)
+        }
+        
+        
+    }
     // MARK: 注释 : v2 👆
     //MARK:
     //MARK:

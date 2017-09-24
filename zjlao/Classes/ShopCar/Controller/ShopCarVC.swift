@@ -168,9 +168,15 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     }
     @objc func gotoFriendsList()  {
         mylog("got friends list ")
+        let model = GDBaseModel.init(dict: nil )
+        model.actionkey = "GDFriendListVC"
+        GDSkipManager.skip(viewController: self , model: model , complated: nil )
     }
     @objc func gotoMessagesList()  {
         mylog("goto message list")
+        let model = GDBaseModel.init(dict: nil )
+        model.actionkey = "ProfileVC"
+        GDSkipManager.skip(viewController: self , model: model , complated: nil )
     }
     @objc func gotoSetting()  {
         mylog("go and setting")

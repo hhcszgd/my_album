@@ -8,7 +8,7 @@
 //TODO: 消息按钮 固定不随tableView滚动
 import UIKit
 import MJRefresh
-class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTrendsMsgCellDelegate{
+class ProfileVC: GDNormalVC , GDTrendsMsgCellDelegate{
     
     
     
@@ -17,13 +17,13 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     let tipLbl1 = UILabel.init(frame: CGRect.zero)
     let tipLbl2 = UILabel.init(frame: CGRect.zero)
     var datas : [TrendsMsgCellModel] = [TrendsMsgCellModel]()
-    lazy var tableView : UITableView = {
-        let temp = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)//
-        self.view.addSubview(temp)
-        temp.dataSource = self
-        temp.delegate = self
-        temp.frame = CGRect(x: 0, y: 20, width: SCREENWIDTH, height: SCREENHEIGHT - 20 - 49)
-        
+//    lazy var tableView : UITableView = {
+//        let temp = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)//
+//        self.view.addSubview(temp)
+//        temp.dataSource = self
+//        temp.delegate = self
+//        temp.frame = CGRect(x: 0, y: 20, width: SCREENWIDTH, height: SCREENHEIGHT - 20 - 49)
+    
         
 //        let images = [UIImage(named: "bg_collocation")!,UIImage(named: "bg_coupon")!,UIImage(named: "bg_Direct selling")!,UIImage(named: "bg_electric")!,UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
         
@@ -37,33 +37,32 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
 //        footer?.setImages(self.refreshImages , for: MJRefreshState.idle)
 //        footer?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
 //        temp.mj_footer = footer
-        return temp
-        
-    }()
-    var pullingImages : [UIImage] = {
-        var images = [UIImage(named: "pulling1")! , UIImage(named: "pulling2")! ,UIImage(named: "pulling3")! ,UIImage(named: "pulling4")! ,UIImage(named: "pulling5")! ,UIImage(named: "pulling6")! ,UIImage(named: "pulling7")! ]
-        return images
-        
-    }()
-    var   refreshImages:  [UIImage] = {
-        //        var images = [UIImage]()
-        //        for i in 1...34 {
-        //            let formateStr = NSString(format: "%02d", i)
-        //            let img = UIImage(named: "loading100\(formateStr)");
-        //
-        //            if img != nil  {
-        //                images.append(img!)
-        //            }
-        //        }
-        
-        //        mylog(images.count)
-        let images = [UIImage(named: "gdloading1")! , UIImage(named: "gdloading2")! ]
-        return images
-    }()
+//        return temp
+//
+//    }()
+//    var pullingImages : [UIImage] = {
+//        var images = [UIImage(named: "pulling1")! , UIImage(named: "pulling2")! ,UIImage(named: "pulling3")! ,UIImage(named: "pulling4")! ,UIImage(named: "pulling5")! ,UIImage(named: "pulling6")! ,UIImage(named: "pulling7")! ]
+//        return images
+//
+//    }()
+//    var   refreshImages:  [UIImage] = {
+//        //        var images = [UIImage]()
+//        //        for i in 1...34 {
+//        //            let formateStr = NSString(format: "%02d", i)
+//        //            let img = UIImage(named: "loading100\(formateStr)");
+//        //
+//        //            if img != nil  {
+//        //                images.append(img!)
+//        //            }
+//        //        }
+//
+//        //        mylog(images.count)
+//        let images = [UIImage(named: "gdloading1")! , UIImage(named: "gdloading2")! ]
+//        return images
+//    }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        self.setupTable()
         
         self.automaticallyAdjustsScrollViewInsets = false
 
@@ -99,40 +98,38 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     
     
     func setupTable() {
-
-//        let images = [UIImage(named: "bg_collocation")!,UIImage(named: "bg_coupon")!,UIImage(named: "bg_Direct selling")!,UIImage(named: "bg_electric")!,UIImage(named: "bg_female baby")!,UIImage(named: "bg_franchise")!]
-//        
-//        
-//        let header  =  GDRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
-//        header?.lastUpdatedTimeLabel.isHidden = true
-//        header?.setImages(self.pullingImages , for: MJRefreshState.idle)
-//        header?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
-//        self.tableView.mj_header = header
-//        let footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
-//        footer?.setImages(self.refreshImages , for: MJRefreshState.idle)
-//        footer?.setImages(self.refreshImages , for: MJRefreshState.refreshing)
-//        self.tableView.mj_footer = footer
-//        
         if self.tableView.mj_header == nil  {
             
             self.tableView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
             self.tableView.mj_header = GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refresh))
         }
         
+        if self.navigationController?.childViewControllers.first == self  {
+            self.naviBar.isHidden = true
+        }else{
+            self.naviBar.isHidden = false
+            self.naviBar.backgroundColor = UIColor.black
+            self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
+            var attritit = NSMutableAttributedString.init(string: "消息")
+            attritit.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
+            self.naviBar.attributeTitle = attritit
+            self.tableView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0 )
+            
+        }
         
         
         self.tableView.backgroundColor = UIColor.white
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
     }
-    @objc func refresh ()  {
+    @objc override func refresh ()  {
         self.requestData(loadDataType: LoadDataType.reload)
         
     }
-    @objc func loadMore ()  {
+    @objc override func loadMore ()  {
         self.requestData(loadDataType: LoadDataType.loadMore)
         
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
     
         return self.datas.count
     }
@@ -141,7 +138,7 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileVCCell")
         if cell == nil  {
             let  creatCell = GDTrendsMsgCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "profileVCCell")
@@ -164,7 +161,7 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
 
 
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         return 64.0 
     }
     
@@ -238,15 +235,25 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        GDKeyVC.share.mainTabbarVC?.tabBar.items?.last?.badgeValue = nil
-        GDKeyVC.share.settabBarItem(number: nil , index: 4)
-        self.requestData(loadDataType: LoadDataType.reload)
+//        GDKeyVC.share.settabBarItem(number: nil , index: 4)
+//        self.requestData(loadDataType: LoadDataType.reload)
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model  = self.datas[indexPath.row]
+//        model.actionkey = "GDMideaDetailVC"
+//        let keyParamete : [String : String ] = [ "mediaID":model.media_id ?? "" , "create_at" : model.media_create_at ?? "" , "id":model.id ?? ""]
+//        model.keyparamete = keyParamete as AnyObject
+//        GDSkipManager.skip(viewController: self , model: model)
+        
+        
+        
+//        let model = models![indexPath.item % models!.count]
+        //        getMediaDetail
         model.actionkey = "GDMideaDetailVC"
-        let keyParamete : [String : String ] = [ "mediaID":model.media_id ?? "" , "create_at" : model.media_create_at ?? "" , "id":model.id ?? ""]
+        let keyParamete : [String : String ] = [/*"circleID":self.circleID ,*/ "mediaID":model.id ?? ""]
         model.keyparamete = keyParamete as AnyObject
         GDSkipManager.skip(viewController: self , model: model)
+        
         
     }
     

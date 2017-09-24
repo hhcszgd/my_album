@@ -9,20 +9,20 @@
 import UIKit
 
 class TrendsMsgCellModel: GDBaseModel {
-    var id : String?
-    var content : String?
-    var media_type    : String?
-    var type   : String?
-    var create_at  : String?
-    var media_thumbnail  : String?
-    var comment_user_id  : String?
-    var comment_user_avatar  : String?
-    var media_create_at  : String?
-    var media_id  : String?
-    var is_good  : String?
-    var status  : String?
-    var comment_user_name  : String?
-    
+    @objc var id : String?
+    @objc var content : String?
+    @objc var media_type    : String?
+    @objc var type   : String?
+    @objc var create_at  : String?
+    @objc var media_thumbnail  : String?
+    @objc var comment_user_id  : String?
+    @objc var comment_user_avatar  : String?
+    @objc var media_create_at  : String?
+    @objc var media_id  : String?
+    @objc var is_good  : String?
+    @objc var status  : String?
+    @objc var comment_user_name  : String?
+    @objc var title  : String?
     override init(dict: [String : AnyObject]?) {
         super.init(dict: dict)
     }

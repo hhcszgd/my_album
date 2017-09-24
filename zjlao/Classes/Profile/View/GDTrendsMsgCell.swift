@@ -85,7 +85,8 @@ class GDTrendsMsgCell: UITableViewCell {
                 descrip.append("\(commentOrRecomment)了你的视频")
             }
         }
-        self.descripLbl.text = descrip
+//        self.descripLbl.text = descrip
+        self.descripLbl.text = self.model?.title
         self.commentLbl.text = tempmodel?.content ?? ""
         self.timeLbl.text = tempmodel?.create_at ?? ""
     }
