@@ -164,7 +164,12 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         imgTxt.frame = CGRect(x: x, y: y, width: tableHeaderView.bounds.width  / 4, height: 63)
     }
     @objc func editIcon() {
-        mylog("edit icon")
+//        mylog("edit icon")
+
+        let model = GDBaseModel.init(dict: nil )
+        model.actionkey = "GDProfileEditVC"
+        GDSkipManager.skip(viewController: self , model: model , complated: nil )
+        
     }
     @objc func gotoFriendsList()  {
         mylog("got friends list ")

@@ -1647,6 +1647,26 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         
     }
+    /**
+     2.查看用户信息
+     接口地址：users/<id>
+     请求方式：get
+     请求参数：
+     
+ */
+    
+    func getUserInfomation(userID: String , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "users/" + userID
+        let para = ["token" : self.token  ] as [String : Any]
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("个人信息的请求失败")
+            failure(error)
+        }
+        
+        
+    }
     // MARK: 注释 : v2 👆
     //MARK:
     //MARK:

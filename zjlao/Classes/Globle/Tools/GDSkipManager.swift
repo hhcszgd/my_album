@@ -100,6 +100,12 @@ class GDSkipManager: NSObject {
         case "GDFriendListVC":
             targetVC = GDFriendListVC()
             break
+        case "GDProfileEditVC":
+            targetVC = GDProfileEditVC()
+            break
+        case "GDIconEditVC":
+            targetVC = GDIconEditVC()
+            break
             
             
         default:
