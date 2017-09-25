@@ -21,7 +21,7 @@
  }
  */
 import UIKit
-
+import MJRefresh
 class GDCircleDetailVC2: GDNormalVC {
     let qieziButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
     var circleID  = "0"
@@ -30,7 +30,7 @@ class GDCircleDetailVC2: GDNormalVC {
     var page  : Int = 1
     var pwd : String?
     var circleInfoModel : GDCircleSessionHeaderModel?
-    
+
     var circleName : String = "" {
         didSet{
             let attritit = NSMutableAttributedString.init(string: circleName)
@@ -54,8 +54,16 @@ class GDCircleDetailVC2: GDNormalVC {
         self.prepareSubViews()
         self.setupQZButton()
         self.getCircles()
+        self.collectionView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+        self.collectionView.mj_header = GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refreshOrInit))
+        // Do any additional setup after loading the view.
     }
-    
+    @objc override func loadMore() {
+        getCircles(loadType: LoadDataType.loadMore)
+    }
+    @objc func refreshOrInit() {
+        getCircles(loadType: LoadDataType.initialize)
+    }
     func setupQZButton() {
         self.view.addSubview(qieziButton)
         qieziButton.setImage(UIImage(named:"logo"), for: UIControlState.normal)
@@ -235,23 +243,20 @@ extension GDCircleDetailVC2 {
     }
     
     
-    func getCircles() {
+    func getCircles(loadType : LoadDataType = .initialize) {
+
+        switch loadType {
+        case LoadDataType.initialize , LoadDataType.reload:
+            self.page  = 1
+            break
+        case LoadDataType.loadMore:
+            self.page  = self.page + 1
+            break
+        }
+        
         GDNetworkManager.shareManager.getCircleDetail(circleID: circleID, page: "\(page)" , password: pwd, success: { (model ) in
             mylog("获取圈子详情 : \(model.data)")
             if let outSideDict = model.data as? [String : AnyObject]{
-                if let arr = outSideDict["media"] as? [[String : AnyObject]]{
-                    var tempModels = [GDCircleDetailItemModel]()
-                    for (_ , dict ) in arr.enumerated(){
-//                        mylog(dict)
-                        let tempModel = GDCircleDetailItemModel.init(dict: dict )
-//                        dump(tempModel)
-                        tempModels.append(tempModel)
-                    }
-                    if tempModels.count > 0 {
-                        self.models = tempModels
-                        
-                    }
-                }
                 let tempCircleModel = GDCircleSessionHeaderModel.init(dict: nil  )
                 if let datetime = outSideDict["datetime"] as? String{
                     tempCircleModel.datetime = datetime
@@ -271,10 +276,47 @@ extension GDCircleDetailVC2 {
                     tempCircleModel.members = members
                 }
                 self.circleInfoModel = tempCircleModel
+                var tempModels = [GDCircleDetailItemModel]()
+                if let arr = outSideDict["media"] as? [[String : AnyObject]]{
+                    for (_ , dict ) in arr.enumerated(){
+//                        mylog(dict)
+                        let tempModel = GDCircleDetailItemModel.init(dict: dict )
+//                        dump(tempModel)
+                        tempModels.append(tempModel)
+                    }
+
+                }
+                
+                
+                
+                if(tempModels.count == 0 ){
+                    self.collectionView.mj_header.endRefreshing()
+                    self.collectionView.mj_footer.state = MJRefreshState.noMoreData
+                    return
+                }
+                switch loadType {
+                case LoadDataType.initialize , LoadDataType.reload:
+                    self.models = tempModels
+                    break
+                case LoadDataType.loadMore:
+                    self.models?.append(contentsOf: tempModels)
+                    break
+                }
+                
+                self.collectionView.reloadData()
+                self.collectionView.mj_header.endRefreshing()
+                self.collectionView.mj_footer.state = MJRefreshState.idle
+                
+                
+                
+                
+                
+                
+                
+                
                 /**
                  ["circle_image": , "id": 1125, "circle_type": 2, "circle_name": 圈子11112222, "circle_member_count": 1, "circle_member_number": 80, "permission": 0]
                  */
-                self.collectionView.reloadData()
             }else{
                 mylog("获取圈子详情 类型转换失败")
             }

@@ -221,7 +221,16 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
             }
         }
         if let _ = viewController as? LaoNaviVC {
-            if juge() {self.setupCarame()}
+            if juge() {
+                
+                
+                NotificationCenter.default.post(name: Notification.Name.init("GDLaoTabBarClick"), object: GDKeyVC.share, userInfo: nil)
+//                self.setupCarame()
+                
+            }
+            
+            
+            
 //            if juge() {self.setupCustomCarame()}
             return false
         }

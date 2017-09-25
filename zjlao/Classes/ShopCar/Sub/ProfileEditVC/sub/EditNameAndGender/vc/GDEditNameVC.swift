@@ -111,6 +111,8 @@ class GDEditNameVC: GDNormalVC {
                 mylog("修改用户名成功\(model.description)")
                 if model.status == 200 {
                 }
+                
+                NotificationCenter.default.post(name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount)
                 self.popToPreviousVC()
             }, failure: { (error ) in
                 mylog("修改用户名失败\(error)")
@@ -125,6 +127,8 @@ class GDEditNameVC: GDNormalVC {
             }
             GDNetworkManager.shareManager.editUserInfomation( gender: gender, success: { (model ) in
                 mylog("修改性别成功\(model.description)")
+                
+                NotificationCenter.default.post(name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount)
                 self.popToPreviousVC()
             }, failure: { (error ) in
                 mylog("修改性别失败\(error)")

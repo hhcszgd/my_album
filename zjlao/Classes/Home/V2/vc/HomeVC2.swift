@@ -32,9 +32,11 @@ class HomeVC2: GDBaseVC , GDAutoScrollViewActionDelegate , UICollectionViewDeleg
         self.getAD()
         self.gerCircles()
         unlockBtn.addTarget(self , action: #selector(unlockBtnClick), for: UIControlEvents.touchUpInside)
-        
+        NotificationCenter.default.addObserver(self , selector: #selector(qieZiClick), name: Notification.Name.init("GDLaoTabBarClick"), object: GDKeyVC.share)
     }
-    
+    @objc func qieZiClick()  {
+        self.performSeeAllCircles()
+    }
     func prepareSubViews()  {
         ///:autoScrollView
         

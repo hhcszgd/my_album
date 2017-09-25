@@ -29,8 +29,15 @@ class GDAllCirclesVC: GDNormalVC , UITextFieldDelegate {
         self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
         
         unlockBtn.addTarget(self , action: #selector(unlockBtnClick), for: UIControlEvents.touchUpInside)
-        
+        self.collectionView.mj_footer = nil //GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
+        self.collectionView.mj_header = nil //GDRefreshHeader(refreshingTarget: self, refreshingAction: #selector(refreshOrInit))
         // Do any additional setup after loading the view.
+    }
+    @objc override func loadMore() {
+        
+    }
+    @objc func refreshOrInit() {
+        
     }
     func prepareSubViews()  {
 
