@@ -10,7 +10,7 @@ import UIKit
 
 class GDCoverView: UIControl {
     weak var currentSuperView : UIView!
-    lazy var contentView : UIView = {
+    private lazy var contentView : UIView = {
         let view = UIView()
         view.bounds = CGRect(x: 10, y: 0, width: self.bounds.width - 20, height: self.bounds.height * 0.3)
         view.center = CGPoint(x: self.bounds.width/2, y: self.bounds.height/2)
@@ -25,6 +25,11 @@ class GDCoverView: UIControl {
         self.currentSuperView = superView
         superView.addSubview(self)
         self.addTarget(self , action: #selector(remove), for: UIControlEvents.touchUpInside)
+    }
+    @discardableResult
+    func layoutViewToBeShow(action:(UIView)->()) -> GDCoverView {
+        action(self.contentView)
+        return self
     }
     override func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
@@ -50,14 +55,17 @@ class GDCoverView: UIControl {
             self.removeFromSuperview()
         }
     }
-    func moveContent(offset : CGFloat , timeInterval : TimeInterval = 0.25) {
-        let y = self.contentView.center.y + offset
-        let x = self.contentView.center.x
-        UIView.animate(withDuration: timeInterval, animations: {
-            self.contentView.center = CGPoint(x: x , y: y )
-        }) { (bool ) in
-        }
+    func moveContent(action:(UIView)->())  {
+        action(contentView)
     }
+//    func moveContent(offset : CGFloat , timeInterval : TimeInterval = 0.25) {
+//        let y = self.contentView.center.y + offset
+//        let x = self.contentView.center.x
+//        UIView.animate(withDuration: timeInterval, animations: {
+//            self.contentView.center = CGPoint(x: x , y: y )
+//        }) { (bool ) in
+//        }
+//    }
     deinit {
         mylog("遮盖销毁")
     }

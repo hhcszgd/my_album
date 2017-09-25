@@ -97,17 +97,22 @@ class GDAllCirclesVC: GDNormalVC , UITextFieldDelegate {
     func setupPwdInput() {
         let cover = GDCoverView.init(superView: self.view)
         self.cover = cover
-        self.pwdTextField.frame = CGRect(x: cover.contentView.frame.minX + 10 , y: 40, width:  cover.contentView.frame.width - 20, height: 44)
-        cover.contentView.addSubview(self.pwdTextField)
-        self.pwdTextField.borderStyle = UITextBorderStyle.roundedRect
-        self.pwdTextField.backgroundColor = UIColor.white
-        self.pwdTextField.placeholder = "输入密码进入圈子"
-        self.unlockBtn.setTitle("解锁", for: UIControlState.normal)
-        cover.contentView.backgroundColor = UIColor.init(red: 65/100, green: 59/100, blue: 36/100, alpha: 1)
-        self.unlockBtn.frame = CGRect( x: cover.contentView.frame.midX - 64 / 2 , y: pwdTextField.frame.maxY + 44, width: 64, height: 40   )
-        self.unlockBtn.backgroundColor = UIColor.init(red: 36/100, green: 57/100, blue: 76/100, alpha: 1)
-        self.cover?.contentView.addSubview(self.unlockBtn)
-        
+
+//        self.cover?.contentView.addSubview(self.unlockBtn)
+        self.cover?.layoutViewToBeShow(action: { (contentView) in
+            self.pwdTextField.frame = CGRect(x: contentView.frame.minX + 10 , y: 40, width:  contentView.frame.width - 20, height: 44)
+            //        cover.contentView.addSubview(self.pwdTextField)
+            self.pwdTextField.borderStyle = UITextBorderStyle.roundedRect
+            self.pwdTextField.backgroundColor = UIColor.white
+            self.pwdTextField.placeholder = "输入密码进入圈子"
+            self.unlockBtn.setTitle("解锁", for: UIControlState.normal)
+            contentView.backgroundColor = UIColor.init(red: 65/100, green: 59/100, blue: 36/100, alpha: 1)
+            self.unlockBtn.frame = CGRect( x: contentView.frame.midX - 64 / 2 , y: pwdTextField.frame.maxY + 44, width: 64, height: 40   )
+            self.unlockBtn.backgroundColor = UIColor.init(red: 36/100, green: 57/100, blue: 76/100, alpha: 1)
+            
+            contentView.addSubview(self.pwdTextField)
+            contentView.addSubview(self.unlockBtn)
+        })
         self.pwdTextField.delegate = self
         self.pwdTextField.becomeFirstResponder()
         mylog(UIApplication.shared.windows)
@@ -157,8 +162,16 @@ class GDAllCirclesVC: GDNormalVC , UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField){
         mylog(GDKeyVC.share.keyBoardSize)
         let keyboardMinY = UIScreen.main.bounds.height - GDKeyVC.share.keyBoardSize.height - 20
-        let needMoveY = keyboardMinY - (self.cover?.contentView.frame.maxY ?? 0)
-        self.cover?.moveContent(offset: needMoveY)
+//        self.cover?.moveContent(offset: needMoveY)
+        self.cover?.moveContent(action: { (contentView) in
+            let needMoveY = keyboardMinY - (contentView.frame.maxY ?? 0)
+            let y = contentView.center.y + needMoveY
+            let x = contentView.center.x
+            UIView.animate(withDuration: 0.25, animations: {
+                contentView.center = CGPoint(x: x , y: y )
+            }) { (bool ) in
+            }
+        })
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         mylog(UIApplication.shared.windows)
