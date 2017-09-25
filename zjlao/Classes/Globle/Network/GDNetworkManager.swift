@@ -1667,6 +1667,44 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         
     }
+    /**
+ 
+ 1.修改用户信息
+ 接口地址：users
+ 请求方式：POST
+*/
+    func editUserInfomation(avarta: String? = nil , name : String? = nil , mobile : String? = nil , format : String? = nil , description : String? = nil , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "users"
+        var para  = ["token" : self.token ?? ""  ] as [String : Any]
+        if let avarta = avarta /*, let format = format*/{
+            para["avatar"] = avarta
+//            para["format"] = format
+        }
+        if let name  = name {
+            para["name"] = name
+        }
+        if let mobile  = mobile {
+            para["mobile"] = mobile
+        }
+        if let description = description {
+            para["desctiption"] = description
+        }
+        self.QZRequestJSONDict(RequestType.POST , urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            if result.status == 200 {
+                self.QZFirstInit({ (model ) in
+                    
+                }, failure: { (error ) in
+                    
+                })
+            }
+            success(result)
+        }) { (error) in
+            mylog("修改个人信息的请求失败")
+            failure(error)
+        }
+        
+        
+    }
     // MARK: 注释 : v2 👆
     //MARK:
     //MARK:

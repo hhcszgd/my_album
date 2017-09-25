@@ -50,8 +50,8 @@ class GDTrendsCell: GDBaseCell {
                     pic.addTarget(self , action: #selector(subitemClick(sender:)), for: UIControlEvents.touchUpInside)
                     if let controlModel  = model as? BaseControlModel {
                         pic.controlModel = controlModel
-                        mylog(controlModel.imageUrl)
-                        mylog(controlModel.extensionTitle2)
+//                        mylog(controlModel.imageUrl)
+//                        mylog(controlModel.extensionTitle2)
                         self.picsContainer.addSubview(pic)
                     }
                 }

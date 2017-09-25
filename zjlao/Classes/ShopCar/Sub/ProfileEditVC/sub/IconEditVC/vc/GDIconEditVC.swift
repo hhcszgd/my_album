@@ -88,10 +88,12 @@ extension GDIconEditVC : UIImagePickerControllerDelegate , UINavigationControlle
                 UIImageWriteToSavedPhotosAlbum(image , nil  ,nil , nil )
             }
             //todo  perform save image to library
+            mylog(alertVC)
             
             alertVC.dismiss(animated: true , completion: {
-                
+                mylog(Thread.current)
             })
+            GDAlertView.alert("保存成功", image: nil, time: 2, complateBlock: nil )
         }
         let alertAction3 = UIAlertAction.init(title: "取消", style: UIAlertActionStyle.cancel) { (action ) in
             alertVC.dismiss(animated: true , completion: {})
@@ -224,7 +226,7 @@ extension GDIconEditVC : UIImagePickerControllerDelegate , UINavigationControlle
         // MARK: 注释 : 插入七牛存储👇
         
         
-        /*
+        
         
         GDNetworkManager.shareManager.getQiniuToken(success: { (model ) in
             
@@ -238,14 +240,23 @@ extension GDIconEditVC : UIImagePickerControllerDelegate , UINavigationControlle
                         if let key = successInfo?["key"] as? String{
                             print(key)//get avarta key
                             //save  mediaKey to our server
-                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.circleID, original: key , type: type , description: nil , media_spec:  rectSize, success: { (model ) in
-                                mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
-                                self.getCircles()
+                            GDNetworkManager.shareManager.editUserInfomation(avarta: key/*, format: "jpeg"*/, success: { (model ) in
+                                if model.status == 200 {
+                                    //修改成功
+                                    NotificationCenter.default.post(name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount)
+                                    self.imageView.image = UIImage.init(data: data)
+                                }
                             }, failure: { (error ) in
-                                mylog("插入媒体到圈子 请求结果 : \(error)")
+                                
                             })
+//                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.circleID, original: key , type: type , description: nil , media_spec:  rectSize, success: { (model ) in
+//                                mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
+//                                self.getCircles()
+//                            }, failure: { (error ) in
+//                                mylog("插入媒体到圈子 请求结果 : \(error)")
+//                            })
                         }else{
-                            mylog("插入媒体到圈子失败 : \(responseInfo)")
+                            mylog("修改头像失败 : \(responseInfo)")
                             GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
                         }
                     }
@@ -258,7 +269,7 @@ extension GDIconEditVC : UIImagePickerControllerDelegate , UINavigationControlle
             mylog(error )
         })
         
-        */
+        
         
     }
 }

@@ -45,6 +45,10 @@ class GDProfileEditVC: GDNormalVC {
         self.configRowInfo(rowView: setting, title: "设置", y: startY)
         self.requestNetwork()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.requestNetwork()
+    }
     func setupNaviBar()  {
         self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
         let  attritit = NSMutableAttributedString.init(string: "个人信息")
@@ -81,10 +85,14 @@ class GDProfileEditVC: GDNormalVC {
                 
             case "姓名":
                 mylog(title)
+                let vc  = GDEditNameVC.init(title: "修改姓名", originalValue: (self.userInfo["name"] as? String ) ?? "")
+                self.navigationController?.pushViewController(vc , animated: true )
                 
                 
             case "性别":
                 mylog(title)
+                let vc  = GDEditNameVC.init(title: "修改性别", originalValue: (self.userInfo["sex"] as? String ) ?? "")
+                self.navigationController?.pushViewController(vc , animated: true )
                 
                 
             case "地区":

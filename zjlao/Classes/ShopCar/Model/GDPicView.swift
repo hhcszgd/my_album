@@ -96,7 +96,7 @@ class GDPicView: GDBaseControl {
     override var controlModel: BaseControlModel?{
         set{
             super.controlModel = newValue
-            mylog(newValue?.subTitle)
+//            mylog(newValue?.subTitle)
             if let formate = newValue?.extensionTitle2 {
                 if formate == "jpeg" || formate == "png" || formate == "jpg" {
                     self.isVideo  = false

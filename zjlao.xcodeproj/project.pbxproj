@@ -102,6 +102,7 @@
 		1529EFD71E922EBD00800A6E /* GDCircleTrendsCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1529EFD61E922EBD00800A6E /* GDCircleTrendsCellModel.swift */; };
 		152C91931E90A8A00006A3E2 /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 152C91921E90A8A00006A3E2 /* NSString+Hash.m */; };
 		153546321EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153546311EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift */; };
+		154564F81F7896DA00F2C008 /* GDEditNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154564F71F7896DA00F2C008 /* GDEditNameVC.swift */; };
 		15460F411F6BC73E00D4A7FE /* GDAllCirclesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */; };
 		154B76DE1E1F69C300436CD9 /* GDXmppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B76DD1E1F69C300436CD9 /* GDXmppManager.swift */; };
 		154BB5F31E2B507600A9EF05 /* GDBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BB5F21E2B507600A9EF05 /* GDBaseVC.swift */; };
@@ -515,6 +516,7 @@
 		152C91921E90A8A00006A3E2 /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
 		153546311EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsMsgCellModel.swift; sourceTree = "<group>"; };
 		1536B9F61E0BEA38008CCB31 /* zjlao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = zjlao.entitlements; sourceTree = "<group>"; };
+		154564F71F7896DA00F2C008 /* GDEditNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDEditNameVC.swift; sourceTree = "<group>"; };
 		15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDAllCirclesVC.swift; sourceTree = "<group>"; };
 		154B76DD1E1F69C300436CD9 /* GDXmppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDXmppManager.swift; sourceTree = "<group>"; };
 		154BB5F21E2B507600A9EF05 /* GDBaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBaseVC.swift; sourceTree = "<group>"; };
@@ -3186,6 +3188,7 @@
 		1527D3371F779B12001EF4C3 /* sub */ = {
 			isa = PBXGroup;
 			children = (
+				154564F21F7896C300F2C008 /* EditNameAndGender */,
 				1527D3381F779B23001EF4C3 /* IconEditVC */,
 			);
 			path = sub;
@@ -3225,6 +3228,46 @@
 			sourceTree = "<group>";
 		};
 		1527D33C1F779B23001EF4C3 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		154564F21F7896C300F2C008 /* EditNameAndGender */ = {
+			isa = PBXGroup;
+			children = (
+				154564F31F7896C300F2C008 /* model */,
+				154564F41F7896C300F2C008 /* sub */,
+				154564F51F7896C300F2C008 /* vc */,
+				154564F61F7896C300F2C008 /* view */,
+			);
+			path = EditNameAndGender;
+			sourceTree = "<group>";
+		};
+		154564F31F7896C300F2C008 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		154564F41F7896C300F2C008 /* sub */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = sub;
+			sourceTree = "<group>";
+		};
+		154564F51F7896C300F2C008 /* vc */ = {
+			isa = PBXGroup;
+			children = (
+				154564F71F7896DA00F2C008 /* GDEditNameVC.swift */,
+			);
+			path = vc;
+			sourceTree = "<group>";
+		};
+		154564F61F7896C300F2C008 /* view */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -4441,6 +4484,7 @@
 				1563FBE01E8263470034432D /* GDMapVC.swift in Sources */,
 				159281C21E90DE1D0029105F /* GDTrendsCell.swift in Sources */,
 				154F989E1E286BE90084C091 /* GDTestWebVC.swift in Sources */,
+				154564F81F7896DA00F2C008 /* GDEditNameVC.swift in Sources */,
 				1523AE431DCC8DDC00011F9A /* OriginalNetDataModel.swift in Sources */,
 				15A4DD4D1E8CF5B6009A0DCE /* GPUImageSolarizeFilter.m in Sources */,
 				1529EFD51E922E3D00800A6E /* GDCircleTrendsCell.swift in Sources */,

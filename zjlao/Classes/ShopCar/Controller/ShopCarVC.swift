@@ -45,7 +45,7 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.black
-        
+        self.addNotification()
         self.setupTableView()
         self.setupNaviBar()
         self.requestData(loadDataType: LoadDataType.initialize)
@@ -277,8 +277,17 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
                         self.friend.topTitle = "\(friendNum)"
                     }
                     
-               
-                    
+                    if let avatar  = userDict["avatar"] as? String {
+                        if let url  =  URL(string: avatar){
+                            self.iconView.sd_setImage(with:url, for: UIControlState.normal)
+                        }
+                    }
+                    if let name   = userDict["name"] as? String {
+                        self.nameLbl.text = name
+                    }
+                    if let descrip   = userDict["desctiption"] as? String {
+                        self.descripLabel.text = descrip
+                    }
                 }
             
             }
@@ -314,7 +323,13 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     @objc func refreshOrInit()  {
         self.requestData(loadDataType: LoadDataType.initialize)
     }
-    
+    func addNotification() {
+        NotificationCenter.default.addObserver(self , selector: #selector(performNotiAction(info:)), name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount )
+    }
+    @objc func performNotiAction(info : Notification)  {
+        mylog("name:\(info.name) <--editProfileSuccess")
+        self.requestData(loadDataType: LoadDataType.initialize)
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
