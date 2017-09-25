@@ -91,7 +91,7 @@ class GDProfileEditVC: GDNormalVC {
                 
             case "性别":
                 mylog(title)
-                let vc  = GDEditNameVC.init(title: "修改性别", originalValue: (self.userInfo["sex"] as? String ) ?? "")
+                let vc  = GDEditNameVC.init(title: "修改性别", originalValue:"\( (self.userInfo["sex"] as? Int ) ?? 0 )")
                 self.navigationController?.pushViewController(vc , animated: true )
                 
                 

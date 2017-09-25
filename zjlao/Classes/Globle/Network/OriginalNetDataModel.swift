@@ -113,5 +113,8 @@ import UIKit
 //        return String.init("\(status)\(msg)\(data)")
 //    
 //    }
+    override var description: String{
+        return "Status->\(self.status) , Data->\(String(describing: self.data))"
+    }
     
 }

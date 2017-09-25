@@ -1673,7 +1673,7 @@ class GDNetworkManager: AFHTTPSessionManager {
  接口地址：users
  请求方式：POST
 */
-    func editUserInfomation(avarta: String? = nil , name : String? = nil , mobile : String? = nil , format : String? = nil , description : String? = nil , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+    func editUserInfomation(avarta: String? = nil , name : String? = nil ,gender:String? = nil , mobile : String? = nil , format : String? = nil , description : String? = nil , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
         let url =  "users"
         var para  = ["token" : self.token ?? ""  ] as [String : Any]
         if let avarta = avarta /*, let format = format*/{
@@ -1688,6 +1688,9 @@ class GDNetworkManager: AFHTTPSessionManager {
         }
         if let description = description {
             para["desctiption"] = description
+        }
+        if let gender = gender  {
+            para["sex"] = gender
         }
         self.QZRequestJSONDict(RequestType.POST , urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             if result.status == 200 {
