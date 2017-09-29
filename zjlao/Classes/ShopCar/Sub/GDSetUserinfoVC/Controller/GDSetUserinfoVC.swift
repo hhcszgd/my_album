@@ -87,7 +87,7 @@ class GDSetUserinfoVC: GDUnNormalVC {
         mobileTextField.frame = CGRect(x: nameLabel.frame.maxX , y: mobileLabel.frame.minY, width: SCREENWIDTH - nameLabelW , height: nameLabelH)
         
         bigTipsLabel.text = "账号复原"
-        bigTipsLabel.font = GDFont.systemFont(ofSize: 30)
+        bigTipsLabel.font = GDFont.systemFont(ofSize: 20)
         bigTipsLabel.frame = CGRect(x: 15, y: mobileLabel.frame.maxY + margin * 2, width: SCREENWIDTH - 15 * 2, height: bigTipsLabel.font.lineHeight)
         
         smallTipsLabel.font = GDFont.systemFont(ofSize: 15)
