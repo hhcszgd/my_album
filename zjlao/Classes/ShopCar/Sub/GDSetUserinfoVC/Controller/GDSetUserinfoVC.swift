@@ -52,17 +52,20 @@ class GDSetUserinfoVC: GDUnNormalVC {
         
         save.setTitle("保存", for: UIControlState.normal)
         save.addTarget(self , action: #selector(saveClick), for: UIControlEvents.touchUpInside)
-        save.backgroundColor = UIColor.orange
+        save.backgroundColor = UIColor.white
+        save.setTitleColor(UIColor.gray, for: UIControlState.normal)
         blackView.backgroundColor = UIColor.black
         nameLabel.text = "姓名:"
         mobileLabel.text = "手机:"
         self.mobileTextField.isEnabled = false
         let margin : CGFloat = 10
-        let avatarW : CGFloat = 72
+        let avatarW : CGFloat = 100
         let avatarH = avatarW
         let avatarX = (SCREENWIDTH - avatarW ) * 0.5
-        let avatarY : CGFloat = 88
+        let avatarY : CGFloat = 70
         avatarImageView.frame = CGRect(x: avatarX, y: avatarY, width: avatarW, height: avatarH)
+        avatarImageView.layer.cornerRadius = avatarW * 0.5
+        avatarImageView.layer.masksToBounds = true
         editProfileIcon.contentMode = UIViewContentMode.scaleAspectFit
         let editProfileIconW : CGFloat = 20.0
         let editProfileIconH : CGFloat = 15.0

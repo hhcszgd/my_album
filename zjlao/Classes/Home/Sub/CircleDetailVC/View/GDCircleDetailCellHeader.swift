@@ -247,8 +247,8 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
             self.ownerIcon.frame = CGRect(x: 0, y: 0, width: iconW, height: iconW)
         }
         
-        self.reportBtn.frame = CGRect(x: 0, y: bigImgW * 0.5 - 44 / 2, width: iconW, height: 44)
-        
+//        self.reportBtn.frame = CGRect(x: 0, y: bigImgW * 0.5 - 44 / 2, width: iconW, height: 44)
+//        
         self.zanBtn.frame = CGRect(x: SCREENWIDTH - iconW, y: ownerIcon.frame.maxY + besideBtnMargin , width: iconW, height: iconW)
         self.zanCount.frame = CGRect(x: zanBtn.frame.minX , y: zanBtn.frame.maxY , width: iconW , height: iconW / 3)
         
@@ -257,6 +257,13 @@ class GDCircleDetailCellHeader: UITableViewHeaderFooterView {
         
         self.deleteBtn.frame = CGRect(x: zanBtn.frame.minX, y: commentBtn.frame.maxY + besideBtnMargin , width: iconW, height: iconW)
         self.deleteBtn.isHidden = self.model?.mine == 1 ? false : true
+        if self.model?.mine == 1 {//my pic
+            self.reportBtn.isHidden = true
+        }else{//other pic
+            self.reportBtn.isHidden = false
+            self.reportBtn.frame =  CGRect(x: zanBtn.frame.minX, y: commentBtn.frame.maxY + besideBtnMargin , width: iconW, height: iconW)
+            
+        }
         
         self.bigImageView.frame = CGRect(x: iconW, y: 0, width: bigImgW, height: bigImgW)
         self.videoIcon.bounds = CGRect(x: 0, y: 0, width: 44, height: 44)

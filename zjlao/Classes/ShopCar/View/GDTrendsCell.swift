@@ -98,7 +98,7 @@ class GDTrendsCell: GDBaseCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        let margin : CGFloat = 1.0
+        let margin : CGFloat = 3.0
         let topH : CGFloat = 44.0
 //        let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
         let picW : CGFloat = (SCREENWIDTH - 3 * margin ) / 4

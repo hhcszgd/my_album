@@ -173,7 +173,7 @@ class GDCircleTrendsCell: GDBaseCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        let margin : CGFloat = 1.0
+        let margin : CGFloat = 3.0
         let topH : CGFloat = 44.0
 //        let picH : CGFloat = 64
         let rows = 1

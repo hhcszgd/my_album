@@ -328,7 +328,7 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         if model.items?.count == 0 || model.items == nil  {
             return 1
         }
-        let margin : CGFloat = 1.0
+        let margin : CGFloat = 3.0
         let topH : CGFloat = 44.0
         let picW : CGFloat = (SCREENWIDTH - 5 * margin ) / 4
         let picH : CGFloat = picW
