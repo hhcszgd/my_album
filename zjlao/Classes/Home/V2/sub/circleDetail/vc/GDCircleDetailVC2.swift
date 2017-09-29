@@ -401,12 +401,15 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
         mylog(info)
         if let type  = info[UIImagePickerControllerMediaType] as? String{
             mylog(type)
-            picker.dismiss(animated: true) {}
-            if type == "public.movie" {
-                self.dealModie(info: info)
-            }else if type == "public.image" {
-                self.dealImage(info: info)
+            DispatchQueue.main.async {
+                if type == "public.movie" {
+                    self.dealModie(info: info)
+                }else if type == "public.image" {
+                    self.dealImage(info: info)
+                }
+                
             }
+            picker.dismiss(animated: true) {}
         }
     }
     func dealModie(info:[String : Any])  {
@@ -459,9 +462,10 @@ extension GDCircleDetailVC2 : UIImagePickerControllerDelegate , UINavigationCont
 //        }
         //perform upload image
         if theImage != nil  {
-            let imageDate = UIImagePNGRepresentation(theImage!)
-            if imageDate != nil {
-                self.upload(data: imageDate!, rectSize : theImage!.size, type: "1")
+//            let imageDate = UIImagePNGRepresentation(theImage!)
+            let imageData = UIImageJPEGRepresentation(theImage!, 0.5)
+            if imageData != nil {
+                self.upload(data: imageData!, rectSize : theImage!.size, type: "1")
                 
             }
             
