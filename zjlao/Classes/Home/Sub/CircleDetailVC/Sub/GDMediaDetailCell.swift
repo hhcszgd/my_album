@@ -10,7 +10,7 @@ import UIKit
 
 
 import UIKit
-import SnapKit
+//import SnapKit
 protocol GDMediaDetailCellDelete : NSObjectProtocol {
     func gotoUserDetail(userID:String )//暂未实现
 }

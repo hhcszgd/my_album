@@ -10,9 +10,22 @@ import UIKit
 
 /// 存储类
 class GDStorgeManager: UserDefaults {
-    func re ()  {
-        UserDefaults.standard
+   public class var registerID : String?{
+        set{
+            if newValue == nil  {
+                return
+            }
+            GDStorgeManager.standard.set(newValue!, forKey: "registerID")
+        }
+        get{
+            if let registerid = GDStorgeManager.standard.value(forKey: "registerID") as? String{
+                return registerid
+            }else{
+                return nil
+            }
+        }
     }
+
 //MARK:
     //MARK:增
     //MARK:删

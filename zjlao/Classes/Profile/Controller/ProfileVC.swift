@@ -249,7 +249,7 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model  = self.datas[indexPath.row]
         model.actionkey = "GDMideaDetailVC"
-        let keyParamete : [String : String ] = [ "mediaID":model.media_id ?? "" , "create_at" : model.media_create_at ?? "" , "id":model.id ?? ""]
+        let keyParamete : [String : String ] = [ "mediaID":model.media_id ?? "" , "create_at" : model.media_create_at ?? "" , "id":model.id ?? "" , "message_id" : model.id ?? ""]
         model.keyparamete = keyParamete as AnyObject
         GDSkipManager.skip(viewController: self , model: model)
         

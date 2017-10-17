@@ -478,7 +478,7 @@ class GDMideaDetailVC: GDUnNormalVC  , GDMediaSectionHeaderDelete ,GDMediaSectio
             break
         }
         
-        GDNetworkManager.shareManager.seeMoreComments(circleID: self.circleID, messageID: self.messageID, mediaID: self.mediaID ?? "0", offset: nil , create_at: self.create_at  , { (result) in
+        GDNetworkManager.shareManager.seeMoreComments(circleID: self.circleID, messageID: self.id, mediaID: self.mediaID ?? "0", offset: nil , create_at: self.create_at  , { (result) in
             mylog("查看媒体全部评论 : \(result.status)")
 //            mylog(result.data)
 

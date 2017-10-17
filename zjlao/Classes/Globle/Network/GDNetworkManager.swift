@@ -178,7 +178,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         if let mobileStr  = mobile {
             para["mobile"] = mobileStr
         }
-        if let registrationID  = registration_id {
+        if let registrationID  = GDStorgeManager.registerID {
             para["registration_id"] = registrationID
         }
         self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
@@ -241,7 +241,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         let url = "comment"
         
         let para = [
-            "page" : page,//媒体base64
+            "page" : page,//
             "token" : self.token ?? "看看",
             ] as [String : Any]
         
@@ -471,6 +471,25 @@ class GDNetworkManager: AFHTTPSessionManager {
         
     }
     
+    // MARK: 注释 : 获取某人某天的媒体
+    func getPersonalDayHistory(userID : String , page : String , createAt : String? , _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "friend/" + userID
+        var para = [
+            "page" : page,//
+            "token" : self.token,
+            ]
+        if let creat_at = createAt {
+            para["create_at"] = creat_at
+        }
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("上传头像的请求失败")
+            failure(error)
+        }
+        
+        
+    }
 // MARK: 注释 : 上传头像和设置姓名
     func uploadAvatar(name : String ,original : String,size : String , descrip : String?, _ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) {
         //        GDLocationManager.share.gotCurrentLocation { (location , error) in
@@ -635,7 +654,10 @@ class GDNetworkManager: AFHTTPSessionManager {
             mylog(longtitude)
             mylog(latitude)
             if location != nil {
-                let para = ["mobile" : mobile , "verify" :  authCode ,"deviceid" : did , "coordinate" : "\(longtitude),\(latitude)" ]
+                var para = ["mobile" : mobile , "verify" :  authCode ,"deviceid" : did , "coordinate" : "\(longtitude),\(latitude)" ]
+                if let registrationID  = GDStorgeManager.registerID {
+                    para["registration_id"] = registrationID
+                }
                 self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
                     mylog(result.data)
                     if result.status == 200 {
@@ -651,6 +673,11 @@ class GDNetworkManager: AFHTTPSessionManager {
 //                                    GDStorgeManager.standard.setValue(tokenStr, forKey: "token")
                                 self.token = tokenStr
                                     self.QZFirstInit({ (model) in //认证成功以后 通过初始化接口重置用户状态
+                                        self.changeUserinfo({ (model ) in
+                                            //用以保存极光id
+                                        }, failure: { (error) in
+                                            
+                                        })
                                     }, failure: { (error ) in
                                         mylog("初始化失败")
                                     })

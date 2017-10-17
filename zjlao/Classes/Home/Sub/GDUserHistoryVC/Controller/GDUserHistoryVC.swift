@@ -203,6 +203,7 @@ class GDUserHistoryVC: GDUnNormalVC , GDTrendsCellDelegate {
     func trendsCellMoreClick(model : GDTrendsCellModel){
         mylog("点击更多")
         model.actionkey = "DayMediaDetailVC"
+        model.keyparamete = userID as AnyObject
         GDSkipManager.skip(viewController: self , model: model)
         
     }

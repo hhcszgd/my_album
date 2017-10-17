@@ -299,6 +299,7 @@ class ShopCarVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
     func trendsCellMoreClick(model : GDTrendsCellModel){
         mylog("点击更多")
         model.actionkey = "DayMediaDetailVC"
+        model.keyparamete = Account.shareAccount.member_id as AnyObject
         GDSkipManager.skip(viewController: self , model: model)
         
     }

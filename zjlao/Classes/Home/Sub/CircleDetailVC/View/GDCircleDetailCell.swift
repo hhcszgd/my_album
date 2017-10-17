@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SnapKit
+//import SnapKit
 protocol GDCircleDetailCellDelete : NSObjectProtocol {
     func gotoUserDetail(userID:String )//暂未实现
 }

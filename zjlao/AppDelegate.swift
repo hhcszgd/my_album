@@ -39,12 +39,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     
     //MARK:////////////////////////////////////原生推送相关//////////////////////////////////////////
     func setupOriginPushNotification()  {
+        if let registrationID  = GDStorgeManager.registerID {
+            return
+        }
         if #available(iOS 10.0, *){
             let novifiCenter = UNUserNotificationCenter.current()
             novifiCenter.delegate = self
             novifiCenter.requestAuthorization(options: [UNAuthorizationOptions.alert , UNAuthorizationOptions.sound , UNAuthorizationOptions.badge], completionHandler: { (resule, error) in
                 if(resule ){
-                    mylog("成功")
+                    mylog("推送注册成功\(resule)")
                 }else{
                     mylog("注册失败\(error)")
                 }
@@ -539,14 +542,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         //        [registrationIDCompletionHandler:]?
         JPUSHService.registrationIDCompletionHandler { (respondsCode, registrationID) in
             mylog("极光注册远程通知成功后获取的注册ID\(registrationID)\n\n状态码是\(respondsCode)")//需要传给服务器
-            
-            
-            GDNetworkManager.shareManager.changeUserinfo( registration_id: registrationID, { (result) in
-                mylog("保存极光id回调\(result.status)")
-                mylog("保存极光id回调\(result.data)")
-            }, failure: { (error) in
-                mylog("保存极光id失败\(error)")
-            })
+            GDStorgeManager.registerID = registrationID
+             GDNetworkManager.shareManager.QZFirstInit({ (result ) in
+                GDNetworkManager.shareManager.changeUserinfo( registration_id: registrationID, { (result) in
+                    mylog("保存极光id回调\(result.status)")
+                    mylog("保存极光id回调\(result.data)")
+                }, failure: { (error) in
+                    mylog("保存极光id失败\(error)")
+                })
+             }, failure: { (error ) in
+                mylog(error)//网络连接失败
+             })
+           
 //            GDNetworkManager.shareManager.saveDeviceTokenAndRegisterID(deviceToken: nil , registerID: registrationID, { (respondsData) in
 //                mylog("registrationID\(respondsData.message)")
 //            }, failure: { (error ) in
@@ -708,7 +715,7 @@ class GDSetupLocationEnableVC: UIViewController{
         self.skipButton.center = CGPoint(x: 10 + (self.view.bounds.size.width / 2 - 10 ) / 2, y: self.view.bounds.size.height / 2)
         self.tipLbl.center = CGPoint(x: self.view.bounds.size.width / 2  + (self.view.bounds.size.width / 2 - 10 ) / 2, y: self.view.bounds.size.height / 2)
         
-        self.skipButton.backgroundColor = UIColor.init(red: 0.3, green: 0.8, blue: 0.8, alpha: 1)
+        self.skipButton.backgroundColor = UIColor.white//UIColor.init(red: 0.3, green: 0.8, blue: 0.8, alpha: 1)
         self.tipLbl.backgroundColor = self.skipButton.backgroundColor
     }
     func performSkip()  {

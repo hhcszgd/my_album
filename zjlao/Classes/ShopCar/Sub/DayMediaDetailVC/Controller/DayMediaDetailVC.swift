@@ -11,6 +11,9 @@ import MJRefresh
 import SDWebImage
 class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
     var currentPage : Int = 1
+    var avaterUrl  = ""
+    var iconView = UIImageView()
+    
     var datas  : [GDTrendsCellModel] =  [GDTrendsCellModel](){
         willSet{
             mylog(newValue)
@@ -37,14 +40,21 @@ class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
         if let trueModel = self.keyModel as? GDTrendsCellModel {
             creat_at = trueModel.my
         }
-        GDNetworkManager.shareManager.getPersonalHistory(page: "\(self.currentPage)" , createAt : creat_at, { (result ) in
+        GDNetworkManager.shareManager.getPersonalDayHistory(userID: (self.keyModel?.keyparamete as? String ) ?? "0", page: "\(self.currentPage)" , createAt : creat_at, { (result ) in
             mylog("请求历史消息的状态码\(result.status)")
             mylog(result.data)
             var tempDatas  : [GDTrendsCellModel] = [GDTrendsCellModel] ()
             var subDatas  : [BaseControlModel] = [BaseControlModel] ()
 
             if let infoDict = result.data as? [String : AnyObject]{
-                if let mediasArr = infoDict["user"] as? [[String : AnyObject]]{
+                if let userDict = infoDict["user"] as? [String : AnyObject]{
+                    if let avatarUrl = userDict["avatar"] as? String{
+//                        if let url = URL.init(string: avatarUrl){
+                            self.avaterUrl = avatarUrl
+                        self.iconView.sd_setImage(with: URL(string: self.avaterUrl), placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
+//                        }
+                    }
+                    
                 }
                 if let mediasArr = infoDict["medias"] as? [[String : AnyObject]]{
                     for mediaDict in mediasArr{
@@ -149,7 +159,11 @@ class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
         self.view.addSubview(self.tableView)
         self.tableView.backgroundColor = UIColor(red: 240 / 256, green:  240 / 256, blue:  240 / 256, alpha: 1)
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        self.automaticallyAdjustsScrollViewInsets = false
+        if #available( iOS 11, *) {
+            self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
+        }else{
+            self.automaticallyAdjustsScrollViewInsets = false
+        }
         self.tableView.delegate  = self
         self.tableView.dataSource = self
         self.tableView.mj_footer = GDRefreshGifFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
@@ -171,7 +185,8 @@ class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
         
         let iconView = UIImageView.init(frame: CGRect(x: 0, y: headerView.bounds.size.height - 64, width: 64, height: 64))
 //        iconView.image = UIImage.init(named: "bg_nohead")
-        iconView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
+        self.iconView = iconView
+        iconView.sd_setImage(with: URL(string: self.avaterUrl), placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
         headerView.addSubview(iconView)
         
         let nameLbl = UILabel.init()
