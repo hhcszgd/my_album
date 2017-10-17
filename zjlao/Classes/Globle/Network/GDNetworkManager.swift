@@ -1312,6 +1312,38 @@ class GDNetworkManager: AFHTTPSessionManager {
         }
     }
     
+
+
+    func getQiniuToken(success : @escaping (OriginalNetDataModel )->() , failure : @escaping (NSError)->()) {
+        
+        let url = "qiniu"
+        let para = [
+            "token" : self.token ?? "看看",
+            ] as [String : Any]
+        
+        self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            
+            failure(error)
+        }
+        
+    }
+    /**
+     传七牛获取图片链接
+     */
+    
+    func uploadAvart(data:Data ,token : String , complite : @escaping QNUpCompletionHandler) {
+        
+        
+        
+        
+        
+        qnUploadManager.put(data , key: nil , token: token, complete: { (responseInfo, theKey, successInfo) in
+            complite(responseInfo , theKey , successInfo)
+        }, option: nil )
+        
+    }
     //MARK:
     //MARK:
     //MARK:
