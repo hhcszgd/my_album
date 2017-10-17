@@ -10,11 +10,13 @@ import UIKit
 import CoreGraphics
 //import GPUImage
 import CoreLocation
+import MapKit
 class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelegate  {
 
     var avPlayerVC : AVPlayerViewController?
     lazy var customViewContainer = UIControl()
     lazy var imageView = UIImageView()
+    lazy var sendTimeAndLocation = UILabel()
     lazy var textFieldContainer = UIView()
     lazy var sendButton = UIButton()
     lazy var cancleButton = UIButton()
@@ -718,8 +720,9 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                 self.customViewContainer.backgroundColor = UIColor.black
                 self.customViewContainer.addTarget(self , action: #selector(whiteSpaceClick), for: UIControlEvents.touchUpInside)
                 self.textFieldContainer.backgroundColor = UIColor.init(colorLiteralRed: 0.92, green: 0.92, blue: 0.92, alpha: 1)
-                self.textField.backgroundColor = UIColor.white
+                self.textField.backgroundColor = UIColor.black
                 self.customViewContainer.addSubview(self.imageView)
+                self.customViewContainer.addSubview(self.sendTimeAndLocation)
                 self.customViewContainer.addSubview(self.textFieldContainer)
                 self.customViewContainer.addSubview(self.cancleButton)
                 self.customViewContainer.addSubview(self.sendButton)
@@ -730,24 +733,52 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                 self.cancleButton.setTitle("取消", for: UIControlState.normal)
                 self.sendButton.setTitle("发送", for: UIControlState.normal)
                 self.sendButton.titleLabel?.textAlignment = NSTextAlignment.right
-                self.textField.placeholder = "请为您的照片做一些备注"
-                
+//                self.textField.placeholder = "请为您的照片做一些备注"
+                var attriStr = NSMutableAttributedString.init(string: "此刻的心情 ")
+                let attach = NSTextAttachment()
+                attach.bounds = CGRect(x: 0, y: -2, width: self.textField.font?.lineHeight ?? 10, height: self.textField.font?.lineHeight ?? 10)
+                attach.image = UIImage.init(named: "mediaNote")
+                let attachStr = NSAttributedString.init(attachment: attach)
+                attriStr.append(attachStr)
+                self.textField.textColor = UIColor.white
+                attriStr.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange.init(location: 0, length: attriStr.string.count - 1))
+                self.textField.attributedPlaceholder = attriStr
                 self.customViewContainer.frame = window.bounds
                 self.imageView.frame = CGRect(x: margin, y: margin, width: SCREENWIDTH - margin * 2, height: SCREENWIDTH - margin * 2)
+//                if(UIScreen.main.bounds.size.height == 480){//5,5s,5c不变
+//                    self.textFieldContainer.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin / 5 , width: SCREENWIDTH - margin  * 2, height: margin * 1.3)
+//
+//                }else{//
+//                    self.textFieldContainer.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin , width: SCREENWIDTH - margin  * 2, height: margin * 3)
+//                }
+//                self.configCollectionView()//取消滤镜
+                let result = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
+                mylog(result.day)
+                mylog(result.weekday)
+                mylog(result.month)
+                mylog(result.year)
+                GDLocationManager.share.gotCity(location: GDLocationManager.share.locationManager.location ?? CLLocation.init(), result: { (error , placeMarks ) in
+                    let placemark = placeMarks?.first
+                    self.sendTimeAndLocation.text = "\(result.month ?? 00)月\(result.day ?? 00),\(result.year ?? 0000)   \(placemark?.locality ?? "" ) \(placemark?.administrativeArea ?? "") \(placemark?.country ?? "")"
+                })
+//                self.sendTimeAndLocation.text = "\(result.month ?? 00)月\(result.day ?? 00),\(result.year ?? 0000)"
+                self.sendTimeAndLocation.textColor = UIColor.white
                 if(UIScreen.main.bounds.size.height == 480){//5,5s,5c不变
-                    self.textFieldContainer.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin / 5 , width: SCREENWIDTH - margin  * 2, height: margin * 1.3)
+                    self.sendTimeAndLocation.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin * 2  , width: SCREENWIDTH - margin  * 2, height: margin * 1.3)
+                    
+                    self.textFieldContainer.frame = CGRect(x: margin, y: self.sendTimeAndLocation.frame.maxY + margin / 5 , width: SCREENWIDTH - margin  * 2, height: margin * 1.3)
                     
                 }else{//
-                    self.textFieldContainer.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin , width: SCREENWIDTH - margin  * 2, height: margin * 3)
+                    self.sendTimeAndLocation.frame = CGRect(x: margin, y: self.imageView.frame.maxY + margin * 2 , width: SCREENWIDTH - margin  * 2, height: margin * 1.3)
+                    
+                    self.textFieldContainer.frame = CGRect(x: margin, y: self.sendTimeAndLocation.frame.maxY + margin , width: SCREENWIDTH - margin  * 2, height: margin * 3)
                 }
-                
-                
-                self.configCollectionView()
                 self.textFieldContainer.backgroundColor = UIColor.white
                 self.cancleButton.frame = CGRect(x: 10, y: SCREENHEIGHT - margin * 1.5, width: margin * 2, height:  margin * 1.5)
                 
                 self.sendButton.frame = CGRect(x: SCREENWIDTH - 10 - 44, y: SCREENHEIGHT - (margin * 1.5), width:  margin * 2, height:  margin * 1.5)
-                self.textField.frame = CGRect(x: margin, y: 0, width: self.textFieldContainer.frame.size.width - margin  * 2, height: self.textFieldContainer.frame.size.height)
+                let textfiledMargin : CGFloat  = 0
+                self.textField.frame = CGRect(x: textfiledMargin, y: 0, width: self.textFieldContainer.frame.size.width - textfiledMargin * 2, height: self.textFieldContainer.frame.size.height)
                 
                 self.cancleButton.addTarget(self , action: #selector(cancleClick), for: UIControlEvents.touchUpInside)
                 
@@ -830,7 +861,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         }
         let margin :CGFloat = 20
         UIView.animate(withDuration: realTime) {
-           self.textFieldContainer.frame =  CGRect(x: margin, y: self.imageView.frame.maxY + margin / 10 , width: SCREENWIDTH - margin  * 2, height: margin * 3)
+           self.textFieldContainer.frame =  CGRect(x: margin, y: self.sendTimeAndLocation.frame.maxY + margin / 10 , width: SCREENWIDTH - margin  * 2, height: margin * 3)
         }
         
     }

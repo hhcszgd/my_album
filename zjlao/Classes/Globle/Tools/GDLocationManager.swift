@@ -201,7 +201,7 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
             
             mylog("name : \(placemark?.name)")
             mylog("thoroughfare : \(placemark?.thoroughfare)")
-            mylog("locality : \(placemark?.name)")
+            mylog("locality : \(placemark?.locality)")//城市
             mylog("administrativeArea : \(placemark?.administrativeArea)")
             mylog("country : \(placemark?.country)")
             mylog("postalCode : \(placemark?.postalCode)")
@@ -209,7 +209,7 @@ class GDLocationManager: NSObject ,CLLocationManagerDelegate {
             mylog("isoCountryCode : \(placemark?.isoCountryCode)")
             mylog("subAdministrativeArea : \(placemark?.subAdministrativeArea)")
             mylog("subLocality : \(placemark?.subLocality)")//区
-            mylog("addressDictionary : \(placemark?.addressDictionary)")//区
+            mylog("addressDictionary : \(placemark?.addressDictionary)")//字典格式的所有地址信息
             
             let  resultArrM = placemark?.addressDictionary?["FormattedAddressLines"] as? [AnyObject]
             if let formatterStr  = resultArrM?.first {
