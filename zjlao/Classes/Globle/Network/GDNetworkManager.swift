@@ -61,6 +61,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     // MARK: 注释 : 七牛文件上传管理类
     lazy var qnUploadManager: QNUploadManager = {
         if let uploadMgr = QNUploadManager.init(){
+        
             return uploadMgr
         }else{
             return QNUploadManager.init()!
