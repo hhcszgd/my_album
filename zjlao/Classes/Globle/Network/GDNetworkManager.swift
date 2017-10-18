@@ -1362,7 +1362,28 @@ class GDNetworkManager: AFHTTPSessionManager {
         }
     }
     
-
+    /**
+     1.创建媒体
+     接口地址：media
+     请求方式：post
+     请求参数：
+     
+     */
+    func insertMediaToCircle(circleID : String ,original:String ,  type : String  , description : String? ,  media_spec : CGSize ,success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "media"
+        var para = [ "circle_id" : circleID  , "token" : self.token ?? "" , "original" : original , "media_type" : type ,"media_width":media_spec.width , "media_height":media_spec.height  ] as [String : Any]
+        if let descrip   = description{
+            para["description"] = descrip
+        }
+        self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("插入媒体 请求失败")
+            failure(error)
+        }
+        
+        
+    }
 
     func getQiniuToken(success : @escaping (OriginalNetDataModel )->() , failure : @escaping (NSError)->()) {
         
@@ -1394,6 +1415,9 @@ class GDNetworkManager: AFHTTPSessionManager {
         }, option: nil )
         
     }
+    
+    
+    
     //MARK:
     //MARK:
     //MARK:

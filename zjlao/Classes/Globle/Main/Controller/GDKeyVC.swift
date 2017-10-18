@@ -489,6 +489,48 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
             }
         }
     }
+    
+    func upload(data : Data ,rectSize : CGSize = CGSize(width: 100, height: 100) ,  type : String /**1:image  , 2 movie*/)  {
+        // MARK: 注释 : 插入七牛存储👇
+        GDNetworkManager.shareManager.getQiniuToken(success: { (model ) in
+            
+            if let token = model.data as? String {
+                mylog("获取七牛touken请求的状态码\(model.status)  , data数据 : \(token)")
+                GDNetworkManager.shareManager.uploadAvart(data: data ,token : token , complite: { (responseInfo, theKey , successInfo) in
+                    mylog("上传到七牛的请求结果 responseInfo: \(responseInfo) , theKey : \(theKey) , successInfo \(successInfo) ")
+                    if successInfo == nil {
+                        GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                    }else{
+                        if let key = successInfo?["key"] as? String{
+                            print(key)//get avarta key
+                            //save  mediaKey to our server
+                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.currentCircleID, original: key , type: type , description: nil , media_spec:  rectSize, success: { (model ) in
+                                mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
+//                                self.getCircles()
+                            }, failure: { (error ) in
+                                mylog("插入媒体到圈子 请求结果 : \(error)")
+                            })
+                        }else{
+                            mylog("插入媒体到圈子失败 : \(responseInfo)")
+                            GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                        }
+                    }
+                })
+                
+            }
+        }, failure: { (error ) in
+            //未知错误
+            GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+            mylog(error )
+        })
+        
+    }
+    
+    
+    
+    
+    
+    
     func dealModie(info:[String : Any])  {
         if let url  = info[UIImagePickerControllerMediaURL] as? URL {
             //file:///private/var/mobile/Containers/Data/Application/6142A42C-BDE9-43CF-8C2E-B04F06945925/tmp/51711806175__214B5E6E-8AD3-4AF0-9CA0-EF891A4B4543.MOV
@@ -909,16 +951,17 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
             let data =  UIImagePNGRepresentation(image)
             let dataBase64 = data?.base64EncodedString()
             let size = dataBase64?.characters.count
-            GDNetworkManager.shareManager.uploadMedia(circleID: self.currentCircleID, original: dataBase64!, size: "\(size!)",descrip :self.textField.text, { (model) in
-                mylog("图片上传结果:\(model.status)")
-                mylog(model.data)
-                self.updateCurrentCircleID(model: model)
-                self.textField.text = nil
-
-                //                    mylog(model.data)
-            }) { (error ) in
-                mylog("图片上传结果:\(error)")
-            }
+            self.upload(data: data ?? Data(), rectSize: image.size, type: "1")
+//            GDNetworkManager.shareManager.uploadMedia(circleID: self.currentCircleID, original: dataBase64!, size: "\(size!)",descrip :self.textField.text, { (model) in
+//                mylog("图片上传结果:\(model.status)")
+//                mylog(model.data)
+//                self.updateCurrentCircleID(model: model)
+//                self.textField.text = nil
+//
+//                //                    mylog(model.data)
+//            }) { (error ) in
+//                mylog("图片上传结果:\(error)")
+//            }
         }
         //执行上传 , base64在子线程
     }
