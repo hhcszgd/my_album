@@ -750,7 +750,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     func QZFirstInit(_ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) -> () {
         let url = "init"
         let did = UIDevice.current.identifierForVendor?.uuidString
-        let para = ["deviceid" : did ]
+        let para = ["deviceid" : did  , "app_type" : "2"]
         QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             mylog("初始化状态码\(result.status)")
             if result.status == 202 {
@@ -770,6 +770,15 @@ class GDNetworkManager: AFHTTPSessionManager {
                     if let avatar = info["avatar"] as? String{
                      Account.shareAccount.head_images = avatar
                     }
+                    
+                    
+                    if let newVersionID = info["version"] as? String{
+
+                    }
+                    if let updateType = info["update_type"] as? String{//更新类型(1、强制更新 2、不强制’)
+
+                    }
+                    
 //                    Account.shareAccount.member_id =  "\(info["id"])"
 //                    Account.shareAccount.head_images = info["avatar"] as! String?
                     if let token = info["token"] {
@@ -815,8 +824,49 @@ class GDNetworkManager: AFHTTPSessionManager {
     }
     
     
-    
-    
+    ///:是否升级
+    func checkUpdate(_ success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ()) -> () {
+        let url = "init"
+        
+        let did = UIDevice.current.identifierForVendor?.uuidString
+        let para = ["deviceid" : did  , "app_type" : "2"]
+        QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            let model = OriginalNetDataModel.init(dict: ["status" : 0 as AnyObject ])
+            print("初始值\(model.status)")
+            if let info = result.data as? Dictionary<String, Any> {
+                let infoDict = Bundle.main.infoDictionary
+                guard let currentAppVersion = infoDict?["CFBundleShortVersionString"] as? String else {return}
+                if let newVersionID = info["version"] as? String{
+                    print("服务器版本号:\(newVersionID)")
+                    let compareResult : ComparisonResult = newVersionID.compare(currentAppVersion)//1.8 比1.2 ,结果叫降
+                    switch compareResult {
+                    case ComparisonResult.orderedSame : //不变
+                        success(model)
+                        return
+                        print("同\(newVersionID) , \(currentAppVersion)")
+                    case  ComparisonResult.orderedAscending : //降
+                        success(model)
+                        return
+                        print("降\(newVersionID) , \(currentAppVersion)")
+                    case ComparisonResult.orderedDescending  : //升
+                        print("升\(newVersionID) , \(currentAppVersion)")
+                        model.status = 2
+                    
+//                    default  :
+//                        break
+                    }
+                }  
+                if let updateType = info["update_type"] as? String{//更新类型(1、强制更新 2、不强制’)
+                    model.status =  ( updateType == "1" ? 2 : 1)
+                }
+            }
+            success(model)
+        }) { (error) in
+            failure(error)
+        }
+        
+        
+    }
     
     //次终极自定义请求 // 闭包参数result 保证只要回调 就一定有值
     func QZRequestDataFromNewWork(_ method: RequestType, urlString: String,parameters:[String : AnyObject],success: @escaping (_ result:OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) ->()) {
@@ -1349,176 +1399,6 @@ class GDNetworkManager: AFHTTPSessionManager {
     //MARK:
     //MARK:
     //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    //MARK:
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+ 
 
 }

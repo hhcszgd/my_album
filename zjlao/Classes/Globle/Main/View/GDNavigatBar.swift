@@ -317,8 +317,8 @@ class GDNavigatBar: GDView {
         titleLabel.textAlignment = NSTextAlignment.center
         self.addSubview(titleLabel)
         titleLabel.center = CGPoint(x: UIScreen.main.bounds.size.width/2.0, y: 42);
-        leftSubViewsContainer.backgroundColor = UIColor.randomColor()
-        rightSubViewsContainer.backgroundColor = UIColor.randomColor()
+//        leftSubViewsContainer.backgroundColor = UIColor.randomColor()
+//        rightSubViewsContainer.backgroundColor = UIColor.randomColor()
         
         //        self.addSubview(backBtn)
         self.addSubview(leftSubViewsContainer)

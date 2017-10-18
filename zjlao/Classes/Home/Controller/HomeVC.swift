@@ -201,7 +201,47 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
         self.blackStatusBar.backgroundColor = UIColor.black
         self.view.addSubview(self.blackStatusBar)
         self.setupNotification()
+        GDNetworkManager.shareManager.checkUpdate({ (model ) in
+            print("调用检查更新\(#file) , \(model.status)")//0不升 , 1可升 , 2必升
+            self.performNotisGotoUpdateVersion(type: model.status)
+        }) { (error) in
+            print("调用更新接口失败\(error)")
+        }
     }
+    
+    func performNotisGotoUpdateVersion(type : Int)
+    {
+    
+    let alertVC = UIAlertController.init(title: "你造吗", message: "又有新版本了", preferredStyle: UIAlertControllerStyle.alert)
+        if type == 0 {
+            return
+        }else if (type == 1) {//1:提示升级
+            let  ac1 = UIAlertAction.init(title: "我是拒绝的", style: UIAlertActionStyle.cancel, handler: { (action) in
+                return
+            });
+            alertVC.addAction(ac1)
+        }else if (type == 2){// 2:强制升级
+            
+        }
+        let   ac2 = UIAlertAction.init(title: "更新就更新", style: UIAlertActionStyle.default) { (action) in
+            let str = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1264405709"
+            if let url = URL.init(string: str){
+                
+                if (UIApplication.shared.canOpenURL(url))
+                {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+
+        alertVC.addAction(ac2)
+        self.present(alertVC, animated: true) {
+            
+        }
+    }
+
+    
+    
     func setupNotification()  {
         NotificationCenter.default.addObserver(self , selector: #selector(getNearbyCircles), name: NSNotification.Name.init("RefreshAfterBlockSomeoneInClassifyVC"), object: nil)
        NotificationCenter.default.addObserver(self , selector: #selector(getNearbyCircles), name: GDHomeTabBarReclick, object: nil)
