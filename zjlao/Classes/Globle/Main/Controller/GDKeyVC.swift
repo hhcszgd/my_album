@@ -490,13 +490,13 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         }
     }
     
-    func upload(data : Data ,rectSize : CGSize = CGSize(width: 100, height: 100) ,  type : String /**1:image  , 2 movie*/)  {
+    func upload(data : Data ,rectSize : CGSize = CGSize(width: 100, height: 100) ,  type : String /**1:image  , 2 movie*/ ,format : String = "jpeg")  {
         // MARK: 注释 : 插入七牛存储👇
         GDNetworkManager.shareManager.getQiniuToken(success: { (model ) in
             
             if let token = model.data as? String {
                 mylog("获取七牛touken请求的状态码\(model.status)  , data数据 : \(token)")
-                GDNetworkManager.shareManager.uploadAvart(data: data ,token : token , complite: { (responseInfo, theKey , successInfo) in
+                GDNetworkManager.shareManager.uploadMediaToQiniu(data: data ,token : token , complite: { (responseInfo, theKey , successInfo) in
                     mylog("上传到七牛的请求结果 responseInfo: \(responseInfo) , theKey : \(theKey) , successInfo \(successInfo) ")
                     if successInfo == nil {
                         GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
@@ -504,7 +504,9 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                         if let key = successInfo?["key"] as? String{
                             print(key)//get avarta key
                             //save  mediaKey to our server
-                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.currentCircleID, original: key , type: type , description: nil , media_spec:  rectSize, success: { (model ) in
+                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.currentCircleID, original: key , format : format  , type: type , description: nil , media_spec:  rectSize, success: { (model ) in
+                                self.updateCurrentCircleID(model: model)
+                                 self.textField.text = nil
                                 mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
 //                                self.getCircles()
                             }, failure: { (error ) in
@@ -521,7 +523,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
         }, failure: { (error ) in
             //未知错误
             GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
-            mylog(error )
+            mylog("获取七牛token失败\(error)" )
         })
         
     }
@@ -530,9 +532,14 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
     
     
     
-    
+    ///:mark todo
     func dealModie(info:[String : Any])  {
         if let url  = info[UIImagePickerControllerMediaURL] as? URL {
+            var  rectsize = CGSize(width: SCREENWIDTH, height: SCREENHEIGHT)
+            if let rect = info[UIImagePickerControllerCropRect] as? CGRect{
+                print("获取视频的尺寸成功\(rect)")
+                rectsize = rect.size
+            }else{print("获取视频的尺寸失败")}
             //file:///private/var/mobile/Containers/Data/Application/6142A42C-BDE9-43CF-8C2E-B04F06945925/tmp/51711806175__214B5E6E-8AD3-4AF0-9CA0-EF891A4B4543.MOV
 //                let avPlayer : AVPlayer = AVPlayer.init(url: url)
 //                let avPlayerVC : AVPlayerViewController  = AVPlayerViewController.init()
@@ -550,16 +557,19 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                     let dataBase64 = data.base64EncodedString()
                     let size = dataBase64.characters.count
                     mylog(size)
-                    GDNetworkManager.shareManager.uploadMedia(circleID: self.currentCircleID, original: dataBase64, size: "\(size)",descrip :self.textField.text,formate : "MOV", { (model) in
-                        mylog("图片上传结果:\(model.status)")
-                        mylog(model.data)
-                        self.updateCurrentCircleID(model: model)
-                        self.textField.text = nil
-                        
-                        //                    mylog(model.data)
-                    }) { (error ) in
-                        mylog("图片上传结果:\(error)")
-                    }
+                    
+                    self.upload(data: data ?? Data() ,  rectSize : rectsize , type: "2" ,format : "MOV" )//待验证 , 宽高待校正
+                    
+//                    GDNetworkManager.shareManager.uploadMedia(circleID: self.currentCircleID, original: dataBase64, size: "\(size)",descrip :self.textField.text,formate : "MOV", { (model) in
+//                        mylog("图片上传结果:\(model.status)")
+//                        mylog(model.data)
+//                        self.updateCurrentCircleID(model: model)
+//                        self.textField.text = nil
+//
+//                        //                    mylog(model.data)
+//                    }) { (error ) in
+//                        mylog("图片上传结果:\(error)")
+//                    }
                 }
 
                 

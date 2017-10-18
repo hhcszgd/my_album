@@ -294,13 +294,14 @@ extension GDSetUserinfoVC : UIImagePickerControllerDelegate , UINavigationContro
                 let data =   UIImageJPEGRepresentation(editImageReal, 1) //  UIImagePNGRepresentation(editImageReal)
                 let dataBase64 = data?.base64EncodedString()
                 let size = dataBase64?.characters.count
-                GDNetworkManager.shareManager.changeUserinfo(   avatar: dataBase64, { (model) in
-                    mylog("头像上传结果:\(model.status)")
-                    self.avatarImageView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), for: UIControlState.normal, placeholderImage: placePolderImage, options:  [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
-                    //                    mylog(model.data)
-                }) { (error ) in
-                    mylog("头像上传结果:\(error)")
-                }
+                
+                
+                
+                self.updateAvatar(data: data ?? Data(), rectSize: editImageReal.size , type: "1", format: "jpeg")
+                
+                
+
+                
             }
 
 //            self.setupDescripForImage(image: editImageReal)
@@ -310,6 +311,50 @@ extension GDSetUserinfoVC : UIImagePickerControllerDelegate , UINavigationContro
         
         picker.dismiss(animated: true) {      }
     }
+    
+    
+    
+    
+    
+    func updateAvatar(data : Data ,rectSize : CGSize = CGSize(width: 100, height: 100) ,  type : String /**1:image  , 2 movie*/ ,format : String = "jpeg")  {
+        // MARK: 注释 : 插入七牛存储👇
+        GDNetworkManager.shareManager.getQiniuToken(success: { (model ) in
+            
+            if let token = model.data as? String {
+                mylog("获取七牛touken请求的状态码\(model.status)  , data数据 : \(token)")
+                GDNetworkManager.shareManager.uploadMediaToQiniu(data: data ,token : token , complite: { (responseInfo, theKey , successInfo) in
+                    mylog("上传到七牛的请求结果 responseInfo: \(responseInfo) , theKey : \(theKey) , successInfo \(successInfo) ")
+                    if successInfo == nil {
+                        GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                    }else{
+                        if let key = successInfo?["key"] as? String{
+
+                            GDNetworkManager.shareManager.changeUserinfo(   avatar: key, { (model) in
+                                mylog("头像上传结果:\(model.status)")
+//                                self.avatarImageView.sd_setImage(with: URL(string: Account.shareAccount.head_images ?? ""), for: UIControlState.normal, placeholderImage: placePolderImage, options:  [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed])
+                                self.avatarImageView.setImage(UIImage(data: data ), for: UIControlState.normal)
+                                //                    mylog(model.data)
+                            }) { (error ) in
+                                mylog("头像上传结果:\(error)")
+                            }
+                            
+                        }else{
+                            mylog("插入媒体到圈子失败 : \(responseInfo)")
+                            GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+                        }
+                    }
+                })
+                
+            }
+        }, failure: { (error ) in
+            //未知错误
+            GDAlertView.alert("操作失败,请重试", image: nil, time: 2, complateBlock: nil)
+            mylog("获取七牛token失败\(error)" )
+        })
+        
+    }
+    
+    
     
     //    func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
     //
