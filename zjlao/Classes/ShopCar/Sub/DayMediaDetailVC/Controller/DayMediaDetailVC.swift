@@ -82,6 +82,9 @@ class DayMediaDetailVC: GDUnNormalVC , GDTrendsCellDelegate{
                                     picModel.imageUrl = subthumbnail
                                 }
                                 
+                                if let format = subMediaDict["format"] as? String{
+                                    picModel.extensionTitle2 = format
+                                }
                                 if let circle_id = subMediaDict["circle_id"] as? String{
                                     picModel.title = circle_id
                                 }else{

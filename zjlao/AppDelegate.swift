@@ -690,33 +690,39 @@ class GDSetupGPSVC: UIViewController{
     
 }
 class GDSetupLocationEnableVC: UIViewController{
-    
-    let tipLbl  = UIButton()
+    let noticeLabel = UILabel()
+    let openBtn  = UIButton()
     let skipButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(tipLbl)
+        self.view.addSubview(noticeLabel)
+        self.view.addSubview(openBtn)
         self.view.addSubview(skipButton)
         self.view.backgroundColor = UIColor.white
         //        self.tipLbl.textAlignment = NSTextAlignment.center
         //        self.tipLbl.text = "gps功能不可用"
-        self.tipLbl.setTitle("开启定位", for: UIControlState.normal )
+        self.noticeLabel.text = "使用茄子 须开启定位功能"
+        self.openBtn.setTitle("开启定位", for: UIControlState.normal )
         self.skipButton.setTitle("跳过", for: UIControlState.normal)
+        self.noticeLabel.font = GDFont.systemFont(ofSize: 13)
+        self.noticeLabel.textColor = UIColor.darkGray
         self.skipButton.titleLabel?.font = GDFont.systemFont(ofSize: 13)
-        self.tipLbl.titleLabel?.font = GDFont.systemFont(ofSize: 13)
-        self.tipLbl.titleLabel?.numberOfLines = 10
-        self.tipLbl.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
+        self.openBtn.titleLabel?.font = GDFont.systemFont(ofSize: 13)
+        self.openBtn.titleLabel?.numberOfLines = 10
+        self.openBtn.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
         self.skipButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
-        self.tipLbl.addTarget(self , action: #selector(gotoSetting), for: UIControlEvents.touchUpInside)
+        self.openBtn.addTarget(self , action: #selector(gotoSetting), for: UIControlEvents.touchUpInside)
         self.skipButton.addTarget(self , action: #selector(performSkip), for: UIControlEvents.touchUpInside)
-        self.tipLbl.bounds  = CGRect(x: 0, y: 0, width: self.view.bounds.size.width / 2 - 30, height: 30)
+        self.openBtn.bounds  = CGRect(x: 0, y: 0, width: self.view.bounds.size.width / 2 - 30, height: 30)
         self.skipButton.bounds = CGRect(x: 0, y: 0, width: self.view.bounds.size.width / 2 - 30 , height: 30)
-        self.skipButton.center = CGPoint(x: 10 + (self.view.bounds.size.width / 2 - 10 ) / 2, y: self.view.bounds.size.height / 2)
-        self.tipLbl.center = CGPoint(x: self.view.bounds.size.width / 2  + (self.view.bounds.size.width / 2 - 10 ) / 2, y: self.view.bounds.size.height / 2)
+        self.skipButton.center = CGPoint(x: 10 + (self.view.bounds.size.width / 2 - 10 ) / 2, y: self.view.bounds.size.height / 2 + 30 )
+        self.noticeLabel.sizeToFit()
+        self.noticeLabel.center = CGPoint(x:  self.view.bounds.size.width / 2, y: self.view.bounds.size.height / 2 - 30)
+        self.openBtn.center = CGPoint(x: self.view.bounds.size.width / 2  + (self.view.bounds.size.width / 2 - 10 ) / 2, y: self.view.bounds.size.height / 2 + 30)
         
         self.skipButton.backgroundColor = UIColor.white//UIColor.init(red: 0.3, green: 0.8, blue: 0.8, alpha: 1)
-        self.tipLbl.backgroundColor = self.skipButton.backgroundColor
+        self.openBtn.backgroundColor = self.skipButton.backgroundColor
     }
     func performSkip()  {
         self.setKeyvcToMain()

@@ -71,6 +71,7 @@ class GDCircleDetailVC: GDUnNormalVC  , GDCircleDetailCellHeaderDelete , GDCircl
         self.textView.frame = CGRect(x: 10, y: 44, width: self.inputContainer.frame.size.width - 20, height: self.inputContainer.frame.size.height - 44 - 10)
         self.textView.returnKeyType = UIReturnKeyType.done
         self.textView.delegate = self
+        self.textView.font = UIFont.systemFont(ofSize: 16)
         NotificationCenter.default.addObserver(self , selector: #selector(keyboardWillHide(info:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self , selector: #selector(keyboardWillShow(info:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }

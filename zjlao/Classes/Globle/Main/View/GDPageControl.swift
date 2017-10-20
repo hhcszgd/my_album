@@ -122,7 +122,7 @@ class GDPageControl: UIView {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        let itemW : CGFloat = 10
+        let itemW : CGFloat = 15.0
         let itemH  = itemW
         let margin : CGFloat = 0
         let totalWidth = CGFloat(self.subviews.count) * (itemW + margin) + margin

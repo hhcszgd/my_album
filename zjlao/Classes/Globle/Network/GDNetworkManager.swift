@@ -577,9 +577,9 @@ class GDNetworkManager: AFHTTPSessionManager {
                 self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
                     
                     success(result)
-                    if (result.status == 200){
+//                    if (result.status == 200){
                         NotificationCenter.default.post(name: GDNetworkManager.GDUpLoadMediaSuccess, object: nil , userInfo: nil)
-                    }
+//                    }
                 }) { (error) in
                     mylog("上传媒体的请求失败")
                     failure(error)
@@ -1375,7 +1375,7 @@ class GDNetworkManager: AFHTTPSessionManager {
      请求参数：
      
      */
-    func insertMediaToCircle(circleID : String ,original:String ,   format : String = "jpeg",type : String  , description : String? ,  media_spec : CGSize ,success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+    func insertMediaToCircle(circleID : String ,original:String ,   format : String = "jpeg",type : String  , description : String? = nil ,  media_spec : CGSize ,success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
         let url =  "media"
         var para = [ "circle_id" : circleID , "size" : "3"  , "format" : format , "token" : self.token ?? "" , "original" : original , "media_type" : type ,"media_width":media_spec.width , "media_height":media_spec.height  ] as [String : Any]
         if let descrip   = description{
@@ -1383,9 +1383,9 @@ class GDNetworkManager: AFHTTPSessionManager {
         }
         self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             success(result)
-            if (result.status == 200){
+//            if (result.status == 200){
                 NotificationCenter.default.post(name: GDNetworkManager.GDUpLoadMediaSuccess, object: nil , userInfo: nil)
-            }
+//            }
         }) { (error) in
             mylog("插入媒体 请求失败")
             failure(error)

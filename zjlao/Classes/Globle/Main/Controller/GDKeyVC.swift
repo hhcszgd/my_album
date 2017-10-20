@@ -504,7 +504,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                         if let key = successInfo?["key"] as? String{
                             print(key)//get avarta key
                             //save  mediaKey to our server
-                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.currentCircleID, original: key , format : format  , type: type , description: nil , media_spec:  rectSize, success: { (model ) in
+                            GDNetworkManager.shareManager.insertMediaToCircle(circleID: self.currentCircleID, original: key , format : format  , type: type , description: self.textField.text , media_spec:  rectSize, success: { (model ) in
                                 self.updateCurrentCircleID(model: model)
                                  self.textField.text = nil
                                 mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
@@ -783,7 +783,7 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                 
                 
                 self.cancleButton.setTitle("取消", for: UIControlState.normal)
-                self.sendButton.setTitle("发送", for: UIControlState.normal)
+                self.sendButton.setTitle("发布", for: UIControlState.normal)
                 self.sendButton.titleLabel?.textAlignment = NSTextAlignment.right
 //                self.textField.placeholder = "请为您的照片做一些备注"
                 var attriStr = NSMutableAttributedString.init(string: "此刻的心情 ")
@@ -807,11 +807,13 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                 let result = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
                 mylog(result.day)
                 mylog(result.weekday)
+                print("打印月份\(Calendar.current.monthSymbols)")
                 mylog(result.month)
                 mylog(result.year)
                 GDLocationManager.share.gotCity(location: GDLocationManager.share.locationManager.location ?? CLLocation.init(), result: { (error , placeMarks ) in
                     let placemark = placeMarks?.first
-                    self.sendTimeAndLocation.text = "\(result.month ?? 00)月\(result.day ?? 00),\(result.year ?? 0000)   \(placemark?.locality ?? "" ) \(placemark?.administrativeArea ?? "") \(placemark?.country ?? "")"
+                    self.sendTimeAndLocation.text = "\(Calendar.current.monthSymbols[((result.month  ?? 1 ) - 1)]) \(result.day ?? 00) . \(result.year ?? 0000)      \(placemark?.locality ?? "" ) \(placemark?.administrativeArea ?? "") \(placemark?.country ?? "")"
+//                    self.sendTimeAndLocation.text = "\(result.month ?? 00)月\(result.day ?? 00),\(result.year ?? 0000)   \(placemark?.locality ?? "" ) \(placemark?.administrativeArea ?? "") \(placemark?.country ?? "")"
                 })
 //                self.sendTimeAndLocation.text = "\(result.month ?? 00)月\(result.day ?? 00),\(result.year ?? 0000)"
                 self.sendTimeAndLocation.textColor = UIColor.white
@@ -826,12 +828,12 @@ extension GDKeyVC : UIImagePickerControllerDelegate , UINavigationControllerDele
                     self.textFieldContainer.frame = CGRect(x: margin, y: self.sendTimeAndLocation.frame.maxY + margin , width: SCREENWIDTH - margin  * 2, height: margin * 3)
                 }
                 self.textFieldContainer.backgroundColor = UIColor.white
-                self.cancleButton.frame = CGRect(x: 10, y: SCREENHEIGHT - margin * 1.5, width: margin * 2, height:  margin * 1.5)
+                self.cancleButton.frame = CGRect(x: 10, y: SCREENHEIGHT - margin * 2, width: margin * 2, height:  margin * 2)
                 
-                self.sendButton.frame = CGRect(x: SCREENWIDTH - 10 - 44, y: SCREENHEIGHT - (margin * 1.5), width:  margin * 2, height:  margin * 1.5)
+                self.sendButton.frame = CGRect(x: SCREENWIDTH - 10 - 44, y: SCREENHEIGHT - (margin * 2), width:  margin * 2, height:  margin * 2)
                 let textfiledMargin : CGFloat  = 0
                 self.textField.frame = CGRect(x: textfiledMargin, y: 0, width: self.textFieldContainer.frame.size.width - textfiledMargin * 2, height: self.textFieldContainer.frame.size.height)
-                
+//                self.customViewContainer.backgroundColor  = UIColor.lightGray
                 self.cancleButton.addTarget(self , action: #selector(cancleClick), for: UIControlEvents.touchUpInside)
                 
                 

@@ -212,19 +212,19 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
     func performNotisGotoUpdateVersion(type : Int)
     {
     
-    let alertVC = UIAlertController.init(title: "你造吗", message: "又有新版本了", preferredStyle: UIAlertControllerStyle.alert)
+    let alertVC = UIAlertController.init(title: "更新提示", message: "茄子有新版本了，请更新版本！", preferredStyle: UIAlertControllerStyle.alert)
         if type == 0 {
             return
         }else if (type == 1) {//1:提示升级
-            let  ac1 = UIAlertAction.init(title: "我是拒绝的", style: UIAlertActionStyle.cancel, handler: { (action) in
+            let  ac1 = UIAlertAction.init(title: "暂不更新", style: UIAlertActionStyle.cancel, handler: { (action) in
                 return
             });
             alertVC.addAction(ac1)
         }else if (type == 2){// 2:强制升级
             
         }
-        let   ac2 = UIAlertAction.init(title: "更新就更新", style: UIAlertActionStyle.default) { (action) in
-            let str = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1264405709"
+        let   ac2 = UIAlertAction.init(title: "去更新", style: UIAlertActionStyle.default) { (action) in
+            let str = "https://itunes.apple.com/cn/app/%e8%8c%84%e5%ad%90%e7%9b%b8%e6%9c%ba-%e7%bb%93%e4%bc%b4%e6%8b%8d%e7%85%a7%e6%9c%80%e5%a5%bd%e7%94%a8%e5%92%8c%e6%9c%80%e7%ae%80%e5%8d%95%e7%9a%84%e7%9b%b8%e6%9c%ba/id1264405709?mt=8" //"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1264405709"
             if let url = URL.init(string: str){
                 
                 if (UIApplication.shared.canOpenURL(url))
@@ -298,7 +298,7 @@ class HomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource ,
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.requestDataAfterUploadMediaSuccess()
+//        self.requestDataAfterUploadMediaSuccess()
     }
     
 

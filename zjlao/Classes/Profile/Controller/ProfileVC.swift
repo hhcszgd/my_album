@@ -146,6 +146,9 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         if cell == nil  {
             let  creatCell = GDTrendsMsgCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "profileVCCell")
             let model = self.datas[indexPath.row]
+            if indexPath.row == 2{
+//                model.comment_user_avatar = nil
+            }
             creatCell.model = model
             creatCell.msgCelldelegate = self
             return creatCell
@@ -153,6 +156,9 @@ class ProfileVC: GDBaseVC , UITableViewDelegate , UITableViewDataSource , GDTren
         }else{
             if let realCell = cell as? GDTrendsMsgCell {
                 let model = self.datas[indexPath.row]
+                if indexPath.row == 2{
+//                    model.comment_user_avatar = nil
+                }
                 realCell.model = model
                 realCell.msgCelldelegate = self
                 return realCell

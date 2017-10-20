@@ -57,7 +57,7 @@ class GDTrendsMsgCell: UITableViewCell {
     
     func setmodel(tempmodel:TrendsMsgCellModel?)  {
 
-        self.otherIcon.sd_setImage(with:  URL(string: tempmodel?.comment_user_avatar ?? ""), for: UIControlState.normal, placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed]) { (img , error , imageCacheType, url ) in
+        self.otherIcon.sd_setImage(with:  URL(string:tempmodel?.comment_user_avatar ?? ""), for: UIControlState.normal, placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed]) { (img , error , imageCacheType, url ) in
             
         }
         
@@ -120,8 +120,10 @@ class GDTrendsMsgCell: UITableViewCell {
         
         
         self.otherIcon.addTarget(self , action: #selector(otherIconClick(sender:)), for: UIControlEvents.touchUpInside)
-        self.otherIcon.contentMode = UIViewContentMode.scaleToFill
-        self.mediaIconView.contentMode = UIViewContentMode.scaleToFill
+        self.otherIcon.imageView?.contentMode = UIViewContentMode.scaleToFill
+        self.otherIcon.backgroundColor =  UIColor.init(red: 0.87, green: 0.87, blue: 0.87, alpha: 1)
+//        self.mediaIconView.contentMode = UIViewContentMode.scaleToFill
+        self.otherIcon.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
     }
     
     func otherIconClick(sender : UIButton)  {
