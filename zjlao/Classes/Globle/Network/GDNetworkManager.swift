@@ -19,7 +19,8 @@ enum RequestType: String {
     case PUT = "PUT"
 }
 //private let hostName = "http://api.123qz.cn/"//新
-private let hostName = "http://api2.123qz.cn/v2/"//二版接口
+//private let hostName = "http://api2.123qz.cn/v2/"//二版接口
+private let hostName = "http://albumapi.123qz.cn/v1/"//相册接口
 //private let hostName =    "http://123qz.ugshop.cn/"//旧
 private let dataErrorDomain = "com.someThingError"
 class GDNetworkManager: AFHTTPSessionManager {
@@ -622,16 +623,16 @@ class GDNetworkManager: AFHTTPSessionManager {
         let did = UIDevice.current.identifierForVendor?.uuidString
 //        coordinate
 //        GDLocationManager.share.gotCurrentLocation { (location , error) in
-        let location = GDLocationManager.share.locationManager.location
-            let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
-            let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
-//             mylog("定位成功")
-            mylog(location?.coordinate.longitude)
-            mylog(location?.coordinate.latitude)
-            mylog(longtitude)
-            mylog(latitude)
-            if location != nil {
-                let para = ["mobile" : mobile , "verify" :  authCode ,"deviceid" : did , "coordinate" : "\(longtitude),\(latitude)" ]
+//        let location = GDLocationManager.share.locationManager.location
+//            let longtitude = String.init(format: "%.08f", arguments: [(location?.coordinate.longitude)!])
+//            let latitude = String.init(format: "%.08f", arguments: [(location?.coordinate.latitude)!])
+////             mylog("定位成功")
+//            mylog(location?.coordinate.longitude)
+//            mylog(location?.coordinate.latitude)
+//            mylog(longtitude)
+//            mylog(latitude)
+//            if location != nil {
+                let para = ["mobile" : mobile , "verify" :  authCode ,"deviceid" : did ]
                 self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
                     mylog(result.data)
                     if result.status == 200 {
@@ -671,11 +672,11 @@ class GDNetworkManager: AFHTTPSessionManager {
                 }) { (error) in
                     failure(error)
                 }
-            }else{
-                let gdError = NSError(domain: "wrongDomain.com", code: -10001, userInfo: ["reason" : "LocationFaiure"])
-                failure(gdError)
-                mylog("定位失败")
-            }
+//            }else{
+//                let gdError = NSError(domain: "wrongDomain.com", code: -10001, userInfo: ["reason" : "LocationFaiure"])
+//                failure(gdError)
+//                mylog("定位失败")
+//            }
 //        }
 
         
@@ -1656,7 +1657,7 @@ class GDNetworkManager: AFHTTPSessionManager {
  */
     
     func getUserInfomation(userID: String , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
-        let url =  "users/" + userID
+        let url =  "user" //+ userID
         let para = ["token" : self.token  ] as [String : Any]
         self.QZRequestJSONDict(RequestType.GET, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             success(result)
@@ -1700,6 +1701,23 @@ class GDNetworkManager: AFHTTPSessionManager {
                     
                 })
             }
+            success(result)
+        }) { (error) in
+            mylog("修改个人信息的请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    /*接口地址：album
+     请求方式：get
+     */
+    
+    func getAlbums( album_type : Int ,create_at : String ,page : Int , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "album"
+        var para  = ["token" : self.token ?? "" , "album_type" : album_type , "create_at" : create_at , "page" : page ] as [String : Any]
+       
+        self.QZRequestJSONDict(RequestType.GET , urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             success(result)
         }) { (error) in
             mylog("修改个人信息的请求失败")

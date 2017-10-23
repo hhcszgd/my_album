@@ -32,7 +32,7 @@ class GDMainTabbarVC: UITabBarController {
         for subVC in self.childViewControllers {
             subVC.removeFromParentViewController()
         }
-        self.addChildViewController(HomeVaviVC(rootViewController: HomeVC2()))
+        self.addChildViewController(HomeVaviVC(rootViewController: HomeVC3()))
         self.addChildViewController(ClassifyNaviVC(rootViewController: ClassifyVC()))
         self.addChildViewController(LaoNaviVC(rootViewController: LaoVC()))
         self.addChildViewController(ShopCarNaviVC(rootViewController: ShopCarVC()))

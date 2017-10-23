@@ -101,9 +101,11 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
     }
     weak var keyVCDelegate : AfterChangeLanguageKeyVCDidApear?
     static let share: GDKeyVC = {
-        let tempMainTabbarVC = GDMainTabbarVC()
-        let tempKeyVC = GDKeyVC(rootViewController: tempMainTabbarVC)
-        tempMainTabbarVC.delegate = tempKeyVC
+//        let tempMainTabbarVC = GDMainTabbarVC()
+//        let tempKeyVC = GDKeyVC(rootViewController: tempMainTabbarVC)
+//        tempMainTabbarVC.delegate = tempKeyVC
+        let homeVC = AlbumHomeVC()
+        let tempKeyVC = GDKeyVC(rootViewController: homeVC)
         NotificationCenter.default.addObserver(tempKeyVC , selector: #selector(keyboardWillHide(info:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(tempKeyVC , selector: #selector(keyboardWillShow(info:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         return tempKeyVC
@@ -174,7 +176,7 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.isHidden = true;
+//        self.navigationBar.isHidden = true;
         // Do any additional setup after loading the view.
     }
     

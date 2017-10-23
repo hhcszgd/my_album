@@ -299,32 +299,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     }
     
     func dealwithLocation()  {
-        if !CLLocationManager.locationServicesEnabled() {//GPS不可用 ,设备不支持
-            self.window = nil
-            self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-            self.window!.rootViewController = GDSetupGPSVC()
-            //请打开gps定位功能
-            self.window!.makeKeyAndVisible()
-            mylog("gps定位功能不可用")
-        }else{//GPS可用
-            if GDLocationManager.share.authorizationStatus() == CLAuthorizationStatus.authorizedAlways || GDLocationManager.share.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse{//app定位功能可用
-                
+//        if !CLLocationManager.locationServicesEnabled() {//GPS不可用 ,设备不支持
+//            self.window = nil
+//            self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+//            self.window!.rootViewController = GDSetupGPSVC()
+//            //请打开gps定位功能
+//            self.window!.makeKeyAndVisible()
+//            mylog("gps定位功能不可用")
+//        }else{//GPS可用
+//            if GDLocationManager.share.authorizationStatus() == CLAuthorizationStatus.authorizedAlways || GDLocationManager.share.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse{//app定位功能可用
+    
                 self.initializationAccountInfo()
-                mylog("app定位功能可用")
-                
-            }else{//app定位功能不可用 ,请前往设置中心打开app使用位置权限
-                NotificationCenter.default.addObserver(self , selector: #selector(authorizationStatusChanged(status:)), name: GDLocationManager.GDAuthorizationStatusChanged, object: nil)
-                GDLocationManager.share.startUpdatingLocation()
-            
-                self.window = nil
-                self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-                self.window!.rootViewController = GDSetupLocationEnableVC()
-                //请打开gps定位功能
-                self.window!.makeKeyAndVisible()
-                mylog("app没有定位权限")
-            }
-        }
-       
+//                mylog("app定位功能可用")
+//
+//            }else{//app定位功能不可用 ,请前往设置中心打开app使用位置权限
+//                NotificationCenter.default.addObserver(self , selector: #selector(authorizationStatusChanged(status:)), name: GDLocationManager.GDAuthorizationStatusChanged, object: nil)
+//                GDLocationManager.share.startUpdatingLocation()
+//
+//                self.window = nil
+//                self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+//                self.window!.rootViewController = GDSetupLocationEnableVC()
+//                //请打开gps定位功能
+//                self.window!.makeKeyAndVisible()
+//                mylog("app没有定位权限")
+//            }
+//        }
+    
 
     }
     @objc func authorizationStatusChanged(status : CLAuthorizationStatus)  {
@@ -358,16 +358,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     func initializationAccountInfo()  {
   
         
-        GDLocationManager.share.startUpdatingLocation()
+//        GDLocationManager.share.startUpdatingLocation()
         GDNetworkManager.shareManager.QZFirstInit({ (model) in//之所以先初始化, 是怕手机在别的设备被找回
             mylog("首次调用初始化接口成功 status:\(model.status) message:\(String(describing: model.message)) data:\(String(describing: model.data))")
-            if model.status == 202 {
+            if model.status == 202 {//用户已存在
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.authenticated)
-            }else if (model.status == 310){
+            }else if (model.status == 310){//用户不存在
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.unAuthenticated)
             }else if (model.status == 203){
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.halfAuthenticated)
-            }else if (model.status == 307){
+            }else if (model.status == 307){//设备id为空
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.unAuthenticated)
             }else{
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.unAuthenticated)
@@ -385,25 +385,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
             }else {//认证,上传头像和昵称
                 if let _ =  self.window?.rootViewController as? GDSetupUserInfoVC {
                 }else{
-                    GDNetworkManager.shareManager.QZFirstInit({ (result ) in
-                        mylog(result.data)
-                        mylog(result.status)
-                        if (result.status == 202){//用户名,头像手机都认证完毕
-                            if self.window?.rootViewController != GDKeyVC.share {
-                                self.window = nil
-                                self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-                                self.window!.rootViewController = GDKeyVC.share
-                                self.window!.makeKeyAndVisible()
-                            }
-                        }else{//从未认证 , 或者只认证手机 , 没上传头像和设置用户名
+//                    GDNetworkManager.shareManager.QZFirstInit({ (result ) in
+//                        mylog(result.data)
+//                        mylog(result.status)
+//                        if (result.status == 202){//用户名,头像手机都认证完毕
+//                            if self.window?.rootViewController != GDKeyVC.share {
+//                                self.window = nil
+//                                self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+//                                self.window!.rootViewController = GDKeyVC.share
+//                                self.window!.makeKeyAndVisible()
+//                            }
+//                        }else{//从未认证 , 或者只认证手机 , 没上传头像和设置用户名
                             self.window = nil
                             self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-                            self.window!.rootViewController = GDSetupUserInfoVC()
+                            self.window!.rootViewController = LoginVCFirstLaunch()
                             self.window!.makeKeyAndVisible()
-                        }
-                    }, failure: { (error ) in
-                        mylog(error)//网络连接失败
-                    })
+//                        }
+//                    }, failure: { (error ) in
+//                        mylog(error)//网络连接失败
+//                    })
                 }
                 
             }
