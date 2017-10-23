@@ -1462,6 +1462,28 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         
     }
+    /**
+     1.插入媒体到相册
+     接口地址：media
+     请求方式：post
+     请求参数：
+     media_type    int    媒体类型(1、图片 2、视频)
+     */
+    func insertMediaToAlbum(albumID : String ,original:String ,  type : String  ,success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "media"
+        var para = [ "album_id" : albumID  , "token" : self.token ?? "" , "original" : original , "media_type" : type  ] as [String : Any]
+
+        self.QZRequestJSONDict(RequestType.POST, urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("插入媒体 请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
+    
     
     /**
      1.创建媒体
@@ -1547,7 +1569,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     }
     
     
-    func uploadPHAssets(assets:[PHAsset]?)  {
+    func uploadPHAssets(albumID:String ,type : String = "1", assets:[PHAsset]?)  {
         
         self.getQiniuToken(success: { (model ) in
             if let token = model.data as? String {
@@ -1556,11 +1578,10 @@ class GDNetworkManager: AFHTTPSessionManager {
                     self.qnUploadManager.put(asset, key: nil , token: token, complete: { (response, key , info ) in
                     //1185
                         if let key = info?["key"] as? String{
-                            
-                            self.insertMediaToCircle(circleID: "1190", original: key  , type: "1" , description: nil , media_spec:  CGSize(width: asset.pixelWidth, height: asset.pixelHeight), success: { (model ) in
-                                mylog("插入媒体到圈子 请求结果 : \(model.status) , 数据 :\(model.data)")
+                            self.insertMediaToAlbum(albumID: albumID, original: key, type: type, success: { (result ) in
+                                 mylog("插入媒体到相册 请求结果 : \(model.status) , 数据 :\(model.data)")
                             }, failure: { (error ) in
-                                mylog("插入媒体到圈子 请求结果 : \(error)")
+                                 mylog("插入媒体到相册 请求结果 : \(model.status) , 数据 :\(model.data)")
                             })
                         }
                     }, option: nil )
@@ -1675,7 +1696,7 @@ class GDNetworkManager: AFHTTPSessionManager {
  请求方式：POST
 */
     func editUserInfomation(avarta: String? = nil , name : String? = nil ,gender:String? = nil , mobile : String? = nil , format : String? = nil , description : String? = nil , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
-        let url =  "users"
+        let url =  "user"
         var para  = ["token" : self.token ?? ""  ] as [String : Any]
         if let avarta = avarta /*, let format = format*/{
             para["avatar"] = avarta
@@ -1720,7 +1741,27 @@ class GDNetworkManager: AFHTTPSessionManager {
         self.QZRequestJSONDict(RequestType.GET , urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             success(result)
         }) { (error) in
-            mylog("修改个人信息的请求失败")
+            mylog("获取所有相册的请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
+    /*3.创建相册
+     接口地址：album
+     请求方式：post
+     请求参数：
+     */
+    
+    func creatAlbum( albumName : String, success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "album"
+        var para  = ["token" : self.token ?? "" , "album_name" : albumName ] as [String : Any]
+        
+        self.QZRequestJSONDict(RequestType.POST , urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("创建请求失败")
             failure(error)
         }
         

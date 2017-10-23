@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GDEditNameVC: GDNormalVC {
+class GDEditNameVC: GDBaseVC {
     var customTitle : String = ""
     var originalValue : String = "0"
     
@@ -90,14 +90,18 @@ class GDEditNameVC: GDNormalVC {
     }
     
     func setupNaviBar()  {
-        self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
+//        self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
         let  attritit = NSMutableAttributedString.init(string: self.customTitle)
         attritit.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
-        self.naviBar.attributeTitle = attritit
-        self.naviBar.backgroundColor = UIColor.black
+//        self.naviBar.attributeTitle = attritit
+        self.title = attritit.string
+//        self.naviBar.backgroundColor = UIColor.black
         let btn = UIButton()
         btn.setTitle("保存", for: UIControlState.normal)
-        self.naviBar.rightBarButtons = [btn]
+        btn.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+        btn.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
+        let right = UIBarButtonItem.init(customView: btn)
+        self.navigationItem.rightBarButtonItems = [right]
         btn.addTarget(self , action: #selector(save), for: UIControlEvents.touchUpInside)
     }
     @objc func save()  {
@@ -113,7 +117,8 @@ class GDEditNameVC: GDNormalVC {
                 }
                 
                 NotificationCenter.default.post(name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount)
-                self.popToPreviousVC()
+//                self.popToPreviousVC()
+                self.navigationController?.popViewController(animated: true)
             }, failure: { (error ) in
                 mylog("修改用户名失败\(error)")
                 GDAlertView.alert("操作失败", image: nil , time: 2 , complateBlock: nil )
@@ -129,7 +134,8 @@ class GDEditNameVC: GDNormalVC {
                 mylog("修改性别成功\(model.description)")
                 
                 NotificationCenter.default.post(name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount)
-                self.popToPreviousVC()
+//                self.popToPreviousVC()
+                self.navigationController?.popViewController(animated: true)
             }, failure: { (error ) in
                 mylog("修改性别失败\(error)")
                                 GDAlertView.alert("操作失败", image: nil , time: 2 , complateBlock: nil )

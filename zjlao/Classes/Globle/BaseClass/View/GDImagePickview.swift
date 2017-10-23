@@ -20,6 +20,80 @@ import UIKit
     @objc optional func getSelectedPHAssets(assets:[PHAsset]?)
 }
 class GDImagePickview: UIView {
+    
+    
+    private var columnCount : Int{
+        get {
+            if let count  = self.delegate?.columnCount?() {
+                return count
+            }
+            return 3
+        }
+    }
+    private var rowCount : Int {
+        get {
+            if let count  = self.delegate?.rowCount?() {
+                return count
+            }
+            return 3
+        }
+    }
+    private var itemMargin : CGFloat{
+        get {
+            if let margin  = self.delegate?.itemMargin?() {
+                return margin
+            }
+            return 2
+        }
+    }
+    private var collectionInset : UIEdgeInsets{
+        get{
+            if let inset  = self.delegate?.collectionInset?() {
+                return inset
+            }
+            return UIEdgeInsets.init(top: 2, left: 2, bottom: 2, right: 2)
+        }
+    }
+    private var scrollDirection : UICollectionViewScrollDirection {
+        get{
+            if let direction  = self.delegate?.scrollDirection?() {
+                return direction
+            }
+            return UICollectionViewScrollDirection.vertical
+        }
+    }
+    
+    private var itemSize : CGSize {
+        if self.scrollDirection == UICollectionViewScrollDirection.horizontal{
+            let insetWidth = self.collectionInset.top + self.collectionInset.bottom
+            let itemMarginWidth = CGFloat(self.rowCount - 1 ) * itemMargin
+            let itemWH = (self.collection.bounds.size.height - insetWidth - itemMarginWidth) / CGFloat(self.rowCount)
+            return  CGSize(width: itemWH, height: itemWH)
+        }else{
+            let insetWidth = self.collectionInset.left + self.collectionInset.right
+            let itemMarginWidth = CGFloat(self.columnCount - 1 ) * itemMargin
+            let itemWH = (self.collection.bounds.size.width - insetWidth - itemMarginWidth) / CGFloat(self.columnCount)
+            return CGSize(width: itemWH, height: itemWH)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private var collection  : UICollectionView!
     private var table : UITableView?
     private var collectionAssets : PHFetchResult<PHAsset> = PHFetchResult.init()
@@ -97,61 +171,61 @@ extension GDImagePickview : UICollectionViewDelegate , UICollectionViewDataSourc
 }
 extension GDImagePickview{
     
-    private var columnCount : Int{
-        get {
-            if let count  = self.delegate?.columnCount?() {
-                return count
-            }
-            return 3
-        }
-    }
-    private var rowCount : Int {
-        get {
-            if let count  = self.delegate?.rowCount?() {
-                return count
-            }
-            return 3
-        }
-    }
-    private var itemMargin : CGFloat{
-        get {
-            if let margin  = self.delegate?.itemMargin?() {
-                return margin
-            }
-            return 2
-        }
-    }
-    private var collectionInset : UIEdgeInsets{
-        get{
-            if let inset  = self.delegate?.collectionInset?() {
-                return inset
-            }
-            return UIEdgeInsets.init(top: 2, left: 2, bottom: 2, right: 2)
-        }
-    }
-    private var scrollDirection : UICollectionViewScrollDirection {
-        get{
-            if let direction  = self.delegate?.scrollDirection?() {
-                return direction
-            }
-            return UICollectionViewScrollDirection.vertical
-        }
-    }
-    
-    private var itemSize : CGSize {
-        if self.scrollDirection == UICollectionViewScrollDirection.horizontal{
-            let insetWidth = self.collectionInset.top + self.collectionInset.bottom
-            let itemMarginWidth = CGFloat(self.rowCount - 1 ) * itemMargin
-            let itemWH = (self.collection.bounds.size.height - insetWidth - itemMarginWidth) / CGFloat(self.rowCount)
-            return  CGSize(width: itemWH, height: itemWH)
-        }else{
-            let insetWidth = self.collectionInset.left + self.collectionInset.right
-            let itemMarginWidth = CGFloat(self.columnCount - 1 ) * itemMargin
-            let itemWH = (self.collection.bounds.size.width - insetWidth - itemMarginWidth) / CGFloat(self.columnCount)
-            return CGSize(width: itemWH, height: itemWH)
-        }
-    }
-    
+//    private var columnCount : Int{
+//        get {
+//            if let count  = self.delegate?.columnCount?() {
+//                return count
+//            }
+//            return 3
+//        }
+//    }
+//    private var rowCount : Int {
+//        get {
+//            if let count  = self.delegate?.rowCount?() {
+//                return count
+//            }
+//            return 3
+//        }
+//    }
+//    private var itemMargin : CGFloat{
+//        get {
+//            if let margin  = self.delegate?.itemMargin?() {
+//                return margin
+//            }
+//            return 2
+//        }
+//    }
+//    private var collectionInset : UIEdgeInsets{
+//        get{
+//            if let inset  = self.delegate?.collectionInset?() {
+//                return inset
+//            }
+//            return UIEdgeInsets.init(top: 2, left: 2, bottom: 2, right: 2)
+//        }
+//    }
+//    private var scrollDirection : UICollectionViewScrollDirection {
+//        get{
+//            if let direction  = self.delegate?.scrollDirection?() {
+//                return direction
+//            }
+//            return UICollectionViewScrollDirection.vertical
+//        }
+//    }
+//
+//    private var itemSize : CGSize {
+//        if self.scrollDirection == UICollectionViewScrollDirection.horizontal{
+//            let insetWidth = self.collectionInset.top + self.collectionInset.bottom
+//            let itemMarginWidth = CGFloat(self.rowCount - 1 ) * itemMargin
+//            let itemWH = (self.collection.bounds.size.height - insetWidth - itemMarginWidth) / CGFloat(self.rowCount)
+//            return  CGSize(width: itemWH, height: itemWH)
+//        }else{
+//            let insetWidth = self.collectionInset.left + self.collectionInset.right
+//            let itemMarginWidth = CGFloat(self.columnCount - 1 ) * itemMargin
+//            let itemWH = (self.collection.bounds.size.width - insetWidth - itemMarginWidth) / CGFloat(self.columnCount)
+//            return CGSize(width: itemWH, height: itemWH)
+//        }
+//    }
+//
 }
 import Photos
 extension GDImagePickview{

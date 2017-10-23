@@ -36,7 +36,7 @@ class GDPhotoPickerVC: GDNormalVC , GDImagePickerviewDelegate {
     func getSelectedPHAssets(assets: [PHAsset]?) {
         mylog(assets?.count)
       
-        GDNetworkManager.shareManager.uploadPHAssets(assets: assets)
+        GDNetworkManager.shareManager.uploadPHAssets(albumID: "", assets: assets)
         self.popToPreviousVC()
     }
     deinit {

@@ -58,6 +58,8 @@ class AlbumHomeVC: GDBaseVC {
     }
     @objc func iconClick() {
         print("\(#file)")
+        let vc = GDProfileEditVC()
+        self.navigationController?.pushViewController(vc , animated: true )
     }
     @objc func addClick() {
         let addVc = CreatAlbumVC()
@@ -85,13 +87,13 @@ class AlbumHomeVC: GDBaseVC {
      */
     
     func testAPI() {
-        GDNetworkManager.shareManager.getUserInfomation(userID: Account.shareAccount.member_id ?? "", success: { (result ) in
-            print("get user info result status:\(result.status ) , data: \(result.data )")
-        }) { (error ) in
-            print("get user info error \(error)")
-        }
+//        GDNetworkManager.shareManager.getUserInfomation(userID: Account.shareAccount.member_id ?? "", success: { (result ) in
+//            print("get user info result status:\(result.status ) , data: \(result.data )")
+//        }) { (error ) in
+//            print("get user info error \(error)")
+//        }
         
-        GDNetworkManager.shareManager.getAlbums(album_type: 0, create_at: "2017-10-22 10:00:01", page: 1, success: { (result ) in
+        GDNetworkManager.shareManager.getAlbums(album_type: 0, create_at: "2017-10-23 21:00:01", page: 1, success: { (result ) in
             print("get albums result status : \(result.status) , data :  \(result.data)")
         }) { (error ) in
             print("get albums error \(error)")

@@ -142,6 +142,8 @@
 		1574D04D1F9DD31300DF95FA /* AlbumHomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1574D04B1F9DD31300DF95FA /* AlbumHomeVC.xib */; };
 		1574D0511F9DD53800DF95FA /* CreatAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574D04F1F9DD53800DF95FA /* CreatAlbumVC.swift */; };
 		1574D0521F9DD53800DF95FA /* CreatAlbumVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1574D0501F9DD53800DF95FA /* CreatAlbumVC.xib */; };
+		1579DDF11F9DF93B00F22234 /* PickImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1579DDEF1F9DF93B00F22234 /* PickImageVC.swift */; };
+		1579DDF21F9DF93B00F22234 /* PickImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1579DDF01F9DF93B00F22234 /* PickImageVC.xib */; };
 		157E42D31F6A175E00CBE4BA /* GDCircleDetailVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157E42D21F6A175E00CBE4BA /* GDCircleDetailVC2.swift */; };
 		1586B8C21E7D030700957A81 /* GDMapInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1586B8C11E7D030700957A81 /* GDMapInView.swift */; };
 		1586B8C41E7D0DEE00957A81 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1586B8C31E7D0DEE00957A81 /* MapKit.framework */; };
@@ -564,6 +566,8 @@
 		1574D04B1F9DD31300DF95FA /* AlbumHomeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumHomeVC.xib; sourceTree = "<group>"; };
 		1574D04F1F9DD53800DF95FA /* CreatAlbumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatAlbumVC.swift; sourceTree = "<group>"; };
 		1574D0501F9DD53800DF95FA /* CreatAlbumVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreatAlbumVC.xib; sourceTree = "<group>"; };
+		1579DDEF1F9DF93B00F22234 /* PickImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickImageVC.swift; sourceTree = "<group>"; };
+		1579DDF01F9DF93B00F22234 /* PickImageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickImageVC.xib; sourceTree = "<group>"; };
 		157E42D21F6A175E00CBE4BA /* GDCircleDetailVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDCircleDetailVC2.swift; sourceTree = "<group>"; };
 		1586B8C11E7D030700957A81 /* GDMapInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDMapInView.swift; sourceTree = "<group>"; };
 		1586B8C31E7D0DEE00957A81 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -3377,6 +3381,8 @@
 			children = (
 				1574D04F1F9DD53800DF95FA /* CreatAlbumVC.swift */,
 				1574D0501F9DD53800DF95FA /* CreatAlbumVC.xib */,
+				1579DDEF1F9DF93B00F22234 /* PickImageVC.swift */,
+				1579DDF01F9DF93B00F22234 /* PickImageVC.xib */,
 			);
 			path = AlbumFolder;
 			sourceTree = "<group>";
@@ -4212,6 +4218,7 @@
 				1574D0471F9D8EA700DF95FA /* LoginVCFirstLaunch.xib in Resources */,
 				150869811DCC74E70001B6EF /* LaunchScreen.storyboard in Resources */,
 				1523AE721DCC942500011F9A /* Localizable.strings in Resources */,
+				1579DDF21F9DF93B00F22234 /* PickImageVC.xib in Resources */,
 				150869791DCC74E70001B6EF /* Main.storyboard in Resources */,
 				15EB0BF91DCDA02F0009640A /* simplified.strings in Resources */,
 				1523AE641DCC915400011F9A /* Resource.bundle in Resources */,
@@ -4594,6 +4601,7 @@
 				15A4DD331E8CF5B6009A0DCE /* GPUImagePixellatePositionFilter.m in Sources */,
 				15EB0BFE1DCDAD670009640A /* GDFont.swift in Sources */,
 				15CFDE721ED423E5002B48DB /* GDZanArea.swift in Sources */,
+				1579DDF11F9DF93B00F22234 /* PickImageVC.swift in Sources */,
 				15876E7E1F6A530400E7CAB5 /* GDTableViewProtocol.swift in Sources */,
 				15A4DCFA1E8CF5B6009A0DCE /* GPUImageGaussianBlurFilter.m in Sources */,
 				159AC2D01F70AAC600C63DA6 /* GDImagePickview.swift in Sources */,
