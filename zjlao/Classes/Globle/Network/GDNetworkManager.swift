@@ -1732,6 +1732,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     }
     /*接口地址：album
      请求方式：get
+     相册类型(0、全部1、个人 2、共享)
      */
     
     func getAlbums( album_type : Int ,create_at : String ,page : Int , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
@@ -1767,6 +1768,26 @@ class GDNetworkManager: AFHTTPSessionManager {
         
         
     }
+    
+    
+    /*接口地址：album/<id>
+     请求方式：get
+     */
+    
+    func getAlbumDetail( albumID : Int , success : @escaping (_ result : OriginalNetDataModel) -> () , failure : @escaping (_ error : NSError) -> ())  {
+        let url =  "album/\(albumID)"
+        var para  = ["token" : self.token ?? ""  ] as [String : Any]
+        
+        self.QZRequestJSONDict(RequestType.GET  , urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
+            success(result)
+        }) { (error) in
+            mylog("获取圈子详情请求失败")
+            failure(error)
+        }
+        
+        
+    }
+    
     // MARK: 注释 : v2 👆
     //MARK:
     //MARK:

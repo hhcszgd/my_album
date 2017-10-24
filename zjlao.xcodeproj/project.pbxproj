@@ -103,6 +103,10 @@
 		152C91931E90A8A00006A3E2 /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 152C91921E90A8A00006A3E2 /* NSString+Hash.m */; };
 		153546321EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153546311EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift */; };
 		154564F81F7896DA00F2C008 /* GDEditNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154564F71F7896DA00F2C008 /* GDEditNameVC.swift */; };
+		15460D971F9EE1D900C0ED1B /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460D961F9EE1D900C0ED1B /* AlbumModel.swift */; };
+		15460D991F9EEF8400C0ED1B /* AlbumItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460D981F9EEF8400C0ED1B /* AlbumItem.swift */; };
+		15460D9E1F9F1D2F00C0ED1B /* AlbumDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460D9C1F9F1D2F00C0ED1B /* AlbumDetailVC.swift */; };
+		15460D9F1F9F1D2F00C0ED1B /* AlbumDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15460D9D1F9F1D2F00C0ED1B /* AlbumDetailVC.xib */; };
 		15460F411F6BC73E00D4A7FE /* GDAllCirclesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */; };
 		154B76DE1E1F69C300436CD9 /* GDXmppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B76DD1E1F69C300436CD9 /* GDXmppManager.swift */; };
 		154BB5F31E2B507600A9EF05 /* GDBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BB5F21E2B507600A9EF05 /* GDBaseVC.swift */; };
@@ -526,6 +530,10 @@
 		153546311EA9E1F1003DC7C3 /* TrendsMsgCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsMsgCellModel.swift; sourceTree = "<group>"; };
 		1536B9F61E0BEA38008CCB31 /* zjlao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = zjlao.entitlements; sourceTree = "<group>"; };
 		154564F71F7896DA00F2C008 /* GDEditNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDEditNameVC.swift; sourceTree = "<group>"; };
+		15460D961F9EE1D900C0ED1B /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
+		15460D981F9EEF8400C0ED1B /* AlbumItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItem.swift; sourceTree = "<group>"; };
+		15460D9C1F9F1D2F00C0ED1B /* AlbumDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailVC.swift; sourceTree = "<group>"; };
+		15460D9D1F9F1D2F00C0ED1B /* AlbumDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumDetailVC.xib; sourceTree = "<group>"; };
 		15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDAllCirclesVC.swift; sourceTree = "<group>"; };
 		154B76DD1E1F69C300436CD9 /* GDXmppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDXmppManager.swift; sourceTree = "<group>"; };
 		154BB5F21E2B507600A9EF05 /* GDBaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBaseVC.swift; sourceTree = "<group>"; };
@@ -3340,6 +3348,7 @@
 		154BD40F1F63D24700BF8BDD /* model */ = {
 			isa = PBXGroup;
 			children = (
+				15460D961F9EE1D900C0ED1B /* AlbumModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3359,6 +3368,7 @@
 		154BD4111F63D24700BF8BDD /* view */ = {
 			isa = PBXGroup;
 			children = (
+				15460D981F9EEF8400C0ED1B /* AlbumItem.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -3383,6 +3393,8 @@
 				1574D0501F9DD53800DF95FA /* CreatAlbumVC.xib */,
 				1579DDEF1F9DF93B00F22234 /* PickImageVC.swift */,
 				1579DDF01F9DF93B00F22234 /* PickImageVC.xib */,
+				15460D9C1F9F1D2F00C0ED1B /* AlbumDetailVC.swift */,
+				15460D9D1F9F1D2F00C0ED1B /* AlbumDetailVC.xib */,
 			);
 			path = AlbumFolder;
 			sourceTree = "<group>";
@@ -4229,6 +4241,7 @@
 				15A4DD6D1E8CF5B6009A0DCE /* Info.plist in Resources */,
 				1574D0521F9DD53800DF95FA /* CreatAlbumVC.xib in Resources */,
 				1574D04D1F9DD31300DF95FA /* AlbumHomeVC.xib in Resources */,
+				15460D9F1F9F1D2F00C0ED1B /* AlbumDetailVC.xib in Resources */,
 				1523AE6B1DCC937300011F9A /* InfoPlist.strings in Resources */,
 				15147E181F6912AE00179844 /* GDCreateCircleVC.xib in Resources */,
 			);
@@ -4304,6 +4317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A8D1091EA8B05F009BFA3B /* GDFullMediaUser.swift in Sources */,
+				15460D971F9EE1D900C0ED1B /* AlbumModel.swift in Sources */,
 				154E177E1E8B51AB00FF328A /* FilterListViewController.swift in Sources */,
 				156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */,
 				15A4DD611E8CF5B6009A0DCE /* GPUImageTwoPassFilter.m in Sources */,
@@ -4475,6 +4489,7 @@
 				1523AE451DCC8DDC00011F9A /* GDLanguageManager.swift in Sources */,
 				15A4DD341E8CF5B6009A0DCE /* GPUImagePoissonBlendFilter.m in Sources */,
 				15C7F38E1F6A9D780016ACB3 /* TxtAndTxtView.swift in Sources */,
+				15460D9E1F9F1D2F00C0ED1B /* AlbumDetailVC.swift in Sources */,
 				15E250D21DDEB05C004D4509 /* GDSettingManager.swift in Sources */,
 				15A4DD131E8CF5B6009A0DCE /* GPUImageLevelsFilter.m in Sources */,
 				15A4DD0A1E8CF5B6009A0DCE /* GPUImageHSBFilter.m in Sources */,
@@ -4498,6 +4513,7 @@
 				15A4DD191E8CF5B6009A0DCE /* GPUImageLowPassFilter.m in Sources */,
 				15A4DD401E8CF5B6009A0DCE /* GPUImageSaturationBlendFilter.m in Sources */,
 				15A4DCFD1E8CF5B6009A0DCE /* GPUImageGlassSphereFilter.m in Sources */,
+				15460D991F9EEF8400C0ED1B /* AlbumItem.swift in Sources */,
 				1523AE351DCC8DDC00011F9A /* String+Regex.swift in Sources */,
 				154BB6031E2B600100A9EF05 /* GDView.swift in Sources */,
 				15A4DD071E8CF5B6009A0DCE /* GPUImageHistogramFilter.m in Sources */,

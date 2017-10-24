@@ -1346,7 +1346,8 @@ class GDLaunchVC: UIViewController {
             label.textAlignment = NSTextAlignment.center
             if let day = result.day {
                 label.text = day.description
-                label.frame = CGRect(x: SCREENWIDTH / 2 - dayH, y: SCREENHEIGHT / 2 - dayH / 2, width: dayH * 1.1, height: dayH)
+                label.frame = CGRect(x: SCREENWIDTH / 2 - dayH, y: SCREENHEIGHT / 2 - dayH / 2, width: dayH *
+                    1.1, height: dayH)
             }
         case .week:
             if let weekday = result.weekday {

@@ -39,8 +39,13 @@ class GDProfileEditVC: GDBaseVC {
         self.setupNaviBar()
         var startY : CGFloat = 80
         self.configRowInfo(rowView: icon , title: "头像", y: startY , h : 64 )
+        
         startY += (icon.bounds.height + 15)
         self.setRowContent(rowView: icon, subTitle: Account.shareAccount.head_images)
+        self.icon.subImageView.layer.cornerRadius = self.icon.subImageView.bounds.height/2
+        self.icon.subImageView.layer.masksToBounds = true
+        
+        
         self.configRowInfo(rowView: mobile , title: "手机号码", y: startY  )
         startY += (mobile.bounds.height + 2)
         self.configRowInfo(rowView: name , title: "姓名", y: startY )
@@ -73,8 +78,8 @@ class GDProfileEditVC: GDBaseVC {
     func setRowContent(rowView : GDRowView ,subTitle: String?) {
         if (subTitle ?? "").hasPrefix("http") {
             if let url = URL(string : subTitle ?? ""){
-                rowView.subImageView.sd_setImage(with: url)
-                rowView.subImageView.sd_setHighlightedImage(with: url , options: [SDWebImageOptions.retryFailed])
+//                rowView.subImageView.sd_setImage(with: url)
+                rowView.subImageView.sd_setImage(with: url , placeholderImage: UIImage(named:"bg_nohead"), options: [SDWebImageOptions.retryFailed])
             }
         }else{
             rowView.subTitleLabel.text = subTitle
@@ -268,7 +273,7 @@ extension GDProfileEditVC : UIImagePickerControllerDelegate , UINavigationContro
             picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         }
         picker.mediaTypes = [/*kUTTypeMovie as String , kUTTypeVideo as String ,*/ kUTTypeImage as String  , kUTTypeJPEG as String , kUTTypePNG as String]//kUTTypeMPEG4
-        //        picker.allowsEditing = true ;
+                picker.allowsEditing = true ;
         picker.videoMaximumDuration = 12
         //        picker.showsCameraControls = true//摄像头专属
         //        picker.cameraOverlayView = UISwitch()
@@ -332,14 +337,15 @@ extension GDProfileEditVC : UIImagePickerControllerDelegate , UINavigationContro
     func dealImage(info:[String : Any])  {
         
         var theImage : UIImage?
-        //        if let editImageReal  = info[UIImagePickerControllerEditedImage] as? UIImage {
-        //            theImage = editImageReal
-        //        }else{
-        if let originlImage  = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            theImage = originlImage
-            self.icon.subImageView.image = originlImage
-        }
-        //        }
+            if let editImageReal  = info[UIImagePickerControllerEditedImage] as? UIImage {
+                    theImage = editImageReal
+                    self.icon.subImageView.image = editImageReal
+            }else{
+                if let originlImage  = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                    theImage = originlImage
+                    self.icon.subImageView.image = originlImage
+                }
+            }
         //perform upload image
         if theImage != nil  {
             let imageDate = UIImagePNGRepresentation(theImage!)
