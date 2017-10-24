@@ -107,6 +107,8 @@
 		15460D991F9EEF8400C0ED1B /* AlbumItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460D981F9EEF8400C0ED1B /* AlbumItem.swift */; };
 		15460D9E1F9F1D2F00C0ED1B /* AlbumDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460D9C1F9F1D2F00C0ED1B /* AlbumDetailVC.swift */; };
 		15460D9F1F9F1D2F00C0ED1B /* AlbumDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15460D9D1F9F1D2F00C0ED1B /* AlbumDetailVC.xib */; };
+		15460DA11F9F2CAE00C0ED1B /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460DA01F9F2CAE00C0ED1B /* MediaModel.swift */; };
+		15460DA31F9F2D2200C0ED1B /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460DA21F9F2D2200C0ED1B /* MediaItem.swift */; };
 		15460F411F6BC73E00D4A7FE /* GDAllCirclesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */; };
 		154B76DE1E1F69C300436CD9 /* GDXmppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B76DD1E1F69C300436CD9 /* GDXmppManager.swift */; };
 		154BB5F31E2B507600A9EF05 /* GDBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154BB5F21E2B507600A9EF05 /* GDBaseVC.swift */; };
@@ -534,6 +536,8 @@
 		15460D981F9EEF8400C0ED1B /* AlbumItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItem.swift; sourceTree = "<group>"; };
 		15460D9C1F9F1D2F00C0ED1B /* AlbumDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailVC.swift; sourceTree = "<group>"; };
 		15460D9D1F9F1D2F00C0ED1B /* AlbumDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumDetailVC.xib; sourceTree = "<group>"; };
+		15460DA01F9F2CAE00C0ED1B /* MediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
+		15460DA21F9F2D2200C0ED1B /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
 		15460F401F6BC73E00D4A7FE /* GDAllCirclesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDAllCirclesVC.swift; sourceTree = "<group>"; };
 		154B76DD1E1F69C300436CD9 /* GDXmppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDXmppManager.swift; sourceTree = "<group>"; };
 		154BB5F21E2B507600A9EF05 /* GDBaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBaseVC.swift; sourceTree = "<group>"; };
@@ -3349,6 +3353,7 @@
 			isa = PBXGroup;
 			children = (
 				15460D961F9EE1D900C0ED1B /* AlbumModel.swift */,
+				15460DA01F9F2CAE00C0ED1B /* MediaModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3369,6 +3374,7 @@
 			isa = PBXGroup;
 			children = (
 				15460D981F9EEF8400C0ED1B /* AlbumItem.swift */,
+				15460DA21F9F2D2200C0ED1B /* MediaItem.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -4469,6 +4475,7 @@
 				15A4DD581E8CF5B6009A0DCE /* GPUImageThresholdEdgeDetectionFilter.m in Sources */,
 				15A4DCEA1E8CF5B6009A0DCE /* GPUImageDirectionalSobelEdgeDetectionFilter.m in Sources */,
 				15A4DD3B1E8CF5B6009A0DCE /* GPUImageRGBClosingFilter.m in Sources */,
+				15460DA31F9F2D2200C0ED1B /* MediaItem.swift in Sources */,
 				15A4DD421E8CF5B6009A0DCE /* GPUImageScreenBlendFilter.m in Sources */,
 				1523AE3D1DCC8DDC00011F9A /* LoginVC.swift in Sources */,
 				15A4DD501E8CF5B6009A0DCE /* GPUImageSphereRefractionFilter.m in Sources */,
@@ -4498,6 +4505,7 @@
 				15A4DD1D1E8CF5B6009A0DCE /* GPUImageLuminosityBlendFilter.m in Sources */,
 				158801691F775C63007525C9 /* GDFriendListVC.swift in Sources */,
 				15A4DD151E8CF5B6009A0DCE /* GPUImageLinearBurnBlendFilter.m in Sources */,
+				15460DA11F9F2CAE00C0ED1B /* MediaModel.swift in Sources */,
 				15A4DD381E8CF5B6009A0DCE /* GPUImagePrewittEdgeDetectionFilter.m in Sources */,
 				15119F621EBAF908002149B1 /* GDIBCollectionCell.swift in Sources */,
 				15A4DD271E8CF5B6009A0DCE /* GPUImageMultiplyBlendFilter.m in Sources */,
