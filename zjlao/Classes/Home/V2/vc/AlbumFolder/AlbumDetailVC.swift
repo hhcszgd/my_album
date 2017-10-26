@@ -190,29 +190,30 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
     }
    
     @objc func performUpload() {
-        let alertVC  = UIAlertController.init(title: "上传照片需要访问本地相册" , message: nil , preferredStyle: UIAlertControllerStyle.alert)
-        
-        let alertAction2 = UIAlertAction.init(title: "允许", style: UIAlertActionStyle.default) { (action ) in
-            self.configPhotoLibrary()
-            alertVC.dismiss(animated: true , completion: {
-                //调用本地相册库
-            })
-        }
-        
-        let alertAction3 = UIAlertAction.init(title: "拒绝", style: UIAlertActionStyle.cancel) { (action ) in
-            alertVC.dismiss(animated: true , completion: {})
-        }
-        alertVC.addAction(alertAction2)
-        alertVC.addAction(alertAction3)
-        self.present(alertVC, animated: true) {}
-
+       self.configPhotoLibrary()
     }
     
   
     
     func configPhotoLibrary() {
         if PHPhotoLibrary.authorizationStatus() != PHAuthorizationStatus.authorized {
-            UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
+            let alertVC  = UIAlertController.init(title: "上传照片需要访问本地相册" , message: nil , preferredStyle: UIAlertControllerStyle.alert)
+            
+            let alertAction2 = UIAlertAction.init(title: "允许", style: UIAlertActionStyle.default) { (action ) in
+                UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
+                alertVC.dismiss(animated: true , completion: {
+                    //调用本地相册库
+                })
+            }
+            
+            let alertAction3 = UIAlertAction.init(title: "拒绝", style: UIAlertActionStyle.cancel) { (action ) in
+                alertVC.dismiss(animated: true , completion: {})
+            }
+            alertVC.addAction(alertAction2)
+            alertVC.addAction(alertAction3)
+            self.present(alertVC, animated: true) {}
+
+            
         }else{
             let vc = PickImageVC(albumID: "\(self.albumID)")
             self.navigationController?.pushViewController(vc , animated: true )
