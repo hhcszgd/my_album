@@ -510,6 +510,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         self.window!.makeKeyAndVisible()
     }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        print("\(UIDevice.current.identifierForVendor?.uuidString)")
         self.showTime()
 //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
             //        UserDefaults.standard.set(nil, forKey: "LanguageTableName")
@@ -1321,6 +1322,7 @@ class GDLaunchVC: UIViewController {
         imageView.contentMode = UIViewContentMode.scaleAspectFit
         imageView.frame = self.view.bounds
         self.configTimeLabel()
+        
     }
     func configTimeLabel()  {
         self.view.addSubview(self.createLabel(type: ShowTimeType.day))

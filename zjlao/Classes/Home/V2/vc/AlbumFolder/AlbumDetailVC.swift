@@ -7,17 +7,20 @@
 //
 
 import UIKit
-
+import Photos
 class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDelegate{
     var albumID : Int  = 0
     
     var albumMedias = [MediaModel]()
+    var headerModel = AlbumDetailHeaderModel.init(dict: nil )
     let collectionView  = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     
     convenience init(albumID:Int){
         self.init()
         self.albumID = albumID
-        self.view.backgroundColor = UIColor.red 
+        self.view.backgroundColor = UIColor.red
+//                                            NotificationCenter.default.post(name: NSNotification.Name.init("UpLoadMediaSuccess"), object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveNotificationOfUploadSuccess), name: NSNotification.Name.init("UpLoadMediaSuccess"), object: GDNetworkManager.shareManager)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,21 +33,53 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         let flowlayout = UICollectionViewFlowLayout()
         if  direction == UICollectionViewScrollDirection.vertical {
             flowlayout.scrollDirection = UICollectionViewScrollDirection.vertical
-            flowlayout.minimumLineSpacing = 10
-            flowlayout.minimumInteritemSpacing = 10
+            flowlayout.minimumLineSpacing = 3
+            flowlayout.minimumInteritemSpacing = 3
             flowlayout.sectionInset = UIEdgeInsetsMake(10, 20, 10, 20)
-            flowlayout.itemSize = CGSize(width: (UIScreen.main.bounds.width - flowlayout.minimumInteritemSpacing - flowlayout.sectionInset.left - flowlayout.sectionInset.right)/2, height: 200)
+            let itemW = (UIScreen.main.bounds.width - flowlayout.minimumInteritemSpacing * 2  - flowlayout.sectionInset.left - flowlayout.sectionInset.right)/3
+            flowlayout.itemSize = CGSize(width: itemW, height: itemW)
+            flowlayout.headerReferenceSize =  CGSize(width: 100, height: 118)
+            flowlayout.footerReferenceSize = CGSize(width: 100, height: 0)
+            if #available(iOS 9.0, *) {
+                flowlayout.sectionHeadersPinToVisibleBounds = true
+            } else {
+                // Fallback on earlier versions
+            }
         }else{
             let barH = self.navigationController?.navigationBar.bounds.height ?? 0
-            flowlayout.itemSize = CGSize(width: 123, height: (UIScreen.main.bounds.height - flowlayout.minimumInteritemSpacing - flowlayout.sectionInset.top - flowlayout.sectionInset.bottom  - barH)/2)
-            flowlayout.scrollDirection = UICollectionViewScrollDirection.horizontal
-            flowlayout.minimumLineSpacing = 10
-            flowlayout.minimumInteritemSpacing = 10
+            let itemW = (UIScreen.main.bounds.height - flowlayout.minimumInteritemSpacing * 2  - flowlayout.sectionInset.top - flowlayout.sectionInset.bottom  - barH)/3
+            flowlayout.itemSize = CGSize(width: itemW, height: itemW)
+            flowlayout.scrollDirection = UICollectionViewScrollDirection.vertical//horizontal
+            flowlayout.minimumLineSpacing = 3
+            flowlayout.minimumInteritemSpacing = 3
+            
+            flowlayout.headerReferenceSize =  CGSize(width: 100, height: 118)
+            flowlayout.footerReferenceSize = CGSize(width: 100, height:0)
+            if #available(iOS 9.0, *) {
+                flowlayout.sectionHeadersPinToVisibleBounds = true
+            } else {
+                // Fallback on earlier versions
+            }
             //            flowlayout.sectionInset = UIEdgeInsetsMake(20, 10, 10, 10)
         }
         
         return flowlayout
         
+    }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
+    {
+        if  kind == UICollectionElementKindSectionHeader {
+        
+        let reuseView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "DDHeader", for: indexPath)
+            if let header = reuseView as? AlbumDetailHeader{
+                header.model = headerModel
+            }
+        return reuseView
+        }else{
+            
+            let reuseView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Footer", for: indexPath)
+            return reuseView
+        }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){}
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -58,10 +93,14 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         }
         return cell
     }
-    func getAlbumDetail() {
+    @objc func receiveNotificationOfUploadSuccess() {
+        self.getAlbumDetail(type:1)
+    }
+    func getAlbumDetail(type:Int = 1) {//1,首次加载和刷新  , 2 加载更多
         GDNetworkManager.shareManager.getAlbumDetail(albumID: self.albumID, success: { (model ) in
             print("get album detail result status : \(model.status) , data : \(model.data)")
             if let dict = model.data as? [String : AnyObject]{
+                self.headerModel = AlbumDetailHeaderModel.init(dict: dict)
                 if let update_at = dict["update_at"] as? String{//非字符串类型
                     print("update_at:\(update_at)")
                 }
@@ -76,13 +115,23 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
                     
                 }
                 if let medias = dict["media"] as? [[String : AnyObject]]{
+                    var tempAlbumMedias = [MediaModel]()
                     for mediaDict in medias {
                         let media = MediaModel.init(dict: mediaDict)
-                        self.albumMedias.append(media)
+                        tempAlbumMedias.append(media)
+                        
                     }
-                    
+                    if tempAlbumMedias.count == self.albumMedias.count {return}
+                    if type == 1 {
+                        self.albumMedias = tempAlbumMedias
+                    }else{
+                        self.albumMedias.append(contentsOf: tempAlbumMedias)
+                    }
                 }
-                self.collectionView.reloadData()
+                UIView.animate(withDuration: 0.1, animations: {
+                    self.collectionView.reloadData()
+                })
+                
             }
             
             
@@ -98,13 +147,19 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         collectionView.delegate = self
         collectionView.dataSource = self
         self.collectionView.register(MediaItem.self, forCellWithReuseIdentifier: "MediaItem")
+//        self.collectionView.register(AlbumDetailHeader.self , forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "DDHeader")
+        self.collectionView.register(UINib.init(nibName: "AlbumDetailHeader", bundle: Bundle.main), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "DDHeader")
+        
+        self.collectionView.register(UICollectionReusableView.self , forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Footer")
         collectionView.backgroundColor = .white
+        
 //        self.configRefresh()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        super.touchesBegan(<#T##touches: Set<UITouch>##Set<UITouch>#>, with: <#T##UIEvent?#>)
         GDNetworkManager.shareManager.insertMediaToAlbum(albumID: "\(self.albumID)", original: "Fnl6zK1pf5wfzJod0Y2B7tKq8lji", type: "1", success: { (model ) in
@@ -135,8 +190,33 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
     }
    
     @objc func performUpload() {
-        let vc = PickImageVC(albumID: "\(self.albumID)")
-        self.navigationController?.pushViewController(vc , animated: true )
+        let alertVC  = UIAlertController.init(title: "上传照片需要访问本地相册" , message: nil , preferredStyle: UIAlertControllerStyle.alert)
+        
+        let alertAction2 = UIAlertAction.init(title: "允许", style: UIAlertActionStyle.default) { (action ) in
+            self.configPhotoLibrary()
+            alertVC.dismiss(animated: true , completion: {
+                //调用本地相册库
+            })
+        }
+        
+        let alertAction3 = UIAlertAction.init(title: "拒绝", style: UIAlertActionStyle.cancel) { (action ) in
+            alertVC.dismiss(animated: true , completion: {})
+        }
+        alertVC.addAction(alertAction2)
+        alertVC.addAction(alertAction3)
+        self.present(alertVC, animated: true) {}
+
+    }
+    
+  
+    
+    func configPhotoLibrary() {
+        if PHPhotoLibrary.authorizationStatus() != PHAuthorizationStatus.authorized {
+            UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
+        }else{
+            let vc = PickImageVC(albumID: "\(self.albumID)")
+            self.navigationController?.pushViewController(vc , animated: true )
+        }
     }
     @objc func performShare() {
         print("\(#file)")
@@ -155,9 +235,11 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
             }
             self.collectionView.reloadData()
         }
-        self.collectionView.reloadData()
+//        self.collectionView.reloadData()
     }
-    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     /*
     // MARK: - Navigation
 

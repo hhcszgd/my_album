@@ -1580,6 +1580,9 @@ class GDNetworkManager: AFHTTPSessionManager {
                         if let key = info?["key"] as? String{
                             self.insertMediaToAlbum(albumID: albumID, original: key, type: type, success: { (result ) in
                                  mylog("插入媒体到相册 请求结果 : \(model.status) , 数据 :\(model.data)")
+                                if result.status == 200 {
+                                    NotificationCenter.default.post(name: NSNotification.Name.init("UpLoadMediaSuccess"), object: self)
+                                }
                             }, failure: { (error ) in
                                  mylog("插入媒体到相册 请求结果 : \(model.status) , 数据 :\(model.data)")
                             })

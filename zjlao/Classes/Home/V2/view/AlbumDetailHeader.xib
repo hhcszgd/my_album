@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DDHeader" id="U6b-Vx-4bR" customClass="AlbumDetailHeader" customModule="zjlao" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="373" height="237"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asdlkfja;lsd" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cC6-wU-cwa">
+                    <rect key="frame" x="40" y="20" width="293" height="28"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="za6-2Y-kTF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.35785702720207258" green="0.35785702720207258" blue="0.35785702720207258" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4R-NV-Nb7">
+                    <rect key="frame" x="40" y="48" width="293" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="dS8-Kz-Vs1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.72797927461139889" green="0.72797927461139889" blue="0.72797927461139889" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="plr-QM-Wfc">
+                    <rect key="frame" x="20" y="88" width="333" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gqo-Ug-Qem">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="cC6-wU-cwa" secondAttribute="trailing" constant="40" id="EQt-Sn-xRQ"/>
+                <constraint firstItem="X4R-NV-Nb7" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="40" id="Mnb-PM-21A"/>
+                <constraint firstItem="cC6-wU-cwa" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="40" id="V6A-4n-nC4"/>
+                <constraint firstAttribute="trailing" secondItem="X4R-NV-Nb7" secondAttribute="trailing" constant="40" id="Wsn-XC-l1Y"/>
+                <constraint firstItem="cC6-wU-cwa" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="20" id="iDh-8w-C6M"/>
+                <constraint firstItem="X4R-NV-Nb7" firstAttribute="top" secondItem="cC6-wU-cwa" secondAttribute="bottom" id="iyT-gE-Iow"/>
+            </constraints>
+            <connections>
+                <outlet property="collection" destination="plr-QM-Wfc" id="Ybq-NW-cWl"/>
+                <outlet property="creatTime" destination="X4R-NV-Nb7" id="5h6-yq-s2z"/>
+                <outlet property="nameLabel" destination="cC6-wU-cwa" id="iMc-zU-nNF"/>
+            </connections>
+            <point key="canvasLocation" x="-124.5" y="45.5"/>
+        </collectionReusableView>
+    </objects>
+</document>

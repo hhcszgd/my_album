@@ -52,11 +52,11 @@ class GDProfileEditVC: GDBaseVC {
         startY += (name.bounds.height + 2)
 //        self.configRowInfo(rowView: gender, title: "性别", y: startY)
 //        startY += (gender.bounds.height + 2)
-        self.configRowInfo(rowView: area, title: "地区", y: startY)
+//        self.configRowInfo(rowView: area, title: "地区", y: startY)
         startY += (area.bounds.height + 2)
 //        self.configRowInfo(rowView: descrip, title: "个性签名", y: startY)
 //        startY += (descrip.bounds.height + 12)
-        self.configRowInfo(rowView: setting, title: "其他设置", y: startY)
+//        self.configRowInfo(rowView: setting, title: "其他设置", y: startY)
         self.requestNetwork()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -216,26 +216,26 @@ extension GDProfileEditVC : UIImagePickerControllerDelegate , UINavigationContro
             GDAlertView.alert("保存成功", image: nil, time: 2, complateBlock: nil )
         }
         
-        let alertAction22 = UIAlertAction.init(title: "查看历史图片", style: UIAlertActionStyle.default) { (action ) in
-//            if let image = self.icon.subImageView.image{
+//        let alertAction22 = UIAlertAction.init(title: "查看历史图片", style: UIAlertActionStyle.default) { (action ) in
+////            if let image = self.icon.subImageView.image{
+////
+////                UIImageWriteToSavedPhotosAlbum(image , nil  ,nil , nil )
+////            }
+////            //todo  perform save image to library
+////            mylog(alertVC)
 //
-//                UIImageWriteToSavedPhotosAlbum(image , nil  ,nil , nil )
-//            }
-//            //todo  perform save image to library
-//            mylog(alertVC)
-            
-            alertVC.dismiss(animated: true , completion: {
-                mylog(Thread.current)
-            })
+//            alertVC.dismiss(animated: true , completion: {
+//                mylog(Thread.current)
+//            })
 //            GDAlertView.alert("保存成功", image: nil, time: 2, complateBlock: nil )
-        }
+//        }
         
         let alertAction3 = UIAlertAction.init(title: "取消", style: UIAlertActionStyle.cancel) { (action ) in
             alertVC.dismiss(animated: true , completion: {})
         }
         alertVC.addAction(alertAction1)
         alertVC.addAction(alertAction2)
-        alertVC.addAction(alertAction22)
+//        alertVC.addAction(alertAction22)
         alertVC.addAction(alertAction3)
         self.present(alertVC, animated: true) {}
     }

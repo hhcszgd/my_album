@@ -5,7 +5,8 @@
 //  Created by WY on 2017/10/23.
 //  Copyright © 2017年 com.16lao.zjlao. All rights reserved.
 //
-
+import WebKit
+import Photos
 import UIKit
 import SnapKit
 class CreatAlbumVC: GDBaseVC {
@@ -21,6 +22,7 @@ class CreatAlbumVC: GDBaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configSubviews()
+        
         // Do any additional setup after loading the view.
     }
     func creatAlbum() {
@@ -150,6 +152,8 @@ class CreatAlbumVC: GDBaseVC {
     
     @objc func agreementClick(sender:UIButton) {
         print("agreementClick")
+        let vc = WebVC.init(urlStr: "http://albumapi.123qz.cn/qzalbum_policy.html")
+        self.navigationController?.pushViewController(vc , animated: true )
     }
     @objc func creatBtnClick(sender:UIButton) {
         print("creatBtnClick")
@@ -159,19 +163,49 @@ class CreatAlbumVC: GDBaseVC {
         //创建成功调用        self.switchShowStatus(status: false)
 
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        PHPhotoLibrary.requestAuthorization({ (status) in})
+    }
     @objc func uploadBtnClick(sender:UIButton) {
         print("uploadBtnClick")
-        let vc = PickImageVC(albumID: self.album_id)
-        self.navigationController?.pushViewController(vc , animated: true )
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if let index = self.navigationController?.viewControllers.index(of: self){//good! It's words
-            self.navigationController?.viewControllers.remove(at: index)
-            
+        
+        let alertVC  = UIAlertController.init(title: "上传照片需要访问本地相册" , message: nil , preferredStyle: UIAlertControllerStyle.alert)
+
+        let alertAction2 = UIAlertAction.init(title: "允许", style: UIAlertActionStyle.default) { (action ) in
+            self.configPhotoLibrary()
+            alertVC.dismiss(animated: true , completion: {
+                //调用本地相册库
+            })
         }
+
+        let alertAction3 = UIAlertAction.init(title: "拒绝", style: UIAlertActionStyle.cancel) { (action ) in
+            alertVC.dismiss(animated: true , completion: {})
+        }
+        alertVC.addAction(alertAction2)
+        alertVC.addAction(alertAction3)
+        self.present(alertVC, animated: true) {}
+        
+        
+        
         
     }
+    func configPhotoLibrary() {
+        if PHPhotoLibrary.authorizationStatus() != PHAuthorizationStatus.authorized {
+            UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
+        }else{
+            let vc = PickImageVC(albumID: self.album_id)
+            self.navigationController?.pushViewController(vc , animated: true )
+        }
+    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        if let index = self.navigationController?.viewControllers.index(of: self){//good! It's words
+//            self.navigationController?.viewControllers.remove(at: index)
+//            
+//        }
+//        
+//    }
     /*
     // MARK: - Navigation
 
@@ -181,5 +215,25 @@ class CreatAlbumVC: GDBaseVC {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    class WebVC: UIViewController {
+        var urlStr : String!
+        
+        convenience init(urlStr:String){
+            self.init()
+            self.urlStr = urlStr
+        }
+        let webView = WKWebView.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        override func viewDidLoad() {
+            super.viewDidLoad()
+//            self.title = "用户使用协议"
+            self.view.addSubview(webView)
+            if let url  = URL.init(string: self.urlStr) {
+                let request : URLRequest = URLRequest.init(url: url )
+                self.webView.load(request )
+            }
+        }
+        
+    }
 }
+

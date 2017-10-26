@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -27,8 +26,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_bg" translatesAutoresizingMaskIntoConstraints="NO" id="lGx-us-ePW">
-                                <rect key="frame" x="16" y="20" width="343" height="647"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_bg" translatesAutoresizingMaskIntoConstraints="NO" id="lGx-us-ePW">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017年7月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXj-KS-9hh" userLabel="yearmonth">
                                 <rect key="frame" x="188" y="289.5" width="187" height="44"/>
@@ -67,15 +66,15 @@
                             <constraint firstAttribute="trailing" secondItem="gfJ-aI-TSe" secondAttribute="trailing" id="6CW-U1-aTV"/>
                             <constraint firstItem="naj-tj-EVs" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" constant="-44" id="9eW-qy-ISI"/>
                             <constraint firstItem="gfJ-aI-TSe" firstAttribute="leading" secondItem="naj-tj-EVs" secondAttribute="trailing" id="IXw-Wd-XHM"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="lGx-us-ePW" secondAttribute="bottom" id="Q9i-i4-ag4"/>
-                            <constraint firstItem="lGx-us-ePW" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="SUo-Tr-psd"/>
+                            <constraint firstItem="lGx-us-ePW" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Snr-DB-4OL"/>
                             <constraint firstItem="gfJ-aI-TSe" firstAttribute="top" secondItem="bXj-KS-9hh" secondAttribute="bottom" id="VjW-OZ-2su"/>
+                            <constraint firstItem="lGx-us-ePW" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="ZWD-4L-CLT"/>
                             <constraint firstItem="naj-tj-EVs" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="aLm-v1-q98"/>
+                            <constraint firstAttribute="bottom" secondItem="lGx-us-ePW" secondAttribute="bottom" id="dk4-q9-7Uc"/>
                             <constraint firstItem="bXj-KS-9hh" firstAttribute="leading" secondItem="naj-tj-EVs" secondAttribute="trailing" id="ewv-W2-M9d"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="lGx-us-ePW" secondAttribute="trailing" id="leb-wk-cYT"/>
+                            <constraint firstAttribute="trailing" secondItem="lGx-us-ePW" secondAttribute="trailing" id="lFq-Xp-DWm"/>
                             <constraint firstAttribute="trailing" secondItem="bXj-KS-9hh" secondAttribute="trailing" id="oAL-36-Hnn"/>
                             <constraint firstItem="gfJ-aI-TSe" firstAttribute="bottom" secondItem="naj-tj-EVs" secondAttribute="bottom" id="qf1-VH-75N"/>
-                            <constraint firstItem="lGx-us-ePW" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="vHV-BC-16T"/>
                         </constraints>
                     </view>
                 </viewController>

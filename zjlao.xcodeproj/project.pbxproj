@@ -32,6 +32,8 @@
 		15151BDC1EA9B0E0009A5902 /* DayDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15151BDB1EA9B0E0009A5902 /* DayDetailCellModel.swift */; };
 		151774E21E8CA5CE006CFAD4 /* GDImagePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151774E11E8CA5CE006CFAD4 /* GDImagePickerVC.swift */; };
 		151930FA1ED28B400018A5D7 /* Movie.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 151930F91ED28B400018A5D7 /* Movie.m4v */; };
+		1519CBD81FA0670000AE209C /* AlbumDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1519CBD61FA0670000AE209C /* AlbumDetailHeader.swift */; };
+		1519CBD91FA0670000AE209C /* AlbumDetailHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1519CBD71FA0670000AE209C /* AlbumDetailHeader.xib */; };
 		151DF54C1DE564400035EF18 /* GDSwitchModelMangager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */; };
 		151F2F641E9342410071CA9A /* UIImage+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F2F631E9342410071CA9A /* UIImage+Extention.swift */; };
 		151F62401F4D56D20015559E /* GDPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F623F1F4D56D20015559E /* GDPhotoManager.swift */; };
@@ -141,6 +143,10 @@
 		156584821EA73C85000469F2 /* GDZanUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156584811EA73C85000469F2 /* GDZanUser.swift */; };
 		156584861EA73EA2000469F2 /* GDCommentShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156584851EA73EA2000469F2 /* GDCommentShort.swift */; };
 		156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156858711DE2A077009DF996 /* GDNormalVC.swift */; };
+		15703B911FA06F3E00CA18B7 /* AlbumMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15703B901FA06F3E00CA18B7 /* AlbumMember.swift */; };
+		15703B931FA06FA100CA18B7 /* AlbumDetailHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15703B921FA06FA100CA18B7 /* AlbumDetailHeaderModel.swift */; };
+		15703B951FA073FA00CA18B7 /* AlbumMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15703B941FA073FA00CA18B7 /* AlbumMemberView.swift */; };
+		15703B9B1FA09E7700CA18B7 /* SiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15703B9A1FA09E7700CA18B7 /* SiftView.swift */; };
 		1574D0461F9D8EA700DF95FA /* LoginVCFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574D0441F9D8EA700DF95FA /* LoginVCFirstLaunch.swift */; };
 		1574D0471F9D8EA700DF95FA /* LoginVCFirstLaunch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1574D0451F9D8EA700DF95FA /* LoginVCFirstLaunch.xib */; };
 		1574D0491F9DC58700DF95FA /* HomeVC3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574D0481F9DC58700DF95FA /* HomeVC3.swift */; };
@@ -171,6 +177,7 @@
 		159A47DF1F6F627500FE1BD0 /* GDCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159A47DE1F6F627500FE1BD0 /* GDCoverView.swift */; };
 		159AC2D01F70AAC600C63DA6 /* GDImagePickview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159AC2CF1F70AAC600C63DA6 /* GDImagePickview.swift */; };
 		159AC2D61F70ABD000C63DA6 /* GDPhotoPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159AC2D51F70ABD000C63DA6 /* GDPhotoPickerVC.swift */; };
+		15A2F0AB1FA18AA600C73B26 /* ChooseTimeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2F0AA1FA18AA600C73B26 /* ChooseTimeItem.swift */; };
 		15A4DCC51E8CF5B6009A0DCE /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB551E8CF5B5009A0DCE /* GLProgram.m */; };
 		15A4DCC61E8CF5B6009A0DCE /* GPUImage3x3ConvolutionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB581E8CF5B5009A0DCE /* GPUImage3x3ConvolutionFilter.m */; };
 		15A4DCC71E8CF5B6009A0DCE /* GPUImage3x3TextureSamplingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4DB5A1E8CF5B5009A0DCE /* GPUImage3x3TextureSamplingFilter.m */; };
@@ -451,6 +458,8 @@
 		15151BDB1EA9B0E0009A5902 /* DayDetailCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayDetailCellModel.swift; sourceTree = "<group>"; };
 		151774E11E8CA5CE006CFAD4 /* GDImagePickerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDImagePickerVC.swift; sourceTree = "<group>"; };
 		151930F91ED28B400018A5D7 /* Movie.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Movie.m4v; sourceTree = "<group>"; };
+		1519CBD61FA0670000AE209C /* AlbumDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailHeader.swift; sourceTree = "<group>"; };
+		1519CBD71FA0670000AE209C /* AlbumDetailHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumDetailHeader.xib; sourceTree = "<group>"; };
 		151DF54B1DE564400035EF18 /* GDSwitchModelMangager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDSwitchModelMangager.swift; sourceTree = "<group>"; };
 		151F2F631E9342410071CA9A /* UIImage+Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extention.swift"; sourceTree = "<group>"; };
 		151F623F1F4D56D20015559E /* GDPhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDPhotoManager.swift; sourceTree = "<group>"; };
@@ -571,6 +580,10 @@
 		156584811EA73C85000469F2 /* GDZanUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDZanUser.swift; sourceTree = "<group>"; };
 		156584851EA73EA2000469F2 /* GDCommentShort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDCommentShort.swift; sourceTree = "<group>"; };
 		156858711DE2A077009DF996 /* GDNormalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDNormalVC.swift; sourceTree = "<group>"; };
+		15703B901FA06F3E00CA18B7 /* AlbumMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMember.swift; sourceTree = "<group>"; };
+		15703B921FA06FA100CA18B7 /* AlbumDetailHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailHeaderModel.swift; sourceTree = "<group>"; };
+		15703B941FA073FA00CA18B7 /* AlbumMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMemberView.swift; sourceTree = "<group>"; };
+		15703B9A1FA09E7700CA18B7 /* SiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiftView.swift; sourceTree = "<group>"; };
 		1574D0441F9D8EA700DF95FA /* LoginVCFirstLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVCFirstLaunch.swift; sourceTree = "<group>"; };
 		1574D0451F9D8EA700DF95FA /* LoginVCFirstLaunch.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVCFirstLaunch.xib; sourceTree = "<group>"; };
 		1574D0481F9DC58700DF95FA /* HomeVC3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC3.swift; sourceTree = "<group>"; };
@@ -606,6 +619,7 @@
 		159A47DE1F6F627500FE1BD0 /* GDCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDCoverView.swift; sourceTree = "<group>"; };
 		159AC2CF1F70AAC600C63DA6 /* GDImagePickview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDImagePickview.swift; sourceTree = "<group>"; };
 		159AC2D51F70ABD000C63DA6 /* GDPhotoPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPhotoPickerVC.swift; sourceTree = "<group>"; };
+		15A2F0AA1FA18AA600C73B26 /* ChooseTimeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTimeItem.swift; sourceTree = "<group>"; };
 		15A4DB541E8CF5B5009A0DCE /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
 		15A4DB551E8CF5B5009A0DCE /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
 		15A4DB561E8CF5B5009A0DCE /* GPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImage.h; sourceTree = "<group>"; };
@@ -3354,6 +3368,8 @@
 			children = (
 				15460D961F9EE1D900C0ED1B /* AlbumModel.swift */,
 				15460DA01F9F2CAE00C0ED1B /* MediaModel.swift */,
+				15703B901FA06F3E00CA18B7 /* AlbumMember.swift */,
+				15703B921FA06FA100CA18B7 /* AlbumDetailHeaderModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3375,6 +3391,11 @@
 			children = (
 				15460D981F9EEF8400C0ED1B /* AlbumItem.swift */,
 				15460DA21F9F2D2200C0ED1B /* MediaItem.swift */,
+				1519CBD61FA0670000AE209C /* AlbumDetailHeader.swift */,
+				1519CBD71FA0670000AE209C /* AlbumDetailHeader.xib */,
+				15703B941FA073FA00CA18B7 /* AlbumMemberView.swift */,
+				15703B9A1FA09E7700CA18B7 /* SiftView.swift */,
+				15A2F0AA1FA18AA600C73B26 /* ChooseTimeItem.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -4236,6 +4257,7 @@
 				1574D0471F9D8EA700DF95FA /* LoginVCFirstLaunch.xib in Resources */,
 				150869811DCC74E70001B6EF /* LaunchScreen.storyboard in Resources */,
 				1523AE721DCC942500011F9A /* Localizable.strings in Resources */,
+				1519CBD91FA0670000AE209C /* AlbumDetailHeader.xib in Resources */,
 				1579DDF21F9DF93B00F22234 /* PickImageVC.xib in Resources */,
 				150869791DCC74E70001B6EF /* Main.storyboard in Resources */,
 				15EB0BF91DCDA02F0009640A /* simplified.strings in Resources */,
@@ -4323,6 +4345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A8D1091EA8B05F009BFA3B /* GDFullMediaUser.swift in Sources */,
+				15703B931FA06FA100CA18B7 /* AlbumDetailHeaderModel.swift in Sources */,
 				15460D971F9EE1D900C0ED1B /* AlbumModel.swift in Sources */,
 				154E177E1E8B51AB00FF328A /* FilterListViewController.swift in Sources */,
 				156858721DE2A077009DF996 /* GDNormalVC.swift in Sources */,
@@ -4364,6 +4387,7 @@
 				1523AE341DCC8DDC00011F9A /* NSDate+Extension.swift in Sources */,
 				15A4DCC51E8CF5B6009A0DCE /* GLProgram.m in Sources */,
 				150890071E022CB600F4F763 /* GDRefreshGifHeader.swift in Sources */,
+				15703B911FA06F3E00CA18B7 /* AlbumMember.swift in Sources */,
 				15A4DD481E8CF5B6009A0DCE /* GPUImageSkinToneFilter.m in Sources */,
 				154BB5FB1E2B55EE00A9EF05 /* GDBaseCell.swift in Sources */,
 				15A674C11F186475001873AD /* GDMediaSectionHeader.swift in Sources */,
@@ -4408,6 +4432,7 @@
 				1523AE281DCC8DDC00011F9A /* BaseControlModel.swift in Sources */,
 				15CFDE761ED4240A002B48DB /* GDCommentArea.swift in Sources */,
 				15C627961EEA33C300227F76 /* GDCircleDetailCellFooter.swift in Sources */,
+				15703B951FA073FA00CA18B7 /* AlbumMemberView.swift in Sources */,
 				1523AE4D1DCC8DDC00011F9A /* LaoVC.swift in Sources */,
 				15A4DCD11E8CF5B6009A0DCE /* GPUImageBuffer.m in Sources */,
 				1523AE231DCC8DDC00011F9A /* ActionProtocol.swift in Sources */,
@@ -4435,6 +4460,7 @@
 				1586B8C21E7D030700957A81 /* GDMapInView.swift in Sources */,
 				1574D04C1F9DD31300DF95FA /* AlbumHomeVC.swift in Sources */,
 				15A4DCED1E8CF5B6009A0DCE /* GPUImageEmbossFilter.m in Sources */,
+				15703B9B1FA09E7700CA18B7 /* SiftView.swift in Sources */,
 				15A4DCEE1E8CF5B6009A0DCE /* GPUImageErosionFilter.m in Sources */,
 				15A4DD3A1E8CF5B6009A0DCE /* GPUImageRawDataOutput.m in Sources */,
 				15A4DD3F1E8CF5B6009A0DCE /* GPUImageRGBOpeningFilter.m in Sources */,
@@ -4514,6 +4540,7 @@
 				15A4DCCF1E8CF5B6009A0DCE /* GPUImageBoxBlurFilter.m in Sources */,
 				15F5D2DC1DD34BB0003F2A15 /* QRView.swift in Sources */,
 				1523AE591DCC8DDC00011F9A /* PtableViewCell.swift in Sources */,
+				1519CBD81FA0670000AE209C /* AlbumDetailHeader.swift in Sources */,
 				15A4DCE91E8CF5B6009A0DCE /* GPUImageDirectionalNonMaximumSuppressionFilter.m in Sources */,
 				1523AE551DCC8DDC00011F9A /* PTableCellBody.swift in Sources */,
 				1523AE3C1DCC8DDC00011F9A /* LoginNaviVC.swift in Sources */,
@@ -4627,6 +4654,7 @@
 				15CFDE721ED423E5002B48DB /* GDZanArea.swift in Sources */,
 				1579DDF11F9DF93B00F22234 /* PickImageVC.swift in Sources */,
 				15876E7E1F6A530400E7CAB5 /* GDTableViewProtocol.swift in Sources */,
+				15A2F0AB1FA18AA600C73B26 /* ChooseTimeItem.swift in Sources */,
 				15A4DCFA1E8CF5B6009A0DCE /* GPUImageGaussianBlurFilter.m in Sources */,
 				159AC2D01F70AAC600C63DA6 /* GDImagePickview.swift in Sources */,
 				15A4DCD91E8CF5B6009A0DCE /* GPUImageColorBurnBlendFilter.m in Sources */,
@@ -4792,7 +4820,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -4837,7 +4865,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -4855,7 +4883,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8CV7WZ68PF;
 				INFOPLIST_FILE = zjlao/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4882,7 +4910,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8CV7WZ68PF;
 				INFOPLIST_FILE = zjlao/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -94,7 +94,7 @@ class GDImagePickview: UIView {
     
     
     
-    private var collection  : UICollectionView!
+ var collection  : UICollectionView!
     private var table : UITableView?
     private var collectionAssets : PHFetchResult<PHAsset> = PHFetchResult.init()
     private var tableModels : [NSObject]?

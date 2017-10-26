@@ -8,19 +8,23 @@
 
 import UIKit
 import SnapKit
-class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSource{
+import Photos
+class AlbumHomeVC: GDBaseVC,SiftViewDidSelectProtocol , UICollectionViewDelegate , UICollectionViewDataSource{
     var page : Int = 1
     var albumModels = [AlbumModel]()
     let collectionView  = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-    
+    var siftView = SiftView.init(frame: CGRect.zero) //  UINib.init(nibName: "SiftView", bundle: nil )
+    let corver = UIControl.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     let tipsLabel = UILabel.init(frame: CGRect(x: 0, y: 200, width: SCREENWIDTH, height: 44))
+    var selectItem : ChooseTimeItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "茄子云相册"
         self.view.backgroundColor = UIColor.white
         self.configNavigationBar()
-        self.configSubviews()
         self.configCollectionView()
+        self.configTips()
         let date = Date.init()
         let dateFormate = DateFormatter.init()
         dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -32,7 +36,62 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
         } else {
             // Fallback on earlier versions
         }
+        self.view.addSubview(self.corver)
+        self.corver.addTarget(self , action: #selector(coverClick), for: UIControlEvents.touchUpInside)
+        self.corver.backgroundColor = UIColor.lightGray.withAlphaComponent(0.4)
+        self.corver.alpha = 0
+//        let nib = UINib.init(nibName: "SiftView", bundle: nil )
+//        let anyObj = nib.instantiate(withOwner: nil , options: nil ).last
+//        if let aa  = anyObj as? SiftView {
+//            self.siftView = aa
+        self.view.addSubview(self.siftView)
+//        self.siftView.frame = CGRect(x: self.view.bounds.width - 10, y: 76, width: 0, height: 0)
+        self.siftView.snp.makeConstraints { (make ) in
+            make.width.equalTo(0)
+            make.height.equalTo(0)
+            make.top.equalToSuperview().offset(74)
+            make.right.equalToSuperview().offset(-10)
+        }
+//            self.siftView.addTarget(self , action: #selector(coverClick), for: UIControlEvents.touchUpInside)
+//        }
+        self.siftView.backgroundColor = UIColor.black
+        self.siftView.delegate = self
+    }
+
+    func didSelectItem(item : ChooseTimeItem){
+        print(item.label.text)
+        self.page = 1
+        self.selectItem = item
+        self.getAllAlbums(album_type: 1, create_at: item.para, page: self.page , loadType: 1)
+        self.coverClick()
+    }
+    @objc func coverClick(){
+        UIView.animate(withDuration: 0.2) {
+            self.corver.alpha = 0
+            self.siftView.snp.remakeConstraints { (make ) in
+                make.width.equalTo(0)
+                make.height.equalTo(0)
+                make.top.equalToSuperview().offset(74)
+                make.right.equalTo(self.view.snp.right).offset(-10)
+            }
+            self.view.layoutIfNeeded()
+        }
         
+    }
+    @objc func siftClick() {
+        print("\(#file)")
+        UIView.animate(withDuration: 0.2) {
+
+            self.corver.alpha = 1
+            self.siftView.snp.remakeConstraints { (make ) in
+                make.width.equalTo(170)
+                make.height.equalTo(200)
+                make.top.equalToSuperview().offset(74)
+                make.right.equalTo(self.view.snp.right).offset(-10)
+            }
+            self.view.layoutIfNeeded()
+            
+        }
     }
     func configCollectionView() {
         self.view.addSubview(collectionView)
@@ -43,6 +102,7 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
         collectionView.dataSource = self
         self.collectionView.register(AlbumItem.self, forCellWithReuseIdentifier: "AlbumItem")
         collectionView.backgroundColor = .white
+        collectionView.backgroundView = self.tipsLabel
         self.configRefresh()
     }
     func configRefresh() {
@@ -52,11 +112,11 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
     @objc func refresh(){
         self.albumModels.removeAll()
         self.page = 1
-        let date = Date.init()
-        let dateFormate = DateFormatter.init()
-        dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let str = dateFormate.string(from: date)
-        self.getAllAlbums(album_type: 1, create_at: str, page: self.page)
+//        let date = Date.init()
+//        let dateFormate = DateFormatter.init()
+//        dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//        let str = dateFormate.string(from: date)
+        self.getAllAlbums(album_type: 1, create_at:self.selectItem?.para ?? "0,1", page: self.page)
     }
     @objc func loadMore() {
         self.page += 1
@@ -64,7 +124,7 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
         let dateFormate = DateFormatter.init()
         dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let str = dateFormate.string(from: date)
-        self.getAllAlbums(album_type: 1, create_at: str, page: self.page)
+        self.getAllAlbums(album_type: 1, create_at: self.selectItem?.para ?? "0,1", page: self.page , loadType: 2)
     }
     func switchFlowLayout(direction : UICollectionViewScrollDirection) -> UICollectionViewFlowLayout {
         let flowlayout = UICollectionViewFlowLayout()
@@ -102,8 +162,8 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
         }
         return cell
     }
-    func configSubviews() {
-        self.view.addSubview(self.tipsLabel)
+    func configTips() {
+//        self.view.addSubview(self.tipsLabel)
         self.tipsLabel.textAlignment = NSTextAlignment.center
         self.tipsLabel.textColor = UIColor.lightGray
         self.tipsLabel.numberOfLines = 2
@@ -148,9 +208,7 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
         self.navigationController?.pushViewController(addVc, animated: true )
         print("\(#file)")
     }
-    @objc func siftClick() {
-        print("\(#file)")
-    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -166,7 +224,7 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
      // Pass the selected object to the new view controller.
      }
      */
-    func getAllAlbums(album_type : Int , create_at : String , page : Int ) {
+    func getAllAlbums(album_type : Int , create_at : String , page : Int , loadType : Int = 0 /*0初始化和刷新 , 2 ,时间区间 , 其他为加载更多*/ ) {
         GDNetworkManager.shareManager.getAlbums(album_type: album_type, create_at: create_at, page: page, success: { (result ) in
             if let arr = result.data as? [[String: AnyObject]]{
                 var tempAlbumModels = [AlbumModel]()
@@ -178,8 +236,24 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
 //                        print(albumModel.create_at)
                     }
                 }
-                self.albumModels.append(contentsOf: tempAlbumModels)
+                if loadType == 0 {
+                    self.albumModels = tempAlbumModels
+                }else{
+                    self.albumModels.append(contentsOf: tempAlbumModels)
+                }
+                if self.albumModels.count > 0 {self.collectionView.backgroundView?.isHidden = true }
                 self.collectionView.reloadData()
+            }else{
+                if loadType == 0 {
+                    self.collectionView.backgroundView?.isHidden = false
+                }else if loadType == 1{
+                    
+                    self.albumModels.removeAll()
+                    self.tipsLabel.text = "当前时间段没有相册"
+                    self.collectionView.reloadData()
+                    self.collectionView.backgroundView?.isHidden = false
+                }
+                
             }
             self.collectionView.mj_header.endRefreshing()
             self.collectionView.mj_footer.endRefreshing()
@@ -188,20 +262,6 @@ class AlbumHomeVC: GDBaseVC , UICollectionViewDelegate , UICollectionViewDataSou
             print("get albums error \(error)")
         }
     }
-    func testAPI() {
-//        GDNetworkManager.shareManager.getUserInfomation(userID: Account.shareAccount.member_id ?? "", success: { (result ) in
-//            print("get user info result status:\(result.status ) , data: \(result.data )")
-//        }) { (error ) in
-//            print("get user info error \(error)")
-//        }
-        
-        GDNetworkManager.shareManager.getAlbums(album_type: 1, create_at: "2017-10-23 21:00:01", page: 1, success: { (result ) in
-            print("get albums result status : \(result.status) , data :  \(result.data)")
-        }) { (error ) in
-            print("get albums error \(error)")
-        }
-    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         /**/

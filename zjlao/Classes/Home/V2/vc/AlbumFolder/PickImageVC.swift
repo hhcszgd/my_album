@@ -46,15 +46,42 @@ class PickImageVC: GDBaseVC , GDImagePickerviewDelegate{
 //        btn.addTarget(self , action: #selector(doneClick), for: UIControlEvents.touchUpInside)
     }
     @objc func doneClick()  {
+        
+        if let currentIndex = self.navigationController?.viewControllers.index(of: self){
+            if let priviousVC = self.navigationController?.viewControllers[currentIndex - 1] as? AlbumDetailVC {//ifPriviousVCIsAlbumDetailVC , doneForPop , else  pushAlbumDetailVC
+                imgPicker.done()
+                return
+            }
+        }
         imgPicker.done()
+        if imgPicker.collection.indexPathsForSelectedItems?.count ?? 0 == 0 {
+            GDAlertView.alert("请选择照片", image: nil , time: 2 , complateBlock: nil )
+            return
+        }
+        let vc = AlbumDetailVC.init(albumID: Int(self.albumID) ?? 0)
+        self.navigationController?.pushViewController(vc , animated: true )
     }
     func getSelectedPHAssets(assets: [PHAsset]?) {
         mylog(assets?.count)
         //传albumID
         GDNetworkManager.shareManager.uploadPHAssets(albumID : self.albumID ,assets: assets)
-        self.navigationController?.popViewController(animated: true)
+        if let currentIndex = self.navigationController?.viewControllers.index(of: self){
+            if let priviousVC = self.navigationController?.viewControllers[currentIndex - 1] as? AlbumDetailVC {
+                self.navigationController?.popViewController(animated: true)
+                
+            }
+        }
         
     }
+//        override func viewWillDisappear(_ animated: Bool) {
+//            super.viewWillDisappear(animated)
+//            if let index = self.navigationController?.viewControllers.index(of: self){//good! It's words
+//                self.navigationController?.viewControllers.remove(at: index)
+//
+//            }
+//
+//        }
+    
     deinit {
         mylog("选取照片结束")
     }
