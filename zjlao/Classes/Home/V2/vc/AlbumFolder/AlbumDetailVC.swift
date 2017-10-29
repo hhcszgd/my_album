@@ -81,7 +81,19 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
             return reuseView
         }
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){}
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        self.gotoImageBrowser(index: indexPath.item)
+    }
+    func gotoImageBrowser(index : Int = 0)  {
+        var phtots = [GDIBPhoto]()
+        for model  in self.albumMedias {
+            let photo = GDIBPhoto(dict: nil)
+            photo.imageURL = model.thumbnail
+            phtots.append(photo)
+        }
+        
+        _ = GDIBContentView.init(photos: phtots , showingPage : index)
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.albumMedias.count
     }
