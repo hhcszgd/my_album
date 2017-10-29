@@ -38,6 +38,8 @@ class GDProfileEditVC: GDBaseVC {
         self.view.addSubview(setting)
         self.setupNaviBar()
         var startY : CGFloat = 80
+
+        
         self.configRowInfo(rowView: icon , title: "头像", y: startY , h : 64 )
         
         startY += (icon.bounds.height + 15)

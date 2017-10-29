@@ -88,7 +88,7 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         var phtots = [GDIBPhoto]()
         for model  in self.albumMedias {
             let photo = GDIBPhoto(dict: nil)
-            photo.imageURL = model.thumbnail
+            photo.imageURL = model.original
             phtots.append(photo)
         }
         

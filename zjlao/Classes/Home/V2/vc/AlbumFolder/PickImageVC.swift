@@ -73,14 +73,14 @@ class PickImageVC: GDBaseVC , GDImagePickerviewDelegate{
         }
         
     }
-//        override func viewWillDisappear(_ animated: Bool) {
-//            super.viewWillDisappear(animated)
-//            if let index = self.navigationController?.viewControllers.index(of: self){//good! It's words
-//                self.navigationController?.viewControllers.remove(at: index)
-//
-//            }
-//
-//        }
+        override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(animated)
+            if let index = self.navigationController?.viewControllers.index(of: self){//good! It's words
+                self.navigationController?.viewControllers.remove(at: index)
+
+            }
+
+        }
     
     deinit {
         mylog("选取照片结束")

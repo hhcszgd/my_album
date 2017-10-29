@@ -157,6 +157,9 @@ class CreatAlbumVC: GDBaseVC {
     }
     @objc func creatBtnClick(sender:UIButton) {
         print("creatBtnClick")
+        if self.nameTextField.isFirstResponder {
+            self.nameTextField.resignFirstResponder()
+        }
         self.creatAlbum()
         
         
