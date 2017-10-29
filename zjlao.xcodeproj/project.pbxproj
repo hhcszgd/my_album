@@ -4890,7 +4890,7 @@
 					"$(PROJECT_DIR)/zjlao/Classes/Globle/Library",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiezi.cmr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiezi.album;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/zjlao/zjlao-Bridging-Header.h";
@@ -4917,7 +4917,7 @@
 					"$(PROJECT_DIR)/zjlao/Classes/Globle/Library",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiezi.cmr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiezi.album;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/zjlao/zjlao-Bridging-Header.h";

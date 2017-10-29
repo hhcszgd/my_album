@@ -227,6 +227,16 @@ class LoginVCFirstLaunch: UIViewController {
         }else{return false}
         
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if self.mobileTextField.isFirstResponder {
+            self.mobileTextField.resignFirstResponder()
+        }
+        
+        if self.authCodeTextField.isFirstResponder {
+            self.authCodeTextField.resignFirstResponder()
+        }
+    }
     /*
     // MARK: - Navigation
 

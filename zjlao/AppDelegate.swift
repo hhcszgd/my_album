@@ -975,7 +975,7 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
             }else if (result.status == 306){//用户创建失败
                 GDAlertView.alert("操作失败 请重试", image: nil, time: 2, complateBlock: nil)
             }else if (result.status == 314){//坐标不能为空
-                GDAlertView.alert("gds异常,请检查定位权限", image: nil, time: 2, complateBlock: nil)
+                GDAlertView.alert("gps异常,请检查定位权限", image: nil, time: 2, complateBlock: nil)
             }else if (result.status == 311){//手机号已被占用 调一下初始化接口,判断是否需要设置昵称和用户名 ,否的话直接跳到主页面
                 self.afterAuthMobilePerformInit()
             }
