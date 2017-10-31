@@ -23,6 +23,8 @@ class CreatAlbumVC: GDBaseVC {
         super.viewDidLoad()
         self.configSubviews()
         
+        ///:设置下一个push出来的VC的导航栏返回键
+        self.navigationItem.backBarButtonItem =   UIBarButtonItem.init(title: nil  , style: UIBarButtonItemStyle.plain, target: nil , action: nil )//去掉title
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -238,8 +240,14 @@ class CreatAlbumVC: GDBaseVC {
         let webView = WKWebView.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         override func viewDidLoad() {
             super.viewDidLoad()
+            ///:设置下一个push出来的VC的导航栏返回键
+            self.navigationItem.backBarButtonItem =   UIBarButtonItem.init(title: nil  , style: UIBarButtonItemStyle.plain, target: nil , action: nil )//去掉title
+            ///:设置下一个push出来的VC的导航栏返回键
+//            self.navigationItem.backBarButtonItem =   UIBarButtonItem.init(title: nil  , style: UIBarButtonItemStyle.plain, target: nil , action: nil )//去掉title
+            //        self.naviBar.backgroundColor = UIColor.black
 //            self.title = "用户使用协议"
             self.view.addSubview(webView)
+            
             if let url  = URL.init(string: self.urlStr) {
                 let request : URLRequest = URLRequest.init(url: url )
                 self.webView.load(request )

@@ -179,8 +179,16 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
         super.viewDidLoad()
 //        self.navigationBar.isHidden = true;
         // Do any additional setup after loading the view.
+        self.configBackButtonInNavigationBar()
     }
-    
+    func configBackButtonInNavigationBar() {
+        ///:设置导航栏返回键
+        self.navigationBar.topItem?.backBarButtonItem =   UIBarButtonItem.init(title: "" , style: UIBarButtonItemStyle.plain, target: nil , action: nil )//去掉title
+        self.navigationBar.backIndicatorImage = UIImage(named:"header_leftbtn_nor")//返回按键
+        self.navigationBar.backIndicatorTransitionMaskImage = UIImage(named:"header_leftbtn_nor")
+        ///:设置导航栏返回键内容颜色
+        self.navigationBar.tintColor = UIColor.lightGray
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -32,7 +32,10 @@ class PickImageVC: GDBaseVC , GDImagePickerviewDelegate{
         
         let done   = UIButton.init(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
         done.addTarget(self , action: #selector(doneClick), for: UIControlEvents.touchUpInside)
-        done.backgroundColor = UIColor.blue
+//        done.backgroundColor = UIColor.blue
+        done.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+        done.setTitle("完成", for: UIControlState.normal)
+        done.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         let right = UIBarButtonItem.init(customView: done)
         self.navigationItem.rightBarButtonItems = [right]
 //        self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
@@ -47,6 +50,10 @@ class PickImageVC: GDBaseVC , GDImagePickerviewDelegate{
     }
     @objc func doneClick()  {
         
+        if imgPicker.collection.indexPathsForSelectedItems?.count ?? 0 == 0 {
+            GDAlertView.alert("请选择照片", image: nil , time: 1 , complateBlock: nil )
+            return
+        }
         if let currentIndex = self.navigationController?.viewControllers.index(of: self){
             if let priviousVC = self.navigationController?.viewControllers[currentIndex - 1] as? AlbumDetailVC {//ifPriviousVCIsAlbumDetailVC , doneForPop , else  pushAlbumDetailVC
                 imgPicker.done()
@@ -54,10 +61,6 @@ class PickImageVC: GDBaseVC , GDImagePickerviewDelegate{
             }
         }
         imgPicker.done()
-        if imgPicker.collection.indexPathsForSelectedItems?.count ?? 0 == 0 {
-            GDAlertView.alert("请选择照片", image: nil , time: 2 , complateBlock: nil )
-            return
-        }
         let vc = AlbumDetailVC.init(albumID: Int(self.albumID) ?? 0)
         self.navigationController?.pushViewController(vc , animated: true )
     }

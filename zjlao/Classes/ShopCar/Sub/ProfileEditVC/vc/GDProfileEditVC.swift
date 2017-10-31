@@ -72,7 +72,9 @@ class GDProfileEditVC: GDBaseVC {
         let  attritit = NSMutableAttributedString.init(string: "个人信息")
         attritit.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSRange.init(location: 0, length: attritit.string.characters.count))
         self.title = attritit.string
-//        self.naviBar.backgroundColor = UIColor.black
+        ///:设置下一个push出来的VC的导航栏返回键
+        self.navigationItem.backBarButtonItem =   UIBarButtonItem.init(title: nil  , style: UIBarButtonItemStyle.plain, target: nil , action: nil )//去掉title
+        //        self.naviBar.backgroundColor = UIColor.black
     }
     func configRowInfo(rowView : GDRowView,title:String,y:CGFloat,h:CGFloat = 44)  {
         rowView.titleLabel.text = title

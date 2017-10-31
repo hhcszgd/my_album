@@ -39,6 +39,8 @@ class AlbumItem: UICollectionViewCell {
         didSet{
             if let url = URL(string : model.album_image){
                 self.imgView.sd_setImage(with: url , placeholderImage: UIImage(named:"bg_nohead"), options: [SDWebImageOptions.retryFailed])
+            }else{
+                self.imgView.image = UIImage(named:"bg_nohead")
             }
             albumName.text = model.album_name
             mediaCount.text = "\(model.media_count)" + "张"

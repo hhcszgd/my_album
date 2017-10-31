@@ -183,8 +183,7 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
     func configNavigationBar() {
         //        let left = UIBarButtonItem.init(image: UIImage(named:""), style: UIBarButtonItemStyle.plain, target: self , action: #selector(iconClick))
         //        self.navigationController?.navigationItem.leftBarButtonItem = left
-       
-        
+
         let upload  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
         upload.addTarget(self , action: #selector(performUpload), for: UIControlEvents.touchUpInside)
         upload.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
@@ -199,6 +198,12 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         share.addTarget(self , action: #selector(performShare), for: UIControlEvents.touchUpInside)
         let right2 = UIBarButtonItem.init(customView: share)
         self.navigationItem.rightBarButtonItems = [ right2,right1 ]
+        ///:设置下一个push出来的VC的导航栏返回键
+        self.navigationItem.backBarButtonItem =   UIBarButtonItem.init(title: nil  , style: UIBarButtonItemStyle.plain, target: nil , action: nil )//去掉title
+//        self.navigationController?.navigationBar.backIndicatorImage = UIImage(named:"header_leftbtn_nor")//返回按键
+//        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named:"header_leftbtn_nor")
+//        ///:设置导航栏返回键内容颜色
+//        self.navigationController?.navigationBar.tintColor = UIColor.lightGray
     }
    
     @objc func performUpload() {
@@ -233,6 +238,26 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
     }
     @objc func performShare() {
         print("\(#file)")
+        self.share(shareUrlStr: "http://www.baidu.com/")
+    }
+    func share(shareUrlStr : String) {
+        // 要分享的图片
+        let image = UIImage.init(named: "logoPressed")!
+        // 要分享的文字
+        let str = "茄子相册分享"
+        let url : URL =  URL(string : shareUrlStr) ?? URL(string : "https://123qz.cn/share.html")!
+        // 将要分享的元素放到一个数组中
+        let postItems = [ image, str , url] as [Any]
+        let activityVC = UIActivityViewController.init(activityItems: postItems, applicationActivities: nil)
+        
+        // 在展现 activityVC 时，必须根据当前的设备类型，使用适当的方法。在iPad上，必须通过popover来展现view controller。在iPhone和iPodtouch上，必须以模态的方式展现。
+        //        if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
+        //            UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+        //            [popup presentPopoverFromRect:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/4, 0, 0) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        //        } else {
+        self.present(activityVC, animated: true , completion: nil)
+        //        }
+        
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -249,6 +274,12 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
             self.collectionView.reloadData()
         }
 //        self.collectionView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false  , animated: true )
+       
     }
     deinit {
         NotificationCenter.default.removeObserver(self)

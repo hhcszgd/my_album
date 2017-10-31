@@ -36,7 +36,7 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         self.getAllAlbums(album_type: 1, create_at: str , page: 1)
         // Do any additional setup after loading the view.
         if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.always
+            collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
         } else {
             // Fallback on earlier versions
         }
@@ -112,7 +112,8 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
     func configCollectionView() {
         self.view.addSubview(collectionView)
         self.collectionView.snp.makeConstraints { (make ) in
-            make.left.right.bottom.top.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(64)
         }
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -215,17 +216,30 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         self.naviBar.leftBarButtons = [icon]
         let add  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         add.addTarget(self , action: #selector(addClick), for: UIControlEvents.touchUpInside)
-        add.backgroundColor = UIColor.green
+//        add.backgroundColor = UIColor.green
+        add.setTitle("新建", for: UIControlState.normal)
+        add.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+        add.titleLabel?.font = UIFont.systemFont(ofSize: 15)
 //        let right1 = UIBarButtonItem.init(customView: add )
         
         
         let sift  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         sift.addTarget(self , action: #selector(siftClick), for: UIControlEvents.touchUpInside)
-        sift.backgroundColor = UIColor.blue
+//        sift.backgroundColor = UIColor.blue
+        sift.setTitle("筛选", for: UIControlState.normal)
+        sift.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        sift.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
 //        let right2 = UIBarButtonItem.init(customView: sift)
 //        self.navigationItem.rightBarButtonItems = [right1 , right2]
-        self.naviBar.rightBarButtons = [add , sift]
+        self.naviBar.rightBarButtons = [sift,add]
+        ///:设置导航栏返回键
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem =   UIBarButtonItem.init(title: nil , style: UIBarButtonItemStyle.plain, target: nil , action: nil )//去掉title
+        self.navigationController?.navigationBar.backIndicatorImage = UIImage(named:"header_leftbtn_nor")//返回按键
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named:"header_leftbtn_nor")
+        ///:设置导航栏返回键内容颜色
+        self.navigationController?.navigationBar.tintColor = UIColor.lightGray
         self.navigationController?.navigationBar.isHidden = true
+        
     }
     @objc func iconClick() {
         print("\(#file)")
@@ -316,4 +330,5 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
     deinit {
         NotificationCenter.default.removeObserver(self )
     }
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {}
 }
