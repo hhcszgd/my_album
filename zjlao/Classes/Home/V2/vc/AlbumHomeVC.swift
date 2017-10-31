@@ -61,6 +61,14 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         self.siftView.backgroundColor = UIColor.black
         self.siftView.delegate = self
         self.addIconChangedObserver()
+        self.addNaviShadow()
+    }
+    func addNaviShadow() {
+        let shadowView = UIImageView.init(image: UIImage(named:"naviBarShadow"))
+        shadowView.frame = CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: 6)
+        shadowView.contentMode = UIViewContentMode.scaleAspectFill
+        self.naviBar.addSubview(shadowView)
+        shadowView.backgroundColor = UIColor.clear
     }
     func addIconChangedObserver() {
         NotificationCenter.default.addObserver(self , selector: #selector(iconChanged(noti:)), name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount)
@@ -226,7 +234,8 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         let sift  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         sift.addTarget(self , action: #selector(siftClick), for: UIControlEvents.touchUpInside)
 //        sift.backgroundColor = UIColor.blue
-        sift.setTitle("筛选", for: UIControlState.normal)
+//        sift.setTitle("筛选", for: UIControlState.normal)
+        sift.setImage(UIImage(named:"sift_icon"), for: UIControlState.normal)
         sift.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         sift.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
 //        let right2 = UIBarButtonItem.init(customView: sift)

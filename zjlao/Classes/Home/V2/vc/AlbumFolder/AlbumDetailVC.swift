@@ -187,14 +187,16 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         let upload  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
         upload.addTarget(self , action: #selector(performUpload), for: UIControlEvents.touchUpInside)
         upload.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
-        upload.setTitle("上传", for: UIControlState.normal)
+//        upload.setTitle("上传", for: UIControlState.normal)
+        upload.setImage(UIImage(named:"upload_logo"), for: UIControlState.normal)
         let right1 = UIBarButtonItem.init(customView: upload )
         
         
         let share  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
         
         share.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
-        share.setTitle("分享", for: UIControlState.normal)
+//        share.setTitle("分享", for: UIControlState.normal)
+        share.setImage(UIImage(named:"share_logo"), for: UIControlState.normal)
         share.addTarget(self , action: #selector(performShare), for: UIControlEvents.touchUpInside)
         let right2 = UIBarButtonItem.init(customView: share)
         self.navigationItem.rightBarButtonItems = [ right2,right1 ]

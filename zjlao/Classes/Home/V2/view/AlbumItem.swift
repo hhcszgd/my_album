@@ -43,8 +43,16 @@ class AlbumItem: UICollectionViewCell {
                 self.imgView.image = UIImage(named:"bg_nohead")
             }
             albumName.text = model.album_name
+            
+            let attachment = NSTextAttachment.init()
+            attachment.image = UIImage(named:"member_icon")
+            attachment.bounds = CGRect(x: 0, y: -memberCount.font.lineHeight * 0.2, width: memberCount.font.lineHeight, height: memberCount.font.lineHeight)
+            let attributeStr = NSMutableAttributedString.init()
+            attributeStr.append(NSAttributedString(attachment: attachment))
+            attributeStr.append(NSAttributedString(string: "\(model.media_count)"))
+            memberCount.attributedText = attributeStr
+//            memberCount.text = "\(model.album_member_count) 人"
             mediaCount.text = "\(model.media_count)" + "张"
-            memberCount.text = "\(model.album_member_count) 人"
             
             self.layoutIfNeeded()
         }

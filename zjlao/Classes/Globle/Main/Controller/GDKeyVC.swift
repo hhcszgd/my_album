@@ -108,7 +108,7 @@ class GDKeyVC: UINavigationController  ,UITabBarControllerDelegate , LoginDelega
         let tempKeyVC = GDKeyVC(rootViewController: homeVC)
         NotificationCenter.default.addObserver(tempKeyVC , selector: #selector(keyboardWillHide(info:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(tempKeyVC , selector: #selector(keyboardWillShow(info:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        tempKeyVC.navigationBar.shadowImage = UIImage() //去除导航栏黑线
+        tempKeyVC.navigationBar.shadowImage = UIImage(named:"naviBarShadow") //去除导航栏黑线
         return tempKeyVC
     }()
     //    override init(rootViewController: UIViewController) {

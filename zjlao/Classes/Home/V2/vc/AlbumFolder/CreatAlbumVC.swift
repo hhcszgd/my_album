@@ -125,7 +125,8 @@ class CreatAlbumVC: GDBaseVC {
             make.height.equalTo(64)
         }
         
-        self.uploadBtn.backgroundColor =  UIColor.green
+//        self.uploadBtn.backgroundColor =  UIColor.green
+        self.uploadBtn.backgroundColor =  UIColor(hexString: "#00ae66")
         self.uploadBtn.layer.cornerRadius = 5
         self.uploadBtn.layer.masksToBounds = true
         self.uploadBtn.setTitle("上传照片", for: UIControlState.normal)
