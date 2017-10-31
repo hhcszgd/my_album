@@ -190,10 +190,10 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
 //        upload.setTitle("上传", for: UIControlState.normal)
         upload.setImage(UIImage(named:"upload_logo"), for: UIControlState.normal)
         let right1 = UIBarButtonItem.init(customView: upload )
-        
+        upload.adjustsImageWhenHighlighted = false
         
         let share  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
-        
+        share.adjustsImageWhenHighlighted = false
         share.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
 //        share.setTitle("分享", for: UIControlState.normal)
         share.setImage(UIImage(named:"share_logo"), for: UIControlState.normal)

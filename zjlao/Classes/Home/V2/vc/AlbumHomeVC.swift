@@ -62,6 +62,10 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         self.siftView.delegate = self
         self.addIconChangedObserver()
         self.addNaviShadow()
+        
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return UIStatusBarStyle.default
     }
     func addNaviShadow() {
         let shadowView = UIImageView.init(image: UIImage(named:"naviBarShadow"))

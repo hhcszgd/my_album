@@ -53,7 +53,7 @@ class GDBaseVC: UIViewController {
         self.setupContentAndFrame()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle{
-        return UIStatusBarStyle.lightContent
+        return UIStatusBarStyle.default
     }
     func addSubViews () {
         
