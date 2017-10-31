@@ -740,6 +740,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                     if let avatar = info["avatar"] as? String{
                      Account.shareAccount.head_images = avatar
                     }
+                    Account.shareAccount.saveAccount()
 //                    Account.shareAccount.member_id =  "\(info["id"])"
 //                    Account.shareAccount.head_images = info["avatar"] as! String?
                     if let token = info["token"] {
@@ -1720,12 +1721,12 @@ class GDNetworkManager: AFHTTPSessionManager {
         self.QZRequestJSONDict(RequestType.POST , urlString: url , parameters: para as [String : AnyObject] , success: { (result) in
             if result.status == 200 {
                 self.QZFirstInit({ (model ) in
+                    success(result)
                     
                 }, failure: { (error ) in
                     
                 })
             }
-            success(result)
         }) { (error) in
             mylog("修改个人信息的请求失败")
             failure(error)

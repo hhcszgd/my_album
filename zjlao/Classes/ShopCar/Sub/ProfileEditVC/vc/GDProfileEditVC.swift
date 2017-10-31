@@ -43,6 +43,7 @@ class GDProfileEditVC: GDBaseVC {
         self.configRowInfo(rowView: icon , title: "头像", y: startY , h : 64 )
         
         startY += (icon.bounds.height + 15)
+        self.icon.subImageView.image = UIImage(named:"bg_nohead")
         self.setRowContent(rowView: icon, subTitle: Account.shareAccount.head_images)
         self.icon.subImageView.layer.cornerRadius = self.icon.subImageView.bounds.height/2
         self.icon.subImageView.layer.masksToBounds = true
@@ -64,6 +65,7 @@ class GDProfileEditVC: GDBaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.requestNetwork()
+            self.navigationController?.setNavigationBarHidden(false  , animated: true )
     }
     func setupNaviBar()  {
 //        self.naviBar.backBtn.setImage(UIImage(named: "icon_classify_homepage"), for: UIControlState.normal)
@@ -341,11 +343,11 @@ extension GDProfileEditVC : UIImagePickerControllerDelegate , UINavigationContro
         var theImage : UIImage?
             if let editImageReal  = info[UIImagePickerControllerEditedImage] as? UIImage {
                     theImage = editImageReal
-                    self.icon.subImageView.image = editImageReal
+//                    self.icon.subImageView.image = editImageReal
             }else{
                 if let originlImage  = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     theImage = originlImage
-                    self.icon.subImageView.image = originlImage
+//                    self.icon.subImageView.image = originlImage
                 }
             }
         //perform upload image

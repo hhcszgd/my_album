@@ -9,18 +9,22 @@
 import UIKit
 import SnapKit
 import Photos
-class AlbumHomeVC: GDBaseVC,SiftViewDidSelectProtocol , UICollectionViewDelegate , UICollectionViewDataSource{
+
+import SDWebImage
+
+class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDelegate , UICollectionViewDataSource*/{
     var page : Int = 1
     var albumModels = [AlbumModel]()
-    let collectionView  = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+//    let collectionView  = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     var siftView = SiftView.init(frame: CGRect.zero) //  UINib.init(nibName: "SiftView", bundle: nil )
     let corver = UIControl.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     let tipsLabel = UILabel.init(frame: CGRect(x: 0, y: 200, width: SCREENWIDTH, height: 44))
     var selectItem : ChooseTimeItem?
+    var iconButton : UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "茄子云相册"
+        self.naviBar.title = "茄子云相册"
         self.view.backgroundColor = UIColor.white
         self.configNavigationBar()
         self.configCollectionView()
@@ -56,8 +60,20 @@ class AlbumHomeVC: GDBaseVC,SiftViewDidSelectProtocol , UICollectionViewDelegate
 //        }
         self.siftView.backgroundColor = UIColor.black
         self.siftView.delegate = self
+        self.addIconChangedObserver()
     }
-
+    func addIconChangedObserver() {
+        NotificationCenter.default.addObserver(self , selector: #selector(iconChanged(noti:)), name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount)
+    }
+    @objc func iconChanged(noti:Notification)  {
+        guard let headerUrl = URL(string: Account.shareAccount.head_images ?? "")  else {return}
+        self.iconButton.sd_setImage(with: headerUrl, for: UIControlState.normal) { (img , error , cacheType, url ) in
+            if error == nil {
+                self.iconButton.layer.masksToBounds = true
+                self.iconButton.layer.cornerRadius = 22 - 2.5
+            }
+        }
+    }
     func didSelectItem(item : ChooseTimeItem){
         print(item.label.text)
         self.page = 1
@@ -109,7 +125,7 @@ class AlbumHomeVC: GDBaseVC,SiftViewDidSelectProtocol , UICollectionViewDelegate
         collectionView.mj_header = GDRefreshHeader(refreshingTarget: self , refreshingAction: #selector(refresh))
         collectionView.mj_footer = GDRefreshBackFooter(refreshingTarget: self , refreshingAction: #selector(loadMore))
     }
-    @objc func refresh(){
+    @objc override func refresh(){
         self.albumModels.removeAll()
         self.page = 1
 //        let date = Date.init()
@@ -118,7 +134,7 @@ class AlbumHomeVC: GDBaseVC,SiftViewDidSelectProtocol , UICollectionViewDelegate
 //        let str = dateFormate.string(from: date)
         self.getAllAlbums(album_type: 1, create_at:self.selectItem?.para ?? "0,1", page: self.page)
     }
-    @objc func loadMore() {
+    @objc override func loadMore() {
         self.page += 1
         let date = Date.init()
         let dateFormate = DateFormatter.init()
@@ -151,10 +167,10 @@ class AlbumHomeVC: GDBaseVC,SiftViewDidSelectProtocol , UICollectionViewDelegate
         let detailVC = AlbumDetailVC.init(albumID:self.albumModels[indexPath.item].album_id)
         self.navigationController?.pushViewController(detailVC, animated: true )
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.albumModels.count
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumItem", for: indexPath)
         if let realCell = cell as? AlbumItem {
             realCell.model = self.albumModels[indexPath.item]
@@ -177,30 +193,48 @@ class AlbumHomeVC: GDBaseVC,SiftViewDidSelectProtocol , UICollectionViewDelegate
     func configNavigationBar() {
         //        let left = UIBarButtonItem.init(image: UIImage(named:""), style: UIBarButtonItemStyle.plain, target: self , action: #selector(iconClick))
         //        self.navigationController?.navigationItem.leftBarButtonItem = left
-        let icon = UIButton.init(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+        let icon = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        icon.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+        icon.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+//        icon.setImage(UIImage.init(named: "bg_nohead"), for: UIControlState.normal)
+        if let url  = URL(string: Account.shareAccount.head_images ?? "") {
+            icon.sd_setImage(with: url , for: UIControlState.normal, placeholderImage: UIImage.init(named: "bg_nohead"))
+        }else{
+            icon.setImage(UIImage.init(named: "bg_nohead"), for: UIControlState.normal)
+        }
+        icon.adjustsImageWhenHighlighted = false
+        self.iconButton = icon
+        icon.bounds =  CGRect(x: 0, y: 0, width: 44, height: 44)
         icon.addTarget(self , action: #selector(iconClick), for: UIControlEvents.touchUpInside)
-        icon.backgroundColor = UIColor.red
-        icon.layer.masksToBounds = true
-        icon.layer.cornerRadius = 17
-        let left = UIBarButtonItem.init(customView: icon)
-        self.navigationItem.leftBarButtonItems = [left]
-        
-        let add  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+//        icon.backgroundColor = UIColor.red
+        icon.imageView?.layer.masksToBounds = true
+        icon.imageView?.layer.cornerRadius = 17
+        icon.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+//        let left = UIBarButtonItem.init(customView: icon)
+//        self.navigationItem.leftBarButtonItems = [left]
+        self.naviBar.leftBarButtons = [icon]
+        let add  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         add.addTarget(self , action: #selector(addClick), for: UIControlEvents.touchUpInside)
         add.backgroundColor = UIColor.green
-        let right1 = UIBarButtonItem.init(customView: add )
+//        let right1 = UIBarButtonItem.init(customView: add )
         
         
-        let sift  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+        let sift  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         sift.addTarget(self , action: #selector(siftClick), for: UIControlEvents.touchUpInside)
         sift.backgroundColor = UIColor.blue
-        let right2 = UIBarButtonItem.init(customView: sift)
-        self.navigationItem.rightBarButtonItems = [right1 , right2]
+//        let right2 = UIBarButtonItem.init(customView: sift)
+//        self.navigationItem.rightBarButtonItems = [right1 , right2]
+        self.naviBar.rightBarButtons = [add , sift]
+        self.navigationController?.navigationBar.isHidden = true
     }
     @objc func iconClick() {
         print("\(#file)")
         let vc = GDProfileEditVC()
         self.navigationController?.pushViewController(vc , animated: true )
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true , animated: true )
     }
     @objc func addClick() {
         let addVc = CreatAlbumVC()
@@ -279,5 +313,7 @@ class AlbumHomeVC: GDBaseVC,SiftViewDidSelectProtocol , UICollectionViewDelegate
         self.collectionView.reloadData()
     }
     
-    
+    deinit {
+        NotificationCenter.default.removeObserver(self )
+    }
 }

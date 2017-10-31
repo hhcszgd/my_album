@@ -25,6 +25,10 @@ class CreatAlbumVC: GDBaseVC {
         
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false  , animated: true )
+    }
     func creatAlbum() {
         if !self.checkBox.isSelected {
             GDAlertView.alert("请勾选并同意用户使用协议", image: nil , time: 2, complateBlock: nil )
