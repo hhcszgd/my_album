@@ -172,7 +172,7 @@ extension GDCircleDetailVC2 : GDFlowLayoutProtocol{
             let model = self.models![indexPath.item]
             let imageMargin : CGFloat = 0
             let tempWidth = Float.init(model.media_width ?? "0")
-            let imageWidth = CGFloat.init(tempWidth ?? 0.0)
+            let imageWidth  = CGFloat.init(tempWidth ?? 0.0)
             let tempHeight = Float.init(model.media_height ?? "0")
             if tempWidth == 0 || tempHeight == 0 {
                 return 0
