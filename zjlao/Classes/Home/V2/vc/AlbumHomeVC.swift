@@ -83,6 +83,13 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
     }
     func addIconChangedObserver() {
         NotificationCenter.default.addObserver(self , selector: #selector(iconChanged(noti:)), name: NSNotification.Name.init("EditProfileSuccess"), object: Account.shareAccount)
+        
+        NotificationCenter.default.addObserver(self , selector: #selector(albumCountChanged), name: NSNotification.Name.init("AlbumCountChanged"), object:nil )
+        
+    }
+    @objc func albumCountChanged()  {
+        self.page = 1
+        self.getAllAlbums(album_type: 1, create_at: self.selectItem?.para ?? "0,1" , page: self.page , loadType:  1)
     }
     @objc func iconChanged(noti:Notification)  {
         guard let headerUrl = URL(string: Account.shareAccount.head_images ?? "")  else {return}
@@ -269,7 +276,7 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.getAllAlbums(album_type: 1, create_at: self.selectItem?.para ?? "0,1" , page: self.page , loadType:  1)
+        
         self.navigationController?.setNavigationBarHidden(true , animated: true )
     }
     @objc func addClick() {

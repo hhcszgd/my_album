@@ -32,10 +32,10 @@ class GDProfileEditVC: GDBaseVC {
         self.view.addSubview(icon)
         self.view.addSubview(mobile)
         self.view.addSubview(name)
-        self.view.addSubview(gender)
-        self.view.addSubview(area )
-        self.view.addSubview(descrip)
-        self.view.addSubview(setting)
+//        self.view.addSubview(gender)
+//        self.view.addSubview(area )
+//        self.view.addSubview(descrip)
+//        self.view.addSubview(setting)
         self.setupNaviBar()
         var startY : CGFloat = 80
 

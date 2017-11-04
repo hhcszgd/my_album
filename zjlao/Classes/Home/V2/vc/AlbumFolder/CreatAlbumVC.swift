@@ -43,6 +43,8 @@ class CreatAlbumVC: GDBaseVC {
         GDNetworkManager.shareManager.creatAlbum(albumName: nameTextField.text!, success: { (result ) in
             print("get albums result status : \(result.status) , data :  \(result.data)")
             if result.status == 200 {
+                
+                NotificationCenter.default.post(Notification.init(name: Notification.Name.init("AlbumCountChanged")))
                 self.nameLabel.text = "\(self.nameTextField.text ?? "")\n\n创 建 成 功"
                 if let dict = result.data as? [String : String]{
                     self.album_id = dict["album_id"] ?? ""

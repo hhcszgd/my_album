@@ -356,15 +356,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     }
     
     func initializationAccountInfo()  {
-        if Account.shareAccount.accountStatus == AccountStatus.authenticated {
-            if self.window?.rootViewController != GDKeyVC.share {
-                self.window = nil
-                self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-                self.window!.rootViewController = GDKeyVC.share
-                self.window!.makeKeyAndVisible()
-            }
-            return
-        }
+//        if Account.shareAccount.accountStatus == AccountStatus.authenticated {
+//            if self.window?.rootViewController != GDKeyVC.share {
+//                self.window = nil
+//                self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+//                self.window!.rootViewController = GDKeyVC.share
+//                self.window!.makeKeyAndVisible()
+//            }
+//            return
+//        }
         
 //        GDLocationManager.share.startUpdatingLocation()
         GDNetworkManager.shareManager.QZFirstInit({ (model) in//之所以先初始化, 是怕手机在别的设备被找回
