@@ -80,7 +80,8 @@ class AlbumDetailHeader: UICollectionReusableView,UICollectionViewDataSource, UI
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.configCollectionView()
+        self.collection.isHidden = true 
+//        self.configCollectionView()
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import AVKit
 class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDelegate{
     var albumID : Int  = 0
     
@@ -29,6 +30,10 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         self.configNavigationBar()
         // Do any additional setup after loading the view.
     }
+     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        self.naviBar.change(by: scrollView)
+    }
+
     func switchFlowLayout(direction : UICollectionViewScrollDirection) -> UICollectionViewFlowLayout {
         let flowlayout = UICollectionViewFlowLayout()
         if  direction == UICollectionViewScrollDirection.vertical {
@@ -38,7 +43,7 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
             flowlayout.sectionInset = UIEdgeInsetsMake(10, 20, 10, 20)
             let itemW = (UIScreen.main.bounds.width - flowlayout.minimumInteritemSpacing * 2  - flowlayout.sectionInset.left - flowlayout.sectionInset.right)/3
             flowlayout.itemSize = CGSize(width: itemW, height: itemW)
-            flowlayout.headerReferenceSize =  CGSize(width: 100, height: 118)
+            flowlayout.headerReferenceSize =  CGSize(width: 100, height: 80)
             flowlayout.footerReferenceSize = CGSize(width: 100, height: 0)
             if #available(iOS 9.0, *) {
                 flowlayout.sectionHeadersPinToVisibleBounds = true
@@ -53,7 +58,7 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
             flowlayout.minimumLineSpacing = 3
             flowlayout.minimumInteritemSpacing = 3
             
-            flowlayout.headerReferenceSize =  CGSize(width: 100, height: 118)
+            flowlayout.headerReferenceSize =  CGSize(width: 100, height: 80)
             flowlayout.footerReferenceSize = CGSize(width: 100, height:0)
             if #available(iOS 9.0, *) {
                 flowlayout.sectionHeadersPinToVisibleBounds = true
@@ -66,7 +71,7 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         return flowlayout
         
     }
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
+     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
     {
         if  kind == UICollectionElementKindSectionHeader {
         
@@ -82,22 +87,41 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-        self.gotoImageBrowser(index: indexPath.item)
+        let item = self.albumMedias[indexPath.item]
+        if item.media_type == 2  {
+                if let url = URL.init(string: item.original) {
+                    let avPlayer : AVPlayer = AVPlayer.init(url: url)
+                    avPlayer.play()
+                    let avPlayerVC : AVPlayerViewController  = AVPlayerViewController.init()
+                    avPlayerVC.player = avPlayer
+                    self.present(avPlayerVC, animated: true  , completion: {
+                        
+                    })
+                    
+                }
+        }else{
+            self.gotoImageBrowser(index: indexPath.item)
+        }
     }
     func gotoImageBrowser(index : Int = 0)  {
         var phtots = [GDIBPhoto]()
         for model  in self.albumMedias {
             let photo = GDIBPhoto(dict: nil)
             photo.imageURL = model.original
+            photo.isVideo = (model.media_type == 2 ? true : false)
+            if photo.isVideo{
+                photo.videoURL = photo.imageURL
+            }else{
             phtots.append(photo)
+            }
         }
         
         _ = GDIBContentView.init(photos: phtots , showingPage : index)
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.albumMedias.count
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaItem", for: indexPath)
         if let realCell = cell as? MediaItem {
             realCell.model = self.albumMedias[indexPath.item]
@@ -280,11 +304,14 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false  , animated: true )
+        self.navigationController?.setNavigationBarHidden(false    , animated: true )
+//        GDKeyVC.share.navigationBar.shadowImage = UIImage(named:"naviBarShadow") //去除导航栏黑线
+        GDKeyVC.share.navigationBar.shadowImage = UIImage() //去除导航栏黑线
        
     }
     deinit {
         NotificationCenter.default.removeObserver(self)
+        GDKeyVC.share.navigationBar.shadowImage = UIImage(named:"naviBarShadow") //去除导航栏黑线
     }
     /*
     // MARK: - Navigation

@@ -12,6 +12,9 @@ class GDIBPhoto: NSObject {
     var image : UIImage?
     var imageURL : String?
     var imagePath : String?
+    var videoURL : String?
+    var isVideo = false
+    
 
     init(dict : [String : AnyObject]?) {
         super.init()

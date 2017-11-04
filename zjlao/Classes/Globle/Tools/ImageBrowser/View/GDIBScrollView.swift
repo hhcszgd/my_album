@@ -8,25 +8,64 @@
 
 import UIKit
 import SDWebImage
+import MBProgressHUD
 class GDIBScrollView: UIScrollView {
 
     let imageView : UIImageView = UIImageView()
     var alertView: UIView?
-    
+    var progress : MBProgressHUD?
     var photo : GDIBPhoto? {
         willSet{
             
+//
+//            if let image  = newValue?.image {
+//                imageView.image = image
+//               self.fexImageViewFrame(image: image)
+//                self.zoomEnable(status: true)
+//            }else{
+//                self.zoomEnable(status: false)
+//            }
+//
+//
+//            if let imagePath  = newValue?.imagePath {
+//                imageView.image = UIImage(contentsOfFile: imagePath)
+//                self.fexImageViewFrame(image: imageView.image ?? UIImage())
+//                self.zoomEnable(status: true)
+//            }else{
+//                self.zoomEnable(status: false)
+//            }
+//
+//
+//            if let imageURL = newValue?.imageURL {
+//                let url = URL(string: imageURL)
+//
+//                imageView.sd_setImage(with: url, placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed]) { (image , error , imageCacheType, url) in
+//                    //加载结果
+//                    if let imageReal = image {
+//                        self.fexImageViewFrame(image: imageReal)
+//                        mylog("加载成功")
+//                        self.zoomEnable(status: true)
+//                    }else{
+//                        mylog("加载失败")
+//                        self.zoomEnable(status: false)
+//                    }
+//                }
+//            }//监听图片加载
             
-            if let image  = newValue?.image {
+            
+        }
+        didSet{
+            
+            if let image  = photo?.image {
                 imageView.image = image
-               self.fexImageViewFrame(image: image)
+                self.fexImageViewFrame(image: image)
                 self.zoomEnable(status: true)
             }else{
                 self.zoomEnable(status: false)
             }
             
             
-            if let imagePath  = newValue?.imagePath {
+            if let imagePath  = photo?.imagePath {
                 imageView.image = UIImage(contentsOfFile: imagePath)
                 self.fexImageViewFrame(image: imageView.image ?? UIImage())
                 self.zoomEnable(status: true)
@@ -35,11 +74,15 @@ class GDIBScrollView: UIScrollView {
             }
             
             
-            if let imageURL = newValue?.imageURL {
+            if let imageURL = photo?.imageURL {
                 let url = URL(string: imageURL)
-
-                imageView.sd_setImage(with: url, placeholderImage: placePolderImage, options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed]) { (image , error , imageCacheType, url) in
+                self.progress?.hide(animated: false)
+                let progress = MBProgressHUD.showAdded(to: self , animated: true )
+                self.progress = progress
+                progress.graceTime = 1
+                imageView.sd_setImage(with: url, placeholderImage:nil , options: [SDWebImageOptions.cacheMemoryOnly , SDWebImageOptions.retryFailed]) { (image , error , imageCacheType, url) in
                     //加载结果
+                    progress.hide(animated: true )
                     if let imageReal = image {
                         self.fexImageViewFrame(image: imageReal)
                         mylog("加载成功")
@@ -49,11 +92,8 @@ class GDIBScrollView: UIScrollView {
                         self.zoomEnable(status: false)
                     }
                 }
-            }//监听图片加载
-            
-            
+            }//监听图片
         }
-        didSet{}
     }
     
     func fexImageViewFrame(image:UIImage)  {
@@ -84,8 +124,8 @@ class GDIBScrollView: UIScrollView {
     func config()  {
         self.addSubview(imageView)
         imageView.contentMode = UIViewContentMode.scaleAspectFit
-        imageView.backgroundColor = UIColor.randomColor()
-        imageView.frame = CGRect(x: 0, y: (SCREENHEIGHT - SCREENWIDTH) / 2, width: SCREENWIDTH, height: SCREENWIDTH)
+//        imageView.backgroundColor = UIColor.randomColor()
+//        imageView.frame = CGRect(x: 0, y: (SCREENHEIGHT - SCREENWIDTH) / 2, width: SCREENWIDTH, height: SCREENWIDTH)
         imageView.isUserInteractionEnabled = true
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
         doubleTap.numberOfTapsRequired = 2
@@ -137,6 +177,7 @@ class GDIBScrollView: UIScrollView {
         if !imageView.frame.equalTo(frameToCenter) {
             imageView.frame = frameToCenter
         }
+        
 
     }
     

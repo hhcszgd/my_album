@@ -43,7 +43,7 @@ class CreatAlbumVC: GDBaseVC {
         GDNetworkManager.shareManager.creatAlbum(albumName: nameTextField.text!, success: { (result ) in
             print("get albums result status : \(result.status) , data :  \(result.data)")
             if result.status == 200 {
-                self.nameLabel.text = "\(self.nameTextField.text ?? "")\n创建成功"
+                self.nameLabel.text = "\(self.nameTextField.text ?? "")\n\n创 建 成 功"
                 if let dict = result.data as? [String : String]{
                     self.album_id = dict["album_id"] ?? ""
                 }
@@ -92,7 +92,7 @@ class CreatAlbumVC: GDBaseVC {
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
             make.height.equalTo(40)
-            make.top.equalToSuperview().offset(100)
+            make.top.equalToSuperview().offset(130)
         }
         
         
@@ -116,12 +116,13 @@ class CreatAlbumVC: GDBaseVC {
             make.centerY.equalTo(checkBox)
         }
         nameLabel.textAlignment = NSTextAlignment.center
-        nameLabel.numberOfLines = 2
-        nameLabel.text = "\"什么什么什么\"\n创建成功"
+        nameLabel.numberOfLines = 5
+        nameLabel.text = "\"什么什么什么\"\n \n创建成功"
+       
         nameLabel.textColor = UIColor.gray
         self.nameLabel.snp.makeConstraints { (make ) in
             make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(111)
+            make.top.equalToSuperview().offset(130)
             make.height.equalTo(64)
         }
         

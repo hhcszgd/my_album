@@ -13,6 +13,7 @@ class GDIBContentView: UIView {
     //control
     let cancleButton = UIButton()
     let pageIndicater = UILabel()
+    var  avPlayerVC : AVPlayerViewController?
     //aboutPages
     var previousOffset : CGPoint = CGPoint.zero
     var showingPage : Int  = 0 {
@@ -111,7 +112,7 @@ extension GDIBContentView {
 }
 
 // MARK: 注释 : setAboutCollection
-
+import AVKit
 extension GDIBContentView {
     func configWindow()  {
         if let window = UIApplication.shared.delegate?.window {
@@ -147,7 +148,11 @@ extension GDIBContentView {
 // MARK: 注释 : aboutCollectionDelegate
 
 extension GDIBContentView : UICollectionViewDelegate , UICollectionViewDataSource  {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let photo = self.photos[indexPath.item]
+        if photo.isVideo {
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
             return photos.count
     }

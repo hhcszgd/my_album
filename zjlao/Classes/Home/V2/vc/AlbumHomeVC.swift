@@ -11,10 +11,11 @@ import SnapKit
 import Photos
 
 import SDWebImage
-
+import MBProgressHUD
 class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDelegate , UICollectionViewDataSource*/{
     var page : Int = 1
     var albumModels = [AlbumModel]()
+    var  progress : MBProgressHUD?
 //    let collectionView  = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     var siftView = SiftView.init(frame: CGRect.zero) //  UINib.init(nibName: "SiftView", bundle: nil )
     let corver = UIControl.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -33,7 +34,13 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         let dateFormate = DateFormatter.init()
         dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let str = dateFormate.string(from: date)
-        self.getAllAlbums(album_type: 1, create_at: str , page: 1)
+        
+        self.progress?.hide(animated: false)
+        let progress = MBProgressHUD.showAdded(to: self.view  , animated: true )
+        progress.graceTime = 2.0
+        self.progress = progress
+        
+        self.getAllAlbums(album_type: 1, create_at: "0,1" , page: self.page)
         // Do any additional setup after loading the view.
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
@@ -90,7 +97,7 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         print(item.label.text)
         self.page = 1
         self.selectItem = item
-        self.getAllAlbums(album_type: 1, create_at: item.para, page: self.page , loadType: 1)
+        self.getAllAlbums(album_type: 1, create_at: item.para, page: self.page , loadType: 2)
         self.coverClick()
     }
     @objc func coverClick(){
@@ -145,7 +152,7 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
 //        let dateFormate = DateFormatter.init()
 //        dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
 //        let str = dateFormate.string(from: date)
-        self.getAllAlbums(album_type: 1, create_at:self.selectItem?.para ?? "0,1", page: self.page)
+        self.getAllAlbums(album_type: 1, create_at:self.selectItem?.para ?? "0,1", page: self.page ,  loadType:  1 )
     }
     @objc override func loadMore() {
         self.page += 1
@@ -153,7 +160,7 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         let dateFormate = DateFormatter.init()
         dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let str = dateFormate.string(from: date)
-        self.getAllAlbums(album_type: 1, create_at: self.selectItem?.para ?? "0,1", page: self.page , loadType: 2)
+        self.getAllAlbums(album_type: 1, create_at: self.selectItem?.para ?? "0,1", page: self.page , loadType: 11)
     }
     func switchFlowLayout(direction : UICollectionViewScrollDirection) -> UICollectionViewFlowLayout {
         let flowlayout = UICollectionViewFlowLayout()
@@ -196,7 +203,8 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         self.tipsLabel.textAlignment = NSTextAlignment.center
         self.tipsLabel.textColor = UIColor.lightGray
         self.tipsLabel.numberOfLines = 2
-        self.tipsLabel.text = "您还没有建立相册\n点击右上角+,新建相册"
+        self.tipsLabel.text = ""
+//        self.tipsLabel.isHidden = true
         self.tipsLabel.snp.makeConstraints { (make ) in
             make.left.right.equalToSuperview()
             make.height.equalTo(48)
@@ -261,6 +269,7 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.getAllAlbums(album_type: 1, create_at: self.selectItem?.para ?? "0,1" , page: self.page , loadType:  1)
         self.navigationController?.setNavigationBarHidden(true , animated: true )
     }
     @objc func addClick() {
@@ -285,8 +294,10 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
      // Pass the selected object to the new view controller.
      }
      */
-    func getAllAlbums(album_type : Int , create_at : String , page : Int , loadType : Int = 0 /*0初始化和刷新 , 2 ,时间区间 , 其他为加载更多*/ ) {
+    func getAllAlbums(album_type : Int , create_at : String , page : Int , loadType : Int = 0 /*0初始化 , 1 刷新 , 2 ,时间区间 , 其他为加载更多*/ ) {
+
         GDNetworkManager.shareManager.getAlbums(album_type: album_type, create_at: create_at, page: page, success: { (result ) in
+            self.progress?.hide(animated:false)
             if let arr = result.data as? [[String: AnyObject]]{
                 var tempAlbumModels = [AlbumModel]()
                 for dict in arr {
@@ -299,6 +310,14 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
                 }
                 if loadType == 0 {
                     self.albumModels = tempAlbumModels
+                    if tempAlbumModels.count == 0 {
+                        self.collectionView.backgroundView?.isHidden = false
+                       self.tipsLabel.text = "您还没有建立相册\n点击右上角+,新建相册"
+                    }
+                }else if loadType == 1 {
+                    self.albumModels = tempAlbumModels
+                }else if loadType == 2 {
+                    self.albumModels = tempAlbumModels
                 }else{
                     self.albumModels.append(contentsOf: tempAlbumModels)
                 }
@@ -307,7 +326,19 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
             }else{
                 if loadType == 0 {
                     self.collectionView.backgroundView?.isHidden = false
-                }else if loadType == 1{
+                    if self.albumModels.count == 0 {
+                        self.collectionView.backgroundView?.isHidden = false
+                        self.tipsLabel.text = "您还没有建立相册\n点击右上角+,新建相册"
+                    }
+                }else if loadType == 1 {
+                    if self.selectItem == nil {
+                        self.tipsLabel.text = "您还没有建立相册\n点击右上角+,新建相册"
+                    }else{
+                        self.tipsLabel.text = "当前时间段没有相册"
+                    }
+                    self.albumModels.removeAll()
+                    self.collectionView.reloadData()
+                }else if loadType == 2{
                     
                     self.albumModels.removeAll()
                     self.tipsLabel.text = "当前时间段没有相册"

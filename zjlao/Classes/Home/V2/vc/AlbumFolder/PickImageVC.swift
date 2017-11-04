@@ -68,6 +68,9 @@ class PickImageVC: GDBaseVC , GDImagePickerviewDelegate{
         mylog(assets?.count)
         //传albumID
         GDNetworkManager.shareManager.uploadPHAssets(albumID : self.albumID ,assets: assets)
+        for (index , item)  in (assets ?? []).enumerated() {
+            print("sssssssssss:\(item.mediaType.rawValue)")
+        }
         if let currentIndex = self.navigationController?.viewControllers.index(of: self){
             if let priviousVC = self.navigationController?.viewControllers[currentIndex - 1] as? AlbumDetailVC {
                 self.navigationController?.popViewController(animated: true)

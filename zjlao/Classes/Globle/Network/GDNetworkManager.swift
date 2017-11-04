@@ -32,7 +32,7 @@ class GDNetworkManager: AFHTTPSessionManager {
         return AFNetworkReachabilityManager.shared().networkReachabilityStatus
         
     }
-    var alert : GDAlertView = GDAlertView.networkLoading()
+//    var alert : GDAlertView = GDAlertView.networkLoading()
     var token : String? {
         get{
             if let result  = GDStorgeManager.standard.value(forKey: "token") {
@@ -847,7 +847,7 @@ class GDNetworkManager: AFHTTPSessionManager {
 //            
 //            return
 //        }
-        if urlString != "LoginOut" { self.alert.gdShow()}//退出是立即生效的, 不转圈
+//        if urlString != "LoginOut" { self.alert.gdShow()}//退出是立即生效的, 不转圈
 //        mylog( UIDevice.current.identifierForVendor?.uuidString)
 //        mylog("\(urlString)\(parameters)")
         var  para : [String : AnyObject]? = [String : AnyObject]()
@@ -870,7 +870,7 @@ class GDNetworkManager: AFHTTPSessionManager {
             
             get(url, parameters: para, progress: nil , success: { (_, result) in
                 //                mylog(result)
-                self.alert.gdHide()///////////////////////////
+//                self.alert.gdHide()///////////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)
                 if let dict = result as? [String : AnyObject] {
                     //执行成功回调
@@ -884,7 +884,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                 self.printMessage(urlString, paramete: error)
                 failure(error)
             }, failure: { (_, error) in
-                self.alert.gdHide()////////////////////////////////
+//                self.alert.gdHide()////////////////////////////////
                 //执行失败的回调
                 self.printMessage(urlString, paramete: error as AnyObject?)
                 failure( error as NSError)
@@ -897,7 +897,7 @@ class GDNetworkManager: AFHTTPSessionManager {
             post(url, parameters: para, progress: nil, success: { (task, result) in
 //                mylog("请求参数:\(para) , 请求结果:\(result)")
                 self.printTaskInfo(task: task)
-                self.alert.gdHide()///////////////////////////
+//                self.alert.gdHide()///////////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)
 //                mylog("测试打印数据 : \(result)")
                 if let dict = result as? [String : AnyObject] {
@@ -913,7 +913,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                 failure(error)
             }, failure: { (task, error) in
                 self.printTaskInfo(task: task)
-                self.alert.gdHide()///////////////////
+//                self.alert.gdHide()///////////////////
                 //执行失败的回调
                 self.printMessage(urlString, paramete: error as AnyObject?)
                 failure( error as NSError)
@@ -922,7 +922,7 @@ class GDNetworkManager: AFHTTPSessionManager {
             
         }else if method == RequestType.PUT {
             put(url, parameters: para, success: { (_, result) in
-                self.alert.gdHide()//////////////////////
+//                self.alert.gdHide()//////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)
                 if let dict = result as? [String : AnyObject] {
                     //执行成功回调
@@ -935,7 +935,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                 self.printMessage(urlString, paramete: error)
                 failure(error)
             }, failure: { (_, error) in
-                self.alert.gdHide()//////////////////////////////
+//                self.alert.gdHide()//////////////////////////////
                 //执行失败的回调
                 self.printMessage(urlString, paramete: error as AnyObject?)
                 failure( error as NSError)
@@ -1025,7 +1025,10 @@ class GDNetworkManager: AFHTTPSessionManager {
             
             return
         }
-        if urlString != "LoginOut" { self.alert.gdShow()}//退出是立即生效的, 不转圈
+        if urlString != "LoginOut" {
+//            self.alert.gdShow()
+            
+        }//退出是立即生效的, 不转圈
         mylog( UIDevice.current.identifierForVendor?.uuidString)
         mylog("\(urlString)\(parameters)")
         var  para : [String : AnyObject] = [String : AnyObject]()
@@ -1044,7 +1047,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                         
             get(url, parameters: para, progress: nil , success: { (_, result) in
                 //                mylog(result)
-                self.alert.gdHide()///////////////////////////
+//                self.alert.gdHide()///////////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)
                 if let dict = result as? [String : AnyObject] {
                     //执行成功回调
@@ -1058,7 +1061,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                 self.printMessage(urlString, paramete: error)
                 failure(error)
             }, failure: { (_, error) in
-                self.alert.gdHide()////////////////////////////////
+//                self.alert.gdHide()////////////////////////////////
                 //执行失败的回调
                 self.printMessage(urlString, paramete: error as AnyObject?)
                 failure( error as NSError)
@@ -1069,7 +1072,7 @@ class GDNetworkManager: AFHTTPSessionManager {
             //实现POST请求
             mylog("zzzzzzzzz\(para)")
             post(url, parameters: para, progress: nil, success: { (_, result) in
-                self.alert.gdHide()///////////////////////////
+//                self.alert.gdHide()///////////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)
                 if let dict = result as? [String : AnyObject] {
                     //执行成功回调
@@ -1082,7 +1085,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                 self.printMessage(urlString, paramete: error)
                 failure(error)
             }, failure: { (_, error) in
-                self.alert.gdHide()///////////////////
+//                self.alert.gdHide()///////////////////
                 //执行失败的回调
                 self.printMessage(urlString, paramete: error as AnyObject?)
                 failure( error as NSError)
@@ -1091,7 +1094,7 @@ class GDNetworkManager: AFHTTPSessionManager {
             
         }else if method == RequestType.PUT {
             put(url, parameters: para, success: { (_, result) in
-                self.alert.gdHide()//////////////////////
+//                self.alert.gdHide()//////////////////////
 //                self.printMessage(urlString, paramete: result as AnyObject?)
                 if let dict = result as? [String : AnyObject] {
                     //执行成功回调
@@ -1104,7 +1107,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                 self.printMessage(urlString, paramete: error)
                 failure(error)
             }, failure: { (_, error) in
-                self.alert.gdHide()//////////////////////////////
+//                self.alert.gdHide()//////////////////////////////
                 //执行失败的回调
                 self.printMessage(urlString, paramete: error as AnyObject?)
                 failure( error as NSError)
@@ -1571,7 +1574,7 @@ class GDNetworkManager: AFHTTPSessionManager {
     
     
     func uploadPHAssets(albumID:String ,type : String = "1", assets:[PHAsset]?)  {
-        
+        var type = type
         self.getQiniuToken(success: { (model ) in
             if let token = model.data as? String {
                 for ( _ , asset) in (assets ?? []).enumerated() {
@@ -1579,6 +1582,7 @@ class GDNetworkManager: AFHTTPSessionManager {
                     self.qnUploadManager.put(asset, key: nil , token: token, complete: { (response, key , info ) in
                     //1185
                         if let key = info?["key"] as? String{
+                            if asset.mediaType == .video {type = "2" }
                             self.insertMediaToAlbum(albumID: albumID, original: key, type: type, success: { (result ) in
                                  mylog("插入媒体到相册 请求结果 : \(model.status) , 数据 :\(model.data)")
                                 if result.status == 200 {
