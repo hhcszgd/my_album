@@ -50,7 +50,7 @@ class PickImageVC: GDBaseVC , GDImagePickerviewDelegate{
     }
     @objc func doneClick()  {
         
-        if imgPicker.collection.indexPathsForSelectedItems?.count ?? 0 == 0 {
+        if imgPicker.allIndexPathsOfSelectedItems.count ?? 0 == 0 {
             GDAlertView.alert("请选择照片", image: nil , time: 1 , complateBlock: nil )
             return
         }
