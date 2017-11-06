@@ -356,23 +356,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     }
     
     func initializationAccountInfo()  {
-//        if Account.shareAccount.accountStatus == AccountStatus.authenticated {
+        if Account.shareAccount.accountStatus == AccountStatus.authenticated {//如果只支持一台设备登陆 , 这些代码注释掉
 //            if self.window?.rootViewController != GDKeyVC.share {
-//                self.window = nil
-//                self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-//                self.window!.rootViewController = GDKeyVC.share
-//                self.window!.makeKeyAndVisible()
+            if   self.window ==  nil{
+                let win = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                win.backgroundColor = UIColor.white
+                self.window = win
+            }
+                self.window!.rootViewController = GDKeyVC.share
+                self.window!.makeKeyAndVisible()
 //            }
 //            return
-//        }
+        }
         
 //        GDLocationManager.share.startUpdatingLocation()
         GDNetworkManager.shareManager.QZFirstInit({ (model) in//之所以先初始化, 是怕手机在别的设备被找回
             mylog("首次调用初始化接口成功 status:\(model.status) message:\(String(describing: model.message)) data:\(String(describing: model.data))")
             if model.status == 202 {//用户已存在
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.authenticated)
+                
+                
             }else if (model.status == 310){//用户不存在
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.unAuthenticated)
+                if  self.window == nil{
+                    let win = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                    win.backgroundColor = UIColor.white
+                    self.window = win
+                }
+                self.window!.rootViewController = LoginVCFirstLaunch()
+                
+                self.window!.makeKeyAndVisible()
+                
             }else if (model.status == 203){
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.halfAuthenticated)
             }else if (model.status == 307){//设备id为空
@@ -381,7 +395,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
                 Account.shareAccount.resetAccountStatus(status: AccountStatus.unAuthenticated)
             }
             
-            
+            /*
             
             if Account.shareAccount.accountStatus == AccountStatus.authenticated {
                 if self.window?.rootViewController != GDKeyVC.share {
@@ -419,6 +433,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
                 }
                 
             }
+            */
 
             
             
@@ -432,6 +447,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
         
     }
     
+    func initWhenNotAoth() {
+        
+    }
     //MARK:////////////////////////////////////////////更改语言相关//////////////////////////////////////////////////////
     
     
