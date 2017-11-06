@@ -63,13 +63,13 @@ class AlbumItem: UICollectionViewCell {
         }
         self.mediaCount.snp.remakeConstraints { (make ) in
             make.left.equalToSuperview().offset(10)
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-5)
             make.width.equalTo((self.contentView.bounds.width - 20) / 2)
             make.height.equalTo(18)
         }
         self.memberCount.snp.remakeConstraints { (make ) in
             make.right.equalToSuperview().offset(-10)
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-5)
             make.width.equalTo((self.contentView.bounds.width - 20) / 2)
             make.height.equalTo(18)
         }

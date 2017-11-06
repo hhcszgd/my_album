@@ -35,6 +35,14 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         self.configNavigationBar()
         // Do any additional setup after loading the view.
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if collectionView.contentSize.height > collectionView.bounds.height {
+            collectionView.alwaysBounceVertical = true
+        }else{
+            collectionView.alwaysBounceVertical = false
+        }
+    }
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
         self.priviousContentOffSet = scrollView.contentOffset.y
     }
@@ -212,6 +220,7 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
             // Fallback on earlier versions
         }
         self.view.addSubview(collectionView)
+        
         collectionView.backgroundColor = UIColor.white
         self.collectionView.snp.makeConstraints { (make ) in
             make.left.right.bottom.top.equalToSuperview()
@@ -300,16 +309,18 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
     }
     @objc func performShare() {
         print("\(#file)")
-        self.share(shareUrlStr: "http://www.baidu.com/")
+        self.share(shareUrlStr: "http://123qz.cn")
     }
     func share(shareUrlStr : String) {
         // 要分享的图片
         let image = UIImage.init(named: "logoPressed")!
         // 要分享的文字
-        let str = "茄子相册分享"
-        let url : URL =  URL(string : shareUrlStr) ?? URL(string : "https://123qz.cn/share.html")!
+        let shareTitle = "茄子相册"
+        let str = "我发现一个好玩的app,一起来看看吧"
+        let appStroeURL = URL(string :"https://itunes.apple.com/us/app/%E8%8C%84%E5%AD%90%E7%9B%B8%E5%86%8C-%E5%AE%B6%E4%BA%BA%E7%9B%B8%E5%86%8C%E5%88%86%E4%BA%AB/id1302973832?l=zh&ls=1&mt=8")!
+        let url : URL =  URL(string : shareUrlStr) ?? URL(string : "http://123qz.cn")!
         // 将要分享的元素放到一个数组中
-        let postItems = [ image, str , url] as [Any]
+        let postItems = [shareTitle, image, str /*, url*/ , appStroeURL] as [Any]
         let activityVC = UIActivityViewController.init(activityItems: postItems, applicationActivities: nil)
         
         // 在展现 activityVC 时，必须根据当前的设备类型，使用适当的方法。在iPad上，必须通过popover来展现view controller。在iPhone和iPodtouch上，必须以模态的方式展现。
@@ -342,12 +353,14 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false    , animated: true )
 //        GDKeyVC.share.navigationBar.shadowImage = UIImage(named:"naviBarShadow") //去除导航栏黑线
-        GDKeyVC.share.navigationBar.shadowImage = UIImage() //去除导航栏黑线
+        GDKeyVC.share.navigationBar.shadowImage = UIImage() //去除导航栏黑线ios11有用,ios10 没用
+        GDKeyVC.share.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)//不知道对ios10的黑线有没有用
        
     }
     deinit {
         NotificationCenter.default.removeObserver(self)
         GDKeyVC.share.navigationBar.shadowImage = UIImage(named:"naviBarShadow") //去除导航栏黑线
+        NotificationCenter.default.post(Notification.init(name: Notification.Name.init("AlbumCountChanged")))
     }
     /*
     // MARK: - Navigation

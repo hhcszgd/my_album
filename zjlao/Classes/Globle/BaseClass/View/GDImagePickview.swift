@@ -275,7 +275,7 @@ class GDPhotoItem: UICollectionViewCell {
             }
             self.configSelectBtnUI(isSelect: self.selectBtn.isSelected)
             if let asset  = model?.asset {
-                PHImageManager.default().requestImage(for: asset, targetSize:CGSize(width: 100, height: 100   ), contentMode: PHImageContentMode.default, options: nil) { (imgOption , dictInfo) in
+                PHImageManager.default().requestImage(for: asset, targetSize:CGSize(width: 300, height: 300   ), contentMode: PHImageContentMode.default, options: nil) { (imgOption , dictInfo) in
                     if let image = imgOption {
                         self.imageView.image = image
                     }

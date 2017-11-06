@@ -18,6 +18,7 @@ class AlbumDetailHeader: UICollectionReusableView,UICollectionViewDataSource, UI
         didSet{
             creatTime.text = "创建于 " + model.create_at
             nameLabel.text =  model.album_name
+            nameLabel.font = UIFont.boldSystemFont(ofSize: 17)
             self.layoutIfNeeded()
         }
     }

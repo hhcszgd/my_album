@@ -21,8 +21,8 @@ class PickImageVC: GDBaseVC , GDImagePickerviewDelegate{
         super.viewDidLoad()
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
         imgPicker.delegate  = self
-        imgPicker.frame =  CGRect(x: 0, y: 64, width:
-            self.view.bounds.width, height: self.view.bounds.height - 64)
+        imgPicker.frame =  CGRect(x: 0, y: 0, width:
+            self.view.bounds.width, height: self.view.bounds.height )
         self.view.addSubview(imgPicker)
         self.imgPicker.layoutIfNeeded()
         self.setupNaviBar()

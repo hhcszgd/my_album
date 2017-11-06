@@ -331,6 +331,7 @@ class GDNavigatBar: GDView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         titleLabel.isHidden = true;
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
         titleLabel.textAlignment = NSTextAlignment.center
         self.addSubview(titleLabel)
         titleLabel.center = CGPoint(x: UIScreen.main.bounds.size.width/2.0, y: 42);

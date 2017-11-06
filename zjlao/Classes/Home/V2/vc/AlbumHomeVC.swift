@@ -181,11 +181,15 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
             flowlayout.minimumLineSpacing = 10
             flowlayout.minimumInteritemSpacing = 10
             flowlayout.sectionInset = UIEdgeInsetsMake(10, 20, 10, 20)
-            flowlayout.itemSize = CGSize(width: (UIScreen.main.bounds.width - flowlayout.minimumInteritemSpacing - flowlayout.sectionInset.left - flowlayout.sectionInset.right)/2, height: 200)
+            let itemW =  (UIScreen.main.bounds.width - flowlayout.minimumInteritemSpacing - flowlayout.sectionInset.left - flowlayout.sectionInset.right)/2
+            flowlayout.itemSize = CGSize(width:itemW, height: itemW + 18 * 2)
         }else{
             let barH = self.navigationController?.navigationBar.bounds.height ?? 0
-            flowlayout.itemSize = CGSize(width: 123, height: (UIScreen.main.bounds.height - flowlayout.minimumInteritemSpacing - flowlayout.sectionInset.top - flowlayout.sectionInset.bottom  - barH)/2)
-            flowlayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+            let itemH =  (UIScreen.main.bounds.height - flowlayout.minimumInteritemSpacing - flowlayout.sectionInset.top - flowlayout.sectionInset.bottom  - barH)/2
+            flowlayout.itemSize = CGSize(width:itemH - 18 * 2 , height: itemH )
+            
+            
+             flowlayout.scrollDirection = UICollectionViewScrollDirection.horizontal
             flowlayout.minimumLineSpacing = 10
             flowlayout.minimumInteritemSpacing = 10
 //            flowlayout.sectionInset = UIEdgeInsetsMake(20, 10, 10, 10)
