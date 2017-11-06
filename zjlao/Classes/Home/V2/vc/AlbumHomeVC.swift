@@ -253,7 +253,8 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         let add  = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         add.addTarget(self , action: #selector(addClick), for: UIControlEvents.touchUpInside)
 //        add.backgroundColor = UIColor.green
-        add.setTitle("新建", for: UIControlState.normal)
+//        add.setTitle("新建", for: UIControlState.normal)
+        add.setImage(UIImage(named:"jia"), for: UIControlState.normal)
         add.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
         add.titleLabel?.font = UIFont.systemFont(ofSize: 15)
 //        let right1 = UIBarButtonItem.init(customView: add )

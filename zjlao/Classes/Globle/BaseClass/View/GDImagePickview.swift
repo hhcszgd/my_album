@@ -175,7 +175,7 @@ extension GDImagePickview : UICollectionViewDelegate , UICollectionViewDataSourc
                 model.becomeGray = false
                 
             }
-            if !model.isSelected{model.showTitle = "x"}
+            if !model.isSelected{model.showTitle = "✔︎"}//✓
             model.indexPath = indexPath
             realItem.model = model
         }
@@ -254,7 +254,7 @@ extension GDImagePickview  : PhotoItemDelegate{
 class PhotoItemModel: NSObject {
     var asset : PHAsset?
     var isSelected : Bool = false
-    var showTitle = "x"
+    var showTitle = "✔︎"
     var indexPath : IndexPath?
     var becomeGray  : Bool = false
     
@@ -306,7 +306,7 @@ class GDPhotoItem: UICollectionViewCell {
     }
     
     func configSelectBtn() {
-        self.selectBtn.setTitle("x", for: UIControlState.normal)
+        self.selectBtn.setTitle("✔︎", for: UIControlState.normal)
         self.selectBtn.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
         //        self.selectBtn.isUserInteractionEnabled = false
         self.selectBtn.addTarget(self , action: #selector(selectBtnClick(sender:)), for: UIControlEvents.touchUpInside)
@@ -321,7 +321,7 @@ class GDPhotoItem: UICollectionViewCell {
         if isSelect {
             self.selectBtn.layer.cornerRadius = self.selectBtn.bounds.width/2
             self.selectBtn.layer.masksToBounds = true
-            self.selectBtn.backgroundColor = UIColor.green
+            self.selectBtn.backgroundColor = UIColor(hexString: "#BC348A")
             self.selectBtn.setTitle(model?.showTitle, for: UIControlState.selected)
             self.selectBtn.layer.borderWidth = 0
             self.selectBtn.layer.borderColor = UIColor.green.cgColor
