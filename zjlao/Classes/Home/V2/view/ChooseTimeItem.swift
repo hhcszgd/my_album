@@ -33,7 +33,7 @@ class ChooseTimeItem: UICollectionViewCell {
         case "2年以上":
             return "24,0"
         default:
-            return ""
+            return "0,1"
         }
     }
     

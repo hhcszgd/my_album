@@ -20,7 +20,11 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
     var siftView = SiftView.init(frame: CGRect.zero) //  UINib.init(nibName: "SiftView", bundle: nil )
     let corver = UIControl.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     let tipsLabel = UILabel.init(frame: CGRect(x: 0, y: 200, width: SCREENWIDTH, height: 44))
-    var selectItem : ChooseTimeItem?
+    var selectItem : ChooseTimeItem?{
+        didSet{
+            print("print para of select time item ----> \(selectItem?.para)")
+        }
+    }
     var iconButton : UIButton!
     
     override func viewDidLoad() {
@@ -89,6 +93,7 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
     }
     @objc func albumCountChanged()  {
         self.page = 1
+        self.selectItem = nil
         self.getAllAlbums(album_type: 1, create_at: self.selectItem?.para ?? "0,1" , page: self.page , loadType:  1)
     }
     @objc func iconChanged(noti:Notification)  {
@@ -280,6 +285,7 @@ class AlbumHomeVC: GDNormalVC,SiftViewDidSelectProtocol /*, UICollectionViewDele
         self.navigationController?.setNavigationBarHidden(true , animated: true )
     }
     @objc func addClick() {
+        self.coverClick()
         let addVc = CreatAlbumVC()
         addVc.title = "新建相册"
         self.navigationController?.pushViewController(addVc, animated: true )

@@ -11,6 +11,11 @@ import Photos
 import AVKit
 class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDelegate{
     var albumID : Int  = 0
+    var priviousContentOffSet : CGFloat = 0.0{
+        didSet{
+            print("oldValue:\(oldValue) ; newValue : \(priviousContentOffSet)")
+        }
+    }
     
     var albumMedias = [MediaModel]()
     var headerModel = AlbumDetailHeaderModel.init(dict: nil )
@@ -30,10 +35,24 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         self.configNavigationBar()
         // Do any additional setup after loading the view.
     }
-     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.naviBar.change(by: scrollView)
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
+        self.priviousContentOffSet = scrollView.contentOffset.y
+    }
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>){
+        let offset = targetContentOffset.pointee
+        if  offset.y > priviousContentOffSet{
+            if !self.navigationController!.navigationBar.isHidden{
+                self.navigationController?.setNavigationBarHidden(true , animated: true )
+            }
+        }else  {
+            
+            if self.navigationController!.navigationBar.isHidden{
+                self.navigationController?.setNavigationBarHidden(false  , animated: true )
+            }
+        }
     }
 
+    
     func switchFlowLayout(direction : UICollectionViewScrollDirection) -> UICollectionViewFlowLayout {
         let flowlayout = UICollectionViewFlowLayout()
         if  direction == UICollectionViewScrollDirection.vertical {
@@ -46,7 +65,7 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
             flowlayout.headerReferenceSize =  CGSize(width: 100, height: 80)
             flowlayout.footerReferenceSize = CGSize(width: 100, height: 0)
             if #available(iOS 9.0, *) {
-                flowlayout.sectionHeadersPinToVisibleBounds = true
+                flowlayout.sectionHeadersPinToVisibleBounds = false
             } else {
                 // Fallback on earlier versions
             }
@@ -129,6 +148,7 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         }
         return cell
     }
+
     @objc func receiveNotificationOfUploadSuccess() {
         self.getAlbumDetail(type:1)
     }
@@ -157,7 +177,16 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
                         tempAlbumMedias.append(media)
                         
                     }
-                    if tempAlbumMedias.count == self.albumMedias.count {return}
+                    if tempAlbumMedias.count == self.albumMedias.count {
+                        if self.albumMedias.count == 0 {
+                            UIView.animate(withDuration: 0.1, animations: {
+                                self.collectionView.reloadData()
+                            })
+                        }else{
+                            return
+                        }
+                        
+                    }
                     if type == 1 {
                         self.albumMedias = tempAlbumMedias
                     }else{
@@ -176,7 +205,14 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
         }
     }
     func configCollectionView() {
+        if #available(iOS 11.0, *) {
+            self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.never
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = false
+            // Fallback on earlier versions
+        }
         self.view.addSubview(collectionView)
+        collectionView.backgroundColor = UIColor.white
         self.collectionView.snp.makeConstraints { (make ) in
             make.left.right.bottom.top.equalToSuperview()
         }

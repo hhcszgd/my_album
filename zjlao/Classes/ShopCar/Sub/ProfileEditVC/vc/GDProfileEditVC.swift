@@ -50,6 +50,7 @@ class GDProfileEditVC: GDBaseVC {
         
         
         self.configRowInfo(rowView: mobile , title: "手机号码", y: startY  )
+        mobile.additionalImageView.isHidden = true 
         startY += (mobile.bounds.height + 2)
         self.configRowInfo(rowView: name , title: "姓名", y: startY )
         startY += (name.bounds.height + 2)

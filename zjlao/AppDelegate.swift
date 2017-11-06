@@ -386,7 +386,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
             if Account.shareAccount.accountStatus == AccountStatus.authenticated {
                 if self.window?.rootViewController != GDKeyVC.share {
                     self.window = nil
-                    self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                    let win = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                    win.backgroundColor = UIColor.white
+                    self.window = win
                     self.window!.rootViewController = GDKeyVC.share
                     self.window!.makeKeyAndVisible()
                 }
@@ -405,7 +407,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
 //                            }
 //                        }else{//从未认证 , 或者只认证手机 , 没上传头像和设置用户名
                             self.window = nil
-                            self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                            let win = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                            win.backgroundColor = UIColor.white
+                            self.window = win
                             self.window!.rootViewController = LoginVCFirstLaunch()
                             self.window!.makeKeyAndVisible()
 //                        }
@@ -511,7 +515,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     //MARK:////////////////////////////////////appDelegate代理方法//////////////////////////////////////////
     func showTime()  {
         self.window = nil
-        self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+        let win = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+        win.backgroundColor = UIColor.white
+        self.window = win
         let showvc = GDLaunchVC()
         self.window!.rootViewController = showvc
         //请打开gps定位功能
@@ -741,7 +747,9 @@ class GDSetupLocationEnableVC: UIViewController{
             if let realAppdelegate = appDelegate as? AppDelegate {
                 if realAppdelegate.window?.rootViewController != GDKeyVC.share {
                     realAppdelegate.window = nil
-                    realAppdelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                    let win = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                    win.backgroundColor = UIColor.white
+                    realAppdelegate.window = win
                     realAppdelegate.window!.rootViewController = GDKeyVC.share
                     realAppdelegate.window!.makeKeyAndVisible()
                 }
@@ -1107,7 +1115,9 @@ class GDSetupUserInfoVC: UIViewController , UIImagePickerControllerDelegate , UI
             if let realAppdelegate = appDelegate as? AppDelegate {
                 if realAppdelegate.window?.rootViewController != GDKeyVC.share {
                     realAppdelegate.window = nil
-                    realAppdelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                    let win = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+                    win.backgroundColor = UIColor.white
+                    realAppdelegate.window = win
                     realAppdelegate.window!.rootViewController = GDKeyVC.share
                     realAppdelegate.window!.makeKeyAndVisible()
                 }

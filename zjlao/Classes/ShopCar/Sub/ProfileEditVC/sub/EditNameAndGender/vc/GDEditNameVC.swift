@@ -39,6 +39,7 @@ class GDEditNameVC: GDBaseVC {
                 textFiled.leftViewMode = UITextFieldViewMode.always
                 textFiled.center = CGPoint(x: self.view.bounds.width/2, y: 96)
                 textFiled.text = self.originalValue
+                textFiled.placeholder = "请输入要修改的姓名"
             }
         case "修改性别":
             if self.male.superview == nil && self.famale.superview == nil {
