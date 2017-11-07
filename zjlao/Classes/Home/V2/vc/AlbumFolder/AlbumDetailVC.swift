@@ -37,11 +37,11 @@ class AlbumDetailVC: GDBaseVC ,UICollectionViewDataSource, UICollectionViewDeleg
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if collectionView.contentSize.height > collectionView.bounds.height {
+//        if collectionView.contentSize.height > collectionView.bounds.height {
             collectionView.alwaysBounceVertical = true
-        }else{
-            collectionView.alwaysBounceVertical = false
-        }
+//        }else{
+//            collectionView.alwaysBounceVertical = false
+//        }
     }
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
         self.priviousContentOffSet = scrollView.contentOffset.y

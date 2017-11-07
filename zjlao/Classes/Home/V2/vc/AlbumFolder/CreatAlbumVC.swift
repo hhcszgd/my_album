@@ -76,7 +76,7 @@ class CreatAlbumVC: GDBaseVC {
         
         nameTextField.placeholder = "给你的相册取个好听好记可爱的名称吧"
         nameTextField.layer.borderWidth = 1.0
-        nameTextField.layer.borderColor = UIColor.lightGray.cgColor
+        nameTextField.layer.borderColor = UIColor(hexString: "#808080")?.cgColor// UIColor.lightGray.cgColor
         nameTextField.textAlignment = NSTextAlignment.center
         
         creatBtn.layer.borderColor = UIColor.lightGray.cgColor

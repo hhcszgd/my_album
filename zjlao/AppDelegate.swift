@@ -19,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AfterChangeLanguageKeyVC
     //MARK:////////////////////////////////////属性相关//////////////////////////////////////////
     
     
-    var window: UIWindow?
+    var window: UIWindow?{
+        didSet{
+            window?.backgroundColor = UIColor.white
+        }
+    }
     
     
     
